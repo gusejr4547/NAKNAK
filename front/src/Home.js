@@ -3,8 +3,8 @@ import React from 'react';
 function Home(props) {
     return (
         <div style={{
-            backgroundImage:"url(./assets/main.png)",
-            backgroundSize: "cover",
+            // backgroundImage:"url(./assets/main.png)",
+            // backgroundSize: "cover",
             height:"100%",
             // display: 'flex',         // 수직 정렬을 위해 flex 사용
             alignItems: 'center',    // 세로 중앙 정렬
@@ -35,13 +35,14 @@ function Home(props) {
                     </svg>
                     
                 </div>
+                <img src="./assets/cat.png" alt="" style={{width:"200px", height:"200px", position: 'absolute', bottom:'70px', right:'-5px',}}/>
                 {/* <img src="./assets/cat.png" alt="" style={{width:"200px", height:"200",
             position: "fixed",
             bottom: 100,
             right: 100,
             width: 100,
             height: 100,}}/> */}
-                <div style={{
+                {/* <div style={{
                 position: "fixed",
                 bottom: 50,
                 right: 0,
@@ -53,8 +54,8 @@ function Home(props) {
                 borderBottom: "120px solid #FFDF77",
                 zIndex: 1, // 필요에 따라 조정
              }} >
-                <img src="./assets/cat.png" alt="" style={{width:"200px", height:"200px", position: 'absolute', top:'-120px', left:'-70px',}}/>
-                    </div>
+                
+                    </div> */}
             </div>
         </div>
     );

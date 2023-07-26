@@ -2,41 +2,96 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import { Link  } from 'react-router-dom';
 
 function Login(props) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [loginData, setLoginData] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+  
+    const [postData, setPostData] = useState({});
+    // const [getData, setGetData] = useState({});
+
+
+    // const fetchData = async () => {
+    //     try {
+    //       setLoading(true);
+    //       const response = await axios.get("/api/members");
+    //       const jsonData = response.data;
+    //       setGetData(jsonData);
+    //       console.log(getData)
+    //       setLoading(false);
+    //     } catch (error) {
+    //       console.error("Error fetching data:", error);
+    //       setError("데이터 로드에 실패했습니다.");
+    //       setLoading(false);
+    //     }
+    //   };
+    
+    //   const handleClick = () => {
+    //     fetchData();
+    //   };
+    
+      const loginHandleClick = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.post("/api/login", loginData);
+          setPostData(response.data);
+          console.log(postData)
+          setLoading(false);
+        } catch (error) {
+          console.error("Error posting data:", error);
+          setError("데이터 전송에 실패했습니다.");
+          setLoading(false);
+        }
+      };
+    
+      const loginHandleChange = (event) => {
+        const { name, value } = event.target;
+        setLoginData({ ...loginData, [name]: value });
+      };
+    
+      if (loading) {
+        return <div>Loading...</div>;
+      }
+    
+      if (error) {
+        return <div>{error}</div>;
+      }
+
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
     // const [postData, setPostData] = useState({});
 
-    const handleLogin = async () => {
-        // API 요청을 보낼 URL
-        // const apiUrl = 'http://localhost:8080/api/login';
-        const apiUrl = '/api/login';
-        try {
-        // 요청에 보낼 데이터
-        const requestData = {
-            email: email,
-            password: password
-        };
-        const response = await axios.post(apiUrl, requestData);
-        // setPostData(response.data);
-        console.log(response.data)
-        }catch (error) {
-            console.error("Error posting data:", error);
-        }
-        // // Axios를 사용하여 API 요청 보내기
-        // axios.post(apiUrl, requestData, { withCredentials: true })
-        //     .then(response => {
-        //         // 로그인 성공 시 처리
-        //         console.log('로그인 성공:', response.data);
-        //         // 로그인 성공 시, 다음 페이지로 이동하거나 필요한 처리를 하세요.
-        //     })
-        //     .catch(error => {
-        //         // 로그인 실패 시 처리
-        //         console.error('로그인 실패:', error);
-        //         // 로그인 실패 시, 에러 메시지를 사용자에게 보여주거나 필요한 처리를 하세요.
-        //     });
-    };
+    // const handleLogin = async () => {
+    //     // API 요청을 보낼 URL
+    //     // const apiUrl = 'http://localhost:8080/api/login';
+    //     const apiUrl = '/api/login';
+    //     try {
+    //     // 요청에 보낼 데이터
+    //     const requestData = {
+    //         email: email,
+    //         password: password
+    //     };
+    //     const response = await axios.post(apiUrl, requestData);
+    //     // setPostData(response.data);
+    //     console.log(response.data)
+    //     }catch (error) {
+    //         console.error("Error posting data:", error);
+    //     }
+    //     // // Axios를 사용하여 API 요청 보내기
+    //     // axios.post(apiUrl, requestData, { withCredentials: true })
+    //     //     .then(response => {
+    //     //         // 로그인 성공 시 처리
+    //     //         console.log('로그인 성공:', response.data);
+    //     //         // 로그인 성공 시, 다음 페이지로 이동하거나 필요한 처리를 하세요.
+    //     //     })
+    //     //     .catch(error => {
+    //     //         // 로그인 실패 시 처리
+    //     //         console.error('로그인 실패:', error);
+    //     //         // 로그인 실패 시, 에러 메시지를 사용자에게 보여주거나 필요한 처리를 하세요.
+    //     //     });
+    // };
 
     return (
         <div style={{
@@ -54,14 +109,16 @@ function Login(props) {
                 height: '120px',
                 margin: '30px 0px 0px 0px',
             }}>
-                <input type="text" placeholder='id' onChange={(e) => setEmail(e.target.value)} />
-                <input type="text" placeholder='password' style={{ margin: '10px 0px 0px 0px' }} onChange={(e) => setPassword(e.target.value)} />
-                <Button as="input" type="button" value="로그인" style={{ margin: '10px 0px 0px 0px' }} onClick={handleLogin} />
+                <input type="text" placeholder='id' name="email" onChange={loginHandleChange} />
+                <input type="text" placeholder='password' style={{ margin: '10px 0px 0px 0px' }} name="password" onChange={loginHandleChange}/>
+                <Button as="input" type="button" value="로그인" style={{ margin: '10px 0px 0px 0px' }} onClick={loginHandleClick} />
             </div>
-
             <div className='border-top' style={{ width: '200px', margin: '10px 0px 0px 0px' }}>
                 <img src="./assets/google.PNG" alt="Google 로고" style={{ width: '30px', height: '30px', margin: '10px 10px 0px 0px' }} />
                 <img src="./assets/kakao.PNG" alt="Kakao 로고" style={{ width: '30px', height: '30px', margin: '10px 0px 0px 0px' }} />
+                <Link to='/Signup' className="nav-link" >
+                <Button as="input" type="button" value="회원가입" style={{ margin: '10px 0px 0px 0px' }} />
+                </Link>
             </div>
         </div>
     );
