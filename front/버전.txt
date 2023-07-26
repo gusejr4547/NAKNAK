@@ -1,0 +1,13 @@
+사용할 스택 및 버전 정리
+
+Node.js : https://nodejs.org/en 18.16.1 LTS
+
+시작 : npx create-react-app
+
+리코일 : 상태관리 도구 : npm install recoil
+
+api : npm install axios
+
+라우터 : npm i react-router-dom 
+
+부트스트랩 : npm install react-bootstrap bootstrap
