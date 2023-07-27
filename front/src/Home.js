@@ -5,19 +5,18 @@ function Home(props) {
         <div style={{
             // backgroundImage:"url(./assets/main.png)",
             // backgroundSize: "cover",
-            height:"100%",
+            // height:"100%",
             // display: 'flex',         // 수직 정렬을 위해 flex 사용
             alignItems: 'center',    // 세로 중앙 정렬
             justifyContent: 'center' // 가로 중앙 정렬
         }}>
-			<h3>안녕하세요. 홈 입니다.</h3>
             <div style={{
             display: 'inline',
             // alignItems: 'center',    // 세로 중앙 정렬
             justifyContent: 'center' // 가로 중앙 정렬
         }}>
-                <img src="./assets/cl1.png" alt="asd" style={{width:'400px', height:'300px', margin:'100px 0px 0px 20px', }}/>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <img src="./assets/cl1.png" alt="asd" style={{width:'400px', height:'400px', position: 'absolute', top: '10%', right:'1%' }}/>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: 'absolute', bottom: '38%', right:'40%' }}>
                     <svg width="35" height="35" 
                     viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
                     style={{ transform: "translateX(80px)" }}>
@@ -33,29 +32,8 @@ function Home(props) {
                     style={{ transform: "translateX(90px)" }}>
                             <circle cx="50" cy="50" r="40" fill="yellow" />
                     </svg>
-                    
                 </div>
-                <img src="./assets/cat.png" alt="" style={{width:"200px", height:"200px", position: 'absolute', bottom:'70px', right:'-5px',}}/>
-                {/* <img src="./assets/cat.png" alt="" style={{width:"200px", height:"200",
-            position: "fixed",
-            bottom: 100,
-            right: 100,
-            width: 100,
-            height: 100,}}/> */}
-                {/* <div style={{
-                position: "fixed",
-                bottom: 50,
-                right: 0,
-                width: 0,
-                height: 0,
-                borderTop: "50px solid transparent",
-                borderLeft: "50px solid transparent",
-                borderRight: "120px solid #FFDF77",
-                borderBottom: "120px solid #FFDF77",
-                zIndex: 1, // 필요에 따라 조정
-             }} >
-                
-                    </div> */}
+                <img src="./assets/cat.png" alt="" style={{width:"200px", height:"200px", position: 'absolute', bottom:'10%', right:'1%' }}/>
             </div>
         </div>
     );
