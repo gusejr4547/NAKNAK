@@ -6,14 +6,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Entity(name = "member_status")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberStatus {
+public class MemberStatus{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_status_id")
+    private long memberStatusId;
+
     @OneToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Column(name = "point")
