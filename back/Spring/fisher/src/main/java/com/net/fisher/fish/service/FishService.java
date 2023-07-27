@@ -38,25 +38,25 @@ public class FishService {
         List<Fish> fishList = new ArrayList<>();
         fishList.add(Fish.builder()
                 .name("전갱이")
-                .imgUrl("/img/fihses/전갱이.png")
+                .imgUrl("/img/fishes/A001.png")
                 .info("육질이 단단한 맛난 생선")
                 .code("A001")
                 .build());
         fishList.add(Fish.builder()
                 .name("광어")
-                .imgUrl("/img/fihses/광어.png")
+                .imgUrl("/img/fishes/A002.png")
                 .info("횟감으로 좋은 흰살 생선")
                 .code("A002")
                 .build());
         fishList.add(Fish.builder()
                 .name("돌돔")
-                .imgUrl("/img/fihses/돌돔.png")
+                .imgUrl("/img/fishes/A003.png")
                 .info("고오급 횟감")
                 .code("A003")
                 .build());
         fishList.add(Fish.builder()
                 .name("학꽁치")
-                .imgUrl("/img/fihses/학꽁치.png")
+                .imgUrl("/img/fishes/A004.png")
                 .info("겨울철 횟감")
                 .code("A004")
                 .build());
