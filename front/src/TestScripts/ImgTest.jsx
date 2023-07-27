@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as tmImage from "@teachablemachine/image";
 
 const ImgText = () => {
