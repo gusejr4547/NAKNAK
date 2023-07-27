@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from "recoil";
@@ -18,7 +18,6 @@ import ImgTest from './TestScripts/ImgTest';
 // button onClick={() => navigate('/')}>Go Root</button>
 
 function App(props) {
-	
   return (
 	<RecoilRoot>
 		<div className='App' style={{
