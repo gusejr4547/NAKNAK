@@ -1,55 +1,50 @@
-// axios.defaults.baseURL = 'http://192.168.30.161:8080';
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+// import { Link  } from 'react-router-dom';
 
-function Singup(props) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [nickname, setNickname] = useState('');
+function Signup(props) {
+    const [signupData, setSignupData] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [postData, setPostData] = useState({});
 
-    const handleRegister =  async () => {
-        // API 요청을 보낼 URL
-        // const apiUrl = 'http://192.168.30.161:8080/api/members/register';
-        const apiUrl = '/api/members/register';
-        // const apiUrl = '/members/register/';
+
+      const signupHandleClick = async () => {
         try {
-            // 요청에 보낼 데이터
-            const requestData = {
-                    email: email,
-                    password: password,
-                    name: name,
-                    nickname: nickname
-                };
-            const response = await axios.post(apiUrl, requestData);
-            // setPostData(response.data);
-            console.log(response.data)
-            }catch (error) {
-                console.error("Error posting data:", error);
-            }
-        // // 요청에 보낼 데이터
-        // const requestData = {
-        //     email: email,
-        //     password: password,
-        //     name: name,
-        //     nickname: nickname
-        // };
+          setLoading(true);
 
-        // // Axios를 사용하여 API 요청 보내기
-        // axios.post(apiUrl, requestData, { withCredentials: true })
-        //     .then(response => {
-        //         // 회원가입 성공 시 처리
-        //         console.log('회원가입 성공:', response.data);
-        //         // 회원가입 성공 시, 필요한 처리를 하세요.
-        //     })
-        //     .catch(error => {
-        //         // 회원가입 실패 시 처리
-        //         console.error('회원가입 실패:', error);
-        //         // 회원가입 실패 시, 에러 메시지를 사용자에게 보여주거나 필요한 처리를 하세요.
-        //     });
-    };
+        const formData = new FormData();
+        formData.append('email', signupData.email);
+        formData.append('password', signupData.password);
+        formData.append('name', signupData.name);
+        formData.append('nickname', signupData.nickname);
+          const response = await axios.post("/api/members/register", formData);
+          setPostData(response.data);
+          console.log(postData, 123)
+          console.log(response, 456)
+          setLoading(false);
+        } catch (error) {
+          console.log(signupData)
+          console.error("Error posting data:", error);
+          setError("데이터 전송에 실패했습니다.");
+          setLoading(false);
+        }
+      };
+    
+      const signupHandleChange = (event) => {
+        const { name, value } = event.target;
+        setSignupData({ ...signupData, [name]: value });
+      };
+    
+      if (loading) {
+        return <div>Loading...</div>;
+      }
+    
+      if (error) {
+        return <div>{error}</div>;
+      }
 
     return (
         <div style={{
@@ -67,16 +62,14 @@ function Singup(props) {
                 height: '120px',
                 margin: '30px 0px 0px 0px',
             }}>
-                <input type="text" placeholder='id' onChange={(e) => setEmail(e.target.value)} />
-                <input type="text" placeholder='password' style={{ margin: '10px 0px 0px 0px' }} onChange={(e) => setPassword(e.target.value)} />
-                <input type="text" placeholder='name' style={{ margin: '10px 0px 0px 0px' }} onChange={(e) => setName(e.target.value)} />
-                <input type="text" placeholder='nickname' style={{ margin: '10px 0px 0px 0px' }} onChange={(e) => setNickname(e.target.value)} />
-                
-                <Button as="input" type="button" value="회원가입" style={{ margin: '10px 0px 0px 0px' }} onClick={handleRegister} />
+                <input type="text" placeholder='id' name="email" onChange={signupHandleChange} />
+                <input type="text" placeholder='password' style={{ margin: '10px 0px 0px 0px' }} name="password" onChange={signupHandleChange}/>
+                <input type="text" placeholder='name' style={{ margin: '10px 0px 0px 0px' }} name="name" onChange={signupHandleChange}/>
+                <input type="text" placeholder='nickname' style={{ margin: '10px 0px 0px 0px' }} name="nickname" onChange={signupHandleChange}/>
+                <Button as="input" type="button" value="회원가입" style={{ margin: '10px 0px 0px 0px' }} onClick={signupHandleClick} />
             </div>
-
         </div>
     );
 }
 
-export default Singup;
+export default Signup;

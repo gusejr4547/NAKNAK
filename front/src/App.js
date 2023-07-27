@@ -1,13 +1,16 @@
 import React from 'react';
 import "./App.css";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { RecoilRoot } from "recoil";
 // import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import NotFound from './NotFound';
 import Fishing from './Fishing';
 import Login from './account/Login';
+import Dogam from './account/Dogam';
 import Signup from './account/Signup';
+import ImgTest from './TestScripts/ImgTest';
 
 
 
@@ -17,6 +20,7 @@ import Signup from './account/Signup';
 function App(props) {
 	
   return (
+	<RecoilRoot>
 		<div className='App' style={{
       margin: 'auto',
     //   width: '80%',
@@ -30,14 +34,18 @@ function App(props) {
              }}>
 					<Route path="/" element={<Home />}></Route>
 					<Route path="/fishing" element={<Fishing />}></Route>
+					<Route path="/ImgTest" element={<ImgTest />}></Route>
 					<Route path="/Login" element={<Login />}></Route>
 					<Route path="/Signup" element={<Signup />}></Route>
+					<Route path="/Dogam" element={<Dogam />}></Route>
+					
 					{/* <Route path="/product/:productId" element={<Login />}></Route> */}
 					<Route path="*" element={<NotFound />}></Route>
 				</Routes>
 				<Footer/>
 			</BrowserRouter>
 		</div>
+		</RecoilRoot>
   );
 }
 

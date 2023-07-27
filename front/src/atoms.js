@@ -1,11 +1,9 @@
-
 import { atom } from "recoil";
 
 
 //  vue의 state
 
-export const userState = atom({
-  id:'',
-  password:'',
-  
+export const loginuser = atom({
+  key: "loginuser",
+  default: {},
 });
