@@ -15,6 +15,7 @@ const Test = () => {
       setLoading(true);
       const response = await axios.get("/api/members");
       const jsonData = response.data;
+      console.log(response.data)
       setGetData(jsonData);
       setLoading(false);
     } catch (error) {
@@ -32,6 +33,7 @@ const Test = () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/login", loginData);
+      console.log(response.data)
       setPostData(response.data);
       setLoading(false);
     } catch (error) {

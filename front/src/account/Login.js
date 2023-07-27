@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { Link  } from 'react-router-dom';
 import { useRecoilState} from "recoil";
-import { loginuser } from "../atoms";
+import { loginuser, token } from "../atoms";
 
 
 function Login(props) {
@@ -12,12 +12,15 @@ function Login(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [postData, setPostData] = useRecoilState(loginuser);
+    const [accesstoken, setToken] = useRecoilState(token);
 
       const loginHandleClick = async () => {
         try {
           setLoading(true);
           const response = await axios.post("/api/login", loginData);
           setPostData(response.data);
+          console.log(response.headers.authorization)
+          setToken(response.headers.authorization)
           console.log(postData,123)
           console.log(response,456)
           setLoading(false);

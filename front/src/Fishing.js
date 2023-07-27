@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Fishing.css";
 import { Link  } from 'react-router-dom';
+import { useRecoilState} from "recoil";
+import { fishingMode_recoil, time_recoil } from "./atoms";
 
 
 function Fishing(props) {
-  const [fishingMode, setFishingMode] = useState("selectMode");
+  const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
+  const [time, setTime] = useRecoilState(time_recoil);
   //타이머 기능
-  const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
+  // const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
 
   useEffect(() => {
     let intervalId;
@@ -94,8 +97,9 @@ function Fishing(props) {
       >
         <span>종료하기</span>
       </div>
-      <Link to='/ImgTest' className="nav-link" ><input type="submit" value="촬영" /></Link>
+      <Link to='/Fishpic' className="nav-link" ><input type="submit" value="촬영" /></Link>
       <Link to='/Dogam' className="nav-link" ><input type="submit" value="도감" /></Link>
+      <Link to='/Getfish' className="nav-link" ><input type="submit" value="어획" /></Link>
   
     </div>
   );
