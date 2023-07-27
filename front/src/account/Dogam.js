@@ -2,33 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../atoms";
-import { Link } from "react-router-dom";
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./Dogam.css"; // 별도의 CSS 파일을 생성하여 스타일을 적용합니다.
+import "./Dogam.css";
+import FishDetailModal from "./FishDetailModal";
 
 const Dogam = (props) => {
+  const catched = true;
+
+  const [selectedFish, setSelectedFish] = useState(null);
+
   const [dogamData, setDogamData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [loginUser, setloginuser] = useRecoilState(loginuser);
 
-  const URL = "http://192.168.30.161:8080";
-
-  const handleWheel = (e) => {
-    // 마우스 휠 동작에 따라 슬라이드를 이동시킵니다.
-    e.preventDefault(); // 기본 스크롤 동작을 막습니다.
-    const delta = e.deltaY;
-    if (delta > 0) {
-      slider.slickNext();
-    } else {
-      slider.slickPrev();
-    }
-  };
-
-  let slider;
+  const URL = "http://localhost:8080/";
 
   useEffect(() => {
     const getDogam = async () => {
@@ -48,92 +36,33 @@ const Dogam = (props) => {
     getDogam();
   }, []);
 
+  const openModal = (fish) => {
+    setSelectedFish(fish);
+  };
+
+  const closeModal = () => {
+    setSelectedFish(null);
+  };
+
   return (
     <div className="dogam-carousel dogam-wrapper">
       <div className="dogam-board">
         {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt={fish.imgUrl} width="100px" />
-              <p>{fish.name}</p>
-            </Link>
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openModal(fish)}
+          >
+            <img src={URL + fish.imgUrl} alt={fish.name} />
+            <h6>{fish.name}</h6>
           </div>
         ))}
-        {/* dummmy start */}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt={fish.imgUrl} width="100px" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt={fish.imgUrl} width="100px" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt={fish.imgUrl} width="100px" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt={fish.imgUrl} width="100px" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt={fish.imgUrl} width="100px" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt="이미지가 없습니다" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt="이미지가 없습니다" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt="이미지가 없습니다" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div key={fish.fishId} className="slide">
-            <Link to="/">
-              <img src={URL + fish.imgUrl} alt="이미지가 없습니다" />
-              <p>{fish.name}</p>
-            </Link>
-          </div>
-        ))}
-        {/* dummy end */}
       </div>
+
+      {/* 모달 컴포넌트 */}
+      {selectedFish && (
+        <FishDetailModal fishData={selectedFish} onClose={closeModal} />
+      )}
     </div>
   );
 };
