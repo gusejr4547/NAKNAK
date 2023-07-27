@@ -13,7 +13,7 @@ public class MemberStatusDto {
     @AllArgsConstructor
     @Builder
     public static class Response{
-        private Member member;
+        //private Member member;
         private int point;
         private long exp;
         private int level;
