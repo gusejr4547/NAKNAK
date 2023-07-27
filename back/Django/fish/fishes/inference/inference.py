@@ -1,6 +1,7 @@
 from keras.models import load_model  # TensorFlow is required for Keras to work
 from PIL import Image, ImageOps  # Install pillow instead of PIL
 import numpy as np
+from io import BytesIO
 
 from django.contrib.staticfiles import finders
 
@@ -22,7 +23,7 @@ def get_fish_name(file_path):
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
     # Replace this with the path to your image
-    image = Image.open(file_path).convert("RGB")
+    image = Image.open(BytesIO(file_path)).convert("RGB")
 
     # resizing the image to be at least 224x224 and then cropping from the center
     size = (224, 224)
