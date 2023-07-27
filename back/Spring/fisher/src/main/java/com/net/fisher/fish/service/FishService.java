@@ -1,7 +1,9 @@
 package com.net.fisher.fish.service;
 
+import com.google.gson.Gson;
 import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
+import com.net.fisher.fish.dto.FishRecogDto;
 import com.net.fisher.fish.entity.Books;
 import com.net.fisher.fish.entity.Fish;
 import com.net.fisher.fish.entity.FishBowls;
@@ -16,8 +18,13 @@ import com.net.fisher.response.FishCheckResponse;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -61,6 +68,56 @@ public class FishService {
                 .code("A004")
                 .build());
         fishRepository.saveAll(fishList);
+    }
+
+    public FishRecogDto recognizeFish(String token, MultipartFile image){
+        /*
+
+        // Create headers and set the token
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+        // Create the request body as a MultiValueMap
+        MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("file", new HttpEntity<>(file.getResource(), getFileHeaders(file.getOriginalFilename())));
+
+        // Set additional form data if needed
+        requestBody.add("otherParam", "value");
+
+        // Create the request entity with headers and body
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Perform the POST request
+        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
+
+        // Process the response
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String responseData = response.getBody();
+            // Process the responseData
+        } else {
+            // Handle error response
+        }
+        */
+        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        headers.set(HttpHeaders.AUTHORIZATION, token);
+
+        MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("file", new HttpEntity<>(image.getResource(), getFileHeaders(image.getOriginalFilename())));
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate.exchange("localshot:8000/api/v1/fishes", HttpMethod.POST, requestEntity, String.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // Process the responseData
+            String responseData = response.getBody();
+            Gson gson = new Gson();
+            FishRecogDto myData = gson.fromJson(responseData, FishRecogDto.class);
+            return myData;
+        }else{
+            System.out.println("안됨");
+        }
+
+        return null;
+
     }
 
     public Inventory catchFish(long tokenId, String fishCode, Inventory inventory) {
@@ -145,5 +202,12 @@ public class FishService {
         }
 
         booksRepository.save(findBooks);
+    }
+
+    private HttpHeaders getFileHeaders(String fileName) {
+        HttpHeaders fileHeaders = new HttpHeaders();
+        fileHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        fileHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(fileName).build());
+        return fileHeaders;
     }
 }
