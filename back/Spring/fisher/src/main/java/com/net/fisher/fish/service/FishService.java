@@ -1,7 +1,9 @@
 package com.net.fisher.fish.service;
 
+import com.google.gson.Gson;
 import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
+import com.net.fisher.fish.dto.FishRecogDto;
 import com.net.fisher.fish.entity.Books;
 import com.net.fisher.fish.entity.Fish;
 import com.net.fisher.fish.entity.FishBowls;
@@ -16,8 +18,13 @@ import com.net.fisher.response.FishCheckResponse;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,29 +45,79 @@ public class FishService {
         List<Fish> fishList = new ArrayList<>();
         fishList.add(Fish.builder()
                 .name("전갱이")
-                .imgUrl("/img/fihses/전갱이.png")
+                .imgUrl("/img/fishes/A001.png")
                 .info("육질이 단단한 맛난 생선")
                 .code("A001")
                 .build());
         fishList.add(Fish.builder()
                 .name("광어")
-                .imgUrl("/img/fihses/광어.png")
+                .imgUrl("/img/fishes/A002.png")
                 .info("횟감으로 좋은 흰살 생선")
                 .code("A002")
                 .build());
         fishList.add(Fish.builder()
                 .name("돌돔")
-                .imgUrl("/img/fihses/돌돔.png")
+                .imgUrl("/img/fishes/A003.png")
                 .info("고오급 횟감")
                 .code("A003")
                 .build());
         fishList.add(Fish.builder()
                 .name("학꽁치")
-                .imgUrl("/img/fihses/학꽁치.png")
+                .imgUrl("/img/fishes/A004.png")
                 .info("겨울철 횟감")
                 .code("A004")
                 .build());
         fishRepository.saveAll(fishList);
+    }
+
+    public FishRecogDto recognizeFish(String token, MultipartFile image){
+        /*
+
+        // Create headers and set the token
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+        // Create the request body as a MultiValueMap
+        MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("file", new HttpEntity<>(file.getResource(), getFileHeaders(file.getOriginalFilename())));
+
+        // Set additional form data if needed
+        requestBody.add("otherParam", "value");
+
+        // Create the request entity with headers and body
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Perform the POST request
+        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
+
+        // Process the response
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String responseData = response.getBody();
+            // Process the responseData
+        } else {
+            // Handle error response
+        }
+        */
+        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+        headers.set(HttpHeaders.AUTHORIZATION, token);
+
+        MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("file", new HttpEntity<>(image.getResource(), getFileHeaders(image.getOriginalFilename())));
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate.exchange("localshot:8000/api/v1/fishes", HttpMethod.POST, requestEntity, String.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // Process the responseData
+            String responseData = response.getBody();
+            Gson gson = new Gson();
+            FishRecogDto myData = gson.fromJson(responseData, FishRecogDto.class);
+            return myData;
+        }else{
+            System.out.println("안됨");
+        }
+
+        return null;
+
     }
 
     public Inventory catchFish(long tokenId, String fishCode, Inventory inventory) {
@@ -145,5 +202,12 @@ public class FishService {
         }
 
         booksRepository.save(findBooks);
+    }
+
+    private HttpHeaders getFileHeaders(String fileName) {
+        HttpHeaders fileHeaders = new HttpHeaders();
+        fileHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        fileHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename(fileName).build());
+        return fileHeaders;
     }
 }

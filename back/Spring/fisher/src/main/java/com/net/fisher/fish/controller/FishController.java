@@ -3,6 +3,7 @@ package com.net.fisher.fish.controller;
 import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.fish.dto.BooksDto;
 import com.net.fisher.fish.dto.FishBowlsDto;
+import com.net.fisher.fish.dto.FishRecogDto;
 import com.net.fisher.fish.dto.InventoryDto;
 import com.net.fisher.fish.entity.Books;
 import com.net.fisher.fish.entity.FishBowls;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,6 +27,14 @@ public class FishController {
     private final JwtTokenizer jwtTokenizer;
     private final FishMapper fishMapper;
     private final FishService fishService;
+
+    @PostMapping("/fishes/upload")
+    public ResponseEntity<InventoryDto.SingleResponse> postFishImage(
+            @RequestHeader(name = "Authorization") String token,
+            @RequestParam("image") MultipartFile image){
+        FishRecogDto recogDto = fishService.recognizeFish(token,image);
+        return postInventory(token,new InventoryDto.Post(recogDto.getCode(), recogDto.getSize()));
+    }
 
     // 물고기 인식 모듈에서 인벤토리에 추가하는 로직
     @PostMapping("/fishes/catch")
