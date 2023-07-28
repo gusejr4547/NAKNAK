@@ -39,7 +39,8 @@ def runYOLODetection(file_path, yolo_dir_path, myConfidence=0.25, threshold=0.45
     net = cv.dnn.readNetFromDarknet(configPath, weightsPath)
 
     # load input image and grab its spatial dimensions
-    image = cv.imread(file_path)
+    image = cv2.imdecode(np.frombuffer(file_path, np.uint8), cv2.IMREAD_COLOR)
+    # image = cv.imread(file_path)
     # cv2.imshow("image",image)
     # cv2.waitKey(0)
     (H, W) = image.shape[:2]

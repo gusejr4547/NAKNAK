@@ -12,21 +12,25 @@ from .inference.inference import get_fish_name
 
 @api_view(['POST'])
 def fishes(request):
-    file_path = request.data['file_path']
+    # file_path = request.data['file_path']
 
     # file_path = 'C:/Users/SSAFY/Desktop'
     # fish_len = get_fish_length(file_path )
 
+    upload_file = request.FILES['file']
+
+    file_content = upload_file.read()
+
     # 물고기 종 판별
-    fish_name = get_fish_name(file_path)
+    fish_name = get_fish_name(file_content)
 
     # 물고기 size 측정
-    fish_size = get_fish_length(file_path)
+    fish_size = get_fish_length(file_content)
 
-    print(fish_size)
+    # print(fish_size)
 
     data = {
-        'name': fish_name,
+        'code': fish_name,
         'size': fish_size
     }
 
