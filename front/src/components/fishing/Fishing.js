@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Fishing.css";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { fishingMode_recoil, time_recoil } from "./atoms";
+import { fishingMode_recoil, time_recoil } from "../../utils/atoms";
 
 function Fishing(props) {
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);

@@ -1,20 +1,17 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-// import Header from './Header';
-import Footer from "./Footer";
-import Home from "./Home";
-import NotFound from "./NotFound";
-import Fishing from "./Fishing";
-import Login from "./account/Login";
-import Dogam from "./account/Dogam";
-import Signup from "./account/Signup";
-import Fishpic from "./fishing/Fishpic";
-import Books from "./Books";
-import Background from "./Background";
-import Getfish from "./Getfish";
-import Loading from "./Loading";
+import Footer from "./components/common/Footer";
+import Home from "./components/Home";
+import NotFound from "./components/common/NotFound";
+import Fishing from "./components/fishing/Fishing";
+import Login from "./components/account/Login";
+import Dogam from "./components/account/Dogam";
+import Signup from "./components/account/Signup";
+import Fishpic from "./components/fishing/Fishpic";
+import Background from "./components/common/Background";
+import Loading from "./components/common/Loading";
 
 // import { useNavigate } from 'react-router-dom';
 // button onClick={() => navigate('/')}>Go Root</button>
@@ -45,8 +42,6 @@ function App(props) {
             <Route path="/Login" element={<Login />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
-            <Route path="/Getfish" element={<Getfish />}></Route>
-            <Route path="/Books" element={<Books />}></Route>
             <Route path="/Loading" element={<Loading />}></Route>
 
             {/* <Route path="/product/:productId" element={<Login />}></Route> */}

@@ -5,10 +5,7 @@ function Home(props) {
   return (
     <div className="home-container">
       <div className="home-image-container">
-        <img
-          src="./images/mainballoon.png"
-          alt="mainimg import error"
-        />
+        <img src="assets/images/mainballoon.png" alt="mainimg import error" />
       </div>
     </div>
   );

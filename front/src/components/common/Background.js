@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Background.css";
 import { useRecoilState } from "recoil";
-import { fishingMode_recoil } from "./atoms";
+import { fishingMode_recoil } from "../../utils/atoms";
 import { Link } from "react-router-dom";
 
 const Background = () => {
@@ -19,8 +19,8 @@ const Background = () => {
           피싱모드가 진행 중입니다. 클릭하시면 피싱으로 갑니다.
         </Link>
       </div>
-      <img src="../assets/cat.png" alt="" className="cat" />
-      <img src="../images/island.png" alt="" className="island" />
+      <img src="../assets/cats/cat.png" alt="" className="cat" />
+      <img src="../assets/images/island.png" alt="" className="island" />
     </span>
   );
 };

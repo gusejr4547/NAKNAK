@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./Footer.css";
-import "./FontAwesome";
+import "../../utils/FontAwesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { fishingMode_recoil } from "./atoms";
+import { fishingMode_recoil } from "../../utils/atoms";
 
 function Footer(props) {
   const [activeNav, setActiveNav] = useState(1);
