@@ -31,8 +31,9 @@ def get_fish_length(file_path):
     # file_path = "C:/Users/SSAFY/Desktop/fisheeee.jpg"
     width = 30
 
+    image = cv2.imdecode(np.frombuffer(file_path, np.uint8), cv2.IMREAD_COLOR)
     # load the image, convert it to grayscale, and blur it slightly
-    image = cv2.imread(file_path)
+    # image = cv2.imread(file_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (7, 7), 0)
     # perform edge detection, then perform a dilation + erosion to
