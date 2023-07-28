@@ -16,7 +16,7 @@ const Dogam = (props) => {
   const [error, setError] = useState(null);
   const [loginUser, setloginuser] = useRecoilState(loginuser);
 
-  const URL = "http://localhost:8080/";
+  const URL = "http://192.168.30.161:8080";
 
   useEffect(() => {
     const getDogam = async () => {
