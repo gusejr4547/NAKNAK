@@ -1,0 +1,15 @@
+.loadingWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.wave {
+  width: 400px;
+  height: 600px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 75px;
+  border-top-right-radius: 75px;
+  border-bottom-left-radius: 75px;
+  border-bottom-right-radius: 75px;
+}

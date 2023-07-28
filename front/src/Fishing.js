@@ -116,12 +116,12 @@ function Fishing(props) {
       <div
         className={fishingMode === "selectMode" ? "hiddenMode" : "exitBtn"}
         onClick={() =>
-          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today:0 })
+          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today: 0 })
         }
       >
         <span>종료하기</span>
       </div>
-      <Link to="/ImgTest" className="nav-link">
+      <Link to="/Fishpic" className="nav-link">
         <input type="submit" value="촬영" />
       </Link>
       <Link to="/Dogam" className="nav-link">
