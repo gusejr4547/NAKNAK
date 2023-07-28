@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { token } from "../../utils/atoms";
@@ -6,7 +6,7 @@ import { token } from "../../utils/atoms";
 function CameraApp() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [accesstoken, setToken] = useRecoilState(token);
+  const [accesstoken] = useRecoilState(token);
   const header = {
     "Content-Type": "multipart/form-data",
     Authorization: accesstoken,
