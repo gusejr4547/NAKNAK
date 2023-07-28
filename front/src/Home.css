@@ -1,0 +1,16 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-image-container {
+  margin-top: 5rem;
+  position: relative;
+}
+
+.home-image-container img {
+  width: 22.5rem;
+  height: 28.75rem;
+  position: relative;
+}

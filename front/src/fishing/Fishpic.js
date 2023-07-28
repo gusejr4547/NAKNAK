@@ -101,6 +101,7 @@ function CameraApp() {
 
       {capturedImageFile && (
         <div>
+<<<<<<< HEAD
           <h2>촬영한 사진</h2>
           {/* Display the captured image using URL.createObjectURL() */}
           <img src={URL.createObjectURL(capturedImageFile)} alt="Captured Fish" style={{ Width: '200px', height:'200px' }} />
@@ -119,6 +120,11 @@ function CameraApp() {
           <p>물고기 크기: {fishImg.size}cm</p>
           {/* 물고기 이미지도 표시할 수 있습니다 */}
           {/* <img src={fishImg.fish.imgUrl} alt={fishImg.fish.name} style={{ maxWidth: '200px' }} /> */}
+=======
+          <h2>캡처한 이미지</h2>
+          <p>{{fishImg}}</p>
+          <img src={capturedImageURL} alt="Captured" style={{ maxWidth: '400px' }} />
+>>>>>>> feature/design_modify
         </div>
       )}
     </div>
