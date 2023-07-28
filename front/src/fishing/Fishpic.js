@@ -175,7 +175,7 @@ function CameraApp() {
   const [accesstoken, setToken] = useRecoilState(token);
   const header = { "Content-Type": "multipart/form-data", Authorization: accesstoken };
   const [capturedImageURL, setCapturedImageURL] = useState(null); // State to store the captured image URL
-  
+  const [fishImg, setfishImg] = useState('')
 
   useEffect(() => {
     const getCameraStream = async () => {
