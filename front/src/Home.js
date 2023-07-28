@@ -8,7 +8,6 @@ function Home(props) {
         <img
           src="./images/mainballoon.png"
           alt="mainimg import error"
-          className="home-main-image"
         />
       </div>
     </div>
