@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Fishing.css";
-import { Link  } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 function Fishing(props) {
   const [fishingMode, setFishingMode] = useState("selectMode");
@@ -94,9 +93,15 @@ function Fishing(props) {
       >
         <span>종료하기</span>
       </div>
-      <Link to='/ImgTest' className="nav-link" ><input type="submit" value="촬영" /></Link>
-      <Link to='/Dogam' className="nav-link" ><input type="submit" value="도감" /></Link>
-  
+      <Link to="/ImgTest" className="nav-link">
+        <input type="submit" value="촬영" />
+      </Link>
+      <Link to="/Dogam" className="nav-link">
+        <input type="submit" value="도감" />
+      </Link>
+      <Link to="/Getfish" className="nav-link">
+        <input type="submit" value="어획" />
+      </Link>
     </div>
   );
 }
