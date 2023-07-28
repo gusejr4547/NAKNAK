@@ -127,9 +127,6 @@ function Fishing(props) {
       <Link to="/Dogam" className="nav-link">
         <input type="submit" value="도감" />
       </Link>
-      <Link to="/Getfish" className="nav-link">
-        <input type="submit" value="어획" />
-      </Link>
     </div>
   );
 }
