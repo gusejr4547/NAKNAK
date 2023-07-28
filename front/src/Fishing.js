@@ -116,7 +116,7 @@ function Fishing(props) {
       <div
         className={fishingMode === "selectMode" ? "hiddenMode" : "exitBtn"}
         onClick={() =>
-          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today:0 })
+          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today: 0 })
         }
       >
         <span>종료하기</span>
