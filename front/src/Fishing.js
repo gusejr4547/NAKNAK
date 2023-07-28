@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Fishing.css";
-import { Link  } from 'react-router-dom';
-import { useRecoilState} from "recoil";
+import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { fishingMode_recoil, time_recoil } from "./atoms";
-
 
 function Fishing(props) {
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const [time, setTime] = useRecoilState(time_recoil);
-  //타이머 기능
-  // const [time, setTime] = useState({ s: 0, m: 0, h: 0 });
 
   useEffect(() => {
     let intervalId;
@@ -19,7 +16,6 @@ function Fishing(props) {
     } else {
       clearInterval(intervalId);
     }
-
     return () => {
       clearInterval(intervalId);
     };
@@ -33,21 +29,49 @@ function Fishing(props) {
 
   const run = () => {
     setTime((prevTime) => {
+      const today = Date.now();
       let updatedS = prevTime.s;
       let updatedM = prevTime.m;
       let updatedH = prevTime.h;
-
-      if (updatedM === 60) {
-        updatedH++;
-        updatedM = 0;
+      const beforeDay = prevTime.today;
+      // 다시 접속했을 경우 그만큼 시간 더해주기
+      if (beforeDay !== 0 && today > beforeDay + 1500) {
+        // 초과된 시간
+        const overTime = Math.floor((today - beforeDay) / 1000);
+        // 초과된 분
+        const m = Math.floor(overTime / 60) % 60;
+        // 초과된 시
+        const h = Math.floor(overTime / 3600);
+        // 초과된 초
+        const s = overTime % 60;
+        console.log("초가된 시간", h, m, s);
+        // 원래 있던 거에 더하기
+        if (updatedS + s >= 60) {
+          updatedS = updatedS + s - 60;
+          updatedM += 1;
+        } else {
+          updatedS += s;
+        }
+        if (updatedM + m >= 60) {
+          updatedM = updatedM + m - 60;
+          updatedH += 1;
+        } else {
+          updatedM += m;
+        }
+        updatedH += h;
       }
+
       if (updatedS === 60) {
         updatedM++;
         updatedS = 0;
       }
+      if (updatedM === 60) {
+        updatedH++;
+        updatedM = 0;
+      }
       updatedS++;
 
-      return { s: updatedS, m: updatedM, h: updatedH };
+      return { s: updatedS, m: updatedM, h: updatedH, today: today };
     });
   };
 
@@ -92,17 +116,23 @@ function Fishing(props) {
       <div
         className={fishingMode === "selectMode" ? "hiddenMode" : "exitBtn"}
         onClick={() =>
-          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0 })
+          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today:0 })
         }
       >
         <span>종료하기</span>
       </div>
-      <Link to='/Fishpic' className="nav-link" ><input type="submit" value="촬영" /></Link>
-      <Link to='/Dogam' className="nav-link" ><input type="submit" value="도감" /></Link>
-      <Link to='/Getfish' className="nav-link" ><input type="submit" value="어획" /></Link>
-  
+      <Link to="/ImgTest" className="nav-link">
+        <input type="submit" value="촬영" />
+      </Link>
+      <Link to="/Dogam" className="nav-link">
+        <input type="submit" value="도감" />
+      </Link>
     </div>
   );
 }
 
 export default Fishing;
+
+
+
+<Link to='/Getfish' className="nav-link" ><input type="submit" value="어획" /></Link>
