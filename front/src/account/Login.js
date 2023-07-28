@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import { Link  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useRecoilState} from "recoil";
 import { loginuser, token } from "../atoms";
 
@@ -13,18 +13,31 @@ function Login(props) {
     const [error, setError] = useState(null);
     const [postData, setPostData] = useRecoilState(loginuser);
     const [accesstoken, setToken] = useRecoilState(token);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+      if (accesstoken) {
+        navigate('/');
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
 
       const loginHandleClick = async () => {
         try {
           setLoading(true);
+          console.log(loginData)
           const response = await axios.post("/api/login", loginData);
           setPostData(response.data);
           console.log(response.headers.authorization)
           setToken(response.headers.authorization)
+          navigate('/')
           console.log(postData,123)
           console.log(response,456)
           setLoading(false);
         } catch (error) {
+          console.log(loginData)
           console.error("Error posting data:", error);
           setError("데이터 전송에 실패했습니다.");
           setLoading(false);

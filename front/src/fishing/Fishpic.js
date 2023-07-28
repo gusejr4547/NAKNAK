@@ -8,23 +8,33 @@ function CameraApp() {
   const canvasRef = useRef(null);
   const [accesstoken, setToken] = useRecoilState(token);
   const header = { "Content-Type": "multipart/form-data", Authorization: accesstoken };
-  const [capturedImageURL, setCapturedImageURL] = useState(null); // State to store the captured image URL
+  const [capturedImageFile, setCapturedImageFile] = useState(null); // 촬영한 사진의 URL을 저장하는 상태 변수
   const [fishImg, setfishImg] = useState('')
 
-  useEffect(() => {
-    const getCameraStream = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+
+  const getCameraStream = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        } catch (error) {
+          console.error('카메라 접근 오류:', error);
         }
-      } catch (error) {
-        console.error('카메라 접근 오류:', error);
+      };
+
+    const stopCamera = () => {
+      if (videoRef.current) {
+        const stream = videoRef.current.srcObject;
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach(track => track.stop());
+        }
+        videoRef.current.srcObject = null;
+        console.log('카메라 권한이 해제되었습니다.');
       }
     };
 
-    getCameraStream();
-  }, []);
 
   const handleCapturePhoto = async () => {
     if (videoRef.current && canvasRef.current) {
@@ -48,6 +58,7 @@ function CameraApp() {
       const imageFile = new File([imageBlob], 'fish.jpg', { type: 'image/jpg' });
       // 이미지 파일을 FormData에 추가
       const formData = new FormData();
+      setCapturedImageFile(imageFile);
       formData.append('image', imageFile);
       console.log(formData.get('image'));
       // 이미지 데이터를 서버로 전송
@@ -64,11 +75,13 @@ function CameraApp() {
       console.log('서버 응답:', response.data);
       setfishImg(response.data)
       // 서버로부터 응답받은 이미지 URL을 저장
-      setCapturedImageURL(response.data.url);
+      
     } catch (error) {
       console.error('이미지 업로드 오류:', error);
     }
   };
+
+
 
   return (
     <div>
@@ -78,17 +91,34 @@ function CameraApp() {
         autoPlay
         playsInline
       />
+      <button onClick={getCameraStream}>카메라 on</button>
       <button onClick={handleCapturePhoto}>사진 촬영</button>
+      <button onClick={stopCamera}>카메라 off</button>
       <canvas
         ref={canvasRef}
         style={{ display: 'none' }}
       />
-      {/* 이미지 URL이 있을 때만 이미지를 표시 */}
-      {capturedImageURL && (
+
+      {capturedImageFile && (
         <div>
-          <h2>캡처한 이미지</h2>
-          <p>{{fishImg}}</p>
-          <img src={capturedImageURL} alt="Captured" style={{ maxWidth: '400px' }} />
+          <h2>촬영한 사진</h2>
+          {/* Display the captured image using URL.createObjectURL() */}
+          <img src={URL.createObjectURL(capturedImageFile)} alt="Captured Fish" style={{ Width: '200px', height:'200px' }} />
+        </div>
+      )}
+
+      {/* 물고기 정보가 있을 때만 표시 */}
+      {fishImg && (
+        <div>
+          <h2>물고기 정보</h2>
+          <p>인벤토리 ID: {fishImg.inventoryId}</p>
+          <p>물고기 ID: {fishImg.fish.fishId}</p>
+          <p>물고기 이름: {fishImg.fish.name}</p>
+          <p>물고기 코드: {fishImg.fish.code}</p>
+          <p>물고기 정보: {fishImg.fish.info}</p>
+          <p>물고기 크기: {fishImg.size}cm</p>
+          {/* 물고기 이미지도 표시할 수 있습니다 */}
+          {/* <img src={fishImg.fish.imgUrl} alt={fishImg.fish.name} style={{ maxWidth: '200px' }} /> */}
         </div>
       )}
     </div>
