@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-// import { Link  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 
 function Signup(props) {
     const [signupData, setSignupData] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [postData, setPostData] = useState({});
-
+    const navigate = useNavigate();
 
       const signupHandleClick = async () => {
         try {
@@ -22,6 +22,7 @@ function Signup(props) {
         formData.append('nickname', signupData.nickname);
           const response = await axios.post("/api/members/register", formData);
           setPostData(response.data);
+          navigate('/Login')
           console.log(postData, 123)
           console.log(response, 456)
           setLoading(false);
