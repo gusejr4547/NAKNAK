@@ -17,9 +17,7 @@ export const fishingMode_recoil = atom({
   default: "selectMode",
 });
 
-
 export const time_recoil = atom({
   key: "time_recoil",
-  default: { s: 0, m: 0, h: 0 }
+  default: { s: 0, m: 0, h: 0, today:0 },
 });
-
