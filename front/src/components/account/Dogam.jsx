@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginuser } from "../atoms";
+import { loginuser } from "../../utils/atoms";
 import { Link } from "react-router-dom";
 
 import "./Dogam.css";
