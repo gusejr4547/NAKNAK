@@ -108,6 +108,7 @@ public class MemberService {
                 memberImage = memberImageRepository.save(memberImage);
             }
 
+            // 멤버를 생성하면서 새로 생긴 멤버에게 상태 할당 (튜토리얼 진행상황과 같은 스테이터스)
             MemberStatus memberStatus = MemberStatus.builder()
                     .member(savingMember)
                     .exp(0)

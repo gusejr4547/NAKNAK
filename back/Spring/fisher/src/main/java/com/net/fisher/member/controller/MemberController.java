@@ -56,7 +56,10 @@ public class MemberController {
 
 
     @PostMapping("/follow/register/{to-id}")
-    public ResponseEntity makeFollow(@PathVariable(value = "to-id") long toId){
+    public ResponseEntity makeFollow(@PathVariable(value = "to-id") long toId,@RequestHeader("Authorization") String token){
+        long memberId = jwtTokenizer.getMemberId(token);
+
+
         return null;
     }
 
