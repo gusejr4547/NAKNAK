@@ -18,6 +18,12 @@ const Dogam = (props) => {
   const [error, setError] = useState(null);
   const [loginUser, setloginuser] = useRecoilState(loginuser);
 
+  const goBack = () => {
+    if (window && window.history && typeof window.history.back === "function") {
+      window.history.back(); // 이전 페이지로 이동
+    }
+  };
+
   useEffect(() => {
     const getDogam = async () => {
       try {
@@ -44,8 +50,11 @@ const Dogam = (props) => {
   };
 
   return (
-    <div className="dogam-carousel dogam-wrapper">
-      <div className="dogam-board">
+    <div className="dogam-wrapper">
+      <div className="dogam-back-button" onClick={goBack}>
+        닫기
+      </div>
+      <div className="dogam-carousel">
         {dogamData.fishCheck?.all.map((fish) => (
           <div
             key={fish.fishId}
