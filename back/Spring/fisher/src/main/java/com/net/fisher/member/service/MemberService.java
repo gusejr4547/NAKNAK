@@ -138,6 +138,10 @@ public class MemberService {
         return memberRepository.findMembersFromFollowerId(memberId,pageable);
     }
 
+    public Page<Member> getFollowingList(long memberId, Pageable pageable){
+        return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
+    }
+
 
     public Follow makeFollowTo(long toId, long fromId){
 

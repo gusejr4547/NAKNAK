@@ -56,6 +56,7 @@ public class MemberController {
         return new ResponseEntity<>(new MemberStatusResponse(memberResponse,statusResponse), HttpStatus.OK);
     }
 
+    //@PostMapping("/members/")
 
 
     @GetMapping("/members/list")
@@ -91,6 +92,18 @@ public class MemberController {
         return new ResponseEntity<>(
                 new PageResponse<>(members.getTotalElements(),
                 memberMapper.toMemberResponseDtos(memberList)),HttpStatus.OK);
+    }
+
+    @GetMapping("/members/following/{member-id}")
+    public ResponseEntity<PageResponse<MemberDto.Response>> getFollowingList(
+            @PathVariable(name = "member-id")long memberId,
+            @PageableDefault(size = 10, /*sort= "views",*/direction = Sort.Direction.DESC) Pageable pageable){
+        Page<Member> members = memberService.getFollowingList(memberId,pageable);
+        List<Member> memberList = members.getContent();
+
+        return new ResponseEntity<>(
+                new PageResponse<>(members.getTotalElements(),
+                        memberMapper.toMemberResponseDtos(memberList)),HttpStatus.OK);
     }
 
 
