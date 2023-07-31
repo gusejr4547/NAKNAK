@@ -4,8 +4,10 @@ import com.net.fisher.auth.dto.OAuthAttributes;
 import com.net.fisher.auth.utils.CustomAuthorityUtils;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.entity.MemberImage;
+import com.net.fisher.member.entity.MemberStatus;
 import com.net.fisher.member.repository.MemberImageRepository;
 import com.net.fisher.member.repository.MemberRepository;
+import com.net.fisher.member.repository.MemberStatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +30,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final MemberRepository memberRepository;
     private final MemberImageRepository memberImageRepository;
+    private final MemberStatusRepository memberStatusRepository;
     private final CustomAuthorityUtils customAuthorityUtils;
 
 
@@ -75,10 +78,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Optional<Member> optionalMember = memberRepository.findByEmail(oauthEmail)
                 .map(entity -> entity.update(attributes.getName(), oauthEmail));
 
-        member = optionalMember.orElseGet(() -> process(attributes));
+        member = optionalMember.orElseGet(() -> process(attributes)); // Oauth Email 로 조회한 객체가 null 이면 process 메서드 실행 (새 유저 생성)
                 //.orElse(process(attributes));
 
-        return memberRepository.save(member);
+        return member;
     }
     private Member process(OAuthAttributes attributes){
         System.out.println("새로운 로그인?");
@@ -86,8 +89,19 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         List<String> roles = customAuthorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
         member.setMemberImage(saveImage(attributes.getPicture()));
-        return
-                member;
+
+        member = memberRepository.save(member);
+        MemberStatus memberStatus = MemberStatus.builder()
+                .member(member)
+                .exp(0)
+                .level(0)
+                .isNewBee(true)
+                .tutorialProgress(0)
+                .point(0)
+                .build();
+        memberStatusRepository.save(memberStatus);
+
+        return member;
     }
     private MemberImage saveImage(String url){
         MemberImage memberImage = new MemberImage();
