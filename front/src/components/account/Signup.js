@@ -6,13 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
-
+import { postData } from "../../utils/api";
 
 function Signup(props) {
   const [signupData, setSignupData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [postData, setPostData] = useState({});
+  // const [postData, setPostData] = useState({});
   const navigate = useNavigate();
 
   const isNotEmpty = (value) => value.trim() !== '';
@@ -57,7 +57,6 @@ function Signup(props) {
 
   const signupHandleClick = async () => {
     const signupData = { email: userIdValue, password: userPasswordValue, name: usernameValue, nickname: usernicknameValue};
-
     if (!signupData.email) {
       console.log("이메일은 필수 입력값입니다.")
       return;
@@ -90,12 +89,14 @@ function Signup(props) {
       formData.append('password', signupData.password);
       formData.append('name', signupData.name);
       formData.append('nickname', signupData.nickname);
-
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);}
 
       const response = await axios.post('/api/members/register', formData);
-      setPostData(response.data);
+      // const response = await postData("/api1/members/register", formData);
+      // setPostData(response.data);
       navigate('/Login');
-      console.log(postData, 123);
+      // console.log(postData, 123);
       console.log(response, 456);
       setLoading(false);
     } catch (error) {

@@ -1,15 +1,18 @@
 import { atom } from "recoil";
-
+import { recoilPersist } from 'recoil-persist';
+const { persistAtom } = recoilPersist();
 //  vue의 state
 
 export const loginuser = atom({
   key: "loginuser",
   default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const token = atom({
   key: "token",
   default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const fishingMode_recoil = atom({

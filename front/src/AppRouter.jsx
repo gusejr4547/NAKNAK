@@ -14,6 +14,7 @@ import Loading from "./components/common/Loading";
 import Infoapi from "./components/map/Infoapi";
 // import FishBowl from "./components/fishBowl/FishBowl";
 import Profile from "./components/account/Profile";
+import SeaScene from "./components/fishbowl/SeaScene";
 
 
 import Map from "./components/map/Map";
@@ -44,11 +45,11 @@ function AppRouter(props) {
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/Infoapi" element={<Infoapi />}></Route>
-            <Route path="/Profile" element={<Profile />}></Route>
+            <Route path="/SeaScene" element={<SeaScene />}></Route>
+            <Route path="/Profile/:userId" element={<Profile />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>
-            {/* <Route path="/product/:productId" element={<Login />}></Route> */}
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
           <Footer />

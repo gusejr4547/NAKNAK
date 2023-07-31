@@ -20,7 +20,7 @@ function Infoapi(props) {
       // );
 
       setData(response.data.result.recordset);
-      console.log(response.data.result.recordset);
+      console.log(response);
     } catch (e) {
       console.log(e);
     }
