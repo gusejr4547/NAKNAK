@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
 
@@ -51,9 +50,12 @@ const Dogam = (props) => {
 
   return (
     <div className="dogam-wrapper">
-      <div className="dogam-back-button" onClick={goBack}>
-        닫기
-      </div>
+      <img
+        src="/assets/icons/x.png"
+        alt="exit"
+        className="dogam-back-button"
+        onClick={goBack}
+      />
       <div className="dogam-carousel">
         {dogamData.fishCheck?.all.map((fish) => (
           <div
@@ -61,10 +63,62 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openModal(fish)}
           >
-            <img src={fish.imgUrl} alt={fish.name} />
+            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
             <h6>{fish.name}</h6>
           </div>
         ))}
+        {/* dummy start */}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openModal(fish)}
+          >
+            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openModal(fish)}
+          >
+            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openModal(fish)}
+          >
+            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openModal(fish)}
+          >
+            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openModal(fish)}
+          >
+            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}
+        {/* dummy end */}
       </div>
 
       {/* 모달 컴포넌트 */}

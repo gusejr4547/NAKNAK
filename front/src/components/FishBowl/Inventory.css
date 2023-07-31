@@ -1,4 +1,4 @@
-.dogam-wrapper {
+.inven-wrapper {
   position: relative;
   height: 90vh;
   display: flex;
@@ -8,7 +8,7 @@
   margin: 0 auto; /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
 }
 
-.dogam-carousel {
+.inven-carousel {
   padding-top: 3.25rem;
   padding-bottom: 1.25rem;
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
@@ -24,7 +24,7 @@
   overflow-y: scroll; /* 내용이 넘칠 때 스크롤이 생성됩니다. */
 }
 
-.dogam-slide {
+.inven-slide {
   display: flex;
   background-color: aliceblue; /*배경 임시 하얀색*/
   width: calc(32% - 0.625rem);
@@ -34,20 +34,20 @@
   text-align: center;
   margin: 0.3125rem; /* 가운데 정렬을 위해 필요한 스타일 */
 }
-.dogam-slide img {
+.inven-slide img {
   width: 100%;
   height: auto;
 }
-.dogam-slide h6 {
+.inven-slide h6 {
   color: black;
   font-weight: bold;
 }
 
-.dogam-slide-inactive {
+.inven-slide-inactive {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.dogam-back-button {
+.inven-back-button {
   border-radius: 1rem;
 
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
