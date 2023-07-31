@@ -12,6 +12,7 @@ public enum ExceptionCode {
     BOARD_NOT_FOUND(404, "Board Not Found"),
     COMMENT_NOT_FOUND(404, "Comment Not Found"),
     FISH_NOT_FOUND(404, "Fish Not Found in DB"),
+    FOLLOW_NOT_FOUND(404, "Follow Not Found in DB"),
     INVENTORY_NOT_FOUND(404, "Inventory Not Found in DB"),
     FISHBOWLS_NOT_FOUND(404, "Fishbowls Not Found in DB"),
     ATTRACTION_NOT_FOUND(404, "Attraction Not Found"),

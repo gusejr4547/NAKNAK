@@ -60,13 +60,22 @@ public class MemberController {
 
 
     @PostMapping("/follow/register")
-    public ResponseEntity<FollowDto.Response> makeFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
+    public ResponseEntity<FollowDto.Response> registerFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
         long memberId = jwtTokenizer.getMemberId(token);
 
         FollowDto.Response response = memberMapper.toFollowResponseDto(memberService.makeFollowTo(toId,memberId));
 
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
+
+    @PostMapping("/follow/cancel")
+    public ResponseEntity<FollowDto.Response> cancelFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
+        long memberId = jwtTokenizer.getMemberId(token);
+        //FollowDto.Response response = memberMapper.toFollowResponseDto(memberService.makeFollowTo(toId,memberId));
+        memberService.cancelFollowTo(toId,memberId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 

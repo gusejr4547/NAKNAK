@@ -142,6 +142,12 @@ public class MemberService {
         return followRepository.save(follow);
     }
 
+    @Transactional
+    public void cancelFollowTo(long toId, long fromId){
+
+        Follow follow = followRepository.findFollowFromToId(fromId,toId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        followRepository.delete(follow);
+    }
 
     public MemberStatus findStatusOfMember(long memberId){
         return memberStatusRepository.findMemberStatusByMember_MemberId(memberId);
