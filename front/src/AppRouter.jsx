@@ -12,7 +12,7 @@ import Fishpic from "./components/fishing/Fishpic";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
 import Infoapi from "./components/map/Infoapi";
-
+import Map from "./components/map/Map";
 function AppRouter(props) {
   return (
     <RecoilRoot>
@@ -40,6 +40,7 @@ function AppRouter(props) {
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/Infoapi" element={<Infoapi />}></Route>
+            <Route path="/Map" element={<Map />}></Route>
             {/* <Route path="/product/:productId" element={<Login />}></Route> */}
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
