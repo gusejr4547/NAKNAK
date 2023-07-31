@@ -9,8 +9,7 @@ import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
 
-
-const isNotEmpty = (value) => value.trim() !== '';
+const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 function Login(props) {
@@ -44,14 +43,11 @@ function Login(props) {
     $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
-
-
-
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
     if (!loginData.email) {
-      console.log("이메일은 필수 입력값입니다.")
+      console.log("이메일은 필수 입력값입니다.");
       return;
     }
     if (!isValidEmailFormat(loginData.email)) {
@@ -60,9 +56,9 @@ function Login(props) {
     }
 
     if (!loginData.password) {
-      console.log("비밀번호는 필수 입력값입니다.")
+      console.log("비밀번호는 필수 입력값입니다.");
       return;
-    } 
+    }
 
     try {
       setLoading(true);
@@ -81,8 +77,6 @@ function Login(props) {
       setError("데이터 전송에 실패했습니다.");
       setLoading(false);
     }
-      
-
   };
 
   const socialLoginHandler = async (provider) => {
@@ -103,13 +97,10 @@ function Login(props) {
     }
   };
 
-
-
-
-  const loginHandleChange = (event) => {
-    const { name, value } = event.target;
-    setLoginData({ ...loginData, [name]: value });
-  };
+  // const loginHandleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setLoginData({ ...loginData, [name]: value });
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -143,7 +134,6 @@ function Login(props) {
           margin: "30px 0px 0px 0px",
         }}
       >
-
         <AuthInput
           label="아이디"
           type="text"
@@ -180,19 +170,23 @@ function Login(props) {
         style={{ width: "200px", margin: "10px 0px 0px 0px" }}
       >
         <Button
-        as="input" 
-        onClick={() => socialLoginHandler('google')}
-        type="button"
-        value="구글 로그인"
-        style={{ backgroundColor:"white", color:"black" }}
-       ></Button>
-       <Button 
-        as="input"
-        onClick={() => socialLoginHandler('kakao')}
-        type="button"
-        value="카카오 로그인"
-        style={{ margin: "10px 0px 0px 0px", backgroundColor:"yellow", color:"black" }}
-       ></Button>
+          as="input"
+          onClick={() => socialLoginHandler("google")}
+          type="button"
+          value="구글 로그인"
+          style={{ backgroundColor: "white", color: "black" }}
+        ></Button>
+        <Button
+          as="input"
+          onClick={() => socialLoginHandler("kakao")}
+          type="button"
+          value="카카오 로그인"
+          style={{
+            margin: "10px 0px 0px 0px",
+            backgroundColor: "yellow",
+            color: "black",
+          }}
+        ></Button>
         <Link to="/Signup" className="nav-link">
           <Button
             as="input"
