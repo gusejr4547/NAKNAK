@@ -1,3 +1,5 @@
+import os
+
 from keras.models import load_model  # TensorFlow is required for Keras to work
 from PIL import Image, ImageOps  # Install pillow instead of PIL
 import numpy as np
@@ -10,11 +12,15 @@ def get_fish_name(file_path):
     np.set_printoptions(suppress=True)
 
     # Load the model
-    model_path = finders.find("fish-recognition\\keras_Model.h5")
+    # print(os.path.join("fish-recognition", "keras_Model.h5"))
+    model_path = finders.find(os.path.join("fish-recognition", "keras_Model.h5"))
+    # print("path", model_path)
+    # model_path = finders.find("fish-recognition\\kears_Model.h5")
+    # print("path", model_path)
     model = load_model(model_path, compile=False)
 
     # Load the labels
-    label_path = finders.find("fish-recognition\\labels.txt")
+    label_path = finders.find(os.path.join("fish-recognition", "labels.txt"))
     class_names = open(label_path, "r", encoding='UTF8').readlines()
 
     # Create the array of the right shape to feed into the keras model
