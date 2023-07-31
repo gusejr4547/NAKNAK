@@ -103,14 +103,15 @@ public class FishService {
         headers.set(HttpHeaders.AUTHORIZATION, token);
 
         MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("file", new HttpEntity<>(image.getResource(), getFileHeaders(image.getOriginalFilename())));
+        requestBody.add("file",image.getResource());
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<String> response = restTemplate.exchange("localshot:8000/api/v1/fishes", HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:8000/api/v1/fishes/", HttpMethod.POST, requestEntity, String.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             // Process the responseData
             String responseData = response.getBody();
             Gson gson = new Gson();
             FishRecogDto myData = gson.fromJson(responseData, FishRecogDto.class);
+            System.out.println(myData.getCode()+" "+myData.getSize());
             return myData;
         }else{
             System.out.println("안됨");

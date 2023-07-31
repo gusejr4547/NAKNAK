@@ -12,7 +12,7 @@ from django.contrib.staticfiles import finders
 def runYOLODetection(file_path, yolo_dir_path, myConfidence=0.25, threshold=0.45):
     # load my fish class labels that my YOLO model was trained on
     print(yolo_dir_path)
-    labelsPath = os.path.sep.join([yolo_dir_path, "fish.names"])
+    labelsPath = os.path.join(yolo_dir_path, "fish.names")
     labelsPath = finders.find(labelsPath)
 
     print(labelsPath)
@@ -27,9 +27,9 @@ def runYOLODetection(file_path, yolo_dir_path, myConfidence=0.25, threshold=0.45
     # COLORS = np.array([255, 0, 0], dtype="uint8")
 
     # derive the paths to the YOLO weights and model configuration
-    weightsPath = os.path.sep.join([yolo_dir_path, "fish.weights"])
+    weightsPath = os.path.join(yolo_dir_path, "fish.weights")
     weightsPath = finders.find(weightsPath)
-    configPath = os.path.sep.join([yolo_dir_path, "fish_test.cfg"])
+    configPath = os.path.join(yolo_dir_path, "fish_test.cfg")
     configPath = finders.find(configPath)
     # weightsPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
     # configPath = os.path.sep.join([args["yolo"], "yolov3.cfg"])
@@ -39,7 +39,8 @@ def runYOLODetection(file_path, yolo_dir_path, myConfidence=0.25, threshold=0.45
     net = cv.dnn.readNetFromDarknet(configPath, weightsPath)
 
     # load input image and grab its spatial dimensions
-    image = cv.imread(file_path)
+    image = cv2.imdecode(np.frombuffer(file_path, np.uint8), cv2.IMREAD_COLOR)
+    # image = cv.imread(file_path)
     # cv2.imshow("image",image)
     # cv2.waitKey(0)
     (H, W) = image.shape[:2]

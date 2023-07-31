@@ -5,10 +5,12 @@ import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
 import com.net.fisher.file.service.FileService;
+import com.net.fisher.member.entity.Follow;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.entity.MemberImage;
 import com.net.fisher.member.entity.MemberStatus;
 import com.net.fisher.member.mapper.MemberMapper;
+import com.net.fisher.member.repository.FollowRepository;
 import com.net.fisher.member.repository.MemberImageRepository;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.member.repository.MemberStatusRepository;
@@ -34,6 +36,7 @@ public class MemberService {
     private final MemberImageRepository memberImageRepository;
     private final FileService fileService;
     private final MemberStatusRepository memberStatusRepository;
+    private final FollowRepository followRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
@@ -108,6 +111,7 @@ public class MemberService {
                 memberImage = memberImageRepository.save(memberImage);
             }
 
+            // 멤버를 생성하면서 새로 생긴 멤버에게 상태 할당 (튜토리얼 진행상황과 같은 스테이터스)
             MemberStatus memberStatus = MemberStatus.builder()
                     .member(savingMember)
                     .exp(0)
@@ -127,6 +131,17 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_MEMBER);
         }
     }
+
+
+
+    public Follow makeFollowTo(long toId, long fromId){
+        Follow follow = Follow.builder()
+                .member(findMember(fromId))
+                .followMember(findMember(toId))
+                .build();
+        return followRepository.save(follow);
+    }
+
 
     public MemberStatus findStatusOfMember(long memberId){
         return memberStatusRepository.findMemberStatusByMember_MemberId(memberId);
