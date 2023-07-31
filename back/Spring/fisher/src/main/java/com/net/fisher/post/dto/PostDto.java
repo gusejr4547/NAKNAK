@@ -13,4 +13,9 @@ public class PostDto {
     public static class Post{
         private String content;
     }
+
+
+    public static class Response{
+        private Long postId;
+    }
 }

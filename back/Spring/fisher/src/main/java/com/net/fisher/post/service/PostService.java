@@ -24,10 +24,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    MemberRepository memberRepository;
-    FileService fileService;
-    PostRepository postRepository;
-    PostImageRepository postImageRepository;
+    private final MemberRepository memberRepository;
+    private final FileService fileService;
+    private final PostRepository postRepository;
+    private final PostImageRepository postImageRepository;
 
     @Transactional
     public void uploadPost(long tokenId, Post post, MultipartHttpServletRequest httpServletRequest) {
@@ -53,11 +53,22 @@ public class PostService {
 
                 postImageRepository.save(postImage);
             }
+
+            postRepository.save(post);
         } catch (BusinessLogicException e){
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         } catch (IOException e) {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         }
+
+    }
+
+    public Post updatePost(long tokenId, long postId) {
+
+        return null;
+    }
+
+    public void deleteImage(long tokenId, long fileId) {
 
     }
 }
