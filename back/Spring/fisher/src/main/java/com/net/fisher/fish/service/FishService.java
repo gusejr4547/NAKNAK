@@ -50,28 +50,6 @@ public class FishService {
     @PostConstruct
     public void initialFish(){
 
-        RestTemplate restTemplate = new RestTemplate();
-
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        RequestMessage requestMessage = new RequestMessage();
-        requestMessage.setUsername("serverBot");
-        requestMessage.setChannel("9e105");
-        List<Attachment> attachments = new ArrayList<>();
-        attachments.add(new Attachment("Server is on!"));
-        requestMessage.setAttachments(attachments);
-
-        // Create the HttpEntity with headers and request object
-        HttpEntity<RequestMessage> requestEntity = new HttpEntity<>(requestMessage, headers);
-
-        String url = "https://meeting.ssafy.com/hooks/nzhq14h3atb99q3h8coadtqe9o"; // Replace with the actual API endpoint URL
-
-        // Send the POST request and get the response
-        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
-
-
         List<Fish> fishList = new ArrayList<>();
         fishList.add(Fish.builder()
                 .name("전갱이")
