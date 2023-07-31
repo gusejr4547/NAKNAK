@@ -18,6 +18,17 @@ public class MemberDto {
         private String nickname;
         private String name;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Update{
+        private String password;
+        private String nickname;
+    }
+
     @Getter
     @Setter
     @NoArgsConstructor
