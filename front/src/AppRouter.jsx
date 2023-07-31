@@ -15,6 +15,8 @@ import Infoapi from "./components/map/Infoapi";
 // import FishBowl from "./components/fishBowl/FishBowl";
 import Profile from "./components/account/Profile";
 
+
+import Map from "./components/map/Map";
 function AppRouter(props) {
   return (
     <RecoilRoot>
@@ -44,6 +46,8 @@ function AppRouter(props) {
             <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Profile" element={<Profile />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
+
+            <Route path="/Map" element={<Map />}></Route>
             {/* <Route path="/product/:productId" element={<Login />}></Route> */}
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
