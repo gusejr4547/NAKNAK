@@ -1,11 +1,13 @@
 .modal_wrap {
   position: fixed;
-  inset: 0px;
-  background-color: rgba(255, 158, 47, 0.71);
+  inset: 4.5%;
+  background-color: rgba(62, 92, 203, 0.742);
+  border-radius: 2.5%;
   /* display: flex; */
   justify-content: center;
   width: 90%;
   height: 90%;
+  color: #fff;
 }
 
 .presentation {
@@ -21,9 +23,23 @@
   top: 20px;
   cursor: pointer;
   z-index: 1000;
-  color: rgb(0, 0, 0);
+  color: #fff;
+  font-weight: bold;
 }
 
 .modal {
   position: absolute;
+  padding-left: 10%;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 5%;
+}
+
+.modal-information {
+  font-size: 1rem;
+  padding-left: 5%;
 }
