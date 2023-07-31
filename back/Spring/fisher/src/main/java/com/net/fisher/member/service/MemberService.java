@@ -18,6 +18,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -132,19 +134,24 @@ public class MemberService {
         }
     }
 
+    public Page<Member> getFollowList(long memberId, Pageable pageable){
+        return memberRepository.findMembersFromFollowerId(memberId,pageable);
+    }
 
 
     public Follow makeFollowTo(long toId, long fromId){
-        Follow follow = Follow.builder()
+
+        Follow follow =
+        followRepository.findFollowFromToId(fromId,toId).orElseGet(()->Follow.builder()
                 .member(findMember(fromId))
                 .followMember(findMember(toId))
-                .build();
+                .build());
+
         return followRepository.save(follow);
     }
 
     @Transactional
     public void cancelFollowTo(long toId, long fromId){
-
         Follow follow = followRepository.findFollowFromToId(fromId,toId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         followRepository.delete(follow);
     }

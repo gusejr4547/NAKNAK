@@ -12,11 +12,16 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.mapper.MemberMapper;
 import com.net.fisher.member.service.MemberService;
 import com.net.fisher.response.MemberStatusResponse;
+import com.net.fisher.response.PageResponse;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +81,17 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/members/follow/{member-id}")
+    public ResponseEntity<PageResponse<MemberDto.Response>> getFollowList(
+            @PathVariable(name = "member-id")long memberId,
+            @PageableDefault(size = 10, /*sort= "views",*/direction = Sort.Direction.DESC) Pageable pageable){
+        Page<Member> members = memberService.getFollowList(memberId,pageable);
+        List<Member> memberList = members.getContent();
+
+        return new ResponseEntity<>(
+                new PageResponse<>(members.getTotalElements(),
+                memberMapper.toMemberResponseDtos(memberList)),HttpStatus.OK);
+    }
 
 
 

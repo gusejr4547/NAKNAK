@@ -23,6 +23,7 @@ public enum ExceptionCode {
     WRONG_PASSWORD(400,"Wrong Password"),
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
+    FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
     FAILED_TO_WRITE_BOARD(500, "Failed Write Board"),
     FAILED_TO_DELETE_BOARD(500, "Failed Delete Board"),
 
