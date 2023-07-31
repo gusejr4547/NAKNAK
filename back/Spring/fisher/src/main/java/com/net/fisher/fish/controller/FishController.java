@@ -11,7 +11,12 @@ import com.net.fisher.fish.entity.Inventory;
 import com.net.fisher.fish.mapper.FishMapper;
 import com.net.fisher.fish.service.FishService;
 import com.net.fisher.response.BooksResponse;
+import com.net.fisher.response.PageResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +92,25 @@ public class FishController {
 
         // DB에 딕셔너리가 id 순으로 차곡차곡 쌓여있을텐데 과연 이렇게 처리해야할까?
         return new ResponseEntity<>(responses,HttpStatus.OK);
+    }
+
+    @GetMapping("/fishes/inventory/view")
+    public ResponseEntity<PageResponse<InventoryDto.MultiResponse>>
+    getInventoryListOfMember(
+            @RequestHeader(name = "Authorization") String token,
+            @PageableDefault(size = 20, sort= "inventoryId",direction = Sort.Direction.DESC) Pageable pageable){
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        Page<Inventory> inventoryPage = fishService.getInventoryListFromMemberId(tokenId,pageable);
+
+
+
+        PageResponse<InventoryDto.MultiResponse> response = new PageResponse<>
+                (inventoryPage.getTotalElements(),
+                        fishMapper.toInventoryMultiResponseDtos(inventoryPage.getContent()));
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     /*------------------------관리용 API-----------------------*/

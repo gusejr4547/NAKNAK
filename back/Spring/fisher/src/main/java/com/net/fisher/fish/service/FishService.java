@@ -14,10 +14,13 @@ import com.net.fisher.fish.repository.FishRepository;
 import com.net.fisher.fish.repository.InventoryRepository;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
+import com.net.fisher.member.service.MemberService;
 import com.net.fisher.response.FishCheckResponse;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,8 @@ public class FishService {
     private final FishRepository fishRepository;
     private final FishBowlsRepository fishBowlsRepository;
     private final BooksRepository booksRepository;
+    private final MemberService memberService;
+
 
     @PostConstruct
     public void initialFish(){
@@ -137,6 +142,9 @@ public class FishService {
         return inventory;
     }
 
+
+
+
     @Transactional
     public FishBowls intoFishBowls(long tokenId, long inventoryId) {
         Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -203,6 +211,12 @@ public class FishService {
         }
 
         booksRepository.save(findBooks);
+    }
+
+    public Page<Inventory> getInventoryListFromMemberId(long memberId, Pageable pageable){
+        Member findMember = memberService.findMember(memberId);
+
+        return inventoryRepository.getInventoriesByMember(findMember,pageable);
     }
 
     private HttpHeaders getFileHeaders(String fileName) {

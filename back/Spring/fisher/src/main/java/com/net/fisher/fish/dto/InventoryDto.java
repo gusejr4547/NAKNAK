@@ -22,4 +22,16 @@ public class InventoryDto {
         private Fish fish;
         private double size;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class MultiResponse{
+        private long inventoryId;
+        private String fishCode;
+        private String fishName;
+        private double fishSize;
+    }
 }
