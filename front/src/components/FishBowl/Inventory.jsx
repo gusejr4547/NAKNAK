@@ -5,29 +5,29 @@ import { loginuser } from "../../utils/atoms";
 
 import "./Inventory.css";
 
-const SmallMenu = ({ onClose, menuPosition }) => {
+const SmallMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
   const handleMenuClose = (e) => {
     e.stopPropagation();
     onClose(); // 부모 컴포넌트로부터 받은 onClose 함수 호출
   };
-
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    onDeleteSlide();
+    onClose();
+  };
   return (
     <div
       className="small-menu"
       style={{
-        position: "absolute",
-        top: menuPosition.top, // 슬라이드의 상단 위치
-        left: menuPosition.left + menuPosition.width, // 슬라이드의 우측 위치
       }}
-      onClick={handleMenuClose}
     >
-      {/* 작은 메뉴 내용 */}
-      <button>Close</button>
+      <button onClick={handleDelete}>Delete</button>
+      <button onClick={handleMenuClose}>Close</button>
     </div>
   );
 };
 
-const ItemSlide = ({ fishInfo }) => {
+const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
   const [showSmallMenu, setShowSmallMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState(false);
   const slideRef = useRef(null);
@@ -36,7 +36,7 @@ const ItemSlide = ({ fishInfo }) => {
   const handleSlideClick = (e) => {
     console.log("slide clicked");
     e.stopPropagation();
-    setShowSmallMenu(true);
+    setShowSmallMenu(!showSmallMenu);
   };
 
   // 작은 메뉴 닫기 이벤트 핸들러
@@ -44,6 +44,15 @@ const ItemSlide = ({ fishInfo }) => {
     console.log("close clicked");
     setShowSmallMenu(false);
   };
+
+  // // 작은 메뉴 삭제 버튼 클릭 이벤트 핸들러
+  // const handleDeleteSlide = (e) => {
+  //   console.log("delete clicked");
+
+  //   e.stopPropagation();
+  //   onDeleteSlide(fishInfo); // 삭제 이벤트를 부모 컴포넌트로 전달하며 현재 fishInfo를 인자로 넘겨줍니다.
+  //   setShowSmallMenu(false); // 삭제 후 작은 메뉴를 닫습니다.
+  // };
 
   useEffect(() => {
     const slideElement = slideRef.current;
@@ -64,7 +73,7 @@ const ItemSlide = ({ fishInfo }) => {
       {/* ... */}
 
       {showSmallMenu && (
-        <SmallMenu onClose={handleCloseMenu} menuPosition={menuPosition} />
+        <SmallMenu onClose={handleCloseMenu} menuPosition={menuPosition} fishInfo={fishInfo} />
       )}
     </div>
   );
@@ -99,6 +108,12 @@ const Inventory = () => {
     }
   };
 
+  const handleDeleteSlide = (deletedFishInfo) => {
+    setInventoryData((prevData) =>
+      prevData.filter((fish) => fish !== deletedFishInfo)
+    );
+  };
+
   return (
     <div className="inven-wrapper">
       <img
@@ -110,10 +125,12 @@ const Inventory = () => {
       <div className="inven-board">
         <div className="inven-carousel inven-disable-scrollbar">
           {/* {inventoryData.map((fish) => {
-            <ItemSlide key={null} fishInfo={null} />;
+            <ItemSlide key={null} fishInfo={null} onDeleteSlide={()=>handleDeleteSlide(fish)}  />;
           })} */}
 
           {/* dummy start */}
+          {/* <ItemSlide key={null} fishInfo={null} onDeleteSlide={() => handleDeleteSlide(fish)} />; */}
+
           <ItemSlide key={null} fishInfo={null} />
           <ItemSlide key={null} fishInfo={null} />
           <ItemSlide key={null} fishInfo={null} />

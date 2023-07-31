@@ -2,10 +2,14 @@
   position: relative;
   height: 90vh;
   display: flex;
-  justify-content: center; /* 가로 가운데 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
-  max-height: 45rem; /* 카로셀 전체의 최대 높이를 설정합니다. */
-  margin: 0 auto; /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
+  justify-content: center;
+  /* 가로 가운데 정렬 */
+  align-items: center;
+  /* 세로 가운데 정렬 */
+  max-height: 45rem;
+  /* 카로셀 전체의 최대 높이를 설정합니다. */
+  margin: 0 auto;
+  /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
 }
 
 .inven-board {
@@ -31,19 +35,23 @@
 
 .inven-slide {
   display: flex;
-  background-color: aliceblue; /*배경 임시 하얀색*/
+  background-color: aliceblue;
+  /*배경 임시 하얀색*/
   width: calc(32% - 0.625rem);
   height: 7rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: 0.3125rem; /* 가운데 정렬을 위해 필요한 스타일 */
+  margin: 0.3125rem;
+  /* 가운데 정렬을 위해 필요한 스타일 */
 }
+
 .inven-slide img {
   width: 100%;
   height: auto;
 }
+
 .inven-slide h6 {
   color: black;
   font-weight: bold;
@@ -72,13 +80,13 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 .inven-disable-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .small-menu {
   /* z-index: 999; */
   position: absolute;
-  top: -20;
-  right: -10px;
   /* 추가 스타일 및 디자인 설정 */
 }
