@@ -4,8 +4,10 @@ import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.auth.redis.RedisDao;
 import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
+import com.net.fisher.member.dto.FollowDto;
 import com.net.fisher.member.dto.MemberDto;
 import com.net.fisher.member.dto.MemberStatusDto;
+import com.net.fisher.member.entity.Follow;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.mapper.MemberMapper;
 import com.net.fisher.member.service.MemberService;
@@ -45,9 +47,11 @@ public class MemberController {
     public ResponseEntity<MemberStatusResponse> getMember
             (@PathVariable(value = "member-id") long memberId) {
         MemberDto.Response memberResponse = memberMapper.memberToResponseDto(memberService.findMember(memberId));
-        MemberStatusDto.Response statusResponse = memberMapper.toMemberStatusDto(memberService.findStatusOfMember(memberId));
+        MemberStatusDto.Response statusResponse = memberMapper.toMemberStatusDto(memberService.findStatusOfMember(memberId)); //Member 의 정보를 받아오는 GetMapping
         return new ResponseEntity<>(new MemberStatusResponse(memberResponse,statusResponse), HttpStatus.OK);
     }
+
+
 
     @GetMapping("/members/list")
     public ResponseEntity<List<MemberDto.Response>> getMembers() {
@@ -55,10 +59,15 @@ public class MemberController {
     }
 
 
-    @PostMapping("/follow/register/{to-id}")
-    public ResponseEntity makeFollow(@PathVariable(value = "to-id") long toId){
-        return null;
+    @PostMapping("/follow/register")
+    public ResponseEntity<FollowDto.Response> makeFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
+        long memberId = jwtTokenizer.getMemberId(token);
+
+        FollowDto.Response response = memberMapper.toFollowResponseDto(memberService.makeFollowTo(toId,memberId));
+
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
+
 
 
 
