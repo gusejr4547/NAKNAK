@@ -14,7 +14,7 @@ import java.util.List;
 public interface PostMapper {
     Post postDtotoPost(PostDto.Post requestBody);
 
-    default PostDto.Response postToPostResponseDto(Post post, List<PostImageDto.Response> postImageDtos){
+    default PostDto.Response postToPostResponseDto(Post post, List<PostImageDto.Response> postImageDtos, long likeCount){
         PostDto.Response response = PostDto.Response.builder()
                 .postId(post.getPostId())
                 .content(post.getContent())
@@ -23,6 +23,7 @@ public interface PostMapper {
                 .memberNickname(post.getMember().getNickname())
                 .memberImageUrl(post.getMember().getMemberImage().getFileUrl())
                 .postImageDtos(postImageDtos)
+                .likeCount(likeCount)
                 .build();
 
         return response;

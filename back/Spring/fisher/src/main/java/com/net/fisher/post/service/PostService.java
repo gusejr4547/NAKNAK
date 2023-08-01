@@ -6,10 +6,12 @@ import com.net.fisher.file.FileInfo;
 import com.net.fisher.file.service.FileService;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
+import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.entity.Like;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
+import com.net.fisher.post.repository.LikeRepository;
 import com.net.fisher.post.repository.PostImageRepository;
 import com.net.fisher.post.repository.PostRepository;
 import jakarta.transaction.Transactional;
@@ -28,6 +30,7 @@ public class PostService {
     private final FileService fileService;
     private final PostRepository postRepository;
     private final PostImageRepository postImageRepository;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public void uploadPost(long tokenId, Post post, MultipartHttpServletRequest httpServletRequest) {
@@ -77,6 +80,10 @@ public class PostService {
         return postImages;
     }
 
+    public void increaseViews(Post post) {
+        post.setViews(post.getViews() + 1);
+    }
+
     @Transactional
     public void updatePost(long tokenId, long postId, PostDto.Patch postPatchDto) {
 
@@ -117,10 +124,36 @@ public class PostService {
         List<PostImage> imageList = postImageRepository.findPostImagesByPostId(postId);
         postImageRepository.deleteAll(imageList);
 
+        // 좋아요 삭제 - 좋아요 한사람이 여러명 있을 것
+        List<Like> likeList = likeRepository.findAllByPostId(postId);
+        likeRepository.deleteAll(likeList);
+
+        // 태그 처리 필요
+
         postRepository.delete(post);
+    }
 
-        // 좋아요, 태그 처리 필요
+    @Transactional
+    public void likePost(long tokenId, LikeDto.Post likePostDto) {
 
+        Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
+        Post post = postRepository.findById(likePostDto.getPostId()).orElseThrow(()->new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        Like like = Like.builder().post(post).member(member).build();
+
+        likeRepository.save(like);
+    }
+
+    @Transactional
+    public void unlikePost(long tokenId, LikeDto.Post likePostDto) {
+        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId()).orElseThrow(()->new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
+
+        likeRepository.delete(like);
+    }
+
+    public long getLikeCount(long postId){
+
+        return likeRepository.countByPost_PostId(postId);
     }
 }

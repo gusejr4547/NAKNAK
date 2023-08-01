@@ -50,7 +50,12 @@ public class PostController {
         Post post = postService.postDetail(postId);
         List<PostImage> postImages = postService.postImageDetail(postId);
 
-        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages)), HttpStatus.OK);
+        long likeCount = postService.getLikeCount(postId);
+
+        // view 증가
+        postService.increaseViews(post);
+
+        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount), HttpStatus.OK);
     }
 
     // 자신의 post 를 수정
@@ -95,11 +100,27 @@ public class PostController {
     }
 
     @PostMapping("/posts/likes")
-    public ResponseEntity<String> updatelike(
+    public ResponseEntity<String> likePost(
             @RequestHeader(name = "Authorization") String token,
             @RequestBody LikeDto.Post likePostDto){
 
-        return null;
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        postService.likePost(tokenId, likePostDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/posts/unlikes")
+    public ResponseEntity<String> unlikePost(
+            @RequestHeader(name = "Authorization") String token,
+            @RequestBody LikeDto.Post likePostDto){
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        postService.unlikePost(tokenId, likePostDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

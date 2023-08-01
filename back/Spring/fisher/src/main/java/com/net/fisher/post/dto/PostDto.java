@@ -47,7 +47,8 @@ public class PostDto {
 
         private List<PostImageDto.Response> postImageDtos;
 
-        // 좋아요
+        // 좋아요 수
+        private long likeCount;
 
     }
 }
