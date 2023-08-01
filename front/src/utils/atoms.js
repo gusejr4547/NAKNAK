@@ -26,3 +26,7 @@ export const mapModal_recoil = atom({
   key: "mapModal_recoil",
   default: false,
 });
+export const fishingInfo_recoil = atom({
+  key: "fishingInfo_recoil",
+  default: {},
+});

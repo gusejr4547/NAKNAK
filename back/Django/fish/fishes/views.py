@@ -10,6 +10,15 @@ from .inference.inference import get_fish_name
 
 # Create your views here.
 
+@api_view(['GET'])
+def test(request):
+    f = open('/static/test.txt')
+    line = f.readline()
+
+    print(line)
+
+    return Response(line)
+
 @api_view(['POST'])
 def fishes(request):
     # file_path = request.data['file_path']

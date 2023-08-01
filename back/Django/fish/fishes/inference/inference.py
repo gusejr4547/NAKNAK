@@ -6,21 +6,27 @@ import numpy as np
 from io import BytesIO
 
 from django.contrib.staticfiles import finders
+from django.conf import settings
 
 def get_fish_name(file_path):
     # Disable scientific notation for clarity
     np.set_printoptions(suppress=True)
 
     # Load the model
+    model_path = os.path.join("fish-recognition", "keras_Model.h5")
     # print(os.path.join("fish-recognition", "keras_Model.h5"))
-    model_path = finders.find(os.path.join("fish-recognition", "keras_Model.h5"))
+    # model_path = finders.find(os.path.join("fish-recognition", "keras_Model.h5"))
     # print("path", model_path)
+    model_path = os.path.join(settings.STATIC_ROOT, model_path)
+
     # model_path = finders.find("fish-recognition\\kears_Model.h5")
     # print("path", model_path)
     model = load_model(model_path, compile=False)
 
     # Load the labels
-    label_path = finders.find(os.path.join("fish-recognition", "labels.txt"))
+    label_path = os.path.join("fish-recognition", "labels.txt")
+    label_path = os.path.join(settings.STATIC_ROOT, label_path)
+    # label_path = finders.find(os.path.join("fish-recognition", "labels.txt"))
     class_names = open(label_path, "r", encoding='UTF8').readlines()
 
     # Create the array of the right shape to feed into the keras model

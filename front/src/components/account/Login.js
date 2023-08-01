@@ -65,12 +65,10 @@ function Login(props) {
 
     try {
       setLoading(true);
-      console.log(loginData, 123);
-
-      const response = await axios.post("/api/login", loginData);
-      // const response = await postData("/api/login", loginData);
-      setUserData(response.data);
-      console.log();
+      console.log(loginData);
+      const response = await axios.post("/api1/api/login", loginData);
+      setPostData(response.data);
+      console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       localStorage.setItem("key", response.headers.authorization);;
       console.log(accesstoken, 789)
