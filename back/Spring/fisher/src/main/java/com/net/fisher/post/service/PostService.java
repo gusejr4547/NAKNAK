@@ -106,7 +106,21 @@ public class PostService {
         postImageRepository.delete(postImage);
     }
 
-    public void deletePost(long tokenId) {
+    @Transactional
+    public void deletePost(long tokenId, long postId) {
+        Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        if (post.getMember().getMemberId() != member.getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+
+        List<PostImage> imageList = postImageRepository.findPostImagesByPostId(postId);
+        postImageRepository.deleteAll(imageList);
+
+        postRepository.delete(post);
+
+        // 좋아요, 태그 처리 필요
+
 
     }
 }

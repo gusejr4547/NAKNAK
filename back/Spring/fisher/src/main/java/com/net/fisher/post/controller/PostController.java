@@ -88,7 +88,7 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        postService.deletePost(tokenId);
+        postService.deletePost(tokenId, postId);
 
         return new ResponseEntity<>("Post Deleted", HttpStatus.OK);
     }
