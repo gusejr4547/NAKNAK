@@ -24,7 +24,7 @@ const Inventory = () => {
 
         console.log("response success", response.data.data);
         setInventoryData(response.data.data);
-        console.log("inven data =", inventoryData[0]);
+        // console.log("inven data =", inventoryData[0]);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching inventory");
@@ -97,7 +97,6 @@ const Inventory = () => {
         <div className="inven-carousel inven-disable-scrollbar">
           {Object.keys(inventoryData).map((key) => {
             const fish = inventoryData[key];
-            console.log("here", fish);
             return (
               <ItemSlide
                 fishInfo={fish}
@@ -106,7 +105,6 @@ const Inventory = () => {
             );
           })}
           {/* dummy start */}
-          {/* <ItemSlide key={null} fishInfo={null} onDeleteSlide={() => handleDeleteSlide(fish)} />; */}
 
           {/* dummy end */}
         </div>
