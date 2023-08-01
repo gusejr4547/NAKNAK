@@ -41,10 +41,27 @@ const Inventory = () => {
     }
   };
 
-  const handleDeleteSlide = (deletedFishInfo) => {
-    setInventoryData((prevData) =>
-      prevData.filter((fish) => fish !== deletedFishInfo)
-    );
+  const handleDeleteSlide = async (deletedFishInfo) => {
+    // setInventoryData((prevData) =>
+    //   prevData.filter((fish) => fish !== deletedFishInfo)
+    // );
+    console.log("deletefishinfo", deletedFishInfo.inventoryId);
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: `/api/fishes/inventory/delete`,
+        data: {
+          inventoryId: deletedFishInfo.inventoryId,
+        },
+      });
+      setInventoryData((prevData) =>
+        prevData.filter((fish) => fish !== deletedFishInfo)
+      );
+    } catch (error) {
+      console.error("삭제 실패");
+      return 0;
+    }
+    return 1;
   };
 
   ////////////////////add dummy data (inven)//////////////////////////

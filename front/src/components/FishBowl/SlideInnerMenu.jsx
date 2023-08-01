@@ -10,7 +10,7 @@ const SlideInnerMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
   const handleDelete = (e) => {
     e.stopPropagation();
     onDeleteSlide();
-    onClose();
+    // onClose();
   };
 
   useEffect(() => {
