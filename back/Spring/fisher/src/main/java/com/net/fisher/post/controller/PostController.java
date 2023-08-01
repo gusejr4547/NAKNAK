@@ -2,6 +2,7 @@ package com.net.fisher.post.controller;
 
 import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.fish.dto.InventoryDto;
+import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
@@ -91,6 +92,14 @@ public class PostController {
         postService.deletePost(tokenId, postId);
 
         return new ResponseEntity<>("Post Deleted", HttpStatus.OK);
+    }
+
+    @PostMapping("/posts/likes")
+    public ResponseEntity<String> updatelike(
+            @RequestHeader(name = "Authorization") String token,
+            @RequestBody LikeDto.Post likePostDto){
+
+        return null;
     }
 
 
