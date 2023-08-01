@@ -4,12 +4,13 @@ import { useRecoilState } from "recoil";
 import { loginuser, token } from "../../utils/atoms";
 import { Button } from "react-bootstrap";
 import FollowerModal from "./FollowerModal";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 function Follower(props) {
   const [userData] = useRecoilState(loginuser);
   const [followerData, setFollowerData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [accesstoken] = useRecoilState(token);
+  // const [accesstoken] = useRecoilState(token);
   const [isFollowing, setIsFollowing] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -25,9 +26,7 @@ function Follower(props) {
       );
       setFollowerData(response.data);
       const followingList = response.data.data.map((item) => item.memberId);
-      console.log(followingList, userData.memberId);
       setIsFollowing(followingList.includes(userData.memberId));
-      console.log(isFollowing);
       setLoading(false); // 데이터 로딩 완료
     } catch (error) {
       console.error("Error getting data:", error);
@@ -39,12 +38,10 @@ function Follower(props) {
     getFllowing();
   }, [props.user]);
 
-  const header = useMemo(
-    () => ({
-      Authorization: accesstoken,
-    }),
-    [accesstoken]
-  );
+  // const header = useMemo(() => ({
+  //     Authorization: accesstoken,
+  //   }),[accesstoken]);
+
 
   const followUser = async () => {
     if (props.user === userData.memberId) {
@@ -53,14 +50,16 @@ function Follower(props) {
     }
 
     const param = { follow: props.user };
-    const config = { params: param, headers: header };
+    // const config = { params: param, headers: header };
     try {
-      const response = await axios.post(
-        "/api1/api/follow/register",
-        null,
-        config
-      );
-      console.log(response, 456);
+      // const response = await axios.post(
+      //   "/api1/api/follow/register",
+      //   null,
+      //   config
+      // );
+      const response = await authorizedRequest({ method: 'post', url: "/api1/api/follow/register", params: param});
+
+
       getFllowing();
     } catch (error) {
       console.error("Error posting data:", error);
@@ -68,18 +67,18 @@ function Follower(props) {
   };
   const unFollowUser = async () => {
     if (props.user === userData.memberId) {
-      console.log("동일");
+      // console.log("동일");
       return;
     }
     const param = { follow: props.user };
-    const config = { params: param, headers: header };
+    // const config = { params: param, headers: header };
     try {
-      const response = await axios.post(
-        "/api1/api/follow/cancel",
-        null,
-        config
-      );
-      console.log(response, 456);
+      // const response = await axios.post(
+      //   "/api1/api/follow/cancel",
+      //   null,
+      //   config
+      // );
+      const response = await authorizedRequest({ method: 'post', url: "/api1/api/follow/cancel", params: param});
       getFllowing();
     } catch (error) {
       console.error("Error posting data:", error);

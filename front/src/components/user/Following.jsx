@@ -11,7 +11,6 @@ function Following(props) {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-  console.log(props.user, "팔로잉");
   const navigate = useNavigate();
 
   // 모달창 노출
@@ -19,19 +18,20 @@ function Following(props) {
     setModalOpen(true);
   };
 
+  const getFllowing = async () => {
+    try {
+      const response = await axios.get(
+        `/api1/api/members/follow/${props.user}`
+      );
+      setFollowingData(response.data);
+      setLoading(false); // 데이터 로딩 완료
+    } catch (error) {
+      console.error("Error getting data:", error);
+      setLoading(false); // 데이터 로딩 실패
+    }
+  };
+  
   useEffect(() => {
-    const getFllowing = async () => {
-      try {
-        const response = await axios.get(
-          `/api1/api/members/follow/${props.user}`
-        );
-        setFollowingData(response.data);
-        setLoading(false); // 데이터 로딩 완료
-      } catch (error) {
-        console.error("Error getting data:", error);
-        setLoading(false); // 데이터 로딩 실패
-      }
-    };
     getFllowing();
   }, [props.user]);
 

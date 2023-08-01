@@ -193,11 +193,17 @@ function Login(props) {
           as="input"
           onClick={() => socialLoginHandler("kakao")}
           type="button"
-          value="카카오 로그인"
+          value=""
           style={{
             margin: "10px 0px 0px 0px",
             backgroundColor: "yellow",
             color: "black",
+            width: "50%", // Take up the entire available width
+            height: "30%", // Take up the entire available height
+            backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
+            backgroundSize: "cover", // Ensure the image covers the entire button
+            backgroundPosition: "center",
+            /* Add other styles as needed */
           }}
         ></Button>
         <Link to="/Signup" className="nav-link">

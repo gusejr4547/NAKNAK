@@ -12,13 +12,9 @@ function Getfish(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [accesstoken, setToken] = useRecoilState(token);
-    // const [loginUser, setloginuser] = useRecoilState(loginuser);
-    // const header = headers: {
-    //     Authorization: `Bearer ${accessToken}`, // 인증 헤더에 액세스 토큰 추가
-    //   },
+
     const header = {Authorization: accesstoken}
-    // console.log(header)
-    // console.log(fishData,123)
+
     const fishHandleclick = async () => {
         try {
           setLoading(true);
