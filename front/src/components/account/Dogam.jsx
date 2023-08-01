@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
 
@@ -33,43 +32,119 @@ const Dogam = (props) => {
         setDogamData(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Error posting data:", error);
-        setError("데이터 전송에 실패했습니다.");
+        console.error("Error fetching dogam:", error);
+        setError("데이터 로드에 실패했습니다.");
         setLoading(false);
       }
     };
     getDogam();
   }, []);
 
-  const openModal = (fish) => {
+  const openFishDetailModal = (fish) => {
     setSelectedFish(fish);
   };
 
-  const closeModal = () => {
+  const closeFishDetailModal = () => {
     setSelectedFish(null);
   };
 
   return (
     <div className="dogam-wrapper">
-      <div className="dogam-back-button" onClick={goBack}>
-        닫기
-      </div>
-      <div className="dogam-carousel">
+      <img
+        src="/assets/icons/x.png"
+        alt="exit"
+        className="dogam-back-button"
+        onClick={goBack}
+      />
+      <div className="dogam-carousel dogam-disable-scrollbar">
         {dogamData.fishCheck?.all.map((fish) => (
           <div
             key={fish.fishId}
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openModal(fish)}
+            onClick={() => openFishDetailModal(fish)}
           >
-            <img src={fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}
+        {/* dummy start */}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openFishDetailModal(fish)}
+          >
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openFishDetailModal(fish)}
+          >
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openFishDetailModal(fish)}
+          >
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openFishDetailModal(fish)}
+          >
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}{" "}
+        {dogamData.fishCheck?.all.map((fish) => (
+          <div
+            key={fish.fishId}
+            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
+            onClick={() => openFishDetailModal(fish)}
+          >
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
+            <h6>{fish.name}</h6>
+          </div>
+        ))}
+        {/* dummy end */}
       </div>
 
       {/* 모달 컴포넌트 */}
       {selectedFish && (
-        <FishDetailModal fishData={selectedFish} onClose={closeModal} />
+        <FishDetailModal
+          fishData={selectedFish}
+          onClose={closeFishDetailModal}
+        />
       )}
     </div>
   );

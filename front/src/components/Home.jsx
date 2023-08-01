@@ -42,8 +42,10 @@ function Home(props) {
             </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘3</h6>
+            <Link to="/Inventory" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>인벤토리</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />
