@@ -1,17 +1,15 @@
 .dogam-wrapper {
+  position: relative;
   height: 90vh;
   display: flex;
   justify-content: center; /* 가로 가운데 정렬 */
   align-items: center; /* 세로 가운데 정렬 */
-}
-
-.dogam-carousel {
   max-height: 45rem; /* 카로셀 전체의 최대 높이를 설정합니다. */
   margin: 0 auto; /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
 }
 
-.dogam-board {
-  padding-top: 1.25rem;
+.dogam-carousel {
+  padding-top: 3.25rem;
   padding-bottom: 1.25rem;
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
@@ -45,4 +43,16 @@
 
 .dogam-slide-inactive {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dogam-back-button {
+  text-align: center;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+  background-color: rgb(255, 195, 122);
+  width: 5rem;
+  height: 2rem;
+  position: absolute;
+  top: 3rem;
+  right: 2.5rem;
+  z-index: 1;
 }
