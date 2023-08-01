@@ -63,6 +63,20 @@ public class PostService {
 
     }
 
+    public Post postDetail(long postId) {
+
+        Post post = postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        return post;
+    }
+
+    public List<PostImage> postImageDetail(long postId) {
+
+        List<PostImage> postImages = postImageRepository.findPostImagesByPostId(postId);
+
+        return postImages;
+    }
+
     public Post updatePost(long tokenId, long postId) {
 
         return null;
@@ -71,4 +85,7 @@ public class PostService {
     public void deleteImage(long tokenId, long fileId) {
 
     }
+
+
+
 }

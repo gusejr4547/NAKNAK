@@ -27,7 +27,9 @@ public enum ExceptionCode {
 
     PLAN_NOT_FOUND(404, "Plan Not Found"),
     TOTAL_PLAN_NOT_FOUND(404, "TotalPlan Not Found"),
-    FAILED_TO_DELETE_TOTAL_PLAN(500, "Failed Delete TotalPlan");
+    FAILED_TO_DELETE_TOTAL_PLAN(500, "Failed Delete TotalPlan"),
+
+    POST_NOT_FOUND(404, "Post Not Found");
 
     @Getter
     private final int status;

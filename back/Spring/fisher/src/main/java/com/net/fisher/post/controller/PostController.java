@@ -4,6 +4,8 @@ import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.fish.dto.InventoryDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.entity.Post;
+import com.net.fisher.post.entity.PostImage;
+import com.net.fisher.post.mapper.PostImageMapper;
 import com.net.fisher.post.mapper.PostMapper;
 import com.net.fisher.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class PostController {
 
     private final JwtTokenizer jwtTokenizer;
     private final PostMapper postMapper;
+    private final PostImageMapper postImageMapper;
     private final PostService postService;
 
     @PostMapping("/posts/upload")
@@ -43,11 +48,12 @@ public class PostController {
     // post 자세히 보기
     @GetMapping("/posts/{post-id}")
     public ResponseEntity<PostDto.Response> getPost(
-            @PathVariable("post-id") long postId,
-            @RequestHeader(name = "Authorization") String token){
+            @PathVariable("post-id") long postId) {
 
+        Post post = postService.postDetail(postId);
+        List<PostImage> postImages = postService.postImageDetail(postId);
 
-        return null;
+        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages)), HttpStatus.OK);
     }
 
     // 자신의 post 를 수정
