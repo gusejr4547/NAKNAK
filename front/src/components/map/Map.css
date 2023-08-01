@@ -3,5 +3,7 @@
   width: 400px;
   height: 500px;
 }
-.modal {
+#title {
+  display: absolute;
+  padding-top: 20%;
 }

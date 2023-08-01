@@ -63,7 +63,7 @@ function Login(props) {
     try {
       setLoading(true);
       console.log(loginData);
-      const response = await axios.post("/api/login", loginData);
+      const response = await axios.post("/api1/api/login", loginData);
       setPostData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
