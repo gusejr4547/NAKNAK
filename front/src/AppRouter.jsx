@@ -48,6 +48,7 @@ function AppRouter(props) {
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Inventory" element={<Inventory />}></Route>
+            <Route path="/Loading" element={<Loading />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
