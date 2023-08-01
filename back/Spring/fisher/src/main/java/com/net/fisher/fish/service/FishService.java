@@ -136,7 +136,7 @@ public class FishService {
         inventory.setFish(fish);
         inventory.setMember(member);
 
-        inventoryRepository.save(inventory);
+        inventory = inventoryRepository.save(inventory);
 
         /*====도감에 등록하는 알고리즘====*/
 
