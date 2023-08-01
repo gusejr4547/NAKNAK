@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.lang.model.element.NestingKind;
 import java.util.List;
 
 @Controller
@@ -35,11 +36,6 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        System.out.println("###########");
-        System.out.println(tokenId);
-        System.out.println("###########");
-        System.out.println(requestBody);
-
         postService.uploadPost(tokenId, postMapper.postDtotoPost(requestBody), httpServletRequest);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -58,19 +54,22 @@ public class PostController {
 
     // 자신의 post 를 수정
     @PatchMapping("/posts/{post-id}")
-    public ResponseEntity<PostDto.Response> patchPost(
+    public ResponseEntity patchPost(
             @PathVariable("post-id") long postId,
-            @RequestHeader(name = "Authorization") String token) {
+            @RequestHeader(name = "Authorization") String token,
+            @RequestBody PostDto.Patch postPatchDto) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        Post post = postService.updatePost(tokenId, postId);
+        System.out.println(postPatchDto);
 
-        return null;
+        postService.updatePost(tokenId, postId, postPatchDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 자신의 post 에 올린 이미지 삭제
-    @DeleteMapping("/posts/image/{file-id}")
+    @DeleteMapping("/posts/images/{file-id}")
     public ResponseEntity<String> deleteFile(
             @PathVariable("file-id") long fileId,
             @RequestHeader(name = "Authorization") String token) {
@@ -79,6 +78,20 @@ public class PostController {
 
         postService.deleteImage(tokenId, fileId);
 
-        return new ResponseEntity<String>("File Deleted", HttpStatus.OK);
+        return new ResponseEntity<>("File Deleted", HttpStatus.OK);
     }
+
+    @DeleteMapping("/posts/{post-id}")
+    public ResponseEntity<String> deletePost(
+            @PathVariable("post-id") long postId,
+            @RequestHeader(name = "Authorization") String token) {
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        postService.deletePost(tokenId);
+
+        return new ResponseEntity<>("Post Deleted", HttpStatus.OK);
+    }
+
+
 }

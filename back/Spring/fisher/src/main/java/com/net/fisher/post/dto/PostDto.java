@@ -24,6 +24,17 @@ public class PostDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
+    @ToString
+    public static class Patch{
+        private long postId;
+        private String content;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Response{
         private long postId;
         private String content;

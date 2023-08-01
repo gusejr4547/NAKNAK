@@ -55,7 +55,7 @@ public class PostService {
             }
 
             postRepository.save(post);
-        } catch (BusinessLogicException e){
+        } catch (BusinessLogicException e) {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         } catch (IOException e) {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
@@ -65,7 +65,7 @@ public class PostService {
 
     public Post postDetail(long postId) {
 
-        Post post = postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         return post;
     }
@@ -77,15 +77,36 @@ public class PostService {
         return postImages;
     }
 
-    public Post updatePost(long tokenId, long postId) {
+    @Transactional
+    public void updatePost(long tokenId, long postId, PostDto.Patch postPatchDto) {
 
-        return null;
+        Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        if (member.getMemberId() != post.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+
+        post.setContent(postPatchDto.getContent());
+
+        postRepository.save(post);
     }
 
+    @Transactional
     public void deleteImage(long tokenId, long fileId) {
 
+        Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        PostImage postImage = postImageRepository.findById(fileId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
+
+        if (member.getMemberId() != postImage.getPost().getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+
+        postImageRepository.delete(postImage);
     }
 
+    public void deletePost(long tokenId) {
 
-
+    }
 }
