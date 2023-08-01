@@ -5,8 +5,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
+import { useRecoilState } from "recoil";
+import { loginuser } from "../utils/atoms"
+
 
 function Home(props) {
+  const [userData] = useRecoilState(loginuser);
   const settings = {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
@@ -42,10 +46,17 @@ function Home(props) {
             </Link>
           </div>
           <div className="home-slide">
+<<<<<<< HEAD
             <Link to="/Inventory" className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>인벤토리</h6>
             </Link>
+=======
+          <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>프로필</h6>
+          </Link>
+>>>>>>> feature/auth
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />

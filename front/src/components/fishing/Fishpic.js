@@ -13,6 +13,7 @@ function CameraApp() {
   };
   const [capturedImageFile, setCapturedImageFile] = useState(null); // 촬영한 사진의 URL을 저장하는 상태 변수
   const [fishImg, setfishImg] = useState("");
+  const [isCameraOn, setIsCameraOn] = useState(false); // 카메라가 활성화되었는지 여부 상태 변수
 
   const getCameraStream = async () => {
     try {
@@ -20,6 +21,7 @@ function CameraApp() {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
+      setIsCameraOn(true);
     } catch (error) {
       console.error("카메라 접근 오류:", error);
     }
@@ -35,6 +37,7 @@ function CameraApp() {
       videoRef.current.srcObject = null;
       console.log("카메라 권한이 해제되었습니다.");
     }
+    setIsCameraOn(false);
   };
 
   const handleCapturePhoto = async () => {
@@ -93,8 +96,11 @@ function CameraApp() {
         autoPlay
         playsInline
       />
+
       <button onClick={getCameraStream}>카메라 on</button>
+      {isCameraOn && (
       <button onClick={handleCapturePhoto}>사진 촬영</button>
+      )}
       <button onClick={stopCamera}>카메라 off</button>
       <canvas ref={canvasRef} style={{ display: "none" }} />
 

@@ -6,12 +6,16 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
+<<<<<<< HEAD
+=======
+import { postData } from "../../utils/api";
+>>>>>>> feature/auth
 
 function Signup(props) {
   const [signupData, setSignupData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [postData, setPostData] = useState({});
+  // const [postData, setPostData] = useState({});
   const navigate = useNavigate();
 
   const isNotEmpty = (value) => value.trim() !== "";
@@ -55,6 +59,7 @@ function Signup(props) {
   } = useInput(isNotEmpty);
 
   const signupHandleClick = async () => {
+<<<<<<< HEAD
     const signupData = {
       email: userIdValue,
       password: userPasswordValue,
@@ -62,6 +67,9 @@ function Signup(props) {
       nickname: usernicknameValue,
     };
 
+=======
+    const signupData = { email: userIdValue, password: userPasswordValue, name: usernameValue, nickname: usernicknameValue};
+>>>>>>> feature/auth
     if (!signupData.email) {
       console.log("이메일은 필수 입력값입니다.");
       return;
@@ -89,6 +97,7 @@ function Signup(props) {
     try {
       setLoading(true);
       const formData = new FormData();
+<<<<<<< HEAD
       formData.append("email", signupData.email);
       formData.append("password", signupData.password);
       formData.append("name", signupData.name);
@@ -99,6 +108,20 @@ function Signup(props) {
       setPostData(response.data);
       navigate("/Login");
       console.log(postData, 123);
+=======
+      formData.append('email', signupData.email);
+      formData.append('password', signupData.password);
+      formData.append('name', signupData.name);
+      formData.append('nickname', signupData.nickname);
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);}
+
+      const response = await axios.post('/api/members/register', formData);
+      // const response = await postData("/api1/members/register", formData);
+      // setPostData(response.data);
+      navigate('/Login');
+      // console.log(postData, 123);
+>>>>>>> feature/auth
       console.log(response, 456);
       setLoading(false);
     } catch (error) {
