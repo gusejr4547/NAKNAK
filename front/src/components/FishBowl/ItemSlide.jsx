@@ -49,8 +49,9 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
         src={`http://192.168.30.161:8080/img/fishes/${fishInfo.fishCode}.png`}
         alt={"fish img"}
       />
-      <p>{fishInfo.fishName}</p>
-      <p>{fishInfo.fishSize}</p>
+      <h6>
+        {fishInfo.fishName} <br />({fishInfo.fishSize}cm)
+      </h6>
 
       {showSlideInnerMenu && (
         <SlideInnerMenu

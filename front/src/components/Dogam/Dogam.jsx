@@ -55,89 +55,102 @@ const Dogam = (props) => {
         className="dogam-back-button"
         onClick={goBack}
       />
-      <div className="dogam-carousel dogam-disable-scrollbar">
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div
-            key={fish.fishId}
-            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openFishDetailModal(fish)}
-          >
-            <img
-              src={"http://192.168.30.161:8080" + fish.imgUrl}
-              alt={fish.name}
-            />
-            <h6>{fish.name}</h6>
-          </div>
-        ))}
-        {/* dummy start */}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div
-            key={fish.fishId}
-            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openFishDetailModal(fish)}
-          >
-            <img
-              src={"http://192.168.30.161:8080" + fish.imgUrl}
-              alt={fish.name}
-            />
-            <h6>{fish.name}</h6>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div
-            key={fish.fishId}
-            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openFishDetailModal(fish)}
-          >
-            <img
-              src={"http://192.168.30.161:8080" + fish.imgUrl}
-              alt={fish.name}
-            />
-            <h6>{fish.name}</h6>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div
-            key={fish.fishId}
-            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openFishDetailModal(fish)}
-          >
-            <img
-              src={"http://192.168.30.161:8080" + fish.imgUrl}
-              alt={fish.name}
-            />
-            <h6>{fish.name}</h6>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div
-            key={fish.fishId}
-            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openFishDetailModal(fish)}
-          >
-            <img
-              src={"http://192.168.30.161:8080" + fish.imgUrl}
-              alt={fish.name}
-            />
-            <h6>{fish.name}</h6>
-          </div>
-        ))}{" "}
-        {dogamData.fishCheck?.all.map((fish) => (
-          <div
-            key={fish.fishId}
-            className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
-            onClick={() => openFishDetailModal(fish)}
-          >
-            <img
-              src={"http://192.168.30.161:8080" + fish.imgUrl}
-              alt={fish.name}
-            />
-            <h6>{fish.name}</h6>
-          </div>
-        ))}
-        {/* dummy end */}
+      <div className="dogam-board">
+        <div className="dogam-carousel dogam-disable-scrollbar">
+          {dogamData.fishCheck?.all.map((fish) => (
+            <div
+              key={fish.fishId}
+              className={
+                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+              }
+              onClick={() => openFishDetailModal(fish)}
+            >
+              <img
+                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                alt={fish.name}
+              />
+              <h6>{fish.name}</h6>
+            </div>
+          ))}
+          {/* dummy start */}
+          {dogamData.fishCheck?.all.map((fish) => (
+            <div
+              key={fish.fishId}
+              className={
+                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+              }
+              onClick={() => openFishDetailModal(fish)}
+            >
+              <img
+                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                alt={fish.name}
+              />
+              <h6>{fish.name}</h6>
+            </div>
+          ))}{" "}
+          {dogamData.fishCheck?.all.map((fish) => (
+            <div
+              key={fish.fishId}
+              className={
+                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+              }
+              onClick={() => openFishDetailModal(fish)}
+            >
+              <img
+                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                alt={fish.name}
+              />
+              <h6>{fish.name}</h6>
+            </div>
+          ))}{" "}
+          {dogamData.fishCheck?.all.map((fish) => (
+            <div
+              key={fish.fishId}
+              className={
+                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+              }
+              onClick={() => openFishDetailModal(fish)}
+            >
+              <img
+                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                alt={fish.name}
+              />
+              <h6>{fish.name}</h6>
+            </div>
+          ))}{" "}
+          {dogamData.fishCheck?.all.map((fish) => (
+            <div
+              key={fish.fishId}
+              className={
+                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+              }
+              onClick={() => openFishDetailModal(fish)}
+            >
+              <img
+                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                alt={fish.name}
+              />
+              <h6>{fish.name}</h6>
+            </div>
+          ))}{" "}
+          {dogamData.fishCheck?.all.map((fish) => (
+            <div
+              key={fish.fishId}
+              className={
+                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+              }
+              onClick={() => openFishDetailModal(fish)}
+            >
+              <img
+                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                alt={fish.name}
+              />
+              <h6>{fish.name}</h6>
+            </div>
+          ))}
+          {/* dummy end */}
+        </div>
       </div>
-
       {/* 모달 컴포넌트 */}
       {selectedFish && (
         <FishDetailModal
