@@ -61,7 +61,7 @@ public class MemberService {
     String uploadPath;
 
     @PostConstruct
-    public void initialize(){
+    public void initialize(){ // server on mattermost bot
         String ipAddressStr = "ip";
         try {
             InetAddress ipAddress = InetAddress.getLocalHost();
