@@ -7,7 +7,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: "http://192.168.30.161:8080",
       changeOrigin: true,
-      ws: true,
       pathRewrite: {
         "^/api1": "",
       },
@@ -33,6 +32,17 @@ module.exports = function (app) {
       changeOrigin: true,
       pathRewrite: {
         "^/api3": "",
+      },
+    })
+  );
+  // 프록시4 설정 => 바다누리
+  app.use(
+    "/api4",
+    createProxyMiddleware({
+      target: "http://www.khoa.go.kr/api/oceangrid",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api4": "",
       },
     })
   );

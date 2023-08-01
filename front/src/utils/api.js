@@ -9,6 +9,6 @@ export function getData(url) {
 }
 
 // POST 요청을 보내는 함수
-// export function postData(url,data) {
-//   return axios.post(`${apiUrl}`+url, data);
-// }
+export function postData(url, data) {
+  return axios.post("/api1" + url, data);
+}

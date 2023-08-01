@@ -20,7 +20,7 @@ function Infoapi(props) {
       // const response = await axios.get(
       //   `/api2/openWeatherNow.do?mmaf=101&mmsi=994401578&serviceKey=102D1304-985C-4C11-89D1-574914365F64&resultType=json`
       // );
-      console.log(response.data[2]);
+      console.log(response.data);
       // setWeather
       // setData(response.data.result.recordset);
       // console.log(response.data.result.recordset);

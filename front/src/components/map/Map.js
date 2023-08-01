@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { mapModal_recoil, fishingInfo_recoil } from "../../utils/atoms";
 import "./Map.css";
 import axios from "../../api/SeaAPI";
+import bada_axios from "../../api/BadanuriAPI";
 
 // https://apis.map.kakao.com/web/guide/
 // 잔상이 남는디..?
@@ -28,7 +29,239 @@ function Map() {
       };
       const map = new kakao.maps.Map(mapContainer, options); //지도 생성 및 객체 리턴
 
-      // 마커 설정
+      // 바다누리 api 마커 설정
+      const badanuriPositions = [
+        {
+          title: "감천항",
+          obsCode: "TW_0088",
+          content: `<div id='title'>감천항</div>`,
+          latlng: new kakao.maps.LatLng(35.052, 129.003),
+        },
+        {
+          title: "경인항",
+          obsCode: "TW_0077",
+          content: `<div id='title'>경인항</div>`,
+          latlng: new kakao.maps.LatLng(37.523, 126.592),
+        },
+        {
+          title: "경포대해수욕장",
+          obsCode: "TW_0089",
+          content: `<div id='title'>경포대해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(37.808, 128.931),
+        },
+        {
+          title: "고래불해수욕장",
+          obsCode: "TW_0095",
+          content: `<div id='title'>고래불해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(36.58, 129.454),
+        },
+        {
+          title: "광양항",
+          obsCode: "TW_0074",
+          content: `<div id='title'>광양항</div>`,
+          latlng: new kakao.maps.LatLng(34.859, 127.792),
+        },
+        {
+          title: "군산항",
+          obsCode: "TW_0072",
+          content: `<div id='title'>군산항</div>`,
+          latlng: new kakao.maps.LatLng(35.984, 126.508),
+        },
+        {
+          title: "낙산해수욕장",
+          obsCode: "TW_0091",
+          content: `<div id='title'>낙산해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(38.122, 128.65),
+        },
+        {
+          title: "남해동부",
+          obsCode: "KG_0025",
+          content: `<div id='title'>남해동부</div>`,
+          latlng: new kakao.maps.LatLng(34.222, 128.419),
+        },
+        {
+          title: "대천해수욕장",
+          obsCode: "TW_0069",
+          content: `<div id='title'>대천해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(36.274, 126.457),
+        },
+        {
+          title: "대한해협",
+          obsCode: "KG_0024",
+          content: `<div id='title'>대한해협</div>`,
+          latlng: new kakao.maps.LatLng(34.919, 129.121),
+        },
+        {
+          title: "마산항",
+          obsCode: "TW_0085",
+          content: `<div id='title'>마산항</div>`,
+          latlng: new kakao.maps.LatLng(35.103, 128.631),
+        },
+        {
+          title: "망상해수욕장",
+          obsCode: "TW_0094",
+          content: `<div id='title'>망상해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(37.616, 129.103),
+        },
+        {
+          title: "부산항",
+          obsCode: "TW_0087",
+          content: `<div id='title'>부산항</div>`,
+          latlng: new kakao.maps.LatLng(35.091, 129.085),
+        },
+        {
+          title: "부산항신항",
+          obsCode: "TW_0086",
+          content: `<div id='title'>부산항신항</div>`,
+          latlng: new kakao.maps.LatLng(35.043, 128.761),
+        },
+        {
+          title: "상왕등도",
+          obsCode: "TW_0079",
+          content: `<div id='title'>상왕등도</div>`,
+          latlng: new kakao.maps.LatLng(35.652, 126.194),
+        },
+        {
+          title: "생일도",
+          obsCode: "TW_0081",
+          content: `<div id='title'>생일도</div>`,
+          latlng: new kakao.maps.LatLng(34.258, 126.96),
+        },
+        {
+          title: "속초해수욕장",
+          obsCode: "TW_0093",
+          content: `<div id='title'>속초해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(38.198, 128.631),
+        },
+        {
+          title: "송정해수욕장",
+          obsCode: "TW_0090",
+          content: `<div id='title'>송정해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(35.164, 129.219),
+        },
+        {
+          title: "아산만",
+          obsCode: "TW_0071",
+          content: `<div id='title'>아산만</div>`,
+          latlng: new kakao.maps.LatLng(36.997, 126.755),
+        },
+        {
+          title: "여수항",
+          obsCode: "TW_0083",
+          content: `<div id='title'>여수항</div>`,
+          latlng: new kakao.maps.LatLng(34.794, 127.808),
+        },
+        {
+          title: "완도항",
+          obsCode: "TW_0078",
+          content: `<div id='title'>완도항</div>`,
+          latlng: new kakao.maps.LatLng(34.325, 126.763),
+        },
+        {
+          title: "우이도",
+          obsCode: "TW_0080",
+          content: `<div id='title'>우이도</div>`,
+          latlng: new kakao.maps.LatLng(34.543, 125.802),
+        },
+        {
+          title: "울릉도북동",
+          obsCode: "KG_0101",
+          content: `<div id='title'>울릉도북동</div>`,
+          latlng: new kakao.maps.LatLng(38.007, 131.552),
+        },
+        {
+          title: "울릉도북서",
+          obsCode: "KG_0102",
+          content: `<div id='title'>울릉도북서</div>`,
+          latlng: new kakao.maps.LatLng(37.742, 130.601),
+        },
+        {
+          title: "인천항",
+          obsCode: "TW_0076",
+          content: `<div id='title'>인천항</div>`,
+          latlng: new kakao.maps.LatLng(37.389, 126.533),
+        },
+        {
+          title: "임랑해수욕장",
+          obsCode: "TW_0092",
+          content: `<div id='title'>임랑해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(35.302, 129.292),
+        },
+        {
+          title: "제주남부",
+          obsCode: "KG_0021",
+          content: `<div id='title'>제주남부</div>`,
+          latlng: new kakao.maps.LatLng(32.09, 126.965),
+        },
+        {
+          title: "제주해협",
+          obsCode: "KG_0028",
+          content: `<div id='title'>제주해협</div>`,
+          latlng: new kakao.maps.LatLng(33.7, 126.59),
+        },
+        {
+          title: "중문해수욕장",
+          obsCode: "TW_0075",
+          content: `<div id='title'>중문해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(33.234, 126.409),
+        },
+        {
+          title: "태안항",
+          obsCode: "TW_0082",
+          content: `<div id='title'>태안항</div>`,
+          latlng: new kakao.maps.LatLng(37.006, 126.27),
+        },
+        {
+          title: "통영항",
+          obsCode: "TW_0084",
+          content: `<div id='title'>통영항</div>`,
+          latlng: new kakao.maps.LatLng(34.773, 128.46),
+        },
+        {
+          title: "한수원_고리",
+          obsCode: "HB_0002",
+          content: `<div id='title'>한수원_고리</div>`,
+          latlng: new kakao.maps.LatLng(35.318, 129.314),
+        },
+        {
+          title: "한수원_기장",
+          obsCode: "HB_0001",
+          content: `<div id='title'>한수원_기장</div>`,
+          latlng: new kakao.maps.LatLng(35.182, 129.235),
+        },
+        {
+          title: "한수원_나곡",
+          obsCode: "HB_0009",
+          content: `<div id='title'>한수원_나곡</div>`,
+          latlng: new kakao.maps.LatLng(37.119, 129.395),
+        },
+        {
+          title: "한수원_덕천",
+          obsCode: "HB_0008",
+          content: `<div id='title'>한수원_덕천</div>`,
+          latlng: new kakao.maps.LatLng(37.1, 129.404),
+        },
+        {
+          title: "한수원_온양",
+          obsCode: "HB_0007",
+          content: `<div id='title'>한수원_온양</div>`,
+          latlng: new kakao.maps.LatLng(37.019, 129.425),
+        },
+        {
+          title: "한수원_진하",
+          obsCode: "HB_0003",
+          content: `<div id='title'>한수원_진하</div>`,
+          latlng: new kakao.maps.LatLng(35.384, 129.368),
+        },
+        {
+          title: "해운대해수욕장",
+          obsCode: "TW_0062	",
+          content: `<div id='title'>해운대해수욕장</div>`,
+          latlng: new kakao.maps.LatLng(35.148, 129.17),
+        },
+      ];
+
+      // seaapi 마커 설정!!!
       const markerPositions = [
         {
           title: "남항동방파제등대",
@@ -556,7 +789,30 @@ function Map() {
           latlng: new kakao.maps.LatLng(34.2535, 126.808294),
         },
       ];
-      // 마커 생성
+
+      // 바다 누리 마커 생성
+      for (let i = 0; i < badanuriPositions.length; i++) {
+        // 마커 생성
+        const marker = new kakao.maps.Marker({
+          map: map, // 마커를 표시할 지도
+          position: badanuriPositions[i].latlng, // 마커를 표시할 위치
+          title: badanuriPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+          obsCode: badanuriPositions[i].obsCode,
+        });
+
+        const overlay = new kakao.maps.CustomOverlay({
+          content: badanuriPositions[i].content,
+          map: map,
+          position: marker.getPosition(),
+        });
+        kakao.maps.event.addListener(
+          marker,
+          "click",
+          makeOverListener("badanuri", badanuriPositions[i])
+        );
+      }
+
+      // seaAPI 마커 생성
       for (let i = 0; i < markerPositions.length; i++) {
         // 마커 생성
         const marker = new kakao.maps.Marker({
@@ -566,11 +822,6 @@ function Map() {
           mmaf: markerPositions[i].mmaf,
           mmsi: markerPositions[i].mmsi,
         });
-        // 마커에 표시할 인포윈도우 생성
-        // const infowindow = new kakao.maps.InfoWindow({
-        // content: markerPositions[i].content, // 인포윈도우에 표시할 내용
-        // });
-        // infowindow.open(map, marker);
 
         const overlay = new kakao.maps.CustomOverlay({
           content: markerPositions[i].content,
@@ -584,15 +835,25 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener(markerPositions[i])
+          makeOverListener("sea", markerPositions[i])
         );
       }
 
-      function makeOverListener(markerPosition) {
+      function makeOverListener(api, markerPosition) {
         return function () {
           // infowindow.open(map, marker);
-          // 해양정보 불러오기
-          fetchData({ mmaf: markerPosition.mmaf, mmsi: markerPosition.mmsi });
+
+          // 해양정보 불러오기 (seaAPI)
+          if (api === "sea") {
+            fetchData({
+              api: api,
+              mmaf: markerPosition.mmaf,
+              mmsi: markerPosition.mmsi,
+            });
+          } else if (api === "badanuri") {
+            // console.log(markerPosition);
+            fetchData({ api: api, ObsCode: markerPosition.obsCode });
+          }
           // 모달을 만들어보자
           // setModalOpen(true);
           // console.log(markerPosition);
@@ -602,10 +863,33 @@ function Map() {
       // 해양 정보 받아오는 api
       const fetchData = async (props) => {
         try {
-          const response = await axios.get(
-            `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
-          );
-          setData(response.data.result.recordset);
+          if (props.api === "sea") {
+            const response = await axios.get(
+              `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
+            );
+            setData(response.data.result.recordset);
+          } else if (props.api === "badanuri") {
+            const response = await bada_axios.get(
+              `buObsRecent/search.do?ObsCode=${props.ObsCode}`
+            );
+            const new_data = [
+              {
+                MMSI_NM: response.data.result.meta.obs_post_name,
+                AIR_TEMPERATURE: response.data.result.data.air_temp,
+                LATITUDE: response.data.result.meta.obs_lat,
+                LONGITUDE: response.data.result.meta.obs_lon,
+                WIND_DIRECT: response.data.result.data.wind_dir,
+                AIR_PRESSURE: response.data.result.data.air_pres,
+                WIND_SPEED: response.data.result.data.wind_speed,
+                WAVE_HEIGHT: response.data.result.data.wave_height,
+                SALINITY: response.data.result.data.Salinity,
+                WATER_TEMPER: response.data.result.data.water_temp,
+              },
+            ];
+            setData(new_data);
+            // console.log(response.data.result.data);
+          }
+          // 모달열기
           setModalOpen(true);
         } catch (e) {
           console.log(e);

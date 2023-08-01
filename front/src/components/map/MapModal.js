@@ -10,7 +10,6 @@ const MapModal = () => {
   useEffect(() => {
     // 근데 콘솔창이 두번찍히네..
     console.log(data);
-
     return () => {};
   }, [data]);
 
@@ -32,6 +31,8 @@ const MapModal = () => {
           <p>기압: {data[0].AIR_PRESSURE}</p>
           <p>풍속: {data[0].WIND_SPEED}</p>
           <p>수온: {data[0].WATER_TEMPER}</p>
+          <p>파고: {data[0].WAVE_HEIGHT}</p>
+          <p>염분: {data[0].SALINITY}</p>
         </div>
 
         {/* <h2>{marker}</h2> */}
