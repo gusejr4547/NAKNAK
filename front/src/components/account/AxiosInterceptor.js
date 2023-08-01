@@ -25,13 +25,12 @@ const authorizedRequest = async (config) => {
 
     // Axios를 이용하여 요청
     response = await instance(config)
-
+    console.log('토큰멀쩡')
     return response
 
   } catch (err) {
     // 토큰 만료
     if (err.response.status === 401) {
-
       try {
         // 액세스 토큰 갱신 요청
         const response = await instance.post('/api/reissue', {})

@@ -18,96 +18,74 @@ function Profile(props) {
     const [userData ] = useRecoilState(loginuser);
     const [accesstoken ] = useRecoilState(token);
     const [profileData, setProfileData] = useState(null);
+    const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
     // console.log(accesstoken)
     // const acctoken = localStorage.getItem("key")
 
-    const header = useMemo(() => ({
-      Authorization: accesstoken,
-    }), [accesstoken]);
+    // const header = useMemo(() => ({
+    //   Authorization: accesstoken,
+    // }), [accesstoken]);
     
+    const getUser = async () => {
+      try {
+        // console.log(header)
+        const response = await authorizedRequest({ method: 'get', url: `/api/members/${temp}` });
+        setProfileData(response.data);
+        console.log(response.data, 456);
+        setLoading(false); // 데이터 로딩 완료
+      } catch (error) {
+        console.error("Error posting data:", error);
+        setLoading(false); // 데이터 로딩 완료 (에러 발생)
+      }
+    };
+
     useEffect(() => {
-        const getUser = async () => {
-          try {
-            console.log(header)
-            const response = await authorizedRequest({ method: 'get', url: `/api/members/${temp}` });
-
-            // const response = await authorizedRequest(`/members/${temp}`);
-            setProfileData(response.data);
-            console.log(profileData, 123);
-            console.log(response.data, 456);
-          } catch (error) {
-            console.error("Error posting data:", error);
-          }
-        };
-        getUser();
-      }, [header, profileData, temp]
-);
-
-  const followingUser = async () => {
-    console.log(profileData.memberResponse.memberId, userData.memberId)
-    if (profileData.memberResponse.memberId === userData.memberId) {
-      console.log('동일')
-      return
+      getUser();
+    }, []);
+    
+    if (loading) {
+      return <div>Loading...</div>;
     }
-    const param = { follow: profileData.memberResponse.memberId };
-    const config = {params:param, headers:header}
-    try {
-      const response = await axios.post("/api/follow/register", null, config);
-      console.log(response, 456);
-    } catch (error) {
-      console.error('Error posting data:', error);
+  
+    if (!profileData) {
+      return <div>Failed to load data.</div>;
     }
-  };
-
-
-
 
     return (
         <div>
-
-            <h1>프로필</h1>
-            {profileData && (
-          <div className="profileContainer">
-            <div className="profileimgBox">
-            {profileData && profileData.memberResponse.memberImage?.fileUrl && (
-            <img
-              className="profileImg"
-              src={profileData.memberResponse.memberImage.fileUrl}
-              alt="profileimg"
-              style={{ width: "150px" }}
-            />
-          )}
-            </div>
-            <div className="profileBox">
-                <p className="usernickname">닉네임:{profileData.memberResponse.nickname}</p>
-                <p className="userLV">LV:{profileData.memberStatusResponse.level}</p>
-                <p className="usernewBee">초보자:{profileData.memberStatusResponse.newBee? 'O' : 'X'}</p>
-                <p className="userpoint">포인트:{profileData.memberStatusResponse.point}</p>
-                
-                
-                
+          <h1>프로필</h1>
+          {profileData && (
+        <div className="profileContainer">
+          <div className="profileimgBox">
+          {profileData && profileData.memberResponse.memberImage?.fileUrl && (
+          <img
+            className="profileImg"
+            src={profileData.memberResponse.memberImage.fileUrl}
+            alt="profileimg"
+            style={{ width: "150px" }}
+          />
+        )}
+          </div>
+          <div className="profileBox">
+              <p className="usernickname">닉네임 : {profileData.memberResponse.nickname}</p>
+              <p className="userLV">LV : {profileData.memberStatusResponse.level}</p>
+              <p className="usernewBee">초보자 : {profileData.memberStatusResponse.newBee? 'Newbee' : 'Expert'}</p>
+              <p className="userpoint">포인트 : {profileData.memberStatusResponse.point}</p>
               
-              <div className="followContainer">  
-              <Following/>
-              <Follower/>
-                {profileData.memberResponse.memberId !== userData.memberId && (
-                <Button
-                  as="input"
-                  type="button"
-                  value="팔로우"
-                  style={{ margin: '10px 0px 0px 0px' }}
-                  onClick={followingUser}
-                />
-                )}
-
-            </div>
+              
+              
+            
+            <div className="followContainer">  
+            <Following user={profileData.memberResponse.memberId}/>
+            <Follower user={profileData.memberResponse.memberId}/>
+          </div>
 
 
 
-            </div>
-            </div>
-            )}
-            </div>
+          </div>
+          </div>
+          )}
+        </div>
       );
 }
 
