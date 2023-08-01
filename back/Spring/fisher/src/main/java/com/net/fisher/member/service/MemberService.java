@@ -63,7 +63,7 @@ public class MemberService {
     @PostConstruct
     public void initialize(){ // server on mattermost bot
         String ipAddressStr = "ip"; //test
-        try {//test2
+        try {
             InetAddress ipAddress = InetAddress.getLocalHost();
             ipAddressStr = ipAddress.getHostAddress();
             System.out.println("Your IP address is: " + ipAddressStr);
