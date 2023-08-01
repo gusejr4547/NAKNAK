@@ -10,8 +10,6 @@ import useInput from "./use_input";
 import emailInput from "./email_input";
 // import { getData, postData } from "../../utils/api";
 
-
-
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -67,11 +65,11 @@ function Login(props) {
       setLoading(true);
       console.log(loginData);
       const response = await axios.post("/api1/api/login", loginData);
-      setPostData(response.data);
+      // setPostData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
-      localStorage.setItem("key", response.headers.authorization);;
-      console.log(accesstoken, 789)
+      localStorage.setItem("key", response.headers.authorization);
+      console.log(accesstoken, 789);
       navigate("/");
       // console.log(postData, 123);
       console.log(response, 456);
