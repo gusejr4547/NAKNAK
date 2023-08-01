@@ -5,32 +5,78 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginuser, token } from "../../utils/atoms";
+import AuthInput from "./Authinput";
+import useInput from "./use_input";
+import emailInput from "./email_input";
+// import { getData, postData } from "../../utils/api";
+
+const isNotEmpty = (value) => value.trim() !== "";
+const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 function Login(props) {
-  const [loginData, setLoginData] = useState({});
+  // const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [postData, setPostData] = useRecoilState(loginuser);
-  const [accesstoken, setToken] = useRecoilState(token);
+  const [userData, setUserData] = useRecoilState(loginuser);
+  const [accesstoken, setAccessToken] = useRecoilState(token);
   const navigate = useNavigate();
-
   // useEffect(() => {
   //   if (accesstoken) {
   //     navigate('/');
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  const {
+    $value: userIdValue,
+    $isValid: userIdIsValid,
+    $hasError: userIdHasError,
+    $valueChangeHandler: userIdChangeHandler,
+    $inputBlurHandler: userIdBlurHandler,
+    $reset: resetuserId,
+  } = emailInput(isNotEmpty);
 
+  const {
+    $value: userPasswordValue,
+    $isValid: userPasswordValueIsValid,
+    $hasError: userPasswordHasError,
+    $valueChangeHandler: userPasswordChangeHandler,
+    $inputBlurHandler: userPasswordBlurHandler,
+    $reset: resetuserPassword,
+  } = useInput(isNotEmpty);
+
+  const loginHandleKey = (eve) => {
+    if (eve.key == "Enter") {
+      loginHandleClick();
+    }
+  };
   const loginHandleClick = async () => {
+    const loginData = { email: userIdValue, password: userPasswordValue };
+
+    if (!loginData.email) {
+      console.log("이메일은 필수 입력값입니다.");
+      return;
+    }
+    if (!isValidEmailFormat(loginData.email)) {
+      console.log("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+
+    if (!loginData.password) {
+      console.log("비밀번호는 필수 입력값입니다.");
+      return;
+    }
+
     try {
       setLoading(true);
       console.log(loginData);
-      const response = await axios.post("/api/login", loginData);
-      setPostData(response.data);
+      const response = await axios.post("/api1/api/login", loginData);
+      setUserData(response.data);
       console.log(response.headers.authorization);
-      setToken(response.headers.authorization);
+      setAccessToken(response.headers.authorization);
+      localStorage.setItem("key", response.headers.authorization);
+      console.log(accesstoken, 789);
       navigate("/");
-      console.log(postData, 123);
+      // console.log(postData, 123);
       console.log(response, 456);
       setLoading(false);
     } catch (error) {
@@ -41,10 +87,31 @@ function Login(props) {
     }
   };
 
-  const loginHandleChange = (event) => {
-    const { name, value } = event.target;
-    setLoginData({ ...loginData, [name]: value });
+  const socialLoginHandler = async (provider) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `/api1/api/oauth2/authorization/${provider}`
+      );
+      setUserData(response.data);
+      console.log(response.headers.authorization);
+      setAccessToken(response.headers.authorization);
+      localStorage.setItem("key", response.headers.authorization);
+      navigate("/");
+      // console.log(postData, 123);
+      console.log(response, 456);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error posting data:", error);
+      setError("데이터 전송에 실패했습니다.");
+      setLoading(false);
+    }
   };
+
+  // const loginHandleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setLoginData({ ...loginData, [name]: value });
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -74,23 +141,35 @@ function Login(props) {
         style={{
           display: "inline-block",
           width: "200px",
-          height: "120px",
+          height: "240px",
           margin: "30px 0px 0px 0px",
         }}
       >
-        <input
+        <AuthInput
+          label="아이디"
           type="text"
-          placeholder="id"
-          name="email"
-          onChange={loginHandleChange}
+          id="userId"
+          placeholder="아이디 입력"
+          $value={userIdValue}
+          onChange={userIdChangeHandler}
+          onBlur={userIdBlurHandler}
+          $hasError={userIdHasError}
+          $errorText={userIdHasError}
+          onKeyPress={loginHandleKey}
         />
-        <input
-          type="text"
-          placeholder="password"
-          style={{ margin: "10px 0px 0px 0px" }}
-          name="password"
-          onChange={loginHandleChange}
+        <AuthInput
+          label="비밀번호"
+          type="password"
+          id="userPassword"
+          placeholder="비밀번호 입력"
+          $value={userPasswordValue}
+          onChange={userPasswordChangeHandler}
+          onBlur={userPasswordBlurHandler}
+          $hasError={userPasswordHasError}
+          $errorText="필수 입력값입니다"
+          onKeyPress={loginHandleKey}
         />
+
         <Button
           as="input"
           type="button"
@@ -103,16 +182,24 @@ function Login(props) {
         className="border-top"
         style={{ width: "200px", margin: "10px 0px 0px 0px" }}
       >
-        <img
-          src="assets/icons/google.PNG"
-          alt="Google 로고"
-          style={{ width: "30px", height: "30px", margin: "10px 10px 0px 0px" }}
-        />
-        <img
-          src="assets/icons/kakao.PNG"
-          alt="Kakao 로고"
-          style={{ width: "30px", height: "30px", margin: "10px 0px 0px 0px" }}
-        />
+        <Button
+          as="input"
+          onClick={() => socialLoginHandler("google")}
+          type="button"
+          value="구글 로그인"
+          style={{ backgroundColor: "white", color: "black" }}
+        ></Button>
+        <Button
+          as="input"
+          onClick={() => socialLoginHandler("kakao")}
+          type="button"
+          value="카카오 로그인"
+          style={{
+            margin: "10px 0px 0px 0px",
+            backgroundColor: "yellow",
+            color: "black",
+          }}
+        ></Button>
         <Link to="/Signup" className="nav-link">
           <Button
             as="input"
@@ -127,83 +214,3 @@ function Login(props) {
 }
 
 export default Login;
-
-// const loginHandleClick = async () => {
-//     try {
-//       setLoading(true);
-//       const response = await axios.post("/api/login", loginData);
-//       setPostData(response.data);
-//       setLoading(false);
-//     } catch (error) {
-//       console.error("Error posting data:", error);
-//       setError("데이터 전송에 실패했습니다.");
-//       setLoading(false);
-//     }
-//   };
-
-//   const loginHandleChange = (event) => {
-//     const { name, value } = event.target;
-//     setLoginData({ ...loginData, [name]: value });
-//   };
-//   const [loginData, setLoginData] = useState({});
-//   const [postData, setPostData] = useState({});
-
-// {/* <input type="text" name="email" onChange={loginHandleChange} />
-// <input type="password" name="password" onChange={loginHandleChange} />
-// <button onClick={loginHandleClick}>post</button>
-
-// const loginHandleChange = (event) => {
-// const { name, value } = event.target;
-// setLoginData({ ...loginData, [name]: value });
-// }; */}
-
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// function Login() {
-//   const [loginData, setLoginData] = useState({});
-//   const [postData, setPostData] = useState({});
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState('');
-
-//   const loginHandleClick = async () => {
-//     try {
-//       setLoading(true);
-//       const response = await axios.post('/api/login', loginData);
-//       setPostData(response.data);
-//       setLoading(false);
-//     } catch (error) {
-//       console.error('Error posting data:', error);
-//       setError('데이터 전송에 실패했습니다.');
-//       setLoading(false);
-//     }
-//   };
-
-//   const loginHandleChange = (event) => {
-//     const { name, value } = event.target;
-//     setLoginData({ ...loginData, [name]: value });
-//   };
-
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         name="email"
-//         placeholder="이메일"
-//         onChange={loginHandleChange}
-//       />
-//       <input
-//         type="password"
-//         name="password"
-//         placeholder="비밀번호"
-//         onChange={loginHandleChange}
-//       />
-//       <button onClick={loginHandleClick}>로그인</button>
-//       {loading && <p>Loading...</p>}
-//       {error && <p>{error}</p>}
-//       {postData && <pre>{JSON.stringify(postData, null, 2)}</pre>}
-//     </div>
-//   );
-// }
-
-// export default Login;

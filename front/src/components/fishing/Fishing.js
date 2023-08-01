@@ -77,7 +77,6 @@ function Fishing(props) {
 
   return (
     <div>
-      <h1>피싱모드입니다</h1>
       <div className="fishing">
         <div className="box-header">
           <div
@@ -121,15 +120,6 @@ function Fishing(props) {
       >
         <span>종료하기</span>
       </div>
-      <Link to="/Fishpic" className="nav-link">
-        <input type="submit" value="촬영" />
-      </Link>
-      <Link to="/Dogam" className="nav-link">
-        <input type="submit" value="도감" />
-      </Link>
-      <Link to="/Getfish" className="nav-link">
-        <input type="submit" value="어획" />
-      </Link>
     </div>
   );
 }

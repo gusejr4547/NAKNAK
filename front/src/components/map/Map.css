@@ -1,0 +1,9 @@
+#map {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+}
+#title {
+  display: absolute;
+  padding-top: 20%;
+}
