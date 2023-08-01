@@ -44,6 +44,13 @@ function Login(props) {
     $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
+
+  const loginHandleKey = (eve) => {
+    if (eve.key == 'Enter') {
+      loginHandleClick();
+    }
+
+  }
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
@@ -89,6 +96,7 @@ function Login(props) {
       setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
+      localStorage.setItem("key", response.headers.authorization);
       navigate("/");
       // console.log(postData, 123);
       console.log(response, 456);
@@ -147,6 +155,7 @@ function Login(props) {
           onBlur={userIdBlurHandler}
           $hasError={userIdHasError}
           $errorText={userIdHasError}
+          onKeyPress={loginHandleKey}
         />
         <AuthInput
           label="비밀번호"
@@ -158,6 +167,7 @@ function Login(props) {
           onBlur={userPasswordBlurHandler}
           $hasError={userPasswordHasError}
           $errorText="필수 입력값입니다"
+          onKeyPress={loginHandleKey}
         />
 
         <Button
