@@ -108,6 +108,11 @@ public class MemberController {
                         memberMapper.toMemberResponseDtos(memberList)),HttpStatus.OK);
     }
 
+    @PostMapping("/members/status/change")
+    public ResponseEntity<MemberStatusDto.Response> upExperiencePoint(
+            @RequestBody MemberStatusDto.UpStatus upStatus){
+        return null;
+    }
 
 
 
