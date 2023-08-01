@@ -82,7 +82,7 @@ public class MemberService {
             requestMessage.setUsername("serverBot");
             requestMessage.setChannel("9e105");
             List<Attachment> attachments = new ArrayList<>();
-            attachments.add(new Attachment("Server is on! 서버가 켜졌어용"));
+            attachments.add(new Attachment("Server is on! 서버가 켜졌어용 :09_buk_e105_mascot_face: "));
             requestMessage.setAttachments(attachments);
 
             // Create the HttpEntity with headers and request object
