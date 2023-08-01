@@ -113,6 +113,18 @@ public class FishController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @PostMapping("/fishes/inventory/delete")
+    public ResponseEntity<HttpStatus> deleteInventory(
+            @RequestHeader(name = "Authorization") String token,
+            @RequestBody InventoryDto.Delete requestBody) {
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        fishService.deleteInventoryItem(tokenId, requestBody.getInventoryId());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /*------------------------관리용 API-----------------------*/
 
 

@@ -34,4 +34,13 @@ public class InventoryDto {
         private String fishName;
         private double fishSize;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
+    public static class Delete{
+        private long inventoryId;
+    }
 }

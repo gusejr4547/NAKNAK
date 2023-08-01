@@ -29,6 +29,7 @@ public enum ExceptionCode {
 
     PLAN_NOT_FOUND(404, "Plan Not Found"),
     TOTAL_PLAN_NOT_FOUND(404, "TotalPlan Not Found"),
+    NOT_OWNER_OF(409,"Not owner of item"),
     FAILED_TO_DELETE_TOTAL_PLAN(500, "Failed Delete TotalPlan");
 
     @Getter

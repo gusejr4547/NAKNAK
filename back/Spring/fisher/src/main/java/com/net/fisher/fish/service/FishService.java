@@ -146,7 +146,18 @@ public class FishService {
     }
 
 
+    @Transactional
+    public void deleteInventoryItem(long tokenId, long inventoryId){
+        Member member = memberService.findMember(tokenId);
 
+        Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow(()->new BusinessLogicException(ExceptionCode.INVENTORY_NOT_FOUND));
+
+        if(inventory.getMember().getMemberId() == tokenId){
+            inventoryRepository.deleteById(inventoryId);
+        }else{
+            throw new BusinessLogicException(ExceptionCode.NOT_OWNER_OF);
+        }
+    }
 
     @Transactional
     public FishBowls intoFishBowls(long tokenId, long inventoryId) {
