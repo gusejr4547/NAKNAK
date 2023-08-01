@@ -3,8 +3,6 @@ import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
 import axios from "axios";
 
-import { getData, postData } from "../../utils/api";
-
 import "./Dogam.css";
 import FishDetailModal from "./FishDetailModal";
 
