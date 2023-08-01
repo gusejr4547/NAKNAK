@@ -8,6 +8,9 @@ import { loginuser, token } from "../../utils/atoms";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
+// import { getData, postData } from "../../utils/api";
+
+
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -16,7 +19,7 @@ function Login(props) {
   // const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [postData, setPostData] = useRecoilState(loginuser);
+  const [userData, setUserData] = useRecoilState(loginuser);
   const [accesstoken, setAccessToken] = useRecoilState(token);
   const navigate = useNavigate();
   // useEffect(() => {
@@ -62,13 +65,17 @@ function Login(props) {
 
     try {
       setLoading(true);
-      console.log(loginData);
+      console.log(loginData, 123);
+
       const response = await axios.post("/api/login", loginData);
-      setPostData(response.data);
-      console.log(response.headers.authorization);
+      // const response = await postData("/api/login", loginData);
+      setUserData(response.data);
+      console.log();
       setAccessToken(response.headers.authorization);
+      localStorage.setItem("key", response.headers.authorization);;
+      console.log(accesstoken, 789)
       navigate("/");
-      console.log(postData, 123);
+      // console.log(postData, 123);
       console.log(response, 456);
       setLoading(false);
     } catch (error) {
@@ -83,11 +90,11 @@ function Login(props) {
     try {
       setLoading(true);
       const response = await axios.get(`/api/oauth2/authorization/${provider}`);
-      setPostData(response.data);
+      setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       navigate("/");
-      console.log(postData, 123);
+      // console.log(postData, 123);
       console.log(response, 456);
       setLoading(false);
     } catch (error) {

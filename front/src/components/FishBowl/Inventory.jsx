@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { getData, postData } from "../../utils/api";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
-
+import { authorizedRequest } from "../account/AxiosInterceptor";
 import "./Inventory.css";
 
 const SmallMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
@@ -16,11 +16,7 @@ const SmallMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
     onClose();
   };
   return (
-    <div
-      className="small-menu"
-      style={{
-      }}
-    >
+    <div className="small-menu" style={{}}>
       <button onClick={handleDelete}>Delete</button>
       <button onClick={handleMenuClose}>Close</button>
     </div>
@@ -32,6 +28,7 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
   const [menuPosition, setMenuPosition] = useState(false);
   const slideRef = useRef(null);
 
+  console.log("ItemSlide : ", fishInfo);
   // 슬라이드 클릭 이벤트 핸들러
   const handleSlideClick = (e) => {
     console.log("slide clicked");
@@ -69,11 +66,16 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
     <div ref={slideRef} className="inven-slide" onClick={handleSlideClick}>
       {/* 동적으로 받아온 슬라이드 내용 표시 */}
       <img src={""} alt={"fish img"} />
-      <p>fishInfo.name</p>
+      <p>{fishInfo.fishName}</p>
+      <p>{fishInfo.fishSize}</p>
       {/* ... */}
 
       {showSmallMenu && (
-        <SmallMenu onClose={handleCloseMenu} menuPosition={menuPosition} fishInfo={fishInfo} />
+        <SmallMenu
+          onClose={handleCloseMenu}
+          menuPosition={menuPosition}
+          fishInfo={fishInfo}
+        />
       )}
     </div>
   );
@@ -90,9 +92,15 @@ const Inventory = () => {
     const getInventory = async () => {
       try {
         setLoading(true);
-        const response = await postData("", loginUser);
-        console.log("response success", response.data);
-        setInventoryData(response.data);
+
+        const response = await authorizedRequest({
+          method: "get",
+          url: `/api/fishes/inventory/view`,
+        });
+
+        console.log("response success", response.data.data);
+        setInventoryData(response.data.data);
+        console.log("inven data =", inventoryData[0]);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching inventory");
@@ -100,6 +108,7 @@ const Inventory = () => {
         setLoading(false);
       }
     };
+    getInventory();
   }, []);
 
   const goBack = () => {
@@ -114,6 +123,38 @@ const Inventory = () => {
     );
   };
 
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
+
+  const addItem = async () => {
+    try {
+      setLoading(true);
+      const fish = {
+        fishCode: "A003",
+        size: 41.3,
+      };
+
+      const response = await authorizedRequest({
+        method: "post",
+        url: `/api/fishes/catch`,
+        data: fish,
+      });
+
+      console.log("response success", response.data);
+      setInventoryData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching inventory");
+      setError("데이터 로드에 실패했습니다.");
+      setLoading(false);
+    }
+  };
+
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
+
   return (
     <div className="inven-wrapper">
       <img
@@ -122,30 +163,26 @@ const Inventory = () => {
         className="dogam-back-button"
         onClick={goBack}
       />
+      <img
+        src="/assets/icons/x.png"
+        alt="exit"
+        // className="dogam-back-button"
+        onClick={addItem}
+      />
       <div className="inven-board">
         <div className="inven-carousel inven-disable-scrollbar">
-          {/* {inventoryData.map((fish) => {
-            <ItemSlide key={null} fishInfo={null} onDeleteSlide={()=>handleDeleteSlide(fish)}  />;
-          })} */}
-
+          {Object.keys(inventoryData).map((key) => {
+            const fish = inventoryData[key];
+            console.log("here", fish);
+            return (
+              <ItemSlide
+                fishInfo={fish}
+                onDeleteSlide={() => handleDeleteSlide(inventoryData[key])}
+              />
+            );
+          })}
           {/* dummy start */}
           {/* <ItemSlide key={null} fishInfo={null} onDeleteSlide={() => handleDeleteSlide(fish)} />; */}
-
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
-          <ItemSlide key={null} fishInfo={null} />
 
           {/* dummy end */}
         </div>

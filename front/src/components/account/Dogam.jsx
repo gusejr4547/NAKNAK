@@ -63,7 +63,10 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openFishDetailModal(fish)}
           >
-            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}
@@ -74,7 +77,10 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openFishDetailModal(fish)}
           >
-            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}{" "}
@@ -84,7 +90,10 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openFishDetailModal(fish)}
           >
-            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}{" "}
@@ -94,7 +103,10 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openFishDetailModal(fish)}
           >
-            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}{" "}
@@ -104,7 +116,10 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openFishDetailModal(fish)}
           >
-            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}{" "}
@@ -114,7 +129,10 @@ const Dogam = (props) => {
             className={"dogam-slide" + (catched ? "" : " dogam-slide-inactive")}
             onClick={() => openFishDetailModal(fish)}
           >
-            <img src={"http://localhost:8080" + fish.imgUrl} alt={fish.name} />
+            <img
+              src={"http://192.168.30.161:8080" + fish.imgUrl}
+              alt={fish.name}
+            />
             <h6>{fish.name}</h6>
           </div>
         ))}
