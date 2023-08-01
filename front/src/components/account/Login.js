@@ -44,13 +44,11 @@ function Login(props) {
     $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
-
   const loginHandleKey = (eve) => {
-    if (eve.key == 'Enter') {
+    if (eve.key == "Enter") {
       loginHandleClick();
     }
-
-  }
+  };
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
@@ -72,7 +70,7 @@ function Login(props) {
       setLoading(true);
       console.log(loginData);
       const response = await axios.post("/api1/api/login", loginData);
-      // setPostData(response.data);
+      setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       localStorage.setItem("key", response.headers.authorization);
@@ -92,7 +90,9 @@ function Login(props) {
   const socialLoginHandler = async (provider) => {
     try {
       setLoading(true);
-      const response = await axios.get(`/api/oauth2/authorization/${provider}`);
+      const response = await axios.get(
+        `/api1/api/oauth2/authorization/${provider}`
+      );
       setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);

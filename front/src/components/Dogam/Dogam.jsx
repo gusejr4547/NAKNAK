@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
+import axios from "axios";
 
 import { getData, postData } from "../../utils/api";
 
@@ -27,7 +28,7 @@ const Dogam = (props) => {
     const getDogam = async () => {
       try {
         setLoading(true);
-        const response = await getData("/api/books/1");
+        const response = await axios.get("/api1/api/books/1");
         console.log("response success", response.data);
         setDogamData(response.data);
         setLoading(false);

@@ -7,7 +7,7 @@ import axios from "../../api/WeatherAPI";
 // http://marineweather.nmpnt.go.kr:8001/openWeatherNow.do?serviceKey=인증키&resultType=json&mmaf=기관코드&mmsi=지점코드1,지점코드2
 // https://apihub.kma.go.kr/api/typ01/url/sea_obs.php?stn=21229&authKey=DeWo9mhFRAelqPZoRbQH9Q
 function Infoapi(props) {
-  // const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
   const [weather, setWeather] = useState(null);
 
   const fetchData = async (props) => {
@@ -20,16 +20,9 @@ function Infoapi(props) {
       // const response = await axios.get(
       //   `/api2/openWeatherNow.do?mmaf=101&mmsi=994401578&serviceKey=102D1304-985C-4C11-89D1-574914365F64&resultType=json`
       // );
-<<<<<<< HEAD
-      console.log(response.data);
-      // setWeather
-      // setData(response.data.result.recordset);
-      // console.log(response.data.result.recordset);
-=======
 
       setData(response.data.result.recordset);
       console.log(response);
->>>>>>> feature/auth
     } catch (e) {
       console.log(e);
     }
