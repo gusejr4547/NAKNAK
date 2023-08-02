@@ -15,13 +15,15 @@ public interface PostMapper {
     Post postDtoToPost(PostDto.Post requestBody);
 
     default PostDto.Response postToPostResponseDto(Post post, List<PostImageDto.Response> postImageDtos, long likeCount){
+        String fileUrl = "/upload/man.jpeg";
+        if(post.getMember().getMemberImage() !=null) fileUrl = post.getMember().getMemberImage().getFileUrl();
         PostDto.Response response = PostDto.Response.builder()
                 .postId(post.getPostId())
                 .content(post.getContent())
                 .registeredAt(post.getRegisteredAt())
                 .memberId(post.getMember().getMemberId())
                 .memberNickname(post.getMember().getNickname())
-                .memberImageUrl(post.getMember().getMemberImage().getFileUrl())
+                .memberImageUrl(fileUrl)
                 .postImageDtos(postImageDtos)
                 .likeCount(likeCount)
                 .views(post.getViews())
