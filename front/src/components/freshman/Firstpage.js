@@ -51,11 +51,9 @@ function Firstpage() {
             points: 4,
           }}
         />
-        <div>
-          <span>
-            <button>응</button>
-            <button>아니</button>
-          </span>
+        <div className="btns">
+          <span className="btn">응</span>
+          <span className="btn">아니</span>
         </div>
       </div>
     </div>

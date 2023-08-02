@@ -76,3 +76,15 @@
   position: absolute;
   top: 10rem;
 }
+
+.btns {
+  display: flex;
+  position: absolute;
+  bottom: 2rem;
+  z-index: 40;
+  justify-content: space-between;
+}
+.btn {
+  background-color: cornflowerblue;
+  width: 5rem;
+}
