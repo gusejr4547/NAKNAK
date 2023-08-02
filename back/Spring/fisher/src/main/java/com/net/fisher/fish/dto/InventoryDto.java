@@ -43,4 +43,14 @@ public class InventoryDto {
     public static class Delete{
         private long inventoryId;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
+    public static class Info {
+        private int count;
+        private double maxSize;
+    }
 }

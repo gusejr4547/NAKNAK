@@ -5,7 +5,6 @@ import com.net.fisher.fish.dto.BooksDto;
 import com.net.fisher.fish.dto.FishBowlsDto;
 import com.net.fisher.fish.dto.FishRecogDto;
 import com.net.fisher.fish.dto.InventoryDto;
-import com.net.fisher.fish.entity.Books;
 import com.net.fisher.fish.entity.FishBowls;
 import com.net.fisher.fish.entity.Inventory;
 import com.net.fisher.fish.mapper.FishMapper;
@@ -124,6 +123,9 @@ public class FishController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    /*@GetMapping("/fishes/inventory/info")
+    public ResponseEntity<InventoryDto.Info>*/
 
     /*------------------------관리용 API-----------------------*/
 
