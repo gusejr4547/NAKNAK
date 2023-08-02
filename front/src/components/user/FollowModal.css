@@ -1,5 +1,5 @@
 /* modal창 외부화면 */
-.Modal {
+.followModal {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,9 +10,9 @@
   justify-content: center;
   align-items: center;
 }
- 
+
 /* modal창 */
-.modalBody {
+.followmodalBody {
   position: absolute;
   width: 300px;
   height: 500px;
@@ -22,8 +22,8 @@
   border-radius: 10px;
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 }
- 
-#modalCloseBtn {
+
+#followmodalCloseBtn {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -32,8 +32,7 @@
   background-color: transparent;
   font-size: 20px;
 }
- 
-#modalCloseBtn:hover {
+
+#followmodalCloseBtn:hover {
   cursor: pointer;
 }
- 

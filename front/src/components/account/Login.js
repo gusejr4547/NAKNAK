@@ -127,10 +127,11 @@ function Login(props) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         height: "100vh",
+        padding: "0px 0px 50% 0px",
       }}
     >
-      <h1 style={{ margin: "30px 0px 0px 0px" }}>로그인 페이지</h1>
       <img
         src="assets/cats/cat.png"
         alt=""
@@ -186,20 +187,34 @@ function Login(props) {
           as="input"
           onClick={() => socialLoginHandler("google")}
           type="button"
-          value="구글 로그인"
-          style={{ backgroundColor: "white", color: "black" }}
+          value=""
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            width: "50%",
+            height: "40%",
+            backgroundImage: `url(/assets/icons/Google1.png)`,
+            backgroundSize: "cover",
+            backgroundPosition: "left center",
+          }}
         ></Button>
+
         <Button
           as="input"
           onClick={() => socialLoginHandler("kakao")}
           type="button"
-          value="카카오 로그인"
+          value=""
           style={{
-            margin: "10px 0px 0px 0px",
             backgroundColor: "yellow",
             color: "black",
+            width: "50%",
+            height: "40%",
+            backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         ></Button>
+
         <Link to="/Signup" className="nav-link">
           <Button
             as="input"
