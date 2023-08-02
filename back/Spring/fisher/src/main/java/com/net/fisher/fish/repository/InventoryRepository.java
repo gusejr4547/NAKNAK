@@ -10,5 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface InventoryRepository extends JpaRepository<Inventory,Long> {
     Page<Inventory> getInventoriesByMember(Member member, Pageable pageable);
-    @Query("SELECT COUNT(c) as count, MAX(c.size) as maxSize FROM inventories c WHERE c.member.memberId = :memberId")    InventoryDto.Info getInventoryInfo(long memberId);
+    @Query("SELECT COUNT(c) as count, CASE WHEN COUNT(c) > 0 THEN MAX(c.size) ELSE 0 END AS maxSize FROM inventories c WHERE c.member.memberId = :memberId")
+    InventoryDto.Info getInventoryInfo(long memberId);
 }
