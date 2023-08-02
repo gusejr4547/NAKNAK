@@ -60,10 +60,10 @@ const Board = () => {
 
   return (
     <div className="board-wrapper">
-      <div className="board-search-bar"></div>
-      <div className="board-tag-wrapper"></div>
-      <div className="board-board">
-        <div className="borad-feed-carousel">
+      <div className="board-search-bar">here is search bar</div>
+      <div className="board-tag-wrapper">tagtagtagtagtagtag</div>
+      <div className="board-board board-disable-scrollbar">
+        <div className="borad-carousel ">
           {/* input dummy */}
           <button onClick={addFeed}>create dummy</button>
           {/* dummy feed data start */}
