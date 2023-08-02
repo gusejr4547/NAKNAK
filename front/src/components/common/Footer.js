@@ -40,6 +40,7 @@ function Footer(props) {
           onClick={() => setActiveNav(2)}
         >
           카메라
+          {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
         </Link>{" "}
       </div>
 

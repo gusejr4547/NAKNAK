@@ -1,10 +1,10 @@
-.loading_wrapper {
+.first_wrapper {
   width: 100%;
   height: 100%;
-  background-color: #ffe9a1;
+  background-color: #ffe48e;
 }
 
-.wave_wrap {
+.first_wave_wrap {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -18,27 +18,27 @@
   left: 5%;
   overflow: hidden;
 }
-.wave1 {
+.first_wave1 {
   height: 46%;
   position: absolute;
   bottom: 0;
   left: 0;
 }
-.wave2 {
+.first_wave2 {
   height: 35%;
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 3;
 }
-.wave3 {
+.first_wave3 {
   height: 40%;
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 2.5;
 }
-.island_img {
+.first_island_img {
   position: absolute;
   bottom: 7.5rem;
   width: 17rem;
@@ -48,7 +48,7 @@
   background: url("../../../public/assets/images/island3.png") center center
     no-repeat;
 }
-.cat_img {
+.first_cat_img {
   position: absolute;
   bottom: 12rem;
   width: 10rem;
@@ -58,8 +58,19 @@
   background: url("../../../public/assets/cats/cat.png") center center no-repeat;
   background-size: 9rem;
 }
-.loading_title {
-  font-size: 5rem;
+.first_malpoong {
+  position: absolute;
+  bottom: 35rem;
+  width: 20rem;
+  height: 20rem;
+  left: 3rem;
+  z-index: 3;
+  background: url("../../../public/assets/images/mainballoon.png") center center
+    no-repeat;
+  background-size: 18rem;
+}
+.first_title {
+  font-size: 2rem;
   font-weight: bold;
   color: #ffffff;
   position: absolute;

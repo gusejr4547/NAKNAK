@@ -40,7 +40,7 @@ function Home(props) {
 
           <div className="home-slide">
             <Link to="/Fishpic" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/camera1.PNG" alt="icon" />
               <h6>카메라</h6>
             </Link>
           </div>
