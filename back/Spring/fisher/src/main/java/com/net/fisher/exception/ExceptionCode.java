@@ -12,6 +12,7 @@ public enum ExceptionCode {
     BOARD_NOT_FOUND(404, "Board Not Found"),
     COMMENT_NOT_FOUND(404, "Comment Not Found"),
     FISH_NOT_FOUND(404, "Fish Not Found in DB"),
+    FOLLOW_NOT_FOUND(404, "Follow Not Found in DB"),
     INVENTORY_NOT_FOUND(404, "Inventory Not Found in DB"),
     FISHBOWLS_NOT_FOUND(404, "Fishbowls Not Found in DB"),
     ATTRACTION_NOT_FOUND(404, "Attraction Not Found"),
@@ -22,6 +23,7 @@ public enum ExceptionCode {
     WRONG_PASSWORD(400,"Wrong Password"),
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
+    FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
     FAILED_TO_WRITE_BOARD(500, "Failed Write Board"),
     FAILED_TO_DELETE_BOARD(500, "Failed Delete Board"),
 
@@ -32,6 +34,8 @@ public enum ExceptionCode {
     POST_NOT_FOUND(404, "Post Not Found"),
     FILE_NOT_FOUND(404, "File Not Found"),
     LIKE_NOT_FOUND(404, "Like Not Found");
+    NOT_OWNER_OF(409,"Not owner of item"),
+    FAILED_TO_DELETE_TOTAL_PLAN(500, "Failed Delete TotalPlan");
 
     @Getter
     private final int status;

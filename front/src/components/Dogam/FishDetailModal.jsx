@@ -7,7 +7,7 @@ const FishDetailModal = ({ fishData, onClose }) => {
   return (
     <div className="fish-detail-modal container">
       <div className="modal-content">
-        <img src={imgUrl} alt={name} />
+        <img src={"http://192.168.30.161:8080" + imgUrl} alt={name} />
         <h3>{name}</h3>
         <p>{info}</p>
         <button onClick={onClose}>닫기</button>
