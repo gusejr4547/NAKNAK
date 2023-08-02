@@ -49,33 +49,34 @@ public class FishService {
 
     @PostConstruct
     public void initialFish(){
-
-        List<Fish> fishList = new ArrayList<>();
-        fishList.add(Fish.builder()
-                .name("전갱이")
-                .imgUrl("/img/fishes/A001.png")
-                .info("육질이 단단한 맛난 생선")
-                .code("A001")
-                .build());
-        fishList.add(Fish.builder()
-                .name("광어")
-                .imgUrl("/img/fishes/A002.png")
-                .info("횟감으로 좋은 흰살 생선")
-                .code("A002")
-                .build());
-        fishList.add(Fish.builder()
-                .name("돌돔")
-                .imgUrl("/img/fishes/A003.png")
-                .info("고오급 횟감")
-                .code("A003")
-                .build());
-        fishList.add(Fish.builder()
-                .name("학꽁치")
-                .imgUrl("/img/fishes/A004.png")
-                .info("겨울철 횟감")
-                .code("A004")
-                .build());
-        fishRepository.saveAll(fishList);
+        if(fishRepository.findById(1L).isEmpty()) {
+            List<Fish> fishList = new ArrayList<>();
+            fishList.add(Fish.builder()
+                    .name("전갱이")
+                    .imgUrl("/img/fishes/A001.png")
+                    .info("육질이 단단한 맛난 생선")
+                    .code("A001")
+                    .build());
+            fishList.add(Fish.builder()
+                    .name("광어")
+                    .imgUrl("/img/fishes/A002.png")
+                    .info("횟감으로 좋은 흰살 생선")
+                    .code("A002")
+                    .build());
+            fishList.add(Fish.builder()
+                    .name("돌돔")
+                    .imgUrl("/img/fishes/A003.png")
+                    .info("고오급 횟감")
+                    .code("A003")
+                    .build());
+            fishList.add(Fish.builder()
+                    .name("학꽁치")
+                    .imgUrl("/img/fishes/A004.png")
+                    .info("겨울철 횟감")
+                    .code("A004")
+                    .build());
+            fishRepository.saveAll(fishList);
+        }
     }
 
     public FishRecogDto recognizeFish(String token, MultipartFile image){
