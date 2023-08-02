@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {
-    Post postDtotoPost(PostDto.Post requestBody);
+    Post postDtoToPost(PostDto.Post requestBody);
 
     default PostDto.Response postToPostResponseDto(Post post, List<PostImageDto.Response> postImageDtos, long likeCount){
         PostDto.Response response = PostDto.Response.builder()
@@ -24,6 +24,7 @@ public interface PostMapper {
                 .memberImageUrl(post.getMember().getMemberImage().getFileUrl())
                 .postImageDtos(postImageDtos)
                 .likeCount(likeCount)
+                .views(post.getViews())
                 .build();
 
         return response;

@@ -1,4 +1,4 @@
-package com.net.fisher.tag.entity;
+package com.net.fisher.post.entity;
 
 
 import jakarta.persistence.*;

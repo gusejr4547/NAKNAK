@@ -4,6 +4,7 @@ import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.fish.dto.InventoryDto;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
+import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
 import com.net.fisher.post.mapper.PostImageMapper;
@@ -37,7 +38,9 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        postService.uploadPost(tokenId, postMapper.postDtotoPost(requestBody), httpServletRequest);
+//        System.out.println(tagPostDto);
+
+        postService.uploadPost(tokenId, postMapper.postDtoToPost(requestBody), httpServletRequest);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -53,7 +56,7 @@ public class PostController {
         long likeCount = postService.getLikeCount(postId);
 
         // view 증가
-        postService.increaseViews(post);
+        postService.increaseViews(postId);
 
         return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount), HttpStatus.OK);
     }

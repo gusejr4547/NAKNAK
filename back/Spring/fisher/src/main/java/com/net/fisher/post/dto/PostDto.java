@@ -38,6 +38,7 @@ public class PostDto {
     public static class Response{
         private long postId;
         private String content;
+        private int views;
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime registeredAt;
 
