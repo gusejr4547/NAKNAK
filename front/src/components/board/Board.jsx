@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import "./Board.css";
 import axios from "axios";
-
+import Feed from "./Feed";
+import "./Board.css";
 const Board = () => {
   const [tagListData, setTagListData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,14 +13,11 @@ const Board = () => {
   ]);
   ////////////////add dummy feed/////////////////////
   ///////////////////////////////////////////////////
-  var cnt = 1;
   const addFeed = async () => {
     try {
       const response = await axios.get("api/posts/1");
       console.log("dummy load success", response.data);
       console.log(typeof response.data);
-      response.data.postId += cnt++;
-      console.log(cnt);
       setFeedListData((prev) => [...prev, response.data]);
       console.log("add success", feedListData);
     } catch (error) {
@@ -73,7 +70,7 @@ const Board = () => {
           {/* feedListData의 데이터를 HTML로 출력 */}
           {Object.keys(feedListData).map((key) => {
             const feed = feedListData[key];
-            return <div>{feed.postId}</div>;
+            return <Feed feedInfo={feed} />;
           })}
           {/* dummy feed data end */}
         </div>
