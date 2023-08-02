@@ -30,7 +30,7 @@ function Following(props) {
       setLoading(false); // 데이터 로딩 실패
     }
   };
-  
+
   useEffect(() => {
     getFllowing();
   }, [props.user]);

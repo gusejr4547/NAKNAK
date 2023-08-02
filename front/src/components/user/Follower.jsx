@@ -42,7 +42,6 @@ function Follower(props) {
   //     Authorization: accesstoken,
   //   }),[accesstoken]);
 
-
   const followUser = async () => {
     if (props.user === userData.memberId) {
       console.log("동일");
@@ -57,8 +56,11 @@ function Follower(props) {
       //   null,
       //   config
       // );
-      const response = await authorizedRequest({ method: 'post', url: "/api1/api/follow/register", params: param});
-
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/follow/register",
+        params: param,
+      });
 
       getFllowing();
     } catch (error) {
@@ -78,7 +80,11 @@ function Follower(props) {
       //   null,
       //   config
       // );
-      const response = await authorizedRequest({ method: 'post', url: "/api1/api/follow/cancel", params: param});
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/follow/cancel",
+        params: param,
+      });
       getFllowing();
     } catch (error) {
       console.error("Error posting data:", error);
@@ -94,29 +100,31 @@ function Follower(props) {
   }
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <p onClick={showModal}>팔로워: {followerData.count}</p>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followerData.data} />
       )}
-      {props.user !== userData.memberId && !isFollowing && (
-        <Button
-          as="input"
-          type="button"
-          value="팔로우"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={followUser}
-        />
-      )}
-      {props.user !== userData.memberId && isFollowing && (
-        <Button
-          as="input"
-          type="button"
-          value="언팔로우"
-          style={{ margin: "10px 0px 0px 0px", backgroundColor: "red" }}
-          onClick={unFollowUser}
-        />
-      )}
+      <div style={{ position: "absolute", top: "60%", left: "-10%" }}>
+        {props.user !== userData.memberId && !isFollowing && (
+          <Button
+            as="input"
+            type="button"
+            value="팔로우"
+            style={{ marginRight: "10px" }}
+            onClick={followUser}
+          />
+        )}
+        {props.user !== userData.memberId && isFollowing && (
+          <Button
+            as="input"
+            type="button"
+            value="언팔로우"
+            style={{ backgroundColor: "red" }}
+            onClick={unFollowUser}
+          />
+        )}
+      </div>
     </div>
   );
 }

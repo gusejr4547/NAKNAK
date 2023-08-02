@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 // import { Button } from "react-bootstrap";
 import Following from "./Following";
 import Follower from "./Follower";
+import Profileinventory from "./Profileinventory";
 import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
@@ -18,6 +19,10 @@ function Profile(props) {
   // const [accesstoken] = useRecoilState(token);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
+  const [activeView, setActiveView] = useState("myPosts");
+  const handleToggle = (view) => {
+    setActiveView(view);
+  };
 
   const getUser = async () => {
     try {
@@ -46,10 +51,34 @@ function Profile(props) {
   }
 
   return (
-    <div>
-      <h1>프로필</h1>
-      <div className="profileContainer">
-        <div className="profileimgBox">
+    <div className="profileContainer" style={{ height: "95%" }}>
+      <div
+        className="profileTop"
+        style={{
+          height: "20%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          borderBottom: "1px solid #000",
+        }}
+      >
+        <div
+          className="profileimgBox"
+          style={{
+            height: "100%",
+            width: "35%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p className="profileusernickname">
+            <span className="profileuserLV">
+              LV {profileData.memberStatusResponse.level}{" "}
+            </span>
+            {profileData.memberResponse.nickname}
+          </p>
           {profileData.memberResponse.memberImage?.fileUrl && (
             <img
               className="profileImg"
@@ -59,28 +88,74 @@ function Profile(props) {
             />
           )}
         </div>
-        <div className="profileBox">
-          <p className="usernickname">
-            닉네임 : {profileData.memberResponse.nickname}
-          </p>
-          <p className="userLV">
-            LV : {profileData.memberStatusResponse.level}
-          </p>
-          <p className="usernewBee">
-            초보자 :{" "}
-            {profileData.memberStatusResponse.newBee ? "Newbee" : "Expert"}
-          </p>
-          <p className="userpoint">
-            포인트 : {profileData.memberStatusResponse.point}
-          </p>
-
-          <div className="followContainer">
-            <Following user={profileData.memberResponse.memberId} />
-            <Follower user={profileData.memberResponse.memberId} />
-          </div>
-          <div>내가 쓴 게시글</div>
-          <div>내가 좋아요한 게시글</div>
+        <div
+          className="profilefollowContainer"
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            width: "65%",
+            height: " 80%",
+          }}
+        >
+          <p>게시글: 0</p>
+          <Following user={profileData.memberResponse.memberId} />
+          <Follower user={profileData.memberResponse.memberId} />
         </div>
+      </div>
+      <div
+        className="profileMiddle"
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          borderBottom: "1px solid #000",
+        }}
+      >
+        <Profileinventory
+          id={profileData.memberResponse.memberId}
+          point={profileData.memberStatusResponse.point}
+        />
+      </div>
+      {/* <p className="usernewBee">
+        초보자 : {profileData.memberStatusResponse.newBee ? "Newbee" : "Expert"}
+      </p> */}
+      <div
+        className="profileBottom"
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          borderBottom: "1px solid #000",
+        }}
+      >
+        <div className="profiletoggleBar" style={{ display: "flex" }}>
+          <button
+            onClick={() => handleToggle("myPosts")}
+            style={{
+              background: activeView === "myPosts" ? "#ccc" : "transparent",
+            }}
+          >
+            내가 쓴 게시글
+          </button>
+          <button
+            onClick={() => handleToggle("likedPosts")}
+            style={{
+              background: activeView === "likedPosts" ? "#ccc" : "transparent",
+            }}
+          >
+            수조
+          </button>
+        </div>
+        {activeView === "myPosts" ? (
+          <div className="profileMiddle">
+            <p>내가 쓴 게시글</p>
+            <p>좋아요 한 게시글</p>
+          </div>
+        ) : (
+          <div className="profileaquarium">
+            <p>아쿠아리움</p>
+          </div>
+        )}
       </div>
     </div>
   );
