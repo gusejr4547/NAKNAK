@@ -7,8 +7,10 @@ import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
+import com.net.fisher.post.entity.Tag;
 import com.net.fisher.post.mapper.PostImageMapper;
 import com.net.fisher.post.mapper.PostMapper;
+import com.net.fisher.post.mapper.TagMapper;
 import com.net.fisher.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ public class PostController {
     private final JwtTokenizer jwtTokenizer;
     private final PostMapper postMapper;
     private final PostImageMapper postImageMapper;
+    private final TagMapper tagMapper;
     private final PostService postService;
 
     @PostMapping("/posts/upload")
@@ -38,9 +41,12 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-//        System.out.println(tagPostDto);
+        System.out.println("#######################");
+        System.out.println(postMapper.postDtoToPost(requestBody));
+        System.out.println("#######################");
+        System.out.println(tagMapper.listToTags(requestBody.getTags()));
 
-        postService.uploadPost(tokenId, postMapper.postDtoToPost(requestBody), httpServletRequest);
+        postService.uploadPost(tokenId, postMapper.postDtoToPost(requestBody), tagMapper.listToTags(requestBody.getTags()), httpServletRequest);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -126,5 +132,7 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @PostMapping("/tags/")
+//    public ResponseEntity uploadTags
 
 }

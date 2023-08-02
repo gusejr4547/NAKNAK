@@ -8,12 +8,8 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
-import com.net.fisher.post.entity.Like;
-import com.net.fisher.post.entity.Post;
-import com.net.fisher.post.entity.PostImage;
-import com.net.fisher.post.repository.LikeRepository;
-import com.net.fisher.post.repository.PostImageRepository;
-import com.net.fisher.post.repository.PostRepository;
+import com.net.fisher.post.entity.*;
+import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,14 +27,31 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostImageRepository postImageRepository;
     private final LikeRepository likeRepository;
+    private final TagRepository tagRepository;
+    private final PostTagRepository postTagRepository;
 
     @Transactional
-    public void uploadPost(long tokenId, Post post, MultipartHttpServletRequest httpServletRequest) {
+    public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
         try {
             // member 조회
             Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
             post.setMember(member);
+            post = postRepository.save(post);
+
+            // Tag 테이블에 등록, PostTag 에 등록
+            PostTag postTag = null;
+            for (Tag tagInfo : tagList) {
+                Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
+                        Tag.builder().tagName(tagInfo.getTagName()).build());
+                tagRepository.save(tag);
+
+                postTag = PostTag.builder()
+                        .tag(tag)
+                        .post(post)
+                        .build();
+                postTagRepository.save(postTag);
+            }
 
             // 파일 업로드
             List<MultipartFile> fileList = httpServletRequest.getFiles("file");
@@ -57,7 +70,6 @@ public class PostService {
                 postImageRepository.save(postImage);
             }
 
-            postRepository.save(post);
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         } catch (IOException e) {

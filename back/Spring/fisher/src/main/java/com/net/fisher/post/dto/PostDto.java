@@ -17,7 +17,9 @@ public class PostDto {
     @ToString
     public static class Post{
         private String content;
+        private List<String> tags;
     }
+
 
     @Getter
     @Setter
