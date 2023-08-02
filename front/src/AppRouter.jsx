@@ -9,6 +9,7 @@ import Login from "./components/account/Login";
 import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
+import Board from "./components/board/Board";
 // import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
@@ -48,6 +49,7 @@ function AppRouter(props) {
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Inventory" element={<Inventory />}></Route>
+            <Route path="/Board" element={<Board />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}

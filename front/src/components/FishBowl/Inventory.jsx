@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { loginuser } from "../../utils/atoms";
+
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import ItemSlide from "./ItemSlide";
@@ -42,9 +41,6 @@ const Inventory = () => {
   };
 
   const handleDeleteSlide = async (deletedFishInfo) => {
-    // setInventoryData((prevData) =>
-    //   prevData.filter((fish) => fish !== deletedFishInfo)
-    // );
     console.log("deletefishinfo", deletedFishInfo.inventoryId);
     try {
       const response = await authorizedRequest({

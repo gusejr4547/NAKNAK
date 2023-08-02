@@ -74,6 +74,15 @@ function Home(props) {
           </div>
           {/* slide unit end*/}
 
+          {/* slide unit start*/}
+          <div className="home-slide">
+            <Link to="/Board" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>SNS</h6>
+            </Link>
+          </div>
+          {/* slide unit end*/}
+
           {/* dummy data start*/}
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />
