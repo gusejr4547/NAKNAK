@@ -12,11 +12,16 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.mapper.MemberMapper;
 import com.net.fisher.member.service.MemberService;
 import com.net.fisher.response.MemberStatusResponse;
+import com.net.fisher.response.PageResponse;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +56,9 @@ public class MemberController {
         return new ResponseEntity<>(new MemberStatusResponse(memberResponse,statusResponse), HttpStatus.OK);
     }
 
+    /*@PostMapping("/members/update")
+    public ResponseEntity<MemberDto.Response> updateMember
+            (@RequestBody )*/
 
 
     @GetMapping("/members/list")
@@ -60,7 +68,7 @@ public class MemberController {
 
 
     @PostMapping("/follow/register")
-    public ResponseEntity<FollowDto.Response> makeFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
+    public ResponseEntity<FollowDto.Response> registerFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
         long memberId = jwtTokenizer.getMemberId(token);
 
         FollowDto.Response response = memberMapper.toFollowResponseDto(memberService.makeFollowTo(toId,memberId));
@@ -68,6 +76,43 @@ public class MemberController {
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
+    @PostMapping("/follow/cancel")
+    public ResponseEntity<FollowDto.Response> cancelFollow(@RequestParam(name = "follow") long toId, @RequestHeader("Authorization") String token){
+        long memberId = jwtTokenizer.getMemberId(token);
+        //FollowDto.Response response = memberMapper.toFollowResponseDto(memberService.makeFollowTo(toId,memberId));
+        memberService.cancelFollowTo(toId,memberId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/members/follow/{member-id}")
+    public ResponseEntity<PageResponse<MemberDto.Response>> getFollowList(
+            @PathVariable(name = "member-id")long memberId,
+            @PageableDefault(size = 10, /*sort= "views",*/direction = Sort.Direction.DESC) Pageable pageable){
+        Page<Member> members = memberService.getFollowList(memberId,pageable);
+        List<Member> memberList = members.getContent();
+
+        return new ResponseEntity<>(
+                new PageResponse<>(members.getTotalElements(),
+                memberMapper.toMemberResponseDtos(memberList)),HttpStatus.OK);
+    }
+
+    @GetMapping("/members/following/{member-id}")
+    public ResponseEntity<PageResponse<MemberDto.Response>> getFollowingList(
+            @PathVariable(name = "member-id")long memberId,
+            @PageableDefault(size = 10, /*sort= "views",*/direction = Sort.Direction.DESC) Pageable pageable){
+        Page<Member> members = memberService.getFollowingList(memberId,pageable);
+        List<Member> memberList = members.getContent();
+
+        return new ResponseEntity<>(
+                new PageResponse<>(members.getTotalElements(),
+                        memberMapper.toMemberResponseDtos(memberList)),HttpStatus.OK);
+    }
+
+    @PostMapping("/members/status/change")
+    public ResponseEntity<MemberStatusDto.Response> upExperiencePoint(
+            @RequestBody MemberStatusDto.UpStatus upStatus){
+        return null;
+    }
 
 
 
