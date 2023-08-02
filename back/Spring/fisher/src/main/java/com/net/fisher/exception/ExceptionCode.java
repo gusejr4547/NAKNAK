@@ -33,9 +33,8 @@ public enum ExceptionCode {
 
     POST_NOT_FOUND(404, "Post Not Found"),
     FILE_NOT_FOUND(404, "File Not Found"),
-    LIKE_NOT_FOUND(404, "Like Not Found");
-    NOT_OWNER_OF(409,"Not owner of item"),
-    FAILED_TO_DELETE_TOTAL_PLAN(500, "Failed Delete TotalPlan");
+    LIKE_NOT_FOUND(404, "Like Not Found"),
+    NOT_OWNER_OF(409,"Not owner of item");
 
     @Getter
     private final int status;
