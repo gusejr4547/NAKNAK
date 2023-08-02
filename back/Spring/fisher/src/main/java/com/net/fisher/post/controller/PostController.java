@@ -51,7 +51,7 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    // post 자세히 보기
+    // post 자세히 보기(수정화면?)
     @GetMapping("/posts/{post-id}")
     public ResponseEntity<PostDto.Response> getPost(
             @PathVariable("post-id") long postId) {
@@ -61,10 +61,13 @@ public class PostController {
 
         long likeCount = postService.getLikeCount(postId);
 
+        // 태그 얻어오기
+        List<Tag> tagList = postService.getTags(postId);
+
         // view 증가
         postService.increaseViews(postId);
 
-        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount), HttpStatus.OK);
+        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount, tagList), HttpStatus.OK);
     }
 
     // 자신의 post 를 수정

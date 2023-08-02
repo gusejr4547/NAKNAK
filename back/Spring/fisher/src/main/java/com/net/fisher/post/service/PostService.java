@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -91,6 +92,7 @@ public class PostService {
 
         return postImages;
     }
+
 
     @Transactional
     public void increaseViews(long postId) {
@@ -173,4 +175,7 @@ public class PostService {
         return likeRepository.countByPost_PostId(postId);
     }
 
+    public List<Tag> getTags(long postId) {
+        return postTagRepository.findAllTagByPostId(postId);
+    }
 }
