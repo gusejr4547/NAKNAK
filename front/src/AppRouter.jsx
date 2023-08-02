@@ -16,7 +16,7 @@ import Infoapi from "./components/map/Infoapi";
 // import FishBowl from "./components/fishBowl/FishBowl";
 import Profile from "./components/user/Profile";
 // import SeaScene from "./components/fishbowl/SeaScene";
-
+import Firstpage from "./components/freshman/Firstpage";
 import Map from "./components/map/Map";
 import Inventory from "./components/fishBowl/Inventory";
 function AppRouter(props) {
@@ -49,6 +49,7 @@ function AppRouter(props) {
             <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Inventory" element={<Inventory />}></Route>
             <Route path="/Loading" element={<Loading />}></Route>
+            <Route path="/Firstpage" element={<Firstpage />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
