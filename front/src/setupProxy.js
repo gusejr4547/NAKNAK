@@ -2,17 +2,17 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
   // 프록시1 설정
-  app.use(
-    "/api1",
-    createProxyMiddleware({
-      //target: "http://192.168.30.161:8080",
-      target: "http://localhost:8080",
-      changeOrigin: true,
-      pathRewrite: {
-        "^/api1": "",
-      },
-    })
-  );
+  // app.use(
+  //   "/api1",
+  //   createProxyMiddleware({
+  //     //target: "http://192.168.30.161:8080",
+  //     target: "http://localhost:8080",
+  //     changeOrigin: true,
+  //     pathRewrite: {
+  //       "^/api1": "",
+  //     },
+  //   })
+  // );
 
   // 프록시2 설정
   app.use(
