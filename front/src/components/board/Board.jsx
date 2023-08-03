@@ -36,7 +36,7 @@ const Board = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get("api/tags");
+        const response = await axios.get("api1/api/tags");
         // console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
@@ -52,7 +52,7 @@ const Board = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get("api/posts/2");
+        const response = await axios.get("api1/api/posts/2");
         console.log("feed load success", response.data);
         setFeedListData([response.data]);
         // console.log("feedListData", feedListData);

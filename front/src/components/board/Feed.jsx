@@ -64,11 +64,7 @@ const Feed = ({ feedInfo }) => {
         </div>
 
         {/* carousel start */}
-        <img
-          className="feed-image"
-          src={"/assets/images/jge.png"}
-          alt="post images"
-        />
+
         <Slider {...settings}>
           {feedInfo.images.map((image, index) => (
             <img
@@ -78,6 +74,30 @@ const Feed = ({ feedInfo }) => {
               alt="post images"
             />
           ))}
+          <img
+            // key={index}
+            className="feed-image"
+            src={"/assets/images/jge.png"}
+            alt="post images"
+          />
+          <img
+            // key={index}
+            className="feed-image"
+            src={"/assets/images/jge.png"}
+            alt="post images"
+          />
+          <img
+            // key={index}
+            className="feed-image"
+            src={"/assets/images/jge.png"}
+            alt="post images"
+          />
+          <img
+            // key={index}
+            className="feed-image"
+            src={"/assets/images/jge.png"}
+            alt="post images"
+          />
         </Slider>
         {/* carousel end */}
         <div className="feed-footer">
