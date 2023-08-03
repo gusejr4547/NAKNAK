@@ -1,51 +1,45 @@
 import React from "react";
-import "./Modal.css";
+import "./FollowModal.css";
 import { Link, useNavigate } from "react-router-dom";
 
-
 function FollowerModal(props) {
-    const navigate = useNavigate()
-    
-    function closeModal() {
-        props.closeModal();
-    }
+  const navigate = useNavigate();
 
-    function handleProfileLinkClick(memberId) {
-        closeModal();
-        navigate(`/Profile/:${memberId}`)
-      }
+  function closeModal() {
+    props.closeModal();
+  }
 
-    return (
-        <div className="Modal" onClick={closeModal}>
-        <div className="modalBody" onClick={(e) => e.stopPropagation()}>
-            <button id="modalCloseBtn" onClick={closeModal}>
-            ✖
-            </button>
-            {props.data.map((item) => (
-        <p key={item.memberId}>
+  function handleProfileLinkClick(memberId) {
+    closeModal();
+    navigate(`/Profile/:${memberId}`);
+  }
+
+  return (
+    <div className="followModal" onClick={closeModal}>
+      <div className="followmodalBody" onClick={(e) => e.stopPropagation()}>
+        <button id="followmodalCloseBtn" onClick={closeModal}>
+          ✖
+        </button>
+        {props.data.map((item) => (
+          <p key={item.memberId}>
             {/* <Link to={`/Profile/:${item.memberId}`} className="nav-link"> */}
-                <span onClick={() => handleProfileLinkClick(item.memberId)}>{item.nickname}</span>
+            <span onClick={() => handleProfileLinkClick(item.memberId)}>
+              {item.nickname}
+            </span>
             {/* </Link> */}
-        </p>
-      ))}
-        </div>
-        </div>
-    );}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default FollowerModal;
 
-
-
-
-
-
-
-
 // import styles from './Modal.css';
 
-
 // function FollowerModal({ setModalOpen, data}) {
-//     // 모달 끄기 
+//     // 모달 끄기
 //     const closeModal = () => {
 //         setModalOpen(false);
 //     };

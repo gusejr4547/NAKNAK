@@ -30,17 +30,17 @@ function Home(props) {
       <div className="home-board">
         <Slider {...settings} className="home-carousel">
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide">
             <Link to="/Dogam" className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>도감</h6>
             </Link>
-          </div>
+          </div> */}
           {/* slide unit end */}
 
           <div className="home-slide">
             <Link to="/Fishpic" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/camera1.PNG" alt="icon" />
               <h6>카메라</h6>
             </Link>
           </div>
@@ -49,22 +49,24 @@ function Home(props) {
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>인벤토리</h6>
             </Link>
+          </div>
+          <div className="home-slide">
             <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>프로필</h6>
             </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘4</h6>
+            <Link to="/Map" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>Map</h6>
+            </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘5</h6>
-          </div>
-          <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘6</h6>
+            <Link to="/SeaScene" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>수조</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />
