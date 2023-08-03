@@ -3,10 +3,14 @@ import "./Fishing.css";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { fishingMode_recoil, time_recoil } from "../../utils/atoms";
+import { getFish_recoil } from "../../utils/atoms";
+
+import Nowget from "./Nowget";
 
 function Fishing(props) {
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const [time, setTime] = useRecoilState(time_recoil);
+  const [getFish, setGetFish] = useRecoilState(getFish_recoil);
 
   useEffect(() => {
     let intervalId;
@@ -25,6 +29,9 @@ function Fishing(props) {
     // 시작하기
     setFishingMode(data);
     run();
+  };
+  const getClose = (data) => {
+    setGetFish(0);
   };
 
   const run = () => {
@@ -97,7 +104,7 @@ function Fishing(props) {
                 }
               >
                 {" "}
-                <div>
+                <div onClick={() => getClose()}>
                   <span>종료하기</span>
                 </div>
                 {`${time.h.toString().padStart(2, "0")}:${time.m
@@ -108,6 +115,7 @@ function Fishing(props) {
           </div>
         </div>
       </div>
+      <Nowget num={getFish} />
     </div>
   );
 }

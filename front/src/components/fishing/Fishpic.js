@@ -2,11 +2,13 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { token } from "../../utils/atoms";
+import { getFish_recoil } from "../../utils/atoms";
 
 function CameraApp() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [accesstoken] = useRecoilState(token);
+  const [getFish, setGetFish] = useRecoilState(getFish_recoil);
   const header = {
     "Content-Type": "multipart/form-data",
     Authorization: accesstoken,
@@ -62,6 +64,7 @@ function CameraApp() {
       const imageFile = new File([imageBlob], "fish.jpg", {
         type: "image/jpg",
       });
+      setGetFish(getFish + 1);
       // 이미지 파일을 FormData에 추가
       const formData = new FormData();
       setCapturedImageFile(imageFile);
@@ -81,6 +84,7 @@ function CameraApp() {
 
       // 서버로부터 응답을 받고 처리할 로직 추가 가능
       console.log("서버 응답:", response.data);
+
       setfishImg(response.data);
       // 서버로부터 응답받은 이미지 URL을 저장
     } catch (error) {
@@ -98,9 +102,7 @@ function CameraApp() {
       />
 
       <button onClick={getCameraStream}>카메라 on</button>
-      {isCameraOn && (
-      <button onClick={handleCapturePhoto}>사진 촬영</button>
-      )}
+      {isCameraOn && <button onClick={handleCapturePhoto}>사진 촬영</button>}
       <button onClick={stopCamera}>카메라 off</button>
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
