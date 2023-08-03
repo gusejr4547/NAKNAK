@@ -135,7 +135,12 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping("/tags/")
-//    public ResponseEntity uploadTags
+    @GetMapping("/tags")
+    public ResponseEntity<List<Tag>> getTags(){
+
+        List<Tag> tags = postService.getAllTags();
+
+        return new ResponseEntity<>(tags, HttpStatus.OK);
+    }
 
 }

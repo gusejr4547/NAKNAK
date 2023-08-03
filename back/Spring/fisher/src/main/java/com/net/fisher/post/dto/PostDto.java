@@ -31,6 +31,7 @@ public class PostDto {
     public static class Patch{
         private long postId;
         private String content;
+        private List<Tag> tags;
     }
 
     @Getter

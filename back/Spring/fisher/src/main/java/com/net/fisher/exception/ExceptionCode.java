@@ -34,7 +34,8 @@ public enum ExceptionCode {
     POST_NOT_FOUND(404, "Post Not Found"),
     FILE_NOT_FOUND(404, "File Not Found"),
     LIKE_NOT_FOUND(404, "Like Not Found"),
-    NOT_OWNER_OF(409,"Not owner of item");
+    NOT_OWNER_OF(409,"Not owner of item"),
+    TAG_NOT_FOUNT(404, "Tag Not Found");
 
     @Getter
     private final int status;

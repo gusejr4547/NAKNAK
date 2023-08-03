@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -110,8 +112,39 @@ public class PostService {
         }
 
         post.setContent(postPatchDto.getContent());
-
         postRepository.save(post);
+
+        // 기존 태그와 비교해서 새로운 태그는 추가
+        Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
+        Set<Tag> newTags = new HashSet<>();
+        for (Tag tag : postPatchDto.getTags()) {
+            if (!tagRepository.existsTagByTagName(tag.getTagName())) {
+                tag = tagRepository.save(tag);
+                newTags.add(tag);
+            } else {
+                tag = tagRepository.findById(tag.getTagId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+                newTags.add(tag);
+            }
+        }
+
+        // 공통 부분
+//        tags.retainAll();
+
+        // PostTag 에서 지워줘야할 것
+        tags.removeAll(newTags);
+        System.out.println("#############");
+        System.out.println(tags);
+
+        // PostTag 에 추가 해줘야 할 것
+        newTags.removeAll(tags);
+
+//        System.out.println("#############");
+//        System.out.println(tags.removeAll(newTags));
+//        System.out.println("#############");
+//        System.out.println(newTags.removeAll(tags));
+//        System.out.println("#############");
+
+
     }
 
     @Transactional
@@ -177,5 +210,9 @@ public class PostService {
 
     public List<Tag> getTags(long postId) {
         return postTagRepository.findAllTagByPostId(postId);
+    }
+
+    public List<Tag> getAllTags() {
+        return tagRepository.findAll();
     }
 }
