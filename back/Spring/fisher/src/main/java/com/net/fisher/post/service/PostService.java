@@ -238,4 +238,10 @@ public class PostService {
     public Page<Post> getPostFromMemberLike(long tokenId, Pageable pageable) {
         return likeRepository.findPostByMemberId(pageable, tokenId);
     }
+
+    public Page<Post> getDefaultPost(Pageable pageable) {
+    }
+
+    public Page<Post> getPostFromFollowing(Long memberId, Pageable pageable) {
+    }
 }
