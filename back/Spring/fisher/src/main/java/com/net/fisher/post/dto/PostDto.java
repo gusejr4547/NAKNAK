@@ -66,9 +66,5 @@ public class PostDto {
         private long memberId;
         private String memberImageUrl;
         private String memberNickname;
-
-        private PostImageDto.Response postImage;
-
-        private List<Tag> tags;
     }
 }
