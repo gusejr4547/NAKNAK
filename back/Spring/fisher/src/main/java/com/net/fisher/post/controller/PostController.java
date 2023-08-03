@@ -7,8 +7,10 @@ import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
+import com.net.fisher.post.entity.Tag;
 import com.net.fisher.post.mapper.PostImageMapper;
 import com.net.fisher.post.mapper.PostMapper;
+import com.net.fisher.post.mapper.TagMapper;
 import com.net.fisher.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ public class PostController {
     private final JwtTokenizer jwtTokenizer;
     private final PostMapper postMapper;
     private final PostImageMapper postImageMapper;
+    private final TagMapper tagMapper;
     private final PostService postService;
 
     @PostMapping("/posts/upload")
@@ -38,14 +41,17 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-//        System.out.println(tagPostDto);
+        System.out.println("#######################");
+        System.out.println(postMapper.postDtoToPost(requestBody));
+        System.out.println("#######################");
+        System.out.println(tagMapper.listToTags(requestBody.getTags()));
 
-        postService.uploadPost(tokenId, postMapper.postDtoToPost(requestBody), httpServletRequest);
+        postService.uploadPost(tokenId, postMapper.postDtoToPost(requestBody), tagMapper.listToTags(requestBody.getTags()), httpServletRequest);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    // post 자세히 보기
+    // post 자세히 보기(수정화면?)
     @GetMapping("/posts/{post-id}")
     public ResponseEntity<PostDto.Response> getPost(
             @PathVariable("post-id") long postId) {
@@ -55,10 +61,13 @@ public class PostController {
 
         long likeCount = postService.getLikeCount(postId);
 
+        // 태그 얻어오기
+        List<Tag> tagList = postService.getTags(postId);
+
         // view 증가
         postService.increaseViews(postId);
 
-        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount), HttpStatus.OK);
+        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount, tagList), HttpStatus.OK);
     }
 
     // 자신의 post 를 수정
@@ -126,5 +135,12 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/tags")
+    public ResponseEntity<List<Tag>> getTags(){
+
+        List<Tag> tags = postService.getAllTags();
+
+        return new ResponseEntity<>(tags, HttpStatus.OK);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.net.fisher.post.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.net.fisher.member.entity.Member;
+import com.net.fisher.post.entity.Tag;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,9 @@ public class PostDto {
     @ToString
     public static class Post{
         private String content;
+        private List<String> tags;
     }
+
 
     @Getter
     @Setter
@@ -28,6 +31,7 @@ public class PostDto {
     public static class Patch{
         private long postId;
         private String content;
+        private List<Tag> tags;
     }
 
     @Getter
@@ -51,5 +55,7 @@ public class PostDto {
         // 좋아요 수
         private long likeCount;
 
+        // 태그
+        private List<Tag> tags;
     }
 }

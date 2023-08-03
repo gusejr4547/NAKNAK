@@ -8,12 +8,8 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
-import com.net.fisher.post.entity.Like;
-import com.net.fisher.post.entity.Post;
-import com.net.fisher.post.entity.PostImage;
-import com.net.fisher.post.repository.LikeRepository;
-import com.net.fisher.post.repository.PostImageRepository;
-import com.net.fisher.post.repository.PostRepository;
+import com.net.fisher.post.entity.*;
+import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,14 +30,31 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostImageRepository postImageRepository;
     private final LikeRepository likeRepository;
+    private final TagRepository tagRepository;
+    private final PostTagRepository postTagRepository;
 
     @Transactional
-    public void uploadPost(long tokenId, Post post, MultipartHttpServletRequest httpServletRequest) {
+    public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
         try {
             // member 조회
             Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
             post.setMember(member);
+            post = postRepository.save(post);
+
+            // Tag 테이블에 등록, PostTag 에 등록
+            PostTag postTag = null;
+            for (Tag tagInfo : tagList) {
+                Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
+                        Tag.builder().tagName(tagInfo.getTagName()).build());
+                tagRepository.save(tag);
+
+                postTag = PostTag.builder()
+                        .tag(tag)
+                        .post(post)
+                        .build();
+                postTagRepository.save(postTag);
+            }
 
             // 파일 업로드
             List<MultipartFile> fileList = httpServletRequest.getFiles("file");
@@ -57,7 +73,6 @@ public class PostService {
                 postImageRepository.save(postImage);
             }
 
-            postRepository.save(post);
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         } catch (IOException e) {
@@ -80,6 +95,7 @@ public class PostService {
         return postImages;
     }
 
+
     @Transactional
     public void increaseViews(long postId) {
         postRepository.upCountByPostId(postId);
@@ -96,8 +112,39 @@ public class PostService {
         }
 
         post.setContent(postPatchDto.getContent());
-
         postRepository.save(post);
+
+        // 기존 태그와 비교해서 새로운 태그는 추가
+        Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
+        Set<Tag> newTags = new HashSet<>();
+        for (Tag tag : postPatchDto.getTags()) {
+            if (!tagRepository.existsTagByTagName(tag.getTagName())) {
+                tag = tagRepository.save(tag);
+                newTags.add(tag);
+            } else {
+                tag = tagRepository.findById(tag.getTagId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+                newTags.add(tag);
+            }
+        }
+
+        // 공통 부분
+//        tags.retainAll();
+
+        // PostTag 에서 지워줘야할 것
+        tags.removeAll(newTags);
+        System.out.println("#############");
+        System.out.println(tags);
+
+        // PostTag 에 추가 해줘야 할 것
+        newTags.removeAll(tags);
+
+//        System.out.println("#############");
+//        System.out.println(tags.removeAll(newTags));
+//        System.out.println("#############");
+//        System.out.println(newTags.removeAll(tags));
+//        System.out.println("#############");
+
+
     }
 
     @Transactional
@@ -161,4 +208,11 @@ public class PostService {
         return likeRepository.countByPost_PostId(postId);
     }
 
+    public List<Tag> getTags(long postId) {
+        return postTagRepository.findAllTagByPostId(postId);
+    }
+
+    public List<Tag> getAllTags() {
+        return tagRepository.findAll();
+    }
 }
