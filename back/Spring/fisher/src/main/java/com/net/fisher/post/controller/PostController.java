@@ -169,9 +169,25 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/posts/my-likes")
-    public ResponseEntity<List<PostDto.Response>> getMyLikes(
-            @RequestHeader(name = "Authorization") String token) {
-        return null;
+    @GetMapping("/posts/my-like")
+    public ResponseEntity<PageResponse<PostSimpleResponse>> getMyLikes(
+            @RequestHeader(name = "Authorization") String token,
+            @PageableDefault(size = 9, sort = "likeId", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        Page<Post> postPage = postService.getPostFromMemberLike(tokenId, pageable);
+        List<Post> postList = postPage.getContent();
+
+        List<PostSimpleResponse> simpleResponses = new ArrayList<>();
+        for (Post post : postList) {
+            simpleResponses.add(new PostSimpleResponse(
+                    postMapper.toPostSimpleResponseDto(post),
+                    postImageMapper.postImageToPostImageResponseDto(postService.getOnePostImageByPost(post)),
+                    postService.getTags(post.getPostId())));
+        }
+        PageResponse<PostSimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), simpleResponses);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

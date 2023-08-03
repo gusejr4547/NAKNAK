@@ -18,4 +18,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "SELECT c FROM posts c WHERE c.member.memberId = :memberId")
     Page<Post> findPostByMemberIdFromPage(Pageable pageable, long memberId);
+
 }
