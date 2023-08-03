@@ -10,6 +10,7 @@ const Feed = ({ feedInfo }) => {
 
   return (
     <div className="feed-wrapper">
+      {/* data */}
       <div>
         <h4>FeedInfo</h4>
         "postId": {feedInfo.post.postId}, <br />
@@ -33,6 +34,8 @@ const Feed = ({ feedInfo }) => {
           <p key={index}>{tag}</p>;
         })}
       </div>
+      {/* data */}
+
       <div className="feed-board">
         <div className="feed-header">
           <img

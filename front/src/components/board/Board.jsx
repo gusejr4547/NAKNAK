@@ -75,6 +75,8 @@ const Board = () => {
         </div>
       </div>
       <div className="board-tag-wrapper">
+        {}
+        <FeedTag tagInfo={{ tagId: 0, tagName: "ALL" }} />
         {Object.keys(tagListData).map((key) => {
           const tag = tagListData[key];
           return <FeedTag tagInfo={tag} />;

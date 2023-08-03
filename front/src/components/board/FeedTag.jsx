@@ -11,7 +11,7 @@ const FeedTag = (tagInfo) => {
 
   return (
     <div className="feed-tag-wrapper" onClick={onClickTest}>
-      <h6># {tagInfo.tagInfo.tagName}</h6>
+      <h6>#{tagInfo.tagInfo.tagName}</h6>
     </div>
   );
 };
