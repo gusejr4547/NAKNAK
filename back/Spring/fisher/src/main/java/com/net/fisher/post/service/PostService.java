@@ -118,32 +118,33 @@ public class PostService {
         Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
         Set<Tag> newTags = new HashSet<>();
         for (Tag tag : postPatchDto.getTags()) {
+            System.out.println("#############");
+            System.out.println(tag);
             if (!tagRepository.existsTagByTagName(tag.getTagName())) {
                 tag = tagRepository.save(tag);
                 newTags.add(tag);
             } else {
-                tag = tagRepository.findById(tag.getTagId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
                 newTags.add(tag);
             }
         }
 
         // 공통 부분
 //        tags.retainAll();
+        Set<Tag> copyTags = Set.copyOf(tags);
 
         // PostTag 에서 지워줘야할 것
         tags.removeAll(newTags);
-        System.out.println("#############");
-        System.out.println(tags);
+        tags.forEach((tag) -> postTagRepository.deleteByTagAndPost(tag, post));
 
         // PostTag 에 추가 해줘야 할 것
-        newTags.removeAll(tags);
-
-//        System.out.println("#############");
-//        System.out.println(tags.removeAll(newTags));
-//        System.out.println("#############");
-//        System.out.println(newTags.removeAll(tags));
-//        System.out.println("#############");
-
+        newTags.removeAll(copyTags);
+        System.out.println(newTags);
+        PostTag postTag = null;
+        for(Tag tag : newTags){
+            postTag = PostTag.builder().tag(tag).post(post).build();
+            postTagRepository.save(postTag);
+        }
 
     }
 
@@ -177,6 +178,8 @@ public class PostService {
         likeRepository.deleteAll(likeList);
 
         // 태그 처리 필요
+        List<PostTag> postTagList = postTagRepository.findAllByPost_PostId(postId);
+        postTagRepository.deleteAll(postTagList);
 
         postRepository.delete(post);
     }
@@ -214,5 +217,9 @@ public class PostService {
 
     public List<Tag> getAllTags() {
         return tagRepository.findAll();
+    }
+
+    public List<Post> getMyAllPost(long tokenId){
+        return null;
     }
 }

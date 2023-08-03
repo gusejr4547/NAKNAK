@@ -143,4 +143,18 @@ public class PostController {
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
+    @GetMapping("/posts/my-post")
+    public ResponseEntity<List<PostDto.Response>> getMyPosts(
+            @RequestHeader(name = "Authorization") String token){
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        List<Post> postList = postService.getMyAllPost(tokenId);
+        return null;
+    }
+    @GetMapping("/posts/my-likes")
+    public ResponseEntity<List<PostDto.Response>> getMyLikes(
+            @RequestHeader(name = "Authorization") String token){
+        return null;
+    }
 }
