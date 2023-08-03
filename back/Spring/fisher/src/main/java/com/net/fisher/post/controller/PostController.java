@@ -56,8 +56,8 @@ public class PostController {
     public ResponseEntity<PostResponse> getPost(
             @PathVariable("post-id") long postId) {
 
-        Post post = postService.postDetail(postId);
-        List<PostImage> postImages = postService.postImageDetail(postId);
+        Post post = postService.getPost(postId);
+        List<PostImage> postImages = postService.getPostImage(postId);
 
         long likeCount = postService.getLikeCount(postId);
 
@@ -200,7 +200,22 @@ public class PostController {
             postPage = postService.getPostFromFollowing(memberId, pageable);
         }
 
+        // 더미 데이터
+        postPage = postService.getDefaultPost(pageable);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        List<Post> postList = postPage.getContent();
+        List<PostResponse> postResponses = new ArrayList<>();
+        for (Post post : postList) {
+            postResponses.add(new PostResponse(
+                    postMapper.toPostResponseDto(post),
+                    postImageMapper.toPostImageDtos(postService.getPostImage(post.getPostId())),
+                    postService.getLikeCount(post.getPostId()),
+                    postService.getTags(post.getPostId())));
+        }
+
+        PageResponse<PostResponse> response = new PageResponse<>(postPage.getTotalElements(), postResponses);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
