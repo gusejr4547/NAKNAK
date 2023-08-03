@@ -101,7 +101,7 @@ function Signup(props) {
       formData.append("nickname", signupData.nickname);
       const member = "/api/members/register";
       // const response = await axios.post("/api1/api/members/register", formData);
-      const response = await axios.post("/api/members/register", formData);
+      const response = await axios.post("http://localhost:8080/api/members/register", formData);
       // const response = await axios.post("/api1" + member, formData);
       // setPostData(response.data);
       navigate("/Login");
