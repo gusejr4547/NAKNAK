@@ -1,12 +1,10 @@
-package com.net.fisher.tag.entity;
+package com.net.fisher.post.entity;
 
-import com.net.fisher.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.yaml.snakeyaml.events.Event;
 
 @Entity
 @Getter

@@ -34,7 +34,8 @@
 }
 
 .inven-slide {
-  display: flex;
+  border-radius: 0.6rem;
+  display: inline-table;
   background-color: aliceblue;
   /*배경 임시 하얀색*/
   width: calc(32% - 0.625rem);
@@ -48,6 +49,7 @@
 }
 
 .inven-slide img {
+  border-radius: 0.6rem 0.6rem 0 0;
   width: 100%;
   height: auto;
 }

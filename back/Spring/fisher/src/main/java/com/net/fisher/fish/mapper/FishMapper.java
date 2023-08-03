@@ -8,6 +8,7 @@ import com.net.fisher.fish.entity.FishBowls;
 import com.net.fisher.fish.entity.Inventory;
 import org.mapstruct.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -24,6 +25,19 @@ public interface FishMapper {
 
     List<BooksDto.Response> toBooksResponseDtos(List<Books> booksList);
 
+
+    default List<InventoryDto.MultiResponse> toInventoryMultiResponseDtos(List<Inventory> inventories){
+        List<InventoryDto.MultiResponse> multiResponses = new ArrayList<>();
+        for(Inventory inventory:inventories){
+            multiResponses.add(InventoryDto.MultiResponse.builder()
+                    .inventoryId(inventory.getInventoryId())
+                    .fishCode(inventory.getFish().getCode())
+                    .fishName(inventory.getFish().getName())
+                    .fishSize(inventory.getSize())
+                    .build());
+        }
+        return multiResponses;
+    }
 
     default BooksDto.Response toBooksResponseDto(Books books){
         return BooksDto.Response.builder()

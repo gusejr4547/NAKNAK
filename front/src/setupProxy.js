@@ -5,7 +5,8 @@ module.exports = function (app) {
   app.use(
     "/api1",
     createProxyMiddleware({
-      target: "http://192.168.30.161:8080",
+      // target: "http://192.168.30.161:8080",
+      target: "http://passportlkm.iptime.org:20101",
       changeOrigin: true,
       pathRewrite: {
         "^/api1": "",

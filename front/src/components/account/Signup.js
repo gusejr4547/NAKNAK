@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
 
 function Signup(props) {
-  const [signupData, setSignupData] = useState({});
+  // const [signupData, setSignupData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // const [postData, setPostData] = useState({});
@@ -24,7 +24,7 @@ function Signup(props) {
     $hasError: userIdHasError,
     $valueChangeHandler: userIdChangeHandler,
     $inputBlurHandler: userIdBlurHandler,
-    $reset: resetuserId,
+    // $reset: resetuserId,
   } = emailInput(isNotEmpty);
 
   const {
@@ -33,7 +33,7 @@ function Signup(props) {
     $hasError: userPasswordHasError,
     $valueChangeHandler: userPasswordChangeHandler,
     $inputBlurHandler: userPasswordBlurHandler,
-    $reset: resetuserPassword,
+    // $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
   const {
@@ -42,7 +42,7 @@ function Signup(props) {
     $hasError: usernameHasError,
     $valueChangeHandler: usernameChangeHandler,
     $inputBlurHandler: usernameBlurHandler,
-    $reset: resetusername,
+    // $reset: resetusername,
   } = useInput(isNotEmpty);
 
   const {
@@ -51,8 +51,14 @@ function Signup(props) {
     $hasError: usernicknameHasError,
     $valueChangeHandler: usernicknameChangeHandler,
     $inputBlurHandler: usernicknameBlurHandler,
-    $reset: resetusernickname,
+    // $reset: resetusernickname,
   } = useInput(isNotEmpty);
+
+  const signupHandleKey = (eve) => {
+    if (eve.key === "Enter") {
+      signupHandleClick();
+    }
+  };
 
   const signupHandleClick = async () => {
     const signupData = {
@@ -109,10 +115,10 @@ function Signup(props) {
     }
   };
 
-  const signupHandleChange = (event) => {
-    const { name, value } = event.target;
-    setSignupData({ ...signupData, [name]: value });
-  };
+  // const signupHandleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setSignupData({ ...signupData, [name]: value });
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -124,10 +130,11 @@ function Signup(props) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         height: "100vh",
+        padding: "0px 0px 70% 0px",
       }}
     >
-      <h1 style={{ margin: "30px 0px 0px 0px" }}>회원가입 페이지</h1>
       <img
         src="./assets/cats/cat.png"
         alt=""
@@ -152,6 +159,7 @@ function Signup(props) {
           onBlur={userIdBlurHandler}
           $hasError={userIdHasError}
           $errorText={userIdHasError}
+          onKeyPress={signupHandleKey}
         />
         <AuthInput
           label="비밀번호"
@@ -163,6 +171,7 @@ function Signup(props) {
           onBlur={userPasswordBlurHandler}
           $hasError={userPasswordHasError}
           $errorText="필수 입력값입니다"
+          onKeyPress={signupHandleKey}
         />
         <AuthInput
           label="이름"
@@ -174,6 +183,7 @@ function Signup(props) {
           onBlur={usernameBlurHandler}
           $hasError={usernameHasError}
           $errorText="필수 입력값입니다"
+          onKeyPress={signupHandleKey}
         />
         <AuthInput
           label="닉네임"
@@ -185,6 +195,7 @@ function Signup(props) {
           onBlur={usernicknameBlurHandler}
           $hasError={usernicknameHasError}
           $errorText="필수 입력값입니다"
+          onKeyPress={signupHandleKey}
         />
 
         <Button
