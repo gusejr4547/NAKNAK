@@ -30,7 +30,7 @@ function Fishing(props) {
     setFishingMode(data);
     run();
   };
-  const getClose = (data) => {
+  const getClose = () => {
     setGetFish(0);
   };
 

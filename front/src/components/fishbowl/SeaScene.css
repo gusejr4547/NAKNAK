@@ -1,0 +1,11 @@
+#bowlcontainer {
+  border: thick double skyblue;
+  /* border: 0.5rem outset pink; */
+  outline: 1px solid rgb(69, 186, 244);
+  /* box-shadow: 0 0 0 2rem rgb(130, 216, 250); */
+  border-radius: 12px;
+  /* font: bold 1rem sans-serif; */
+  /* margin: 2rem;
+  padding: 1rem; */
+  /* outline-offset: 0.5rem; */
+}
