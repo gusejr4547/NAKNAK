@@ -12,6 +12,8 @@ import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -220,6 +222,17 @@ public class PostService {
     }
 
     public List<Post> getMyAllPost(long tokenId){
+
+
         return null;
     }
+
+    public Page<Post> getPostFromMember(long tokenId, Pageable pageable) {
+        return postRepository.findPostByMemberIdFromPage(pageable, tokenId);
+    }
+
+    public PostImage getOnePostImageByPost(Post post){
+        return postImageRepository.findFirstByPost(post);
+    }
+
 }
