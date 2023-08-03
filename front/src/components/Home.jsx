@@ -30,12 +30,12 @@ function Home(props) {
       <div className="home-board">
         <Slider {...settings} className="home-carousel">
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide">
             <Link to="/Dogam" className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>도감</h6>
             </Link>
-          </div>
+          </div> */}
           {/* slide unit end */}
 
           <div className="home-slide">
