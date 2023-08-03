@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import NotFound from "./components/common/NotFound";
 import Fishing from "./components/fishing/Fishing";
 import Login from "./components/account/Login";
-// import Dogam from "./components/dogam/Dogam";
+import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
 import Board from "./components/board/Board";
