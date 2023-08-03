@@ -13,6 +13,7 @@ import com.net.fisher.post.mapper.PostMapper;
 import com.net.fisher.post.mapper.TagMapper;
 import com.net.fisher.post.service.PostService;
 import com.net.fisher.response.PostResponse;
+import com.net.fisher.response.PostSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.lang.model.element.NestingKind;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -144,7 +146,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/my-post")
-    public ResponseEntity<List<PostDto.Response>> getMyPosts(
+    public ResponseEntity<List<PostSimpleResponse>> getMyPosts(
             @RequestHeader(name = "Authorization") String token,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
@@ -154,11 +156,15 @@ public class PostController {
         Page<Post> postPage = postService.getPostFromMember(tokenId, pageable);
         List<Post> postList = postPage.getContent();
 
+        List<PostSimpleResponse> response = new ArrayList<>();
+        for (Post post : postList) {
+            response.add(new PostSimpleResponse(
+                    postMapper.toPostSimpleResponseDto(post),
+                    postImageMapper.postImageToPostImageResponseDto(postService.getOnePostImageByPost(post)),
+                    postService.getTags(post.getPostId())));
+        }
 
-//        List<PostDto.Response> responseList = postMapper.to
-
-
-        return null;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/posts/my-likes")

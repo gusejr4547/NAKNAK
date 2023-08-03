@@ -28,4 +28,18 @@ public interface PostMapper {
                 .build();
         return response;
     }
+
+    default PostDto.SimpleResponse toPostSimpleResponseDto(Post post){
+        String fileUrl = "/upload/man.jpeg";
+        if(post.getMember().getMemberImage() !=null) fileUrl = post.getMember().getMemberImage().getFileUrl();
+        PostDto.SimpleResponse response = PostDto.SimpleResponse.builder()
+                .postId(post.getPostId())
+                .content(post.getContent())
+                .registeredAt(post.getRegisteredAt())
+                .memberId(post.getMember().getMemberId())
+                .memberNickname(post.getMember().getNickname())
+                .memberImageUrl(fileUrl)
+                .build();
+        return response;
+    }
 }
