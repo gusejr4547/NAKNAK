@@ -1,0 +1,13 @@
+.feed-tag-wrapper {
+  margin: 1rem;
+  background-color: beige;
+  border-radius: 1rem;
+  width: 5rem;
+  height: 1.5rem;
+  text-align: center;
+}
+
+.feed-tag-wrapper h6 {
+  color: blue;
+  font-weight: bold;
+}

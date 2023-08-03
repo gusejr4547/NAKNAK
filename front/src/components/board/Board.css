@@ -7,7 +7,7 @@
   flex-direction: column;
   /* justify-content: center; */
   /* 가로 가운데 정렬 */
-  align-items: center;
+  align-items: baseline;
   /* 세로 가운데 정렬 */
   /* max-height: 45rem; */
   /* 카로셀 전체의 최대 높이를 설정합니다. */
@@ -15,7 +15,7 @@
   /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
 }
 .board-board {
-  width: 24rem;
+  width: 100%;
   height: 40.625rem;
 
   overflow-y: auto;
@@ -38,4 +38,39 @@
 
 .board-disable-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: aqua;
+}
+
+.board-title-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.board-title-container h3 {
+}
+
+.board-search-img-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.board-search-img-container img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.board-tag-wrapper {
+}
+
+.board-tag-carousel {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* 넘치는 요소들을 다음 줄로 넘어가게 함 */
+  align-items: flex-start; /* 세로 가운데 정렬 */
+  overflow-x: scroll; /* 내용이 넘칠 때 스크롤이 생성됩니다. */
 }

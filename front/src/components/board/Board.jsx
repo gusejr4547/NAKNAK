@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import axios from "axios";
 import Feed from "./Feed";
+import FeedTag from "./FeedTag";
+
 import "./Board.css";
 const Board = () => {
   const [tagListData, setTagListData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [feedListData, setFeedListData] = useState([
-    //dummy data
-  ]);
+  const [feedListData, setFeedListData] = useState([]);
+
+  // #region
   ////////////////add dummy feed/////////////////////
   ///////////////////////////////////////////////////
   const addFeed = async () => {
@@ -26,21 +28,25 @@ const Board = () => {
   };
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
+  // #endregion
 
+  // 태그의 이름들을 가져옵니다
   useEffect(() => {
     const getTagList = async () => {
       try {
         setLoading(true);
 
-        const response = await axios.get("url");
+        const response = await axios.get("api/tags");
         console.log("tag load success", response.data);
+        setTagListData(response.data);
       } catch (error) {
         console.error("tag load error");
       }
     };
-    // getTagList();
+    getTagList();
   }, []);
 
+  // 게시글들을 가져옵니다
   useEffect(() => {
     const getFeedList = async () => {
       try {
@@ -60,11 +66,24 @@ const Board = () => {
 
   return (
     <div className="board-wrapper">
-      <div className="board-search-bar">here is search bar</div>
-      <div className="board-tag-wrapper">tagtagtagtagtagtag</div>
+      <div className="board-header">
+        <div className="board-title-container">
+          <h3>요기는 제목입니다</h3>
+        </div>
+        <div className="board-search-img-container">
+          <img src="/assets/icons/kakao.PNG" alt="검색버튼" />
+        </div>
+      </div>
+      <div className="board-tag-wrapper">
+        <div className="board-tag-carousel">
+          {Object.keys(tagListData).map((key) => {
+            const tag = tagListData[key];
+            return <FeedTag tagInfo={tag} />;
+          })}
+        </div>
+      </div>
       <div className="board-board board-disable-scrollbar">
         <div className="borad-carousel ">
-          {/* input dummy */}
           <button onClick={addFeed}>create dummy</button>
           {/* dummy feed data start */}
           {/* feedListData의 데이터를 HTML로 출력 */}
