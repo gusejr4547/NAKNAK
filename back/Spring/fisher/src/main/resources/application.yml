@@ -6,7 +6,7 @@ spring:
         max-idle: 10
         min-idle: 2
     port: 6379
-    host: 127.0.0.1
+    host: redis
     password: 1747
   h2:
     console:
