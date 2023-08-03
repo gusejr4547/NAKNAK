@@ -1,0 +1,9 @@
+.Nowgetdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transform: translateX(-50%); */
+  /* position: absolute;
+  bottom: 20%;
+  left: 40%; */
+}
