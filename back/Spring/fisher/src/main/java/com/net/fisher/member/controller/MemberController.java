@@ -56,7 +56,7 @@ public class MemberController {
         return new ResponseEntity<>(new MemberStatusResponse(memberResponse,statusResponse), HttpStatus.OK);
     }
 
-    /*@PostMapping("/members/update")
+    /*@PostMapping("/members/update")e
     public ResponseEntity<MemberDto.Response> updateMember
             (@RequestBody )*/
 
