@@ -1,8 +1,21 @@
-import { useState } from "react";
-
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./Feed.css";
 
 const Feed = ({ feedInfo }) => {
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipe: true,
+    prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
+    nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+  };
+
   const followClickHandler = () => {
     // 우선 멤버 id 값을 전달할 예정입니다.
     console.log("follow btn clicked", feedInfo.post.memberId);
@@ -61,11 +74,16 @@ const Feed = ({ feedInfo }) => {
           <div className="feed-insight">
             <div className="feed-views ">{feedInfo.post.views} views</div>
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
-            <img
-              src="/assets/icons/heart.png"
-              alt="하트"
-              onClick={followClickHandler}
-            />
+            <Slider {...settings}>
+              {feedInfo.images.map((image, index) => (
+                <img
+                  key={index}
+                  src="/assets/icons/heart.png"
+                  alt="하트"
+                  onClick={followClickHandler}
+                />
+              ))}
+            </Slider>
           </div>
           <div className="feed-caption">{feedInfo.post.content}</div>
         </div>
