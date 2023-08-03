@@ -6,7 +6,7 @@ const FeedTag = (tagInfo) => {
   console.log(tagInfo.tagInfo);
   console.log(tagInfo.tagName);
   const onClickTest = () => {
-    console.log("tag btn clicked!", tagInfo);
+    console.log("tag btn clicked!", tagInfo.tagInfo.tagName);
   };
 
   return (

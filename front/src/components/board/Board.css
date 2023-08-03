@@ -65,12 +65,18 @@
 }
 
 .board-tag-wrapper {
+  padding-top: 1rem;
+  width: 100%;
+
+  display: flex;
+  overflow-x: scroll;
+}
+.board-tag-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .board-tag-carousel {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap; /* 넘치는 요소들을 다음 줄로 넘어가게 함 */
-  align-items: flex-start; /* 세로 가운데 정렬 */
-  overflow-x: scroll; /* 내용이 넘칠 때 스크롤이 생성됩니다. */
+  margin-top: 1rem;
+  margin-left: 1rem;
 }

@@ -75,12 +75,13 @@ const Board = () => {
         </div>
       </div>
       <div className="board-tag-wrapper">
-        <div className="board-tag-carousel">
-          {Object.keys(tagListData).map((key) => {
-            const tag = tagListData[key];
-            return <FeedTag tagInfo={tag} />;
-          })}
-        </div>
+        {Object.keys(tagListData).map((key) => {
+          const tag = tagListData[key];
+          return <FeedTag tagInfo={tag} />;
+        })}
+        {/* dummy data start */}
+
+        {/* dummy data end */}
       </div>
       <div className="board-board board-disable-scrollbar">
         <div className="borad-carousel ">
