@@ -68,7 +68,7 @@ const Board = () => {
     <div className="board-wrapper">
       <div className="board-header">
         <div className="board-title-container">
-          <div>요기는 </div>
+          <div>SNS </div>
         </div>
         <div className="board-search-img-container">
           <img src="/assets/icons/kakao.PNG" alt="검색버튼" />

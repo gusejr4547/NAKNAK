@@ -3,7 +3,10 @@ import { useState } from "react";
 import "./Feed.css";
 
 const Feed = ({ feedInfo }) => {
-  console.log(feedInfo.images);
+  const followClickHandler = () => {
+    // 우선 멤버 id 값을 전달할 예정입니다.
+    console.log("follow btn clicked", feedInfo.post.memberId);
+  };
 
   return (
     <div className="feed-wrapper">
@@ -30,7 +33,45 @@ const Feed = ({ feedInfo }) => {
           <p key={index}>{tag}</p>;
         })}
       </div>
-      <div className="feed-board">요기부터 진짜 피드</div>
+      <div className="feed-board">
+        <div className="feed-header">
+          <img
+            className="feed-profile-img"
+            // null 값에 feedInfo.post.memberImageUrl가 들어가야함
+            src={null || `/assets/images/jge.png`}
+            alt="progile"
+          />
+          <div className="feed-username">username</div>
+          <div className="feed-follow" onClick={followClickHandler}>
+            팔로우
+          </div>
+        </div>
+
+        {/* carousel start */}
+        <img
+          className="feed-image"
+          src={"/assets/images/jge.png"}
+          alt="post images"
+        />
+        {/* carousel end */}
+        <div className="feed-footer">
+          <div className="feed-insight">
+            <div className="feed-views ">{feedInfo.post.views} views</div>
+            {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
+            <img
+              src="/assets/icons/heart.png"
+              alt="하트"
+              onClick={followClickHandler}
+            />
+          </div>
+          <div className="feed-caption">{feedInfo.post.content}</div>
+        </div>
+        {/* 댓글 DB 아직 미완성 */}
+        {/* <div className="comments">
+            <div className="comment">Comment 1</div>
+            <div className="comment">Comment 2</div>
+          </div> */}
+      </div>
     </div>
   );
 };
