@@ -59,6 +59,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize->authorize
                         .requestMatchers("/h2-console**").permitAll()
+                        .requestMatchers("/oauth2/*").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/members/register**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
