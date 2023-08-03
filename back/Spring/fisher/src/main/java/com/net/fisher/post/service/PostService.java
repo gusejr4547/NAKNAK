@@ -235,4 +235,7 @@ public class PostService {
         return postImageRepository.findFirstByPost(post);
     }
 
+    public Page<Post> getPostFromMemberLike(long tokenId, Pageable pageable) {
+        return likeRepository.findPostByMemberId(pageable, tokenId);
+    }
 }
