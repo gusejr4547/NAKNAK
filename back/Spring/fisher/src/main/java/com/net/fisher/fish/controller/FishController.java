@@ -124,8 +124,10 @@ public class FishController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*@GetMapping("/fishes/inventory/info")
-    public ResponseEntity<InventoryDto.Info>*/
+    @GetMapping("/fishes/inventory/info/{member-id}")
+    public ResponseEntity<InventoryDto.Info> getInventoryInfo(@PathVariable("member-id")long memberId){
+        return new ResponseEntity<>(fishService.getInventoryInfoFromMemberId(memberId),HttpStatus.OK);
+    }
 
     /*------------------------관리용 API-----------------------*/
 
