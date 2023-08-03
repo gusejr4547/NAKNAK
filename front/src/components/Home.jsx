@@ -5,8 +5,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
+import { useRecoilState } from "recoil";
+import { loginuser } from "../utils/atoms";
 
 function Home(props) {
+  const [userData] = useRecoilState(loginuser);
   const settings = {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
@@ -27,35 +30,43 @@ function Home(props) {
       <div className="home-board">
         <Slider {...settings} className="home-carousel">
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide">
             <Link to="/Dogam" className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>도감</h6>
             </Link>
-          </div>
+          </div> */}
           {/* slide unit end */}
 
           <div className="home-slide">
             <Link to="/Fishpic" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/camera1.PNG" alt="icon" />
               <h6>카메라</h6>
             </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘3</h6>
+            <Link to="/Inventory" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>인벤토리</h6>
+            </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘4</h6>
+            <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>프로필</h6>
+            </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘5</h6>
+            <Link to="/Map" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>Map</h6>
+            </Link>
           </div>
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>아이콘6</h6>
+            <Link to="/SeaScene" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>수조</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />

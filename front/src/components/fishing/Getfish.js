@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRecoilState} from "recoil";
-import { loginuser, token } from "./atoms";
+import { loginuser,token } from '../../utils/atoms';
 import { Button } from 'react-bootstrap';
+import { authorizedRequest } from '../account/AxiosInterceptor';
+
+
 
 function Getfish(props) {
     const [fishData, setFishData] = useState({})
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [accesstoken, setToken] = useRecoilState(token);
-    // const [loginUser, setloginuser] = useRecoilState(loginuser);
-    // const header = headers: {
-    //     Authorization: `Bearer ${accessToken}`, // 인증 헤더에 액세스 토큰 추가
-    //   },
+
     const header = {Authorization: accesstoken}
-    // console.log(header)
-    // console.log(fishData,123)
+
     const fishHandleclick = async () => {
         try {
           setLoading(true);
-          const response = await axios.post("/api/fishes/catch", fishData, {headers: header});
+        //   const response = await axios.post("/api/fishes/catch", fishData, {headers: header});
+          const response = await authorizedRequest({ method: 'post', url: "/api/fishes/catch", data: fishData,});
           setFishData(response.data);
           console.log(fishData,123)
           console.log(response,456)

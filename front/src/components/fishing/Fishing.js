@@ -77,7 +77,6 @@ function Fishing(props) {
 
   return (
     <div>
-      <h1>피싱모드입니다</h1>
       <div className="fishing">
         <div className="box-header">
           <div
@@ -86,24 +85,20 @@ function Fishing(props) {
             }
             onClick={() => start("바다")}
           >
-            <span>바다</span>
+            <span>낚시 시작</span>
           </div>
-
-          <div
-            className={
-              fishingMode === "selectMode" ? "fishing-box2" : "hiddenMode"
-            }
-            onClick={() => start("민물")}
-          >
-            <span>민물</span>
-          </div>
-
           <div className={fishingMode === "selectMode" ? "hiddenMode" : "mode"}>
             <div>
-              <div className="time">
+              <div
+                className="time"
+                onClick={() =>
+                  setFishingMode("selectMode") &
+                  setTime({ s: 0, m: 0, h: 0, today: 0 })
+                }
+              >
                 {" "}
                 <div>
-                  <span>{fishingMode}</span>
+                  <span>종료하기</span>
                 </div>
                 {`${time.h.toString().padStart(2, "0")}:${time.m
                   .toString()
@@ -113,20 +108,6 @@ function Fishing(props) {
           </div>
         </div>
       </div>
-      <div
-        className={fishingMode === "selectMode" ? "hiddenMode" : "exitBtn"}
-        onClick={() =>
-          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today: 0 })
-        }
-      >
-        <span>종료하기</span>
-      </div>
-      <Link to="/Fishpic" className="nav-link">
-        <input type="submit" value="촬영" />
-      </Link>
-      <Link to="/Dogam" className="nav-link">
-        <input type="submit" value="도감" />
-      </Link>
     </div>
   );
 }

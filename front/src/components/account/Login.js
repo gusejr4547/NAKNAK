@@ -8,6 +8,7 @@ import { loginuser, token } from "../../utils/atoms";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
+// import { getData, postData } from "../../utils/api";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -16,7 +17,7 @@ function Login(props) {
   // const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [postData, setPostData] = useRecoilState(loginuser);
+  const [userData, setUserData] = useRecoilState(loginuser);
   const [accesstoken, setAccessToken] = useRecoilState(token);
   const navigate = useNavigate();
   // useEffect(() => {
@@ -43,6 +44,11 @@ function Login(props) {
     $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
+  const loginHandleKey = (eve) => {
+    if (eve.key == "Enter") {
+      loginHandleClick();
+    }
+  };
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
@@ -63,12 +69,14 @@ function Login(props) {
     try {
       setLoading(true);
       console.log(loginData);
-      const response = await axios.post("/api/login", loginData);
-      setPostData(response.data);
+      const response = await axios.post("/api1/api/login", loginData);
+      setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
+      localStorage.setItem("key", response.headers.authorization);
+      console.log(accesstoken, 789);
       navigate("/");
-      console.log(postData, 123);
+      // console.log(postData, 123);
       console.log(response, 456);
       setLoading(false);
     } catch (error) {
@@ -82,12 +90,15 @@ function Login(props) {
   const socialLoginHandler = async (provider) => {
     try {
       setLoading(true);
-      const response = await axios.get(`/api/oauth2/authorization/${provider}`);
-      setPostData(response.data);
+      const response = await axios.get(
+        `/api1/api/oauth2/authorization/${provider}`
+      );
+      setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
+      localStorage.setItem("key", response.headers.authorization);
       navigate("/");
-      console.log(postData, 123);
+      // console.log(postData, 123);
       console.log(response, 456);
       setLoading(false);
     } catch (error) {
@@ -116,10 +127,11 @@ function Login(props) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         height: "100vh",
+        padding: "0px 0px 50% 0px",
       }}
     >
-      <h1 style={{ margin: "30px 0px 0px 0px" }}>로그인 페이지</h1>
       <img
         src="assets/cats/cat.png"
         alt=""
@@ -144,6 +156,7 @@ function Login(props) {
           onBlur={userIdBlurHandler}
           $hasError={userIdHasError}
           $errorText={userIdHasError}
+          onKeyPress={loginHandleKey}
         />
         <AuthInput
           label="비밀번호"
@@ -155,6 +168,7 @@ function Login(props) {
           onBlur={userPasswordBlurHandler}
           $hasError={userPasswordHasError}
           $errorText="필수 입력값입니다"
+          onKeyPress={loginHandleKey}
         />
 
         <Button
@@ -173,20 +187,34 @@ function Login(props) {
           as="input"
           onClick={() => socialLoginHandler("google")}
           type="button"
-          value="구글 로그인"
-          style={{ backgroundColor: "white", color: "black" }}
+          value=""
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            width: "50%",
+            height: "40%",
+            backgroundImage: `url(/assets/icons/Google1.png)`,
+            backgroundSize: "cover",
+            backgroundPosition: "left center",
+          }}
         ></Button>
+
         <Button
           as="input"
           onClick={() => socialLoginHandler("kakao")}
           type="button"
-          value="카카오 로그인"
+          value=""
           style={{
-            margin: "10px 0px 0px 0px",
             backgroundColor: "yellow",
             color: "black",
+            width: "50%",
+            height: "40%",
+            backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         ></Button>
+
         <Link to="/Signup" className="nav-link">
           <Button
             as="input"

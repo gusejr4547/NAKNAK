@@ -20,4 +20,16 @@ public class MemberStatusDto {
         private boolean isNewBee;
         private int tutorialProgress;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UpStatus{
+        private int upPoint;
+        private long upExp;
+        private int tutorialProgress;
+    }
+
 }
