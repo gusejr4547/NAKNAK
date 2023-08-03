@@ -49,13 +49,26 @@ public class PostDto {
         private long memberId;
         private String memberImageUrl;
         private String memberNickname;
+    }
 
-        private List<PostImageDto.Response> postImageDtos;
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    public static class SimpleResponse{
+        private long postId;
+        private String content;
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        private LocalDateTime registeredAt;
 
-        // 좋아요 수
-        private long likeCount;
+        private long memberId;
+        private String memberImageUrl;
+        private String memberNickname;
 
-        // 태그
+        private PostImageDto.Response postImage;
+
         private List<Tag> tags;
     }
 }

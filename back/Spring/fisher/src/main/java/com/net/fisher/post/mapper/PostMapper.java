@@ -14,23 +14,18 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PostMapper {
     Post postDtoToPost(PostDto.Post requestBody);
-
-    default PostDto.Response postToPostResponseDto(Post post, List<PostImageDto.Response> postImageDtos, long likeCount, List<Tag> tagList){
+    default PostDto.Response toPostResponseDto(Post post){
         String fileUrl = "/upload/man.jpeg";
         if(post.getMember().getMemberImage() !=null) fileUrl = post.getMember().getMemberImage().getFileUrl();
         PostDto.Response response = PostDto.Response.builder()
                 .postId(post.getPostId())
                 .content(post.getContent())
+                .views(post.getViews())
                 .registeredAt(post.getRegisteredAt())
                 .memberId(post.getMember().getMemberId())
                 .memberNickname(post.getMember().getNickname())
                 .memberImageUrl(fileUrl)
-                .postImageDtos(postImageDtos)
-                .likeCount(likeCount)
-                .views(post.getViews())
-                .tags(tagList)
                 .build();
-
         return response;
     }
 }
