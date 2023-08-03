@@ -69,21 +69,26 @@ const Feed = ({ feedInfo }) => {
           src={"/assets/images/jge.png"}
           alt="post images"
         />
+        <Slider {...settings}>
+          {feedInfo.images.map((image, index) => (
+            <img
+              key={index}
+              className="feed-image"
+              src={"/assets/images/jge.png"}
+              alt="post images"
+            />
+          ))}
+        </Slider>
         {/* carousel end */}
         <div className="feed-footer">
           <div className="feed-insight">
             <div className="feed-views ">{feedInfo.post.views} views</div>
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
-            <Slider {...settings}>
-              {feedInfo.images.map((image, index) => (
-                <img
-                  key={index}
-                  src="/assets/icons/heart.png"
-                  alt="하트"
-                  onClick={followClickHandler}
-                />
-              ))}
-            </Slider>
+            <img
+              src="/assets/icons/heart.png"
+              alt="하트"
+              onClick={followClickHandler}
+            />
           </div>
           <div className="feed-caption">{feedInfo.post.content}</div>
         </div>
