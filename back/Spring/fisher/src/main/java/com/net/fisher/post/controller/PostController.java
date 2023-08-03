@@ -12,7 +12,12 @@ import com.net.fisher.post.mapper.PostImageMapper;
 import com.net.fisher.post.mapper.PostMapper;
 import com.net.fisher.post.mapper.TagMapper;
 import com.net.fisher.post.service.PostService;
+import com.net.fisher.response.PostResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,11 +46,6 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        System.out.println("#######################");
-        System.out.println(postMapper.postDtoToPost(requestBody));
-        System.out.println("#######################");
-        System.out.println(tagMapper.listToTags(requestBody.getTags()));
-
         postService.uploadPost(tokenId, postMapper.postDtoToPost(requestBody), tagMapper.listToTags(requestBody.getTags()), httpServletRequest);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -53,7 +53,7 @@ public class PostController {
 
     // post 자세히 보기(수정화면?)
     @GetMapping("/posts/{post-id}")
-    public ResponseEntity<PostDto.Response> getPost(
+    public ResponseEntity<PostResponse> getPost(
             @PathVariable("post-id") long postId) {
 
         Post post = postService.postDetail(postId);
@@ -67,7 +67,7 @@ public class PostController {
         // view 증가
         postService.increaseViews(postId);
 
-        return new ResponseEntity<>(postMapper.postToPostResponseDto(post, postImageMapper.toPostImageDtos(postImages), likeCount, tagList), HttpStatus.OK);
+        return new ResponseEntity<>(new PostResponse(postMapper.toPostResponseDto(post), postImageMapper.toPostImageDtos(postImages), likeCount, tagList), HttpStatus.OK);
     }
 
     // 자신의 post 를 수정
@@ -114,7 +114,7 @@ public class PostController {
     @PostMapping("/posts/likes")
     public ResponseEntity<String> likePost(
             @RequestHeader(name = "Authorization") String token,
-            @RequestBody LikeDto.Post likePostDto){
+            @RequestBody LikeDto.Post likePostDto) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
@@ -126,7 +126,7 @@ public class PostController {
     @PostMapping("/posts/unlikes")
     public ResponseEntity<String> unlikePost(
             @RequestHeader(name = "Authorization") String token,
-            @RequestBody LikeDto.Post likePostDto){
+            @RequestBody LikeDto.Post likePostDto) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
@@ -136,11 +136,34 @@ public class PostController {
     }
 
     @GetMapping("/tags")
-    public ResponseEntity<List<Tag>> getTags(){
+    public ResponseEntity<List<Tag>> getTags() {
 
         List<Tag> tags = postService.getAllTags();
 
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
+    @GetMapping("/posts/my-post")
+    public ResponseEntity<List<PostDto.Response>> getMyPosts(
+            @RequestHeader(name = "Authorization") String token,
+            @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+        // postId, content, image, tag 정도?
+
+        Page<Post> postPage = postService.getPostFromMember(tokenId, pageable);
+        List<Post> postList = postPage.getContent();
+
+
+//        List<PostDto.Response> responseList = postMapper.to
+
+
+        return null;
+    }
+
+    @GetMapping("/posts/my-likes")
+    public ResponseEntity<List<PostDto.Response>> getMyLikes(
+            @RequestHeader(name = "Authorization") String token) {
+        return null;
+    }
 }
