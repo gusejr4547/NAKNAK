@@ -3,7 +3,7 @@
   background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
   position: relative;
   height: 100%;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   /* justify-content: center; */
   /* 가로 가운데 정렬 */
@@ -42,22 +42,18 @@
 
 .board-header {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   background-color: aqua;
 }
 
 .board-title-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
 }
 .board-title-container h3 {
+  width: 100%;
 }
 
 .board-search-img-container {
-  display: flex;
-  justify-content: flex-end;
 }
 .board-search-img-container img {
   width: 4rem;

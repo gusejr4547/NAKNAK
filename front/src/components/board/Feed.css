@@ -1,4 +1,11 @@
 .feed-wrapper {
-  background-color: rgb(203, 220, 252);
+  background-color: rgb(255, 221, 221);
   margin-bottom: 5px;
+}
+.feed-board {
+  background-color: rgb(139, 201, 255);
+  border-bottom: 3px solid;
+  border-color: rgb(59, 59, 59);
+  height: 10rem;
+  width: 100%;
 }

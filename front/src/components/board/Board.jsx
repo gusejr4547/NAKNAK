@@ -37,7 +37,7 @@ const Board = () => {
         setLoading(true);
 
         const response = await axios.get("api/tags");
-        console.log("tag load success", response.data);
+        // console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
         console.error("tag load error");
@@ -52,10 +52,10 @@ const Board = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get("api/posts/1");
+        const response = await axios.get("api/posts/2");
         console.log("feed load success", response.data);
         setFeedListData([response.data]);
-        console.log("feedListData", feedListData);
+        // console.log("feedListData", feedListData);
       } catch (error) {
         console.error("feed load error");
       }
@@ -68,7 +68,7 @@ const Board = () => {
     <div className="board-wrapper">
       <div className="board-header">
         <div className="board-title-container">
-          <h3>요기는 제목입니다</h3>
+          <div>요기는 </div>
         </div>
         <div className="board-search-img-container">
           <img src="/assets/icons/kakao.PNG" alt="검색버튼" />

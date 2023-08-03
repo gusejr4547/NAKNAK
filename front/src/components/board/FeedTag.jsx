@@ -3,8 +3,8 @@ import { useState } from "react";
 import "./FeedTag.css";
 
 const FeedTag = (tagInfo) => {
-  console.log(tagInfo.tagInfo);
-  console.log(tagInfo.tagName);
+  // console.log(tagInfo.tagInfo);
+
   const onClickTest = () => {
     console.log("tag btn clicked!", tagInfo.tagInfo.tagName);
   };
