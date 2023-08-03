@@ -59,10 +59,12 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize->authorize
                         .requestMatchers("/h2-console**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/members/register**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/fishes/catch").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/members/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST).hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()
