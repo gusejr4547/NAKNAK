@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Feed.css";
 
-const Feed = ({ feedInfo }) => {
+import { authorizedRequest } from "../account/AxiosInterceptor";
+
+import FeedTag from "./FeedTag";
+import { Link } from "react-router-dom";
+
+const Feed = ({ feedInfo, followerList, userId }) => {
+  const [followState, setFollowState] = useState(
+    followerList.data.find(
+      (follower) => follower.memberId === feedInfo.post.memberId
+    )
+      ? true
+      : false
+  );
+
+  console.log("before", followState);
   const settings = {
     dots: true,
     infinite: false,
@@ -16,9 +30,29 @@ const Feed = ({ feedInfo }) => {
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
   };
 
-  const followClickHandler = () => {
+  const followClickHandler = async () => {
     // 우선 멤버 id 값을 전달할 예정입니다.
     console.log("follow btn clicked", feedInfo.post.memberId);
+
+    setFollowState(!followState);
+    console.log("after", followState);
+
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: `api/follow/${followState ? "cancel" : "register"}?follow=${
+          feedInfo.post.memberId
+        }`,
+      });
+      console.log("success toggle follow state", response);
+    } catch (error) {
+      console.error("can't change follow state");
+    }
+  };
+
+  const likeClickHandler = () => {
+    // 우선 멤버 id 값을 전달할 예정입니다.
+    console.log("like btn clicked", feedInfo.likeCount);
   };
 
   return (
@@ -57,10 +91,34 @@ const Feed = ({ feedInfo }) => {
             src={null || `/assets/images/jge.png`}
             alt="progile"
           />
-          <div className="feed-username">username</div>
-          <div className="feed-follow" onClick={followClickHandler}>
-            팔로우
-          </div>
+          <Link
+            to={`/Profile/${feedInfo.post.memberId}`}
+            className="feed-username"
+          >
+            {feedInfo.post.memberNickname}
+          </Link>
+
+          {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
+          {userId === feedInfo.post.memberId ? (
+            <div className="feed-not-follow">본인</div>
+          ) : followerList.data.find(
+              (follower) => follower.memberId === feedInfo.post.memberId
+            ) ? (
+            <div
+              className={followState ? "feed-following" : "feed-not-follow"}
+              onClick={followClickHandler}
+            >
+              {followState ? "팔로잉" : "팔로우"}
+            </div>
+          ) : (
+            <div
+              className={followState ? "feed-following" : "feed-not-follow"}
+              onClick={followClickHandler}
+            >
+              {followState ? "팔로잉" : "팔로우"}
+            </div>
+          )}
+          {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
         </div>
 
         {/* carousel start */}
@@ -102,15 +160,20 @@ const Feed = ({ feedInfo }) => {
         {/* carousel end */}
         <div className="feed-footer">
           <div className="feed-insight">
-            <div className="feed-views ">{feedInfo.post.views} views</div>
+            <div className="feed-likes ">{feedInfo.likeCount} likes</div>
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
             <img
               src="/assets/icons/heart.png"
               alt="하트"
-              onClick={followClickHandler}
+              onClick={likeClickHandler}
             />
           </div>
           <div className="feed-caption">{feedInfo.post.content}</div>
+          <div className="feed-tags">
+            {feedInfo.tags.map((tag, index) => {
+              return <FeedTag key={index} tagInfo={tag} />;
+            })}
+          </div>
         </div>
         {/* 댓글 DB 아직 미완성 */}
         {/* <div className="comments">

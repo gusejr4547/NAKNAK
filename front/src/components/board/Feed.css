@@ -31,9 +31,22 @@
 }
 .feed-username {
   font-weight: bold;
+  color: black;
+  text-decoration: none;
   margin-right: auto;
 }
-.feed-follow {
+.feed-not-follow {
+  width: 4.2rem;
+  height: 1.7rem;
+  background-color: #97aeff;
+  border-radius: 0.2rem;
+  margin-right: 0.8rem;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+.feed-following {
   width: 4.2rem;
   height: 1.7rem;
   background-color: #e3e3e3;
@@ -52,7 +65,7 @@
 .feed-caption {
   font-size: 16px;
 }
-.feed-views {
+.feed-likes {
   font-weight: bold;
   margin-right: auto;
 }
@@ -80,4 +93,9 @@
   margin: 0.3rem;
   width: 2rem;
   height: 2rem;
+}
+
+.feed-tags {
+  display: flex;
+  margin-top: 1rem;
 }
