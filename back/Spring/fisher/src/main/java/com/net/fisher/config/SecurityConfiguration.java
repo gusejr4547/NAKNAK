@@ -26,6 +26,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -58,8 +59,8 @@ public class SecurityConfiguration {
 
                 .and()
                 .authorizeHttpRequests(authorize->authorize
-                        .requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
-                        .requestMatchers("/h2-console/*").permitAll()
+                        //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
+                        .requestMatchers(toH2Console()).permitAll()
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
                         .requestMatchers("/oauth2/*").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
