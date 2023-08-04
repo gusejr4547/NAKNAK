@@ -57,10 +57,18 @@
   font-weight: bold;
 }
 
+.feed-image-container {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 412px; /* 이미지 높이 설정 */
+}
+
 .feed-image {
-  width: 100%;
-  max-width: 100%;
+  width: auto;
+  height: 100%;
   margin-bottom: 10px;
+  position: absolute;
 }
 .feed-caption {
   font-size: 16px;

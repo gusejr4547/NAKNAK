@@ -10,6 +10,8 @@ import FeedTag from "./FeedTag";
 import { Link } from "react-router-dom";
 
 const Feed = ({ feedInfo, followerList, userId }) => {
+  console.log(feedInfo);
+
   const [followState, setFollowState] = useState(
     followerList.data.find(
       (follower) => follower.memberId === feedInfo.post.memberId
@@ -18,7 +20,6 @@ const Feed = ({ feedInfo, followerList, userId }) => {
       : false
   );
 
-  console.log("before", followState);
   const settings = {
     dots: true,
     infinite: false,
@@ -35,7 +36,6 @@ const Feed = ({ feedInfo, followerList, userId }) => {
     console.log("follow btn clicked", feedInfo.post.memberId);
 
     setFollowState(!followState);
-    console.log("after", followState);
 
     try {
       const response = await authorizedRequest({
@@ -69,7 +69,6 @@ const Feed = ({ feedInfo, followerList, userId }) => {
         "memberNickname": {feedInfo.post.memberNickname}, <br />
         "images":
         {feedInfo.images.map((image, index) => {
-          console.log(image.fileUrl);
           return (
             <p key={index} style={{ margin: 0 }}>
               {image.fileUrl}
@@ -124,38 +123,53 @@ const Feed = ({ feedInfo, followerList, userId }) => {
         {/* carousel start */}
 
         <Slider {...settings}>
-          {feedInfo.images.map((image, index) => (
+          {feedInfo.images.length > 0 ? (
+            feedInfo.images.map((image, index) => (
+              <div className="feed-image-container">
+                <img
+                  key={index}
+                  className="feed-image"
+                  src={"/assets/images/jge.png"}
+                  alt="post images"
+                />
+              </div>
+            ))
+          ) : (
+            <div className="feed-image-container">
+              <img
+                className="feed-image"
+                src={"/assets/images/jge.png"}
+                alt="post images"
+              />
+            </div>
+          )}
+          {/* dummy image */}
+          {/* <div className="feed-image-container">
             <img
-              key={index}
+              // key={index}
+              className="feed-image"
+              src={"/assets/images/background.png"}
+              alt="post images"
+            />
+          </div>
+          <div className="feed-image-container">
+            <img
+              // key={index}
+              className="feed-image"
+              src={"/assets/123123123.png"}
+              alt="post images"
+            />
+          </div>
+          <div className="feed-image-container">
+            <img
+              // key={index}
               className="feed-image"
               src={"/assets/images/jge.png"}
               alt="post images"
             />
-          ))}
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
+          </div> */}
+
+          {/* dummy image end*/}
         </Slider>
         {/* carousel end */}
         <div className="feed-footer">
@@ -171,6 +185,7 @@ const Feed = ({ feedInfo, followerList, userId }) => {
           <div className="feed-caption">{feedInfo.post.content}</div>
           <div className="feed-tags">
             {feedInfo.tags.map((tag, index) => {
+              console.log(tag);
               return <FeedTag key={index} tagInfo={tag} />;
             })}
           </div>
