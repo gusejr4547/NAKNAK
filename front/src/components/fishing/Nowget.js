@@ -3,7 +3,7 @@ import "./Nowget.css";
 function Nowget(props) {
   return (
     <div className="Nowgetdiv">
-      <p>나의 기록은 {props.num} </p>
+      <h1 className="Nowgeth">나의 기록은 {props.num} </h1>
     </div>
   );
 }

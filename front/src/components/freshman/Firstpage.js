@@ -3,12 +3,13 @@ import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
 import { constSelector } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 function Firstpage() {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
   const [type, setType] = useState(null);
-
+  const navigate = useNavigate();
   // 낚시 결과 함수
 
   // 낚시 설문조사 함수

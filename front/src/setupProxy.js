@@ -11,7 +11,7 @@ module.exports = function (app) {
       pathRewrite: {
         "^/api1": "",
       },
-    }) 
+    })
   );
 
   // 프록시2 설정

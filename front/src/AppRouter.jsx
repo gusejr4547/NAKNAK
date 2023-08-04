@@ -21,6 +21,7 @@ import ImgTest from "./temp/Teacherable/ImgTest";
 import Map from "./components/map/Map";
 import Inventory from "./components/fishbowl/Inventory";
 // import Bowl from "./components/fishbowl/Bowl";
+import Balls from "./components/fishbowl/Balls";
 
 function AppRouter(props) {
   return (
@@ -47,6 +48,7 @@ function AppRouter(props) {
             <Route path="/Fishpic" element={<Fishpic />}></Route>
             {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
+            <Route path="/Balls" element={<Balls />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/ImgTest" element={<ImgTest />}></Route>
