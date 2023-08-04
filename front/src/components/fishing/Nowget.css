@@ -1,9 +1,19 @@
 .Nowgetdiv {
   display: flex;
+  width: 55%;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  bottom: 40%;
+  border: thick double rgb(7, 87, 178);
   /* transform: translateX(-50%); */
   /* position: absolute;
   bottom: 20%;
   left: 40%; */
+}
+
+.Nowgeth {
+  text-align: center;
+  color: blue;
+  margin: 0px;
 }
