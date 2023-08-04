@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -243,7 +243,18 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
-    public Page<Post> getPostFromFollowing(Long memberId, Pageable pageable) {
+    public Page<Post> getPostFromFollowing(long memberId, Pageable pageable, LocalDateTime time) {
+
+        Page<Post> postPage = postRepository.findPostByFollowing(pageable, memberId, time);
+//        System.out.println(postPage.getTotalElements());
+//        System.out.println(postPage.getContent().size());
+        return postPage;
+    }
+
+    public Page<Post> getPostFromMyWay(long tokenId, Pageable pageable) {
+        // 내가 작성한 태그
+
+
         return null;
     }
 }

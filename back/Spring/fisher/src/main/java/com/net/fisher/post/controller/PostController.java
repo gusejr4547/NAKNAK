@@ -18,12 +18,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,12 +193,16 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<PageResponse<PostResponse>> getPosts(
             @RequestHeader(name = "Authorization") String token,
-            @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime time,
+            @PageableDefault(size = 10, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
         Page<Post> postPage = null;
 
-        postPage = postService.getPostFromFollowing(tokenId, pageable);
+        // 팔로잉 기준으로 게시글 조회
+        Page<Post> postPageFollowing = postService.getPostFromFollowing(tokenId, pageable, time);
+        // 태그 기준으로 게시글 조회
+        Page<Post> postPageTag = postService.getPostFromMyWay(tokenId, pageable);
 
         // 더미 데이터
         postPage = postService.getDefaultPost(pageable);

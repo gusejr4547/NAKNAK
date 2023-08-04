@@ -26,4 +26,11 @@ public class TagDto {
     public static class Response{
         List<Tag> tags;
     }
+
+    public interface Info{
+        long getTagId();
+        String getTagName();
+        long getTagCount();
+    }
+
 }
