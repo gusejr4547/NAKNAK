@@ -66,7 +66,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/fishes/catch").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/members/*").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST).hasRole("USER")
+                        //.requestMatchers(HttpMethod.POST).hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()
