@@ -51,6 +51,7 @@ spring:
           google:
             client-id: 541309009451-92mhcite978a3ortbm2c6ruce68hr0lj.apps.googleusercontent.com
             client-secret: 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
+            redirect-uri: http://passportlkm.iptime.org:20101/login/oauth2/code/google
             scope:
               - profile
               - email
