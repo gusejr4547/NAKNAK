@@ -66,7 +66,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -82,7 +82,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -97,7 +97,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -112,7 +112,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -127,7 +127,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -142,7 +142,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://192.168.30.161:8080" + fish.imgUrl}
+                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>

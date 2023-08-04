@@ -30,12 +30,12 @@ function Home(props) {
       <div className="home-board">
         <Slider {...settings} className="home-carousel">
           {/* slide unit start*/}
-          {/* <div className="home-slide">
+          <div className="home-slide">
             <Link to="/Dogam" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/do.PNG" alt="icon" />
               <h6>도감</h6>
             </Link>
-          </div> */}
+          </div>
           {/* slide unit end */}
 
           {/* slide unit start*/}
@@ -50,7 +50,7 @@ function Home(props) {
           {/* slide unit start*/}
           <div className="home-slide">
             <Link to="/Inventory" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/on.PNG" alt="icon" />
               <h6>인벤토리</h6>
             </Link>
           </div>
@@ -59,7 +59,7 @@ function Home(props) {
           {/* slide unit start*/}
           <div className="home-slide">
             <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/pro.PNG" alt="icon" />
               <h6>프로필</h6>
             </Link>
           </div>
@@ -68,7 +68,7 @@ function Home(props) {
           {/* slide unit start*/}
           <div className="home-slide">
             <Link to="/Map" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/ji.PNG" alt="icon" />
               <h6>지도</h6>
             </Link>
           </div>
@@ -77,25 +77,28 @@ function Home(props) {
           {/* slide unit start*/}
           <div className="home-slide">
             <Link to="/Board" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/ge.PNG" alt="icon" />
               <h6>SNS</h6>
             </Link>
           </div>
           {/* slide unit end*/}
 
           {/* dummy data start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide">
             <Link to="/Map" className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>Map</h6>
             </Link>
-          </div>
+          </div> */}
           <div className="home-slide">
             <Link to="/SeaScene" className="nav-link">
               <img src="/assets/icons/google.PNG" alt="icon" />
               <h6>수조</h6>
             </Link>
           </div>
+          {/* slide unit end*/}
+
+          {/* dummy data start*/}
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />
             <h6>dummy</h6>

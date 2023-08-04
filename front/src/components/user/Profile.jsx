@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 // import { Button } from "react-bootstrap";
 import Following from "./Following";
 import Follower from "./Follower";
+import Mypost from "./Mypost";
 import Profileinventory from "./Profileinventory";
 import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
@@ -125,7 +126,7 @@ function Profile(props) {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          borderBottom: "1px solid #000",
+          // borderBottom: "1px solid #000",
         }}
       >
         <div className="profiletoggleBar" style={{ display: "flex" }}>
@@ -138,9 +139,9 @@ function Profile(props) {
             내가 쓴 게시글
           </button>
           <button
-            onClick={() => handleToggle("likedPosts")}
+            onClick={() => handleToggle("aquarium")}
             style={{
-              background: activeView === "likedPosts" ? "#ccc" : "transparent",
+              background: activeView === "aquarium" ? "#ccc" : "transparent",
             }}
           >
             수조
@@ -148,8 +149,8 @@ function Profile(props) {
         </div>
         {activeView === "myPosts" ? (
           <div className="profileMiddle">
-            <p>내가 쓴 게시글</p>
-            <p>좋아요 한 게시글</p>
+            <Mypost id={temp} ver="my-post" />
+            <Mypost id={temp} ver="my-like" />
           </div>
         ) : (
           <div className="profileaquarium">

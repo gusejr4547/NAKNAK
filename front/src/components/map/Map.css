@@ -7,3 +7,13 @@
   display: absolute;
   padding-top: 20%;
 }
+
+.mapsearch {
+  position: fixed;
+  bottom: 30%;
+}
+
+.mapsearchresult {
+  position: fixed;
+  bottom: 20%;
+}

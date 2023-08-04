@@ -20,6 +20,7 @@ import SeaScene from "./components/fishbowl/SeaScene";
 import ImgTest from "./temp/Teacherable/ImgTest";
 import Map from "./components/map/Map";
 import Inventory from "./components/fishbowl/Inventory";
+// import Bowl from "./components/fishbowl/Bowl";
 
 function AppRouter(props) {
   return (
@@ -47,7 +48,7 @@ function AppRouter(props) {
             {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
-            {/* <Route path="/Dogam" element={<Dogam />}></Route> */}
+            <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/ImgTest" element={<ImgTest />}></Route>
             <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Inventory" element={<Inventory />}></Route>
@@ -60,6 +61,7 @@ function AppRouter(props) {
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>
+            {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
           <Footer />

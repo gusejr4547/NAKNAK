@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { recoilPersist } from 'recoil-persist';
+import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 //  vue의 state
 
@@ -18,6 +18,11 @@ export const token = atom({
 export const fishingMode_recoil = atom({
   key: "fishingMode_recoil",
   default: "selectMode",
+});
+
+export const getFish_recoil = atom({
+  key: "getFish_recoil",
+  default: 0,
 });
 
 export const time_recoil = atom({
