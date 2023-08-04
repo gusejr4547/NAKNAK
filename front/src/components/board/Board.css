@@ -3,11 +3,11 @@
   background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
   position: relative;
   height: 100%;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   /* justify-content: center; */
   /* 가로 가운데 정렬 */
-  align-items: center;
+  align-items: baseline;
   /* 세로 가운데 정렬 */
   /* max-height: 45rem; */
   /* 카로셀 전체의 최대 높이를 설정합니다. */
@@ -15,8 +15,8 @@
   /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
 }
 .board-board {
-  width: 24rem;
-  height: 40.625rem;
+  width: 100%;
+  height: 47.625rem;
 
   overflow-y: auto;
 }
@@ -38,4 +38,42 @@
 
 .board-disable-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.board-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  background-color: aqua;
+}
+
+.board-title-container {
+}
+.board-title-container h3 {
+  width: 100%;
+}
+
+.board-search-img-container {
+}
+.board-search-img-container img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.board-tag-wrapper {
+  padding: 0.5rem 0 0.5rem 0;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+
+  display: flex;
+  overflow-x: scroll;
+}
+.board-tag-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.board-tag-carousel {
+  display: flex;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
