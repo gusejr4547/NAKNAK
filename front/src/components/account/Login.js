@@ -49,6 +49,15 @@ function Login(props) {
       loginHandleClick();
     }
   };
+  const logout = () => {
+    setUserData(null);
+    console.log(userData);
+    setAccessToken(null);
+    console.log(accesstoken);
+    localStorage.setItem("key", null);
+    const tt = localStorage.getItem("key");
+    console.log(tt);
+  };
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
@@ -91,7 +100,8 @@ function Login(props) {
     try {
       setLoading(true);
       const response = await axios.get(
-        `/api1/api/oauth2/authorization/${provider}`
+        `/api1/oauth2/authorization/${provider}`
+        // "/api1/oauth2/authorization/google"
       );
       setUserData(response.data);
       console.log(response.headers.authorization);
@@ -177,6 +187,13 @@ function Login(props) {
           value="로그인"
           style={{ margin: "10px 0px 0px 0px" }}
           onClick={loginHandleClick}
+        />
+        <Button
+          as="input"
+          type="button"
+          value="로그아웃"
+          style={{ margin: "10px 0px 0px 0px" }}
+          onClick={logout}
         />
       </div>
       <div
