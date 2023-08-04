@@ -86,7 +86,6 @@ public class PostService {
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         } catch (IOException e) {
-            logger.error(e.getMessage());
             e.printStackTrace();
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         }
