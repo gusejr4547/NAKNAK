@@ -33,8 +33,11 @@ public class FileService {
         try {
             List<FileInfo> infoList = new ArrayList<>();
             File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+            logger.error(uploadDir.getAbsolutePath());
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                boolean e =  uploadDir.mkdir();
+                String er = e?"OK":"NO";
+                logger.error(er);
             }
 
             for (MultipartFile part : fileList) {
