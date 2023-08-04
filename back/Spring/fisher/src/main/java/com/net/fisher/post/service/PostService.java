@@ -46,17 +46,20 @@ public class PostService {
 
             // Tag 테이블에 등록, PostTag 에 등록
             PostTag postTag = null;
-            for (Tag tagInfo : tagList) {
-                Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
-                        Tag.builder().tagName(tagInfo.getTagName()).build());
-                tagRepository.save(tag);
+            if(tagList != null){
+                for (Tag tagInfo : tagList) {
+                    Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
+                            Tag.builder().tagName(tagInfo.getTagName()).build());
+                    tagRepository.save(tag);
 
-                postTag = PostTag.builder()
-                        .tag(tag)
-                        .post(post)
-                        .build();
-                postTagRepository.save(postTag);
+                    postTag = PostTag.builder()
+                            .tag(tag)
+                            .post(post)
+                            .build();
+                    postTagRepository.save(postTag);
+                }
             }
+
 
             // 파일 업로드
             List<MultipartFile> fileList = httpServletRequest.getFiles("file");
