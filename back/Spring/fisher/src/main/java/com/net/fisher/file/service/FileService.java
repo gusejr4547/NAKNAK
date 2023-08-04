@@ -61,4 +61,6 @@ public class FileService {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
         }
     }
+    /*
+    private boolean extensionCheck()*/
 }
