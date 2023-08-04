@@ -35,7 +35,7 @@ public class FileService {
             File uploadDir = new File(uploadPath + File.separator + uploadFolder);
             logger.error(uploadDir.getAbsolutePath());
             if (!uploadDir.exists()) {
-                boolean e =  uploadDir.mkdir();
+                boolean e =  uploadDir.mkdirs();
                 String er = e?"OK":"NO";
                 logger.error(er);
             }
