@@ -17,7 +17,19 @@ public class MemberStatusDto {
         private int point;
         private long exp;
         private int level;
-        private boolean isNewBee;
+        private int isNewBee;
         private int tutorialProgress;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UpStatus{
+        private int upPoint;
+        private long upExp;
+        private int tutorialProgress;
+    }
+
 }

@@ -33,5 +33,6 @@ public class Inventory {
     private int y;*/
 
     @Column(name = "size")
+    @Setter
     private double size;
 }

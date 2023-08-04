@@ -3,5 +3,17 @@
   width: 400px;
   height: 500px;
 }
-.modal {
+#title {
+  display: absolute;
+  padding-top: 20%;
+}
+
+.mapsearch {
+  position: fixed;
+  bottom: 30%;
+}
+
+.mapsearchresult {
+  position: fixed;
+  bottom: 20%;
 }

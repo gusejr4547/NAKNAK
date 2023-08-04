@@ -1,9 +1,12 @@
 package com.net.fisher.fish.service;
 
 import com.google.gson.Gson;
+import com.net.fisher.conv.Attachment;
+import com.net.fisher.conv.RequestMessage;
 import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.fish.dto.FishRecogDto;
+import com.net.fisher.fish.dto.InventoryDto;
 import com.net.fisher.fish.entity.Books;
 import com.net.fisher.fish.entity.Fish;
 import com.net.fisher.fish.entity.FishBowls;
@@ -14,10 +17,13 @@ import com.net.fisher.fish.repository.FishRepository;
 import com.net.fisher.fish.repository.InventoryRepository;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
+import com.net.fisher.member.service.MemberService;
 import com.net.fisher.response.FishCheckResponse;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -39,35 +45,39 @@ public class FishService {
     private final FishRepository fishRepository;
     private final FishBowlsRepository fishBowlsRepository;
     private final BooksRepository booksRepository;
+    private final MemberService memberService;
+
 
     @PostConstruct
     public void initialFish(){
-        List<Fish> fishList = new ArrayList<>();
-        fishList.add(Fish.builder()
-                .name("전갱이")
-                .imgUrl("/img/fishes/A001.png")
-                .info("육질이 단단한 맛난 생선")
-                .code("A001")
-                .build());
-        fishList.add(Fish.builder()
-                .name("광어")
-                .imgUrl("/img/fishes/A002.png")
-                .info("횟감으로 좋은 흰살 생선")
-                .code("A002")
-                .build());
-        fishList.add(Fish.builder()
-                .name("돌돔")
-                .imgUrl("/img/fishes/A003.png")
-                .info("고오급 횟감")
-                .code("A003")
-                .build());
-        fishList.add(Fish.builder()
-                .name("학꽁치")
-                .imgUrl("/img/fishes/A004.png")
-                .info("겨울철 횟감")
-                .code("A004")
-                .build());
-        fishRepository.saveAll(fishList);
+        if(fishRepository.findById(1L).isEmpty()) {
+            List<Fish> fishList = new ArrayList<>();
+            fishList.add(Fish.builder()
+                    .name("전갱이")
+                    .imgUrl("/img/fishes/A001.png")
+                    .info("육질이 단단한 맛난 생선")
+                    .code("A001")
+                    .build());
+            fishList.add(Fish.builder()
+                    .name("광어")
+                    .imgUrl("/img/fishes/A002.png")
+                    .info("횟감으로 좋은 흰살 생선")
+                    .code("A002")
+                    .build());
+            fishList.add(Fish.builder()
+                    .name("돌돔")
+                    .imgUrl("/img/fishes/A003.png")
+                    .info("고오급 횟감")
+                    .code("A003")
+                    .build());
+            fishList.add(Fish.builder()
+                    .name("학꽁치")
+                    .imgUrl("/img/fishes/A004.png")
+                    .info("겨울철 횟감")
+                    .code("A004")
+                    .build());
+            fishRepository.saveAll(fishList);
+        }
     }
 
     public FishRecogDto recognizeFish(String token, MultipartFile image){
@@ -128,13 +138,27 @@ public class FishService {
         inventory.setFish(fish);
         inventory.setMember(member);
 
-        inventoryRepository.save(inventory);
+        inventory = inventoryRepository.save(inventory);
 
         /*====도감에 등록하는 알고리즘====*/
 
         booksUpdate(fish,member,inventory);
 
         return inventory;
+    }
+
+
+    @Transactional
+    public void deleteInventoryItem(long tokenId, long inventoryId){
+        Member member = memberService.findMember(tokenId);
+
+        Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow(()->new BusinessLogicException(ExceptionCode.INVENTORY_NOT_FOUND));
+
+        if(inventory.getMember().getMemberId() == tokenId){
+            inventoryRepository.deleteById(inventoryId);
+        }else{
+            throw new BusinessLogicException(ExceptionCode.NOT_OWNER_OF);
+        }
     }
 
     @Transactional
@@ -203,6 +227,16 @@ public class FishService {
         }
 
         booksRepository.save(findBooks);
+    }
+
+    public Page<Inventory> getInventoryListFromMemberId(long memberId, Pageable pageable){
+        Member findMember = memberService.findMember(memberId);
+
+        return inventoryRepository.getInventoriesByMember(findMember,pageable);
+    }
+
+    public InventoryDto.Info getInventoryInfoFromMemberId(long memberId){
+        return inventoryRepository.getInventoryInfo(memberId);
     }
 
     private HttpHeaders getFileHeaders(String fileName) {

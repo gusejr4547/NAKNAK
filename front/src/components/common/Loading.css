@@ -1,15 +1,67 @@
-.loadingWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.loading_wrapper {
+  width: 100%;
   height: 100%;
+  background-color: #ffe9a1;
 }
-.wave {
-  width: 400px;
-  height: 600px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-top-left-radius: 75px;
-  border-top-right-radius: 75px;
-  border-bottom-left-radius: 75px;
-  border-bottom-right-radius: 75px;
+
+.wave_wrap {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  width: 90%;
+  top: 10%;
+  height: 750px;
+  border: 15px solid #fff;
+  border-radius: 50px;
+  left: 5%;
+  overflow: hidden;
+}
+.wave1 {
+  height: 46%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.wave2 {
+  height: 35%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+}
+.wave3 {
+  height: 40%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2.5;
+}
+.island_img {
+  position: absolute;
+  bottom: 7.5rem;
+  width: 17rem;
+  height: 17rem;
+  left: 2.5rem;
+  z-index: 2;
+  background: url("../../../public/assets/images/island3.png") center center
+    no-repeat;
+}
+.cat_img {
+  position: absolute;
+  bottom: 12rem;
+  width: 10rem;
+  height: 20rem;
+  left: 5rem;
+  z-index: 3;
+  background: url("../../../public/assets/cats/cat.png") center center no-repeat;
+  background-size: 9rem;
+}
+.loading_title {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #ffffff;
+  position: absolute;
+  top: 10rem;
 }

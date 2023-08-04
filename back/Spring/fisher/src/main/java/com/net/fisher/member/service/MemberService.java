@@ -1,6 +1,8 @@
 package com.net.fisher.member.service;
 
 import com.net.fisher.auth.utils.CustomAuthorityUtils;
+import com.net.fisher.conv.Attachment;
+import com.net.fisher.conv.RequestMessage;
 import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
@@ -14,16 +16,27 @@ import com.net.fisher.member.repository.FollowRepository;
 import com.net.fisher.member.repository.MemberImageRepository;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.member.repository.MemberStatusRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,6 +59,44 @@ public class MemberService {
 
     @Value("${app.fileupload.uploadPath}")
     String uploadPath;
+
+    @PostConstruct
+    public void initialize(){ // server on mattermost bot
+        String ipAddressStr = "ip"; //test
+        try {//test2
+            InetAddress ipAddress = InetAddress.getLocalHost();
+            ipAddressStr = ipAddress.getHostAddress();
+            System.out.println("Your IP address is: " + ipAddressStr);
+        } catch (UnknownHostException e) {
+            System.out.println("Unable to determine your IP address: " + e.getMessage());
+        }
+        String toIp = "192.168.30.161";
+        if(ipAddressStr.equals(toIp)){
+            RestTemplate restTemplate = new RestTemplate();
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            RequestMessage requestMessage = new RequestMessage();
+            requestMessage.setUsername("serverBot");
+            requestMessage.setChannel("9e105");
+            List<Attachment> attachments = new ArrayList<>();
+            attachments.add(new Attachment("Server is on! 서버가 켜졌어용 :09_buk_e105_mascot_face: "));
+            requestMessage.setAttachments(attachments);
+
+            // Create the HttpEntity with headers and request object
+            HttpEntity<RequestMessage> requestEntity = new HttpEntity<>(requestMessage, headers);
+
+            String url = "https://meeting.ssafy.com/hooks/nzhq14h3atb99q3h8coadtqe9o"; // Replace with the actual API endpoint URL
+
+            // Send the POST request and get the response
+            ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+        }else{
+
+        }
+
+    }
 
     @Transactional
     public Member createMember(Member member, MultipartHttpServletRequest httpServletRequest) {
@@ -116,7 +167,7 @@ public class MemberService {
                     .member(savingMember)
                     .exp(0)
                     .level(0)
-                    .isNewBee(true)
+                    .isNewBee(-1)
                     .tutorialProgress(0)
                     .point(0)
                     .build();
@@ -132,16 +183,31 @@ public class MemberService {
         }
     }
 
+    public Page<Member> getFollowList(long memberId, Pageable pageable){
+        return memberRepository.findMembersFromFollowerId(memberId,pageable);
+    }
+
+    public Page<Member> getFollowingList(long memberId, Pageable pageable){
+        return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
+    }
 
 
     public Follow makeFollowTo(long toId, long fromId){
-        Follow follow = Follow.builder()
+
+        Follow follow =
+        followRepository.findFollowFromToId(fromId,toId).orElseGet(()->Follow.builder()
                 .member(findMember(fromId))
                 .followMember(findMember(toId))
-                .build();
+                .build());
+
         return followRepository.save(follow);
     }
 
+    @Transactional
+    public void cancelFollowTo(long toId, long fromId){
+        Follow follow = followRepository.findFollowFromToId(fromId,toId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        followRepository.delete(follow);
+    }
 
     public MemberStatus findStatusOfMember(long memberId){
         return memberStatusRepository.findMemberStatusByMember_MemberId(memberId);

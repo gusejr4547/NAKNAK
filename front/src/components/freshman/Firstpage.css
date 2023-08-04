@@ -1,0 +1,108 @@
+.first_wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #fbeeac;
+}
+
+.first_wave_wrap {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  width: 90%;
+  top: 10%;
+  height: 750px;
+  border: 15px solid #fff;
+  border-radius: 50px;
+  left: 5%;
+  overflow: hidden;
+}
+.first_wave1 {
+  height: 46%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.first_wave2 {
+  height: 35%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+}
+.first_wave3 {
+  height: 40%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2.5;
+}
+.first_island_img {
+  position: absolute;
+  bottom: 7.5rem;
+  width: 17rem;
+  height: 17rem;
+  left: 2.5rem;
+  z-index: 2;
+  background: url("../../../public/assets/images/island3.png") center center
+    no-repeat;
+}
+.first_cat_img {
+  position: absolute;
+  bottom: 12rem;
+  width: 10rem;
+  height: 20rem;
+  left: 5rem;
+  z-index: 3;
+  background: url("../../../public/assets/cats/cat.png") center center no-repeat;
+  background-size: 9rem;
+}
+.first_talk {
+  display: flex;
+  position: absolute;
+  top: 7rem;
+  width: 20rem;
+  height: 18em;
+  left: 3rem;
+  z-index: 3;
+  background: url("../../../public/assets/images/mallpoong.png") center center
+    no-repeat;
+  background-size: 20rem;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.first_title {
+  position: absolute;
+  top: 25%;
+  text-align: center;
+  width: 18rem;
+  height: 8rem;
+  font-size: 1.2rem;
+  border-radius: 18px;
+  white-space: pre-wrap;
+}
+
+.btns {
+  display: flex;
+  position: absolute;
+  bottom: 3rem;
+  z-index: 40;
+  justify-content: center;
+  color: #fff;
+  border-radius: 20px;
+}
+.btns span {
+  display: flex;
+  background-color: cornflowerblue;
+  width: 10rem;
+  height: 7rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 24px;
+  text-align: center;
+  padding: 2.5%;
+  margin: 1%;
+}

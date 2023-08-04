@@ -26,6 +26,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -58,11 +59,16 @@ public class SecurityConfiguration {
 
                 .and()
                 .authorizeHttpRequests(authorize->authorize
-                        .requestMatchers("/h2-console**").permitAll()
+                        //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
+                        .requestMatchers(toH2Console()).permitAll()
+                        //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
+                        .requestMatchers("/oauth2/*").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/members/register**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/fishes/catch").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/members/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST).authenticated()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()
@@ -81,7 +87,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:8080");
-        //configuration.addAllowedOriginPattern("http://192.168.30.120:3000");
+        configuration.addAllowedOriginPattern("*:3000");
         configuration.addExposedHeader("*");
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
