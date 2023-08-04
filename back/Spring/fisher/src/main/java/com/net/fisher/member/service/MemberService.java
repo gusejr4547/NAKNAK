@@ -167,7 +167,7 @@ public class MemberService {
                     .member(savingMember)
                     .exp(0)
                     .level(0)
-                    .isNewBee(true)
+                    .isNewBee(-1)
                     .tutorialProgress(0)
                     .point(0)
                     .build();
