@@ -3,12 +3,13 @@ import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
 import { constSelector } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 function Firstpage() {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
   const [type, setType] = useState(null);
-
+  const navigate = useNavigate();
   // 낚시 결과 함수
 
   // 낚시 설문조사 함수
@@ -24,10 +25,12 @@ function Firstpage() {
     } else if (step === 4) {
       // 원투낚시
       setType("원투");
+      console.log("원투");
       setShow(false);
     } else if (step === 5) {
       console.log("뉴비아님");
       setShow(false);
+      navigate("/");
     }
   };
   const btn2 = () => {
@@ -39,10 +42,12 @@ function Firstpage() {
       setStep(4);
     } else if (step === 3) {
       setType("루어");
+      console.log("루어");
       setShow(false);
     } else if (step === 4) {
       // 루어낚시
       setType("루어");
+      console.log("루어");
       setShow(false);
     } else if (step === 5) {
       setStep(3);

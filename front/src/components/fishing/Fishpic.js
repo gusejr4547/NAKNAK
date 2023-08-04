@@ -2,13 +2,14 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { token } from "../../utils/atoms";
-import { getFish_recoil } from "../../utils/atoms";
+import { getFish_recoil, fishingMode_recoil } from "../../utils/atoms";
 
 function CameraApp() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [accesstoken] = useRecoilState(token);
   const [getFish, setGetFish] = useRecoilState(getFish_recoil);
+  const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const header = {
     "Content-Type": "multipart/form-data",
     Authorization: accesstoken,
@@ -19,7 +20,10 @@ function CameraApp() {
 
   const getCameraStream = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false,
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
@@ -64,7 +68,10 @@ function CameraApp() {
       const imageFile = new File([imageBlob], "fish.jpg", {
         type: "image/jpg",
       });
-      setGetFish(getFish + 1);
+      if (fishingMode !== "selectMode") {
+        setGetFish(getFish + 1);
+      }
+
       // 이미지 파일을 FormData에 추가
       const formData = new FormData();
       setCapturedImageFile(imageFile);
