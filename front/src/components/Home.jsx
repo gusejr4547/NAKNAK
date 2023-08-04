@@ -96,6 +96,9 @@ function Home(props) {
               <h6>수조</h6>
             </Link>
           </div>
+          {/* slide unit end*/}
+
+          {/* dummy data start*/}
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />
             <h6>dummy</h6>
