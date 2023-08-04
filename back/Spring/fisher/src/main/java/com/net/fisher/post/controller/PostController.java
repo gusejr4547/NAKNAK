@@ -190,7 +190,7 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<PageResponse<PostResponse>> getPosts(
-            @RequestBody Long memberId,
+            @RequestParam(value = "id", defaultValue = "null") Long memberId,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<Post> postPage = null;
