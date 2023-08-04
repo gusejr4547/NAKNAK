@@ -81,7 +81,7 @@ logging:
       max-file-size: 1MB
 app:
   fileupload:
-    uploadPath: \SSAFY\dummy\fisher
+    uploadPath: F:\SSAFY\dummy\fisher
     uploadDir: upload
 jwt:
   secret-key: ihatejavascriptihatevuefuckyoujavascriptfuckyouvuefreehongkong
