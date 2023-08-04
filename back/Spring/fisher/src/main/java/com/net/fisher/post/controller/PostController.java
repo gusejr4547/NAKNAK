@@ -190,19 +190,16 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<PageResponse<PostResponse>> getPosts(
-            @RequestParam(value = "id", required = false) Long memberId,
+            @RequestHeader(name = "Authorization") String token,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
+        long tokenId = jwtTokenizer.getMemberId(token);
         Page<Post> postPage = null;
-        if (memberId == null) {
-            postPage = postService.getDefaultPost(pageable);
-        } else {
-            postPage = postService.getPostFromFollowing(memberId, pageable);
-        }
+
+        postPage = postService.getPostFromFollowing(tokenId, pageable);
 
         // 더미 데이터
         postPage = postService.getDefaultPost(pageable);
-
 
         List<Post> postList = postPage.getContent();
         List<PostResponse> postResponses = new ArrayList<>();
