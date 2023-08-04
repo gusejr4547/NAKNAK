@@ -13,9 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -26,7 +24,18 @@ public class FileService {
     @Value("${app.fileupload.uploadPath}")
     String uploadPath;
 
+    private final Set<String> permittedExtensions;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public FileService(Set<String> permittedExtensions) {
+        this.permittedExtensions = permittedExtensions;
+        permittedExtensions.add("jpeg");
+        permittedExtensions.add("jpg");
+        permittedExtensions.add("png");
+        permittedExtensions.add("gif");
+    }
+
 
     public List<FileInfo> uploadFiles(List<MultipartFile> fileList) throws IOException {
         File rollback = null;
@@ -44,15 +53,23 @@ public class FileService {
                 String fileName = part.getOriginalFilename();
                 UUID uuid = UUID.randomUUID();
                 String extension = FilenameUtils.getExtension(fileName);
+                if(!extensionCheck(extension)) throw new BusinessLogicException(ExceptionCode.UNACCEPTABLE_EXTENSION);
                 String savingFileName = uuid + "." + extension;
                 File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
                 part.transferTo(destFile);
                 rollback = destFile;
                 infoList.add(new FileInfo(fileName, part.getSize(), part.getContentType(), uploadFolder + "/" + savingFileName));
             }
-
             return infoList;
-        }catch (Exception e) {
+        }catch (BusinessLogicException e){
+            e.printStackTrace();
+            if (rollback != null && rollback.exists()) {
+                rollback.delete();
+            }
+            logger.error(e.getMessage());
+            throw new BusinessLogicException(e.getExceptionCode());
+        }
+        catch (IOException e) {
             e.printStackTrace();
             if (rollback != null && rollback.exists()) {
                 rollback.delete();
@@ -61,6 +78,8 @@ public class FileService {
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
         }
     }
-    /*
-    private boolean extensionCheck()*/
+
+    private boolean extensionCheck(String extension){
+        return permittedExtensions.contains(extension);
+    }
 }

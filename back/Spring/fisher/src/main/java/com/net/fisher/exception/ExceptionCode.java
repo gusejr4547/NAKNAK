@@ -22,6 +22,7 @@ public enum ExceptionCode {
     FAILED_TO_UPDATE_FILE(500, "Failed Update Member"),
     WRONG_PASSWORD(400,"Wrong Password"),
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
+    UNACCEPTABLE_EXTENSION(403,"Unacceptable Extension"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
     FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
     FAILED_TO_WRITE_BOARD(500, "Failed Write Board"),
