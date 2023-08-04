@@ -10,7 +10,7 @@ import FeedTag from "./FeedTag";
 import { Link } from "react-router-dom";
 
 const Feed = ({ feedInfo, followerList, userId }) => {
-  console.log(feedInfo);
+  // console.log(feedInfo);
 
   const [followState, setFollowState] = useState(
     followerList.data.find(
@@ -77,7 +77,7 @@ const Feed = ({ feedInfo, followerList, userId }) => {
         })}
         "tags":
         {feedInfo.tags.map((tag, index) => {
-          <p key={index}>{tag}</p>;
+          return <p key={index}>{tag.name}</p>;
         })}
       </div>
       {/* data */}
@@ -185,7 +185,6 @@ const Feed = ({ feedInfo, followerList, userId }) => {
           <div className="feed-caption">{feedInfo.post.content}</div>
           <div className="feed-tags">
             {feedInfo.tags.map((tag, index) => {
-              console.log(tag);
               return <FeedTag key={index} tagInfo={tag} />;
             })}
           </div>

@@ -78,7 +78,7 @@ const Board = () => {
 
         const response = await await authorizedRequest({
           method: "get",
-          url: `api1/api/posts?page=1&size=5`,
+          url: `api1/api/posts?page=1&size=10`,
         });
         console.log("feed load success", response.data);
         setFeedListData(response.data.data);
