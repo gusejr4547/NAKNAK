@@ -41,7 +41,7 @@ function Home(props) {
           {/* slide unit start*/}
           <div className="home-slide">
             <Link to="/Fishpic" className="nav-link">
-              <img src="/assets/icons/camera1.PNG" alt="icon" />
+              <img src="/assets/icons/camera.PNG" alt="icon" />
               <h6>카메라</h6>
             </Link>
           </div>
@@ -92,7 +92,7 @@ function Home(props) {
           </div> */}
           <div className="home-slide">
             <Link to="/SeaScene" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/tank.PNG" alt="icon" />
               <h6>수조</h6>
             </Link>
           </div>
