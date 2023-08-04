@@ -18,7 +18,7 @@ const Inventory = () => {
 
         const response = await authorizedRequest({
           method: "get",
-          url: `/api/fishes/inventory/view`,
+          url: `api1/api/fishes/inventory/view`,
         });
 
         console.log("response success", response.data.data);
@@ -45,7 +45,7 @@ const Inventory = () => {
     try {
       const response = await authorizedRequest({
         method: "post",
-        url: `/api/fishes/inventory/delete`,
+        url: `api1/api/fishes/inventory/delete`,
         data: {
           inventoryId: deletedFishInfo.inventoryId,
         },
@@ -74,7 +74,7 @@ const Inventory = () => {
 
       const response = await authorizedRequest({
         method: "post",
-        url: `/api/fishes/catch`,
+        url: `api1/api/fishes/catch`,
         data: fish,
       });
 

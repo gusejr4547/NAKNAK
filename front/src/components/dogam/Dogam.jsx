@@ -7,6 +7,7 @@ import "./Dogam.css";
 import FishDetailModal from "./FishDetailModal";
 
 const Dogam = (props) => {
+  console.log(process.env.REACT_APP_BACKEND_URL);
   const catched = true;
 
   const [selectedFish, setSelectedFish] = useState(null);
@@ -66,7 +67,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -82,7 +83,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -97,7 +98,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -112,7 +113,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -127,7 +128,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>
@@ -142,7 +143,7 @@ const Dogam = (props) => {
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
               <h6>{fish.name}</h6>

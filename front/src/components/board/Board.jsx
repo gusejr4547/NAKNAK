@@ -59,7 +59,7 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `api/members/follow/${userInfo.memberId}`,
+          url: `api1/api/members/follow/${userInfo.memberId}`,
         });
         console.log("success getting followers", response);
         setFollowList(response.data);
