@@ -1,10 +1,8 @@
 package com.net.fisher.post.controller;
 
 import com.net.fisher.auth.jwt.JwtTokenizer;
-import com.net.fisher.fish.dto.InventoryDto;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
-import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
 import com.net.fisher.post.entity.Tag;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.lang.model.element.NestingKind;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +56,8 @@ public class PostController {
     public ResponseEntity<PostResponse> getPost(
             @PathVariable("post-id") long postId) {
 
-        Post post = postService.postDetail(postId);
-        List<PostImage> postImages = postService.postImageDetail(postId);
+        Post post = postService.getPost(postId);
+        List<PostImage> postImages = postService.getPostImage(postId);
 
         long likeCount = postService.getLikeCount(postId);
 
@@ -187,6 +184,37 @@ public class PostController {
                     postService.getTags(post.getPostId())));
         }
         PageResponse<PostSimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), simpleResponses);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<PageResponse<PostResponse>> getPosts(
+            @RequestParam(value = "id", required = false) Long memberId,
+            @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<Post> postPage = null;
+        if (memberId == null) {
+            postPage = postService.getDefaultPost(pageable);
+        } else {
+            postPage = postService.getPostFromFollowing(memberId, pageable);
+        }
+
+        // 더미 데이터
+        postPage = postService.getDefaultPost(pageable);
+
+
+        List<Post> postList = postPage.getContent();
+        List<PostResponse> postResponses = new ArrayList<>();
+        for (Post post : postList) {
+            postResponses.add(new PostResponse(
+                    postMapper.toPostResponseDto(post),
+                    postImageMapper.toPostImageDtos(postService.getPostImage(post.getPostId())),
+                    postService.getLikeCount(post.getPostId()),
+                    postService.getTags(post.getPostId())));
+        }
+
+        PageResponse<PostResponse> response = new PageResponse<>(postPage.getTotalElements(), postResponses);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

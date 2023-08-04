@@ -87,14 +87,14 @@ public class PostService {
 
     }
 
-    public Post postDetail(long postId) {
+    public Post getPost(long postId) {
 
         Post post = postRepository.findById(postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         return post;
     }
 
-    public List<PostImage> postImageDetail(long postId) {
+    public List<PostImage> getPostImage(long postId) {
 
         List<PostImage> postImages = postImageRepository.findPostImagesByPostId(postId);
 
@@ -241,5 +241,13 @@ public class PostService {
 
     public Page<Post> getPostFromMemberLike(long tokenId, Pageable pageable) {
         return likeRepository.findPostByMemberId(pageable, tokenId);
+    }
+
+    public Page<Post> getDefaultPost(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    public Page<Post> getPostFromFollowing(Long memberId, Pageable pageable) {
+        return null;
     }
 }
