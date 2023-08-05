@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 function Firstpage() {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
-  const [type, setType] = useState(null);
   const navigate = useNavigate();
   // 낚시 결과 함수
 
@@ -28,7 +27,9 @@ function Firstpage() {
       // 원투낚시
       // 유저정보에도 원 투 저장하기
       // 3초 후에 화면 넘어가기
-      setType("원투");
+      setTimeout(() => {
+        navigate("/Secondpage", { state: "Onetwo" });
+      }, 3000);
     } else if (step === 5) {
       console.log("뉴비아님");
       setStep(8);
@@ -47,14 +48,17 @@ function Firstpage() {
       setStep(6);
       setShow(false);
       // 유저정보에도 루어 저장하기
-      setType("루어");
-
+      setTimeout(() => {
+        navigate("/Secondpage", { state: "Lure" });
+      }, 3000);
       // 루어낚시
     } else if (step === 4) {
       // 유저정보에도 루어 저장하기
       setStep(6);
       setShow(false);
-      setType("루어");
+      setTimeout(() => {
+        navigate("/Secondpage", { state: "Lure" });
+      }, 3000);
     } else if (step === 5) {
       setStep(3);
     }
