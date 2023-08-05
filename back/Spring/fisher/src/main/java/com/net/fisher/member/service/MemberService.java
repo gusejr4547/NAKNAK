@@ -191,7 +191,7 @@ public class MemberService {
         return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
     }
 
-    public MemberStatus setIsNewbie(long memberId,int isNewbie){
+    public int setIsNewbie(long memberId,int isNewbie){
         return memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
     }
 

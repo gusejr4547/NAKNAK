@@ -118,15 +118,15 @@ public class MemberController {
     }
 
     @PostMapping("/members/status/newbie")
-    public ResponseEntity<MemberStatusDto.Response> changeIsNewbie(
+    public ResponseEntity<Integer> changeIsNewbie(
             @RequestHeader("Authorization") String token,
             @RequestBody MemberStatusDto.SetNewbie requestBody) {
             long tokenId = jwtTokenizer.getMemberId(token);
             int newVal = requestBody.getIsNewbie();
 
-            MemberStatus memberStatus = memberService.setIsNewbie(tokenId,newVal);
+            int val = memberService.setIsNewbie(tokenId,newVal);
 
-        return new ResponseEntity<>(memberMapper.toMemberStatusDto(memberStatus),HttpStatus.OK);
+        return new ResponseEntity<>(val,HttpStatus.OK);
     }
 
     /*==========================for Security===============================*/
