@@ -32,9 +32,11 @@ function Secondpage() {
             &lt; 이전
           </span>
         )}
-        <span className="btn2" onClick={() => nextTalk()}>
-          다음 &gt;
-        </span>
+        {step < Lure.length - 1 && (
+          <span className="btn2" onClick={() => nextTalk()}>
+            다음 &gt;
+          </span>
+        )}
       </div>
       <div className="second_wave_wrap">
         <div className="second_cat_img"></div>
@@ -47,7 +49,7 @@ function Secondpage() {
           options={{
             height: 45,
             amplitude: 20,
-            speed: 0.3,
+            speed: 0.32,
             points: 3,
           }}
         />
@@ -60,7 +62,7 @@ function Secondpage() {
           options={{
             height: 20,
             amplitude: 20,
-            speed: 0.25,
+            speed: 0.38,
             points: 4,
           }}
         ></Wave>
@@ -73,7 +75,7 @@ function Secondpage() {
           options={{
             height: 35,
             amplitude: 20,
-            speed: 0.2,
+            speed: 0.5,
             points: 4,
           }}
         />

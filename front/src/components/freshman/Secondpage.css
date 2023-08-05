@@ -78,14 +78,12 @@
   bottom: 5rem;
   right: 3rem;
 }
-
 .second_title {
   position: absolute;
-  /* top: 25%; */
   margin-right: 0.5rem;
   text-align: center;
   width: 16rem;
-  height: 8rem;
+  /* height: 16rem; */
   font-size: 1.2rem;
   border-radius: 18px;
   white-space: pre-wrap;
@@ -95,5 +93,6 @@
 .second_title img {
   position: absolute;
   width: 100%;
-  top: -8rem;
+  left: 0rem;
+  top: -6rem;
 }
