@@ -167,7 +167,7 @@ public class MemberService {
                     .member(savingMember)
                     .exp(0)
                     .level(0)
-                    .isNewBee(-1)
+                    .isNewBie(-1)
                     .tutorialProgress(0)
                     .point(0)
                     .build();
@@ -191,6 +191,9 @@ public class MemberService {
         return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
     }
 
+    public MemberStatus setIsNewbie(long memberId,int isNewbie){
+        return memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
+    }
 
     public Follow makeFollowTo(long toId, long fromId){
 
