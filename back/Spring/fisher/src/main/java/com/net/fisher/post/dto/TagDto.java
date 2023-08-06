@@ -28,9 +28,18 @@ public class TagDto {
     }
 
     public interface Info{
-        long getTagId();
-        String getTagName();
-        long getTagCount();
+        Long getTagId();
+//        Long getTagCount();
     }
 
+//    @Setter
+//    @Getter
+//    @NoArgsConstructor
+//    @AllArgsConstructor
+//    @Builder
+//    @ToString
+//    public static class Info{
+//        long tagId;
+//        long tagCount;
+//    }
 }

@@ -8,11 +8,13 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
+import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,16 +48,18 @@ public class PostService {
 
             // Tag 테이블에 등록, PostTag 에 등록
             PostTag postTag = null;
-            for (Tag tagInfo : tagList) {
-                Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
-                        Tag.builder().tagName(tagInfo.getTagName()).build());
-                tagRepository.save(tag);
+            if (tagList != null) {
+                for (Tag tagInfo : tagList) {
+                    Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
+                            Tag.builder().tagName(tagInfo.getTagName()).build());
+                    tagRepository.save(tag);
 
-                postTag = PostTag.builder()
-                        .tag(tag)
-                        .post(post)
-                        .build();
-                postTagRepository.save(postTag);
+                    postTag = PostTag.builder()
+                            .tag(tag)
+                            .post(post)
+                            .build();
+                    postTagRepository.save(postTag);
+                }
             }
 
             // 파일 업로드
@@ -143,7 +147,7 @@ public class PostService {
         newTags.removeAll(copyTags);
         System.out.println(newTags);
         PostTag postTag = null;
-        for(Tag tag : newTags){
+        for (Tag tag : newTags) {
             postTag = PostTag.builder().tag(tag).post(post).build();
             postTagRepository.save(postTag);
         }
@@ -221,7 +225,7 @@ public class PostService {
         return tagRepository.findAll();
     }
 
-    public List<Post> getMyAllPost(long tokenId){
+    public List<Post> getMyAllPost(long tokenId) {
 
 
         return null;
@@ -231,7 +235,7 @@ public class PostService {
         return postRepository.findPostByMemberIdFromPage(pageable, tokenId);
     }
 
-    public PostImage getOnePostImageByPost(Post post){
+    public PostImage getOnePostImageByPost(Post post) {
         return postImageRepository.findFirstByPost(post);
     }
 
@@ -246,13 +250,34 @@ public class PostService {
     public Page<Post> getPostFromFollowing(long memberId, Pageable pageable, LocalDateTime time) {
 
         Page<Post> postPage = postRepository.findPostByFollowing(pageable, memberId, time);
-//        System.out.println(postPage.getTotalElements());
-//        System.out.println(postPage.getContent().size());
+        System.out.println(postPage.getTotalElements());
+        System.out.println(postPage.getContent().size());
         return postPage;
     }
 
     public Page<Post> getPostFromMyWay(long tokenId, Pageable pageable) {
-        // 내가 작성한 태그
+        // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 3개 선택
+        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 3), tokenId);
+
+        System.out.println(myTagInfo);
+
+//        for (TagDto.Info info : myTagInfo) {
+//            System.out.println("##############");
+//            System.out.println(info.getTagId());
+////            System.out.println(info.getTagCount());
+//        }
+
+        // 태그가 없는 경우는
+        Page<Post> postPage = null;
+        if (!myTagInfo.isEmpty()) {
+            postPage = postRepository.findPostFromMyTag(pageable, tokenId, myTagInfo);
+        } else {
+            System.out.println("tag 가 없네용");
+        }
+
+        for(Post p : postPage.getContent()){
+            System.out.println(p);
+        }
 
 
         return null;
