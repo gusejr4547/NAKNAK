@@ -61,14 +61,15 @@ const Board = () => {
           method: "get",
           url: `api1/api/members/follow/${userInfo.memberId}`,
         });
-        console.log("success getting followers", response);
         setFollowList(response.data);
       } catch (error) {
         console.error("can't get current users followers");
       }
     };
     getFollowers();
-  }, []);
+
+    // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
+  }, [followerList]);
 
   // 게시글들을 가져옵니다
   useEffect(() => {
@@ -90,6 +91,22 @@ const Board = () => {
 
     getFeedList();
   }, []);
+
+  const followChange = async (state, postMemberId) => {
+    console.log(state, postMemberId);
+
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: `api1/api/follow/${
+          state ? "cancel" : "register"
+        }?follow=${postMemberId}`,
+      });
+      console.log("success toggle follow state", response);
+    } catch (error) {
+      console.error("can't change follow state");
+    }
+  };
 
   return (
     <div className="board-wrapper">
@@ -123,9 +140,19 @@ const Board = () => {
             const feed = feedListData[key];
             return (
               <Feed
+                //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
+                key={feed.post.postId}
                 feedInfo={feed}
                 followerList={followerList}
                 userId={userInfo.userId}
+                currentFollowState={
+                  followerList.data.find(
+                    (follower) => follower.memberId === feed.post.memberId
+                  )
+                    ? true
+                    : false
+                }
+                onFollowChange={followChange}
               />
             );
           })}
