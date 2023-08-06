@@ -54,6 +54,7 @@ const authorizedRequest = async (config) => {
         return retryResponse;
       } catch (err) {
         console.log("재발급 실패1", err);
+
         throw err;
       }
     } else {

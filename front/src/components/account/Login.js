@@ -9,6 +9,7 @@ import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
 // import { getData, postData } from "../../utils/api";
+import "./Login.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -49,6 +50,11 @@ function Login(props) {
       loginHandleClick();
     }
   };
+
+  const register = () => {
+    navigate("/Signup");
+  };
+
   const logout = () => {
     setUserData(null);
     console.log(userData);
@@ -148,14 +154,7 @@ function Login(props) {
         style={{ width: "150px", height: "150px" }}
       />
 
-      <div
-        style={{
-          display: "inline-block",
-          width: "200px",
-          height: "240px",
-          margin: "30px 0px 0px 0px",
-        }}
-      >
+      <div className="logininputbox">
         <AuthInput
           label="아이디"
           type="text"
@@ -180,26 +179,35 @@ function Login(props) {
           $errorText="필수 입력값입니다"
           onKeyPress={loginHandleKey}
         />
-
-        <Button
-          as="input"
-          type="button"
-          value="로그인"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={loginHandleClick}
-        />
-        <Button
-          as="input"
-          type="button"
-          value="로그아웃"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={logout}
-        />
+        <div className="loginbuttonbox">
+          <Button
+            as="input"
+            type="button"
+            value="로그인"
+            style={{ margin: "auto" }}
+            onClick={loginHandleClick}
+          />
+          <Button
+            as="input"
+            type="button"
+            value="로그아웃"
+            style={{ margin: "auto" }}
+            onClick={logout}
+          />
+        </div>
       </div>
       <div
         className="border-top"
-        style={{ width: "200px", margin: "10px 0px 0px 0px" }}
+        style={{ width: "250px", margin: "10px 0px 0px 0px" }}
       >
+        <p style={{ fontSize: "13px" }}>
+          Don't have an account?{" "}
+          <span onClick={register} style={{ color: "blue" }}>
+            Register me
+          </span>
+        </p>
+
+        <div className="loginsocial"></div>
         <Button
           as="input"
           onClick={() => socialLoginHandler("google")}
@@ -208,8 +216,8 @@ function Login(props) {
           style={{
             backgroundColor: "white",
             color: "black",
-            width: "50%",
-            height: "40%",
+            width: "30%",
+            height: "30%",
             backgroundImage: `url(/assets/icons/Google1.png)`,
             backgroundSize: "cover",
             backgroundPosition: "left center",
@@ -224,22 +232,13 @@ function Login(props) {
           style={{
             backgroundColor: "yellow",
             color: "black",
-            width: "50%",
-            height: "40%",
+            width: "30%",
+            height: "30%",
             backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         ></Button>
-
-        <Link to="/Signup" className="nav-link">
-          <Button
-            as="input"
-            type="button"
-            value="회원가입"
-            style={{ margin: "10px 0px 0px 0px" }}
-          />
-        </Link>
       </div>
     </div>
   );

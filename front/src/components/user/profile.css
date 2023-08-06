@@ -1,0 +1,36 @@
+.profileimgbox {
+  border-radius: 70%;
+  overflow: hidden;
+  height: 70%;
+  width: 80%;
+  border: 1px solid snow;
+}
+
+.profileImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.profileusernickname {
+  margin: 0;
+}
+.profileBottom {
+  justify-content: center;
+  align-items: center;
+  padding-top: 3%;
+}
+
+.profiletoggleBar {
+  justify-content: center;
+}
+
+.profileactive {
+  background-color: rgb(168, 195, 246);
+  border-radius: 10%;
+}
+
+.profiledefault {
+  background-color: transparent;
+  border-radius: 10%;
+}

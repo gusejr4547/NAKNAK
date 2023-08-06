@@ -1,0 +1,11 @@
+.profileinventorybox {
+  justify-content: center;
+  align-items: center;
+}
+
+.profileinventoryp {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+}
