@@ -77,11 +77,25 @@ const Lure = [
     image: `../assets/firstpage/lure2-3.png`,
   },
   {
-    content: "다음으로 원줄 묶는 법을 알려줄게.",
+    content:
+      "다음으로 원줄 묶는 법을 알려줄게.생각보다 어려울테니까 천천히 따라해봐! \n 미리 연습해봐야 실제로 갔을 때 빨리 할 수 있어! \n",
+    image: `../assets/firstpage/lure3-1.png`,
+  },
+  {
+    content: "이렇게 줄을 한바퀴 돌려",
+    image: `../assets/firstpage/lure3-2.png`,
+  },
+  {
+    content: "그리고 중심 줄을 축으로 5-6번 정도 돌리고, 돌렸던 줄을 당겨.",
+    image: `../assets/firstpage/lure3-3.png`,
+  },
+  {
+    content: "그리고 다른 줄을 쭉 당기면 끝이야.",
+    image: `../assets/firstpage/lure3-4.png`,
   },
   {
     content:
-      "준비물을 다 잘 챙겼지? \n 자, 이제 매듭법을 알려줄게. \n 생각보다 어려울테니까 천천히 따라해봐! \n 미리 연습해봐야 실제로 갔을 때 빨리 할 수 있어! \n",
+      "마지막 순서까지 끝이 났어. 지금까지 본 내용은 다시 확인 할 수 있으니까 보면서 천천히 연습해봐!.",
   },
 ];
 
