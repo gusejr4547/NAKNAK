@@ -4,11 +4,13 @@ import "./Firstpage.css";
 import talk from "./Talk";
 import { constSelector } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 function Firstpage() {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
   const [type, setType] = useState(null);
+  const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const navigate = useNavigate();
   // 낚시 결과 함수
 
@@ -25,9 +27,10 @@ function Firstpage() {
     } else if (step === 4) {
       // 원투낚시
       setType("원투");
-      console.log("원투");
+      changeNewbie(1);
       setShow(false);
     } else if (step === 5) {
+      changeNewbie(0);
       console.log("뉴비아님");
       setShow(false);
       navigate("/");
@@ -42,15 +45,30 @@ function Firstpage() {
       setStep(4);
     } else if (step === 3) {
       setType("루어");
-      console.log("루어");
+      changeNewbie(2);
       setShow(false);
     } else if (step === 4) {
       // 루어낚시
       setType("루어");
-      console.log("루어");
+      changeNewbie(2);
       setShow(false);
     } else if (step === 5) {
       setStep(3);
+    }
+  };
+  // 뉴비 상태 변경
+  const changeNewbie = async (status) => {
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/members/status/newbie",
+        data: { isNewbie: status },
+      });
+      console.log(response.data);
+      setLoading(false); // 데이터 로딩 완료
+    } catch (error) {
+      console.error("Error posting data:", error);
+      setLoading(false); // 데이터 로딩 완료 (에러 발생)
     }
   };
 
