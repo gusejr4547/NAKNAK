@@ -229,6 +229,12 @@ public class FishService {
         booksRepository.save(findBooks);
     }
 
+    public List<FishBowls> getFishBowlsListFromMemberId(long memberId){
+        Member findMember = memberService.findMember(memberId);
+
+        return fishBowlsRepository.findByMember(findMember);
+    }
+
     public Page<Inventory> getInventoryListFromMemberId(long memberId, Pageable pageable){
         Member findMember = memberService.findMember(memberId);
 

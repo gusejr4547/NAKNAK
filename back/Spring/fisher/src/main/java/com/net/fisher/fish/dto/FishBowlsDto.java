@@ -24,4 +24,16 @@ public class FishBowlsDto {
         private Fish fish;
         private double size;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class MultiResponse{
+        private long fishBowlId;
+        private String fishCode;
+        private String fishName;
+        private double fishSize;
+    }
 }
