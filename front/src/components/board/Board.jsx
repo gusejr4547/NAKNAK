@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import axios from "axios";
 import Feed from "./Feed";
@@ -6,6 +6,8 @@ import FeedTag from "./FeedTag";
 
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
+
+import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
 const Board = () => {
@@ -19,23 +21,9 @@ const Board = () => {
   // 팔로우 기능을 위한 현재 사용자 정보
   const [followerList, setFollowList] = useState([]);
 
-  // #region
-  ////////////////add dummy feed/////////////////////
-  ///////////////////////////////////////////////////
-  const addFeed = async () => {
-    try {
-      const response = await axios.get("api1/api/posts/1");
-      console.log("dummy load success", response.data);
-      console.log(typeof response.data);
-      setFeedListData((prev) => [...prev, response.data]);
-      console.log("add success", feedListData);
-    } catch (error) {
-      console.error("list append error");
-    }
-  };
-  ///////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
-  // #endregion
+  // 무한 스크룰을 사용하기 위한 변수
+  const [page, setPage] = useState(1);
+  const [ref, inView] = useInView();
 
   // 태그의 이름들을 가져옵니다
   useEffect(() => {
@@ -71,26 +59,37 @@ const Board = () => {
     // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
   }, [followerList]);
 
-  // 게시글들을 가져옵니다
-  useEffect(() => {
-    const getFeedList = async () => {
-      try {
-        setLoading(true);
+  const getFeedList = useCallback(async () => {
+    try {
+      setLoading(true);
 
-        const response = await await authorizedRequest({
-          method: "get",
-          url: `api1/api/posts?page=1&size=10`,
-        });
-        console.log("feed load success", response.data);
-        setFeedListData(response.data.data);
-        // console.log("feedListData", feedListData);
-      } catch (error) {
-        console.error("feed load error");
+      const response = await await authorizedRequest({
+        method: "get",
+        url: `api1/api/posts?page=${page}&size=2`,
+      });
+      if (response.data.data.length > 0) {
+        console.log("feed load success", response.data.data);
+        setFeedListData((prevData) => prevData.concat(response.data.data));
       }
-    };
+      // console.log("feedListData", feedListData);
+    } catch (error) {
+      console.error("feed load error");
+    } finally {
+    }
+    setLoading(false);
+  }, [page]);
 
+  // `feedListData` 가 바뀔 때 마다 함수 실행
+  useEffect(() => {
     getFeedList();
-  }, []);
+  }, [getFeedList]);
+
+  useEffect(() => {
+    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+    if (inView && !loading) {
+      setPage((prevState) => prevState + 1);
+    }
+  }, [inView, loading]);
 
   const followChange = async (state, postMemberId) => {
     console.log(state, postMemberId);
@@ -113,7 +112,7 @@ const Board = () => {
       <div className="board-header">
         <div className="board-title-container">
           <div>
-            <h3>SNSNSNSNSNSNSN</h3>
+            <h3>NAKNAK</h3>
           </div>
         </div>
         <div className="board-search-img-container">
@@ -131,31 +130,31 @@ const Board = () => {
         {/* dummy data end */}
       </div>
       <div className="board-board board-disable-scrollbar">
-        <div className="borad-carousel ">
-          {/* 더미 추가 버튼 */}
-          <button onClick={addFeed}>create dummy</button>
-
+        <div className="board-carousel ">
           {/* feedListData의 데이터를 HTML로 출력 */}
-          {Object.keys(feedListData).map((key) => {
-            const feed = feedListData[key];
-            return (
-              <Feed
-                //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
-                key={feed.post.postId}
-                feedInfo={feed}
-                followerList={followerList}
-                userId={userInfo.userId}
-                currentFollowState={
-                  followerList.data.find(
-                    (follower) => follower.memberId === feed.post.memberId
-                  )
-                    ? true
-                    : false
-                }
-                onFollowChange={followChange}
-              />
-            );
-          })}
+          {feedListData.length > 0 &&
+            Object.keys(feedListData).map((index) => {
+              const feed = feedListData[index];
+              return (
+                <div ref={ref}>
+                  <Feed
+                    key={index}
+                    //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
+                    feedInfo={feed}
+                    followerList={followerList}
+                    userId={userInfo.userId}
+                    currentFollowState={
+                      followerList.data.find(
+                        (follower) => follower.memberId === feed.post.memberId
+                      )
+                        ? true
+                        : false
+                    }
+                    onFollowChange={followChange}
+                  />
+                </div>
+              );
+            })}
 
           {/* dummy feed data start */}
 

@@ -21,12 +21,12 @@
   overflow-y: auto;
 }
 .board-carousel {
-  position: relative;
+  /* position: relative;
   width: 24rem;
   height: 40.625rem;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 
 /* 스크룰 바 숨기기 */
