@@ -73,7 +73,7 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login()
                 .successHandler(oAuth2SuccessHandler)
-                .userInfoEndpoint()
+                .userInfoEndpoint() //일반적으로 OAuth 2.0 및 OpenID Connect 프로토콜에서 인증 성공 후 인증된 사용자에 대한 추가 정보를 얻기 위해 사용됩니다.
                 .userService(customOAuth2UserService);
         return httpSecurity.build();
     }

@@ -114,6 +114,7 @@ public class MemberController {
     @PostMapping("/members/status/change")
     public ResponseEntity<MemberStatusDto.Response> upExperiencePoint(
             @RequestBody MemberStatusDto.UpStatus upStatus) {
+        //status 변경
         return null;
     }
 
@@ -128,6 +129,16 @@ public class MemberController {
 
         return new ResponseEntity<>(val,HttpStatus.OK);
     }
+
+
+
+
+
+
+
+
+
+
 
     /*==========================for Security===============================*/
 
