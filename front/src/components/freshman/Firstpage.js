@@ -25,15 +25,20 @@ function Firstpage() {
     } else if (step === 3) {
       setStep(4);
     } else if (step === 4) {
+      setStep(7);
+      setShow(false);
       // 원투낚시
+      // 유저정보에도 원 투 저장하기
+      // 3초 후에 화면 넘어가기
       setType("원투");
       changeNewbie(1);
       setShow(false);
     } else if (step === 5) {
       changeNewbie(0);
       console.log("뉴비아님");
+      setStep(8);
       setShow(false);
-      navigate("/");
+      // 유저 정보에 false 저장하기
     }
   };
   const btn2 = () => {
@@ -47,11 +52,11 @@ function Firstpage() {
       setType("루어");
       changeNewbie(2);
       setShow(false);
-    } else if (step === 4) {
-      // 루어낚시
+      // 유저정보에도 루어 저장하기
       setType("루어");
       changeNewbie(2);
       setShow(false);
+      setType("루어");
     } else if (step === 5) {
       setStep(3);
     }

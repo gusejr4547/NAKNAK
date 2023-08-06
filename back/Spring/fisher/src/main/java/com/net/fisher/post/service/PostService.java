@@ -12,6 +12,9 @@ import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
     private final MemberRepository memberRepository;
     private final FileService fileService;
@@ -34,6 +38,7 @@ public class PostService {
     private final LikeRepository likeRepository;
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
     public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
@@ -46,17 +51,20 @@ public class PostService {
 
             // Tag 테이블에 등록, PostTag 에 등록
             PostTag postTag = null;
-            for (Tag tagInfo : tagList) {
-                Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
-                        Tag.builder().tagName(tagInfo.getTagName()).build());
-                tagRepository.save(tag);
+            if(tagList != null){
+                for (Tag tagInfo : tagList) {
+                    Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
+                            Tag.builder().tagName(tagInfo.getTagName()).build());
+                    tagRepository.save(tag);
 
-                postTag = PostTag.builder()
-                        .tag(tag)
-                        .post(post)
-                        .build();
-                postTagRepository.save(postTag);
+                    postTag = PostTag.builder()
+                            .tag(tag)
+                            .post(post)
+                            .build();
+                    postTagRepository.save(postTag);
+                }
             }
+
 
             // 파일 업로드
             List<MultipartFile> fileList = httpServletRequest.getFiles("file");
@@ -76,21 +84,22 @@ public class PostService {
             }
 
         } catch (BusinessLogicException e) {
-            throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
+            throw new BusinessLogicException(e.getExceptionCode());
         } catch (IOException e) {
+            e.printStackTrace();
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         }
 
     }
 
-    public Post postDetail(long postId) {
+    public Post getPost(long postId) {
 
         Post post = postRepository.findById(postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         return post;
     }
 
-    public List<PostImage> postImageDetail(long postId) {
+    public List<PostImage> getPostImage(long postId) {
 
         List<PostImage> postImages = postImageRepository.findPostImagesByPostId(postId);
 
@@ -237,5 +246,13 @@ public class PostService {
 
     public Page<Post> getPostFromMemberLike(long tokenId, Pageable pageable) {
         return likeRepository.findPostByMemberId(pageable, tokenId);
+    }
+
+    public Page<Post> getDefaultPost(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    public Page<Post> getPostFromFollowing(Long memberId, Pageable pageable) {
+        return null;
     }
 }

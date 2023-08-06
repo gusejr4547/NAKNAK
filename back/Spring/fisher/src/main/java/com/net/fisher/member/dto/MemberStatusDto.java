@@ -17,7 +17,7 @@ public class MemberStatusDto {
         private int point;
         private long exp;
         private int level;
-        private boolean isNewBee;
+        private int isNewBie;
         private int tutorialProgress;
     }
 
@@ -30,6 +30,15 @@ public class MemberStatusDto {
         private int upPoint;
         private long upExp;
         private int tutorialProgress;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SetNewbie{
+        private int isNewbie;
     }
 
 }

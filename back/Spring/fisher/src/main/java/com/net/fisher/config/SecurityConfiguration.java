@@ -26,6 +26,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -58,14 +59,16 @@ public class SecurityConfiguration {
 
                 .and()
                 .authorizeHttpRequests(authorize->authorize
-                        .requestMatchers("/h2-console**").permitAll()
+                        //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
+                        .requestMatchers(toH2Console()).permitAll() // H2 Console 에 대한 모든 접근을 허용하기 위한 메서드
+                        //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
                         .requestMatchers("/oauth2/*").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/members/register**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/fishes/catch").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/members/*").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST).hasRole("USER")
+                        .requestMatchers(HttpMethod.POST).authenticated()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()
