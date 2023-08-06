@@ -36,6 +36,8 @@ const Board = () => {
         setTagListData(response.data);
       } catch (error) {
         console.error("tag load error");
+      } finally {
+        setLoading(false);
       }
     };
     getTagList();
@@ -55,7 +57,6 @@ const Board = () => {
       }
     };
     getFollowers();
-
     // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
   }, [followerList]);
 
@@ -63,14 +64,15 @@ const Board = () => {
     try {
       setLoading(true);
 
-      const response = await await authorizedRequest({
+      const response = await authorizedRequest({
         method: "get",
         url: `api1/api/posts?page=${page}&size=2`,
       });
-      if (response.data.data.length > 0) {
-        console.log("feed load success", response.data.data);
-        setFeedListData((prevData) => prevData.concat(response.data.data));
-      }
+      console.log("feed load success", response.data.data);
+      setFeedListData((prevData) => prevData.concat(response.data.data));
+
+      console.log(feedListData);
+
       // console.log("feedListData", feedListData);
     } catch (error) {
       console.error("feed load error");
@@ -85,7 +87,7 @@ const Board = () => {
   }, [getFeedList]);
 
   useEffect(() => {
-    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니고 inView가 true인 경우에만 실행
     if (inView && !loading) {
       setPage((prevState) => prevState + 1);
     }
@@ -137,6 +139,7 @@ const Board = () => {
               const feed = feedListData[index];
               return (
                 <div ref={ref}>
+                  {inView.toString()}
                   <Feed
                     key={index}
                     //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
