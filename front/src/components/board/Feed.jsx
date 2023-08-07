@@ -13,9 +13,14 @@ const Feed = ({
   feedInfo,
   // followerList,
   currentFollowState,
+  feedLikeState,
   userId,
   onFollowChange,
 }) => {
+  // props 를 여기 usestate로 받을 것인지
+  // const [feedLikeState, setFeedLikeState] = useState();
+  const [loading, setLoading] = useState(false);
+
   const followStateClass = currentFollowState
     ? "feed-following"
     : "feed-not-follow";
@@ -31,15 +36,82 @@ const Feed = ({
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
   };
 
+  // useEffect(() => {
+  //   console.log("firststart");
+
+  //   const checkFeedLikeState = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await authorizedRequest({
+  //         method: "get",
+  //         url: `api1/api/posts/my-like?page=1&size=`,
+  //       });
+  //       console.log("success get likedFeedList", response.data);
+  //       if (
+  //         response.data.data.find(
+  //           (post) => post.postId === feedInfo.post.postId
+  //         )
+  //       ) {
+  //         setFeedLikeState(true);
+  //       } else {
+  //         setFeedLikeState(false);
+  //       }
+  //     } catch (error) {
+  //       console.error("failed get likedFeedList");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   checkFeedLikeState();
+  // }, []);
+
   const followClickHandler = async () => {
     onFollowChange(currentFollowState, feedInfo.post.memberId);
     console.log("follow btn clicked", feedInfo.post.memberId);
   };
 
-  const likeClickHandler = () => {
-    // 우선 멤버 id 값을 전달할 예정입니다.
+  const likeClickHandler = async () => {
+    feedLikeState = !feedLikeState;
+    setLoading(true);
+    // console.log(feedLikeState, feedInfo.post.postId);
+    try {
+      await authorizedRequest({
+        method: "post",
+        url: `api1/api/posts/${feedLikeState ? "likes" : "unlikes"}?post=${
+          feedInfo.post.postId
+        }`,
+      });
+      // console.log("success toggle likedstate", response);
+    } catch (error) {
+      console.error("fail toggle likedstate");
+    } finally {
+      setLoading(false);
+    }
+
     console.log("like btn clicked", feedInfo.likeCount);
   };
+  // 수정해야함 ㅁ나어루머ㅏㄴㅇ뤄ㅏㅁㄴ우러ㅏㅁ눙러ㅏa
+  useEffect(() => {
+    const toggleLikeState = async () => {
+      setLoading(true);
+
+      // console.log(feedLikeState, feedInfo.post.postId);
+      try {
+        await authorizedRequest({
+          method: "post",
+          url: `api1/api/posts/${feedLikeState ? "likes" : "unlikes"}?post=${
+            feedInfo.post.postId
+          }`,
+        });
+        // console.log("success toggle likedstate", response);
+      } catch (error) {
+        console.error("fail toggle likedstate");
+      } finally {
+        setLoading(false);
+      }
+    };
+    toggleLikeState();
+  }, [feedLikeState]);
 
   return (
     <div className="feed-wrapper">
@@ -155,7 +227,7 @@ const Feed = ({
             <div className="feed-likes ">{feedInfo.likeCount} likes</div>
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
             <img
-              src="/assets/icons/heart.png"
+              src={feedLikeState ? "/assets/icons/heart.png" : ""}
               alt="하트"
               onClick={likeClickHandler}
             />

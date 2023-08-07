@@ -27,6 +27,9 @@ const Board = () => {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
 
+  // 좋아요 상태들을 저장하는 변수
+  const [likedFeedData, setLikedFeedData] = useState([]);
+
   // 태그의 이름들을 가져옵니다
   useEffect(() => {
     const getTagList = async () => {
@@ -63,7 +66,40 @@ const Board = () => {
     // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
   }, [followerList]);
 
+  // 좋아요하는 게시글에 대한 정보를 가져옵니다
+  useEffect(() => {
+    console.log("firststart");
+
+    const getLikedFeeds = async () => {
+      setLoading(true);
+      try {
+        const response = await authorizedRequest({
+          method: "get",
+          url: `api1/api/posts/my-like?page=1&size=`,
+        });
+        console.log("success get likedFeedList", response.data);
+        // if (
+        //   response.data.data.find(
+        //     (post) => post.postId === feedInfo.post.postId
+        //   )
+        // ) {
+        //   setFeedLikeState(true);
+        // } else {
+        //   setFeedLikeState(false);
+        // }
+        setLikedFeedData((prevData) => prevData.concat(response.data.data));
+      } catch (error) {
+        console.error("failed get likedFeedList");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getLikedFeeds();
+  }, []);
+
+  const showFeedCount = 3;
   const getFeedList = useCallback(async () => {
+    console.log(getCurrentTime(Date.now()));
     try {
       setLoading(true);
 
@@ -71,7 +107,7 @@ const Board = () => {
 
       const response = await authorizedRequest({
         method: "get",
-        url: `api1/api/posts?page=${page}&size=2&time=${getCurrentTime(
+        url: `api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
           Date.now()
         )}`,
       });
@@ -153,8 +189,6 @@ const Board = () => {
                     key={index}
                     //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
                     feedInfo={feed}
-                    followerList={followerList}
-                    userId={userInfo.userId}
                     currentFollowState={
                       followerList.data.find(
                         (follower) => follower.memberId === feed.post.memberId
@@ -162,6 +196,15 @@ const Board = () => {
                         ? true
                         : false
                     }
+                    feedLikeState={
+                      likedFeedData.find(
+                        (likedFeed) =>
+                          likedFeed.post.postId === feed.post.postId
+                      )
+                        ? true
+                        : false
+                    }
+                    userId={userInfo.userId}
                     onFollowChange={followChange}
                   />
                 </div>
