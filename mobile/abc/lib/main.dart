@@ -10,13 +10,14 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 
-void main() {
+void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // 상단바를 투명하게 만듭니다
   ));
 
   WidgetsFlutterBinding.ensureInitialized(); // Flutter 앱 초기화
+  await Permission.camera.request();
   // requestCameraPermission(); // 권한 요청
   _getStatuses();
   runApp(const MyApp());
