@@ -3,9 +3,11 @@ import Wave from "react-wavify";
 import "./Secondpage.css";
 import Lure from "./Lure";
 import Onetwo from "./Onetwo";
+import { useNavigate } from "react-router-dom";
 
 function Secondpage({ show }) {
   const [fishingType, setFishingType] = useState("Lure");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (show === "Lure") {
@@ -17,7 +19,13 @@ function Secondpage({ show }) {
   const [step, setStep] = useState(0);
 
   const nextTalk = () => {
-    setStep(step + 1);
+    if (step > (fishingType === "Lure" ? Lure : Onetwo).length - 2) {
+      // 진척도 40프로 넣기
+      // 메인으로 라우터 이동
+      navigate("/Newbie");
+    } else {
+      setStep(step + 1);
+    }
   };
   const beforeTalk = () => {
     setStep(step - 1);
