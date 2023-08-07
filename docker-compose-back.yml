@@ -30,8 +30,7 @@ services:
     networks:
       - spring-redis
     volumes:
-      - vol:/etc/letsencrypt:/etc/letsencrypt
-
+      - vol:/etc/letsencrypt
 networks:
   spring-redis:
     driver: bridge
