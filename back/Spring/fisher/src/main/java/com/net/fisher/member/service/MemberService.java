@@ -192,7 +192,8 @@ public class MemberService {
     }
 
     public int setIsNewbie(long memberId,int isNewbie){
-        return memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
+        memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
+        return memberStatusRepository.getIsNewbie(memberId);
     }
 
     public Follow makeFollowTo(long toId, long fromId){
