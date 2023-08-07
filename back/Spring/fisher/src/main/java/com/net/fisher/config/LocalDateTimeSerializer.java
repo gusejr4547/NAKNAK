@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> {
+public class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> { // Mapper 를 통하지 않은 json builder 에서 LocalDateTime 에 대한 포맷을 지정할 수 있게하는 Serializer
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override

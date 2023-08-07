@@ -3,10 +3,14 @@ import "./Fishing.css";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { fishingMode_recoil, time_recoil } from "../../utils/atoms";
+import { getFish_recoil } from "../../utils/atoms";
+
+import Nowget from "./Nowget";
 
 function Fishing(props) {
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const [time, setTime] = useRecoilState(time_recoil);
+  const [getFish, setGetFish] = useRecoilState(getFish_recoil);
 
   useEffect(() => {
     let intervalId;
@@ -25,6 +29,9 @@ function Fishing(props) {
     // 시작하기
     setFishingMode(data);
     run();
+  };
+  const getClose = () => {
+    setGetFish(0);
   };
 
   const run = () => {
@@ -76,7 +83,14 @@ function Fishing(props) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        height: "95vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <div className="fishing">
         <div className="box-header">
           <div
@@ -85,24 +99,21 @@ function Fishing(props) {
             }
             onClick={() => start("바다")}
           >
-            <span>바다</span>
+            <span>낚시 시작</span>
           </div>
-
           <div
-            className={
-              fishingMode === "selectMode" ? "fishing-box2" : "hiddenMode"
+            className={fishingMode === "selectMode" ? "hiddenMode" : "mode"}
+            onClick={() =>
+              setFishingMode("selectMode") &
+              setTime({ s: 0, m: 0, h: 0, today: 0 }) &
+              getClose()
             }
-            onClick={() => start("민물")}
           >
-            <span>민물</span>
-          </div>
-
-          <div className={fishingMode === "selectMode" ? "hiddenMode" : "mode"}>
             <div>
               <div className="time">
                 {" "}
                 <div>
-                  <span>{fishingMode}</span>
+                  <span>종료하기</span>
                 </div>
                 {`${time.h.toString().padStart(2, "0")}:${time.m
                   .toString()
@@ -112,14 +123,7 @@ function Fishing(props) {
           </div>
         </div>
       </div>
-      <div
-        className={fishingMode === "selectMode" ? "hiddenMode" : "exitBtn"}
-        onClick={() =>
-          setFishingMode("selectMode") & setTime({ s: 0, m: 0, h: 0, today: 0 })
-        }
-      >
-        <span>종료하기</span>
-      </div>
+      <Nowget num={getFish} />
     </div>
   );
 }

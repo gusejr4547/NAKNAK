@@ -6,6 +6,7 @@ import com.net.fisher.conv.RequestMessage;
 import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.fish.dto.FishRecogDto;
+import com.net.fisher.fish.dto.InventoryDto;
 import com.net.fisher.fish.entity.Books;
 import com.net.fisher.fish.entity.Fish;
 import com.net.fisher.fish.entity.FishBowls;
@@ -228,10 +229,20 @@ public class FishService {
         booksRepository.save(findBooks);
     }
 
+    public List<FishBowls> getFishBowlsListFromMemberId(long memberId){
+        Member findMember = memberService.findMember(memberId);
+
+        return fishBowlsRepository.findByMember(findMember);
+    }
+
     public Page<Inventory> getInventoryListFromMemberId(long memberId, Pageable pageable){
         Member findMember = memberService.findMember(memberId);
 
         return inventoryRepository.getInventoriesByMember(findMember,pageable);
+    }
+
+    public InventoryDto.Info getInventoryInfoFromMemberId(long memberId){
+        return inventoryRepository.getInventoryInfo(memberId);
     }
 
     private HttpHeaders getFileHeaders(String fileName) {

@@ -32,11 +32,13 @@ public class MemberStatus{
     @Column(name = "level")
     private int level;
 
-    @Column(name = "is_newbee")
-    private boolean isNewBee;
+    @Column(name = "is_newbie")
+    private int isNewBie;
 
     @Column(name = "tutorial_progress")
     private int tutorialProgress;
 
-
+    public int setIsNewBie(int isNewBie) {
+        return this.isNewBie = isNewBie;
+    }
 }

@@ -13,6 +13,9 @@ import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +31,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
     private final MemberRepository memberRepository;
     private final FileService fileService;
@@ -36,6 +40,7 @@ public class PostService {
     private final LikeRepository likeRepository;
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
     public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
@@ -62,6 +67,7 @@ public class PostService {
                 }
             }
 
+
             // 파일 업로드
             List<MultipartFile> fileList = httpServletRequest.getFiles("file");
             List<FileInfo> infoList = fileService.uploadFiles(fileList);
@@ -80,8 +86,9 @@ public class PostService {
             }
 
         } catch (BusinessLogicException e) {
-            throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
+            throw new BusinessLogicException(e.getExceptionCode());
         } catch (IOException e) {
+            e.printStackTrace();
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_WRITE_BOARD);
         }
 

@@ -9,6 +9,7 @@ import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
 // import { getData, postData } from "../../utils/api";
+import "./Login.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -48,6 +49,20 @@ function Login(props) {
     if (eve.key == "Enter") {
       loginHandleClick();
     }
+  };
+
+  const register = () => {
+    navigate("/Signup");
+  };
+
+  const logout = () => {
+    setUserData(null);
+    console.log(userData);
+    setAccessToken(null);
+    console.log(accesstoken);
+    localStorage.setItem("key", null);
+    const tt = localStorage.getItem("key");
+    console.log(tt);
   };
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
@@ -91,7 +106,8 @@ function Login(props) {
     try {
       setLoading(true);
       const response = await axios.get(
-        `/api1/api/oauth2/authorization/${provider}`
+        `/api1/oauth2/authorization/${provider}`
+        // "/api1/oauth2/authorization/google"
       );
       setUserData(response.data);
       console.log(response.headers.authorization);
@@ -127,24 +143,18 @@ function Login(props) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         height: "100vh",
+        padding: "0px 0px 50% 0px",
       }}
     >
-      <h1 style={{ margin: "30px 0px 0px 0px" }}>로그인 페이지</h1>
       <img
         src="assets/cats/cat.png"
         alt=""
         style={{ width: "150px", height: "150px" }}
       />
 
-      <div
-        style={{
-          display: "inline-block",
-          width: "200px",
-          height: "240px",
-          margin: "30px 0px 0px 0px",
-        }}
-      >
+      <div className="logininputbox">
         <AuthInput
           label="아이디"
           type="text"
@@ -169,45 +179,66 @@ function Login(props) {
           $errorText="필수 입력값입니다"
           onKeyPress={loginHandleKey}
         />
-
-        <Button
-          as="input"
-          type="button"
-          value="로그인"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={loginHandleClick}
-        />
+        <div className="loginbuttonbox">
+          <Button
+            as="input"
+            type="button"
+            value="로그인"
+            style={{ margin: "auto" }}
+            onClick={loginHandleClick}
+          />
+          <Button
+            as="input"
+            type="button"
+            value="로그아웃"
+            style={{ margin: "auto" }}
+            onClick={logout}
+          />
+        </div>
       </div>
       <div
         className="border-top"
-        style={{ width: "200px", margin: "10px 0px 0px 0px" }}
+        style={{ width: "250px", margin: "10px 0px 0px 0px" }}
       >
+        <p style={{ fontSize: "13px" }}>
+          Don't have an account?{" "}
+          <span onClick={register} style={{ color: "blue" }}>
+            Register me
+          </span>
+        </p>
+
+        <div className="loginsocial"></div>
         <Button
           as="input"
           onClick={() => socialLoginHandler("google")}
           type="button"
-          value="구글 로그인"
-          style={{ backgroundColor: "white", color: "black" }}
+          value=""
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            width: "30%",
+            height: "30%",
+            backgroundImage: `url(/assets/icons/Google1.png)`,
+            backgroundSize: "cover",
+            backgroundPosition: "left center",
+          }}
         ></Button>
+
         <Button
           as="input"
           onClick={() => socialLoginHandler("kakao")}
           type="button"
-          value="카카오 로그인"
+          value=""
           style={{
-            margin: "10px 0px 0px 0px",
             backgroundColor: "yellow",
             color: "black",
+            width: "30%",
+            height: "30%",
+            backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         ></Button>
-        <Link to="/Signup" className="nav-link">
-          <Button
-            as="input"
-            type="button"
-            value="회원가입"
-            style={{ margin: "10px 0px 0px 0px" }}
-          />
-        </Link>
       </div>
     </div>
   );

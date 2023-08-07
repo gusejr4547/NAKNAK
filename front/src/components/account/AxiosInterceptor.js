@@ -24,14 +24,14 @@ const authorizedRequest = async (config) => {
 
     // Axios를 이용하여 요청
     response = await instance(config);
-    console.log("토큰멀쩡");
+    // console.log("토큰멀쩡");
     return response;
   } catch (err) {
     // 토큰 만료
     if (err.response.status === 401) {
       try {
         // 액세스 토큰 갱신 요청
-        const response = await instance.post("/api/reissue", {});
+        const response = await instance.post("/api1/api/reissue", {});
 
         // 액세스 토큰 업데이트
         console.log("재발급 완료");
@@ -53,7 +53,8 @@ const authorizedRequest = async (config) => {
 
         return retryResponse;
       } catch (err) {
-        console.log("재발급 실패", err);
+        console.log("재발급 실패1", err);
+
         throw err;
       }
     } else {
