@@ -1,7 +1,9 @@
 #map {
   position: absolute;
-  width: 100%;
+  width: 90%;
   height: 500px;
+  top: 7rem;
+  left: 5%;
 }
 #title {
   display: absolute;
@@ -16,4 +18,12 @@
 .mapsearchresult {
   position: fixed;
   bottom: 20%;
+}
+
+.newbie_talk {
+  width: 85%;
+  height: 10%;
+  background-color: bisque;
+  position: absolute;
+  bottom: 2rem;
 }

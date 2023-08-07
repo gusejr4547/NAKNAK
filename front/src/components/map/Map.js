@@ -8,6 +8,7 @@ import axios from "../../api/SeaAPI";
 import bada_axios from "../../api/BadanuriAPI";
 import badanuriPositions from "./badanuriPositions";
 import markerPositions from "./markerPositions";
+import { useLocation } from "react-router-dom";
 
 function Map() {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
@@ -15,6 +16,15 @@ function Map() {
   const [mapInfomation, setMapInfomation] = useState({});
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
+
+  // 뉴비버전
+  const location = useLocation();
+  console.log(location);
+  const newbieVersionProp = location.state
+    ? location.state.newbieVersionProp
+    : false;
+
+  console.log(newbieVersionProp);
 
   const Search = (event) => {
     if (event.key === "Enter") {
@@ -170,8 +180,15 @@ function Map() {
 
   return (
     <div>
+      {newbieVersionProp ? (
+        <div className="newbie-talk">
+          자. 이제 현재 네 위치에서 갈 만한 낚시터를 찾아줄게
+        </div>
+      ) : (
+        ""
+      )}
       {modalOpen && <MapModal setModalOpen={setModalOpen} />}
-      <div id="map" className="map"></div>
+      <div id="map" className="map"></div> {/* 뉴비버젼일 경우 대화 추가 */}
       <input
         className="mapsearch"
         placeholder="검색"
