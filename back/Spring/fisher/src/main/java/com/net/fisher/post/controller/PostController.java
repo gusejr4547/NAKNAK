@@ -202,26 +202,10 @@ public class PostController {
         long tokenId = jwtTokenizer.getMemberId(token);
         Page<Post> postPage = null;
 
+        postPage = postService.getPostFromMyWay(tokenId, pageable, time);
 
 
-        Pageable slicePageable = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize()/2, Sort.Direction.DESC, "post_id");
-        // 팔로잉 기준으로 게시글 조회
-        Page<Post> postPageFollowing = postService.getPostFromFollowing(tokenId, slicePageable, time);
-        // 태그 기준으로 게시글 조회
-        Page<Post> postPageTag = postService.getPostFromMyWay(tokenId, slicePageable);
-
-        List<Post> postFollowing = postPageFollowing.getContent();
-        List<Post> postTag = postPageTag.getContent();
-
-        List<Post> totalPostList = postService.sorting(postFollowing, postTag);
-
-        System.out.println(totalPostList);
-
-//        if(totalPostList.size() <= 6){
-//
-//        }
-
-
+        System.out.println(postPage.getContent());
 
         // 더미 데이터 -- 나중에 지워야함
         postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"));

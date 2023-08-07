@@ -5,6 +5,7 @@ import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
 import com.net.fisher.file.service.FileService;
 import com.net.fisher.member.entity.Member;
+import com.net.fisher.member.repository.FollowRepository;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
@@ -17,9 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -39,6 +38,7 @@ public class PostService {
     private final LikeRepository likeRepository;
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
+    private final FollowRepository followRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
@@ -270,30 +270,41 @@ public class PostService {
         return postPage;
     }
 
-    public Page<Post> getPostFromMyWay(long tokenId, Pageable pageable) {
+    public Page<Post> getPostFromMyWay(long memberId, Pageable pageable, LocalDateTime time) {
+        // 3, 3 조회
+        Pageable slicePageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize() / 2, Sort.Direction.DESC, "postId");
+
+        // 팔로잉한 사람의 게시글을 조회
+        List<Long> followingMemberList = followRepository.findFollowMemberIdByMember_MemberId(memberId).orElse(new ArrayList<>());
+//        System.out.println((followingMemberList));
+        Page<Post> postPageFollowing = postRepository.findPostByFollowing(slicePageable, followingMemberList, time);
+
         // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 3개 선택
-        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 3), tokenId);
+        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 3), memberId);
 
         System.out.println(myTagInfo);
 
-//        for (TagDto.Info info : myTagInfo) {
-//            System.out.println("##############");
-//            System.out.println(info.getTagId());
-////            System.out.println(info.getTagCount());
-//        }
-
         // 태그가 없는 경우는
-        Page<Post> postPage = null;
+        Page<Post> postPageTag = null;
         if (!myTagInfo.isEmpty()) {
-            postPage = postRepository.findPostFromMyTag(pageable, tokenId, myTagInfo);
+            postPageTag = postRepository.findPostFromMyTag(slicePageable, followingMemberList, myTagInfo, time);
         } else {
             System.out.println("tag 가 없네용");
         }
 
+        // 합치기
+        List<Post> postFollowing = postPageFollowing.getContent();
+        List<Post> postTag = postPageTag.getContent();
+        List<Post> totalPostList = sorting(postFollowing, postTag);
+
+
+        Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
+                postPageFollowing.getTotalElements() + postPageTag.getTotalElements());
+
         return postPage;
     }
 
-    public List<Post> sorting(List<Post> post1, List<Post> post2){
+    public List<Post> sorting(List<Post> post1, List<Post> post2) {
         List<Post> totalPost = new ArrayList<>(post1);
         totalPost.addAll(post2);
         Collections.sort(totalPost, (e1, e2) -> e2.getRegisteredAt().compareTo(e1.getRegisteredAt()));

@@ -30,6 +30,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             nativeQuery = true)
     Page<Post> findPostByFollowing(Pageable pageable, @Param("memberId") long memberId, @Param("time") LocalDateTime time);
 
+    @Query(value = "select p from posts p where p.member.memberId in :followingMemberList and p.registeredAt <= :time")
+    Page<Post> findPostByFollowing(Pageable pageable, List<Long> followingMemberList, LocalDateTime time);
+
 
     @Query(value="select pt.tag.tagId as tagId " +
             "from posts p " +
@@ -40,30 +43,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Long> countTagByMemberId(Pageable pageable, long memberId);
 
 
-
-    @Query(value = "select distinct * " +
-            "from posts p " +
-            "join members m on p.member_id = m.member_id " +
-            "join post_tag pt on p.post_id = pt.post_id " +
-            "join tags t on pt.tag_id = t.tag_id " +
-            "where p.member_id not in (" +
-            "select follow_member_id from follows where member_id = :memberId " +
-            ") " +
-            "and pt.tag_id in :tagList",
-            countQuery = "select distinct * " +
-                    "from posts p " +
-                    "join members m on p.member_id = m.member_id " +
-                    "join post_tag pt on p.post_id = pt.post_id " +
-                    "join tags t on pt.tag_id = t.tag_id " +
-                    "where p.member_id not in (" +
-                    "select follow_member_id from follows where member_id = :memberId " +
-                    ") " +
-                    "and pt.tag_id in :tagList",
-            nativeQuery = true)
-    Page<Post> findPostFromMyTag(Pageable pageable, long memberId, List<Long> tagList);
+    @Query(value = "select distinct p from posts p join PostTag pt on p.postId = pt.post.postId " +
+            "where p.member.memberId not in :followingMemberList and pt.tag.tagId in :tagList and p.registeredAt <= :time")
+    Page<Post> findPostFromMyTag(Pageable pageable, @Param("followingMemberList") List<Long> followingMemberList,
+                                 @Param("tagList") List<Long> tagList, LocalDateTime time);
 
 
-
-//    @Query(value = "SELECT p FROM posts p WHERE p.member.memberId NOT IN ")
-//    Page<Post> findByMyTag(Pageable, long memberId, List<Long> tagList);
 }
