@@ -2,7 +2,6 @@
   "name": "front",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://passportlkm.iptime.org:20101",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
@@ -23,6 +22,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.5.2",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",

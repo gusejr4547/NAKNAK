@@ -9,16 +9,16 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 import FeedTag from "./FeedTag";
 import { Link } from "react-router-dom";
 
-const Feed = ({ feedInfo, followerList, userId }) => {
-  // console.log(feedInfo);
-
-  const [followState, setFollowState] = useState(
-    followerList.data.find(
-      (follower) => follower.memberId === feedInfo.post.memberId
-    )
-      ? true
-      : false
-  );
+const Feed = ({
+  feedInfo,
+  // followerList,
+  currentFollowState,
+  userId,
+  onFollowChange,
+}) => {
+  const followStateClass = currentFollowState
+    ? "feed-following"
+    : "feed-not-follow";
 
   const settings = {
     dots: true,
@@ -32,22 +32,8 @@ const Feed = ({ feedInfo, followerList, userId }) => {
   };
 
   const followClickHandler = async () => {
-    // 우선 멤버 id 값을 전달할 예정입니다.
+    onFollowChange(currentFollowState, feedInfo.post.memberId);
     console.log("follow btn clicked", feedInfo.post.memberId);
-
-    setFollowState(!followState);
-
-    try {
-      const response = await authorizedRequest({
-        method: "post",
-        url: `api/follow/${followState ? "cancel" : "register"}?follow=${
-          feedInfo.post.memberId
-        }`,
-      });
-      console.log("success toggle follow state", response);
-    } catch (error) {
-      console.error("can't change follow state");
-    }
   };
 
   const likeClickHandler = () => {
@@ -63,6 +49,7 @@ const Feed = ({ feedInfo, followerList, userId }) => {
         "postId": {feedInfo.post.postId}, <br />
         "content": {feedInfo.post.content}, <br />
         "views":{feedInfo.post.views}, <br />
+        "likecnt":{feedInfo.likeCount}, <br />
         "registeredAt":{feedInfo.post.registeredAt}, <br />
         "memberId":{feedInfo.post.memberId}, <br />
         "memberImageUrl": {feedInfo.post.memberImageUrl}, <br />
@@ -100,21 +87,9 @@ const Feed = ({ feedInfo, followerList, userId }) => {
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.post.memberId ? (
             <div className="feed-not-follow">본인</div>
-          ) : followerList.data.find(
-              (follower) => follower.memberId === feedInfo.post.memberId
-            ) ? (
-            <div
-              className={followState ? "feed-following" : "feed-not-follow"}
-              onClick={followClickHandler}
-            >
-              {followState ? "팔로잉" : "팔로우"}
-            </div>
           ) : (
-            <div
-              className={followState ? "feed-following" : "feed-not-follow"}
-              onClick={followClickHandler}
-            >
-              {followState ? "팔로잉" : "팔로우"}
+            <div className={followStateClass} onClick={followClickHandler}>
+              {currentFollowState ? "팔로잉" : "팔로우"}
             </div>
           )}
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
@@ -172,6 +147,7 @@ const Feed = ({ feedInfo, followerList, userId }) => {
           {/* dummy image end*/}
         </Slider>
         {/* carousel end */}
+
         <div className="feed-footer">
           <div className="feed-insight">
             <div className="feed-likes ">{feedInfo.likeCount} likes</div>

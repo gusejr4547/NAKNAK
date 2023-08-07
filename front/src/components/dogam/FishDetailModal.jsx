@@ -7,7 +7,7 @@ const FishDetailModal = ({ fishData, onClose }) => {
   return (
     <div className="fish-detail-modal container">
       <div className="modal-content">
-        <img src={"http://passportlkm.iptime.org:20101" + imgUrl} alt={name} />
+        <img src={process.env.REACT_APP_BACKEND_URL + imgUrl} alt={name} />
         <h3>{name}</h3>
         <p>{info}</p>
         <button onClick={onClose}>닫기</button>
