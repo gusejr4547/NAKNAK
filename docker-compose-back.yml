@@ -7,6 +7,8 @@ services:
       dockerfile: dockerfile
     ports:
       - "8080:8080"
+    networks:
+      - spring-redis
     depends_on:
       - redis
 
@@ -15,10 +17,25 @@ services:
     command: ["redis-server", "--requirepass", "1747"]
     ports:
       - "6379:6379"
+    networks:
+      - spring-redis
 
   react:
     build:
       context: ./front
-      dockerfile: dockerfile
+      dockerfile: dockerfile_test
     ports:
-      - "3000:3000"
+      - "443:443"
+      - "80:80"
+    networks:
+      - spring-redis
+    volumes:
+      - vol:/etc/letsencrypt:/etc/letsencrypt
+
+networks:
+  spring-redis:
+    driver: bridge
+
+volumes:
+  vol:
+    external: true
