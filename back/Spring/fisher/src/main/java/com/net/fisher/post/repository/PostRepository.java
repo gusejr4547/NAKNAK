@@ -40,6 +40,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Long> countTagByMemberId(Pageable pageable, long memberId);
 
 
+
     @Query(value = "select distinct * " +
             "from posts p " +
             "join members m on p.member_id = m.member_id " +
@@ -63,4 +64,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 
 
+//    @Query(value = "SELECT p FROM posts p WHERE p.member.memberId NOT IN ")
+//    Page<Post> findByMyTag(Pageable, long memberId, List<Long> tagList);
 }

@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface FollowRepository extends JpaRepository<Follow,Long> {
     @Query("SELECT c FROM follows c WHERE c.member.memberId = :fromId AND c.followMember.memberId = :toId")
     Optional<Follow> findFollowFromToId(long fromId, long toId);
+
+
 }

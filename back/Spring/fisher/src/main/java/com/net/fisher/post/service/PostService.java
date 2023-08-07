@@ -26,10 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -293,12 +290,14 @@ public class PostService {
             System.out.println("tag 가 없네용");
         }
 
-        for (Post p : postPage.getContent()) {
-            System.out.println(p);
-        }
-
-
-        return null;
+        return postPage;
     }
 
+    public List<Post> sorting(List<Post> post1, List<Post> post2){
+        List<Post> totalPost = new ArrayList<>(post1);
+        totalPost.addAll(post2);
+        Collections.sort(totalPost, (e1, e2) -> e2.getRegisteredAt().compareTo(e1.getRegisteredAt()));
+
+        return totalPost;
+    }
 }
