@@ -30,7 +30,7 @@ function Fishing(props) {
     setFishingMode(data);
     run();
   };
-  const getClose = (data) => {
+  const getClose = () => {
     setGetFish(0);
   };
 
@@ -83,7 +83,14 @@ function Fishing(props) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        height: "95vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <div className="fishing">
         <div className="box-header">
           <div
@@ -94,17 +101,18 @@ function Fishing(props) {
           >
             <span>낚시 시작</span>
           </div>
-          <div className={fishingMode === "selectMode" ? "hiddenMode" : "mode"}>
+          <div
+            className={fishingMode === "selectMode" ? "hiddenMode" : "mode"}
+            onClick={() =>
+              setFishingMode("selectMode") &
+              setTime({ s: 0, m: 0, h: 0, today: 0 }) &
+              getClose()
+            }
+          >
             <div>
-              <div
-                className="time"
-                onClick={() =>
-                  setFishingMode("selectMode") &
-                  setTime({ s: 0, m: 0, h: 0, today: 0 })
-                }
-              >
+              <div className="time">
                 {" "}
-                <div onClick={() => getClose()}>
+                <div>
                   <span>종료하기</span>
                 </div>
                 {`${time.h.toString().padStart(2, "0")}:${time.m

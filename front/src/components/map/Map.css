@@ -1,9 +1,19 @@
 #map {
   position: absolute;
-  width: 400px;
+  width: 100%;
   height: 500px;
 }
 #title {
   display: absolute;
   padding-top: 20%;
+}
+
+.mapsearch {
+  position: fixed;
+  bottom: 30%;
+}
+
+.mapsearchresult {
+  position: fixed;
+  bottom: 20%;
 }

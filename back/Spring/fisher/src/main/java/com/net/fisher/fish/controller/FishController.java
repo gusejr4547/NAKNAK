@@ -93,6 +93,16 @@ public class FishController {
         return new ResponseEntity<>(responses,HttpStatus.OK);
     }
 
+    @GetMapping("/fishes/fishbowl/view")
+    public ResponseEntity<List<FishBowlsDto.MultiResponse>>
+    getFishBowlsListOfMember(
+            @RequestHeader(name = "Authorization") String token){
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        List<FishBowls> fishBowls= fishService.getFishBowlsListFromMemberId(tokenId);
+        return new ResponseEntity<>(fishMapper.toFishBowlMultiResponseDtos(fishBowls),HttpStatus.OK);
+    }
+
     @GetMapping("/fishes/inventory/view")
     public ResponseEntity<PageResponse<InventoryDto.MultiResponse>>
     getInventoryListOfMember(
@@ -102,8 +112,6 @@ public class FishController {
         long tokenId = jwtTokenizer.getMemberId(token);
 
         Page<Inventory> inventoryPage = fishService.getInventoryListFromMemberId(tokenId,pageable);
-
-
 
         PageResponse<InventoryDto.MultiResponse> response = new PageResponse<>
                 (inventoryPage.getTotalElements(),
@@ -124,8 +132,10 @@ public class FishController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*@GetMapping("/fishes/inventory/info")
-    public ResponseEntity<InventoryDto.Info>*/
+    @GetMapping("/fishes/inventory/info/{member-id}")
+    public ResponseEntity<InventoryDto.Info> getInventoryInfo(@PathVariable("member-id")long memberId){
+        return new ResponseEntity<>(fishService.getInventoryInfoFromMemberId(memberId),HttpStatus.OK);
+    }
 
     /*------------------------관리용 API-----------------------*/
 

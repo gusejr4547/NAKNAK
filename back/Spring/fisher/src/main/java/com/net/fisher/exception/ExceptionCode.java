@@ -22,6 +22,7 @@ public enum ExceptionCode {
     FAILED_TO_UPDATE_FILE(500, "Failed Update Member"),
     WRONG_PASSWORD(400,"Wrong Password"),
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
+    UNACCEPTABLE_EXTENSION(403,"Unacceptable Extension"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
     FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
     FAILED_TO_WRITE_BOARD(500, "Failed Write Board"),
@@ -34,7 +35,8 @@ public enum ExceptionCode {
     POST_NOT_FOUND(404, "Post Not Found"),
     FILE_NOT_FOUND(404, "File Not Found"),
     LIKE_NOT_FOUND(404, "Like Not Found"),
-    NOT_OWNER_OF(409,"Not owner of item");
+    NOT_OWNER_OF(409,"Not owner of item"),
+    TAG_NOT_FOUNT(404, "Tag Not Found");
 
     @Getter
     private final int status;

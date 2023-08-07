@@ -1,6 +1,7 @@
 package com.net.fisher.fish.dto;
 
 import com.net.fisher.fish.entity.Fish;
+import jakarta.persistence.Column;
 import lombok.*;
 
 public class InventoryDto {
@@ -44,13 +45,8 @@ public class InventoryDto {
         private long inventoryId;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @Builder
-    @AllArgsConstructor
-    public static class Info {
-        private int count;
-        private double maxSize;
+    public interface Info {
+        long getCount();
+        double getMaxSize();
     }
 }
