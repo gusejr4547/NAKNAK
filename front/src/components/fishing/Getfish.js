@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { loginuser, token } from "../../utils/atoms";
 import { Button } from "react-bootstrap";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import Camera from "yolov8-onnxruntime-web@0.1.0";
 
 function Getfish(props) {
   const [fishData, setFishData] = useState({});
@@ -41,6 +42,7 @@ function Getfish(props) {
   return (
     <div>
       <h1>어획 등록</h1>
+      <Camera />
       <input
         type="text"
         placeholder="code"

@@ -130,3 +130,56 @@ Future<bool> _getStatuses() async {
 }
 
 
+
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'InAppWebView Example',
+//       home: InAppWebViewExample(),
+//     );
+//   }
+// }
+//
+// class InAppWebViewExample extends StatefulWidget {
+//   @override
+//   _InAppWebViewExampleState createState() => _InAppWebViewExampleState();
+// }
+//
+// class _InAppWebViewExampleState extends State<InAppWebViewExample> {
+//   late InAppWebViewController _webViewController;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('InAppWebView Example'),
+//       ),
+//       body: InAppWebView(
+//         initialUrlRequest: URLRequest(
+//           url: Uri.parse('https://i9e105.p.ssafy.io'), // Replace with your React web URL
+//         ),
+//         onWebViewCreated: (InAppWebViewController controller) {
+//           _webViewController = controller;
+//         },
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () async {
+//           // Run JavaScript code in the webview
+//           await _webViewController.evaluateJavascript(
+//             source: 'navigator.mediaDevices.getUserMedia({ video: true })',
+//           );
+//         },
+//         child: Icon(Icons.camera),
+//       ),
+//     );
+//   }
+// }

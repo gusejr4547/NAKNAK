@@ -56,11 +56,11 @@ function Login(props) {
   };
 
   const logout = () => {
-    setUserData(null);
+    setUserData(undefined);
     console.log(userData);
-    setAccessToken(null);
+    setAccessToken(undefined);
     console.log(accesstoken);
-    localStorage.setItem("key", null);
+    localStorage.setItem("key", undefined);
     const tt = localStorage.getItem("key");
     console.log(tt);
   };

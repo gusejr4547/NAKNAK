@@ -46,6 +46,7 @@ function AppRouter(props) {
             <Route path="/" element={<Home />}></Route>
             <Route path="/fishing" element={<Fishing />}></Route>
             <Route path="/Fishpic" element={<Fishpic />}></Route>
+
             {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
             <Route path="/Balls" element={<Balls />}></Route>
