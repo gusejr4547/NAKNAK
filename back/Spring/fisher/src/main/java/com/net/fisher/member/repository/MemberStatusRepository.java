@@ -14,6 +14,14 @@ public interface MemberStatusRepository extends JpaRepository<MemberStatus,Long>
     @Modifying
     int setStatusForIsNewbie(long memberId, int isNewbie);
 
+    @Query("UPDATE member_status c SET c.tutorialProgress = :tutorialProgress WHERE c.member.memberId = :memberId")
+    @Transactional
+    @Modifying
+    int setStatusForTutorialProgress(long memberId, int tutorialProgress);
+
     @Query("SELECT c.isNewBie FROM member_status c WHERE c.member.memberId = :memberId")
     int getIsNewbie(long memberId);
+
+    @Query("SELECT c.tutorialProgress FROM member_status c WHERE c.member.memberId = :memberId")
+    int getTutorialProgress(long memberId);
 }

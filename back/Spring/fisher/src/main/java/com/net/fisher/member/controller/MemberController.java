@@ -111,11 +111,25 @@ public class MemberController {
                         memberMapper.toMemberResponseDtos(memberList)), HttpStatus.OK);
     }
 
-    @PostMapping("/members/status/change")
+    /*@PostMapping("/members/status/change")
     public ResponseEntity<MemberStatusDto.Response> upExperiencePoint(
-            @RequestBody MemberStatusDto.UpStatus upStatus) {
-        //status 변경
+            @RequestBody MemberStatusDto.SetProgress requestBody) {
+            long tokenId = jwtTokenizer.getMemberId();
+
+
         return null;
+    }*/
+
+    @PostMapping("/members/status/progress")
+    public ResponseEntity<Integer> changeTutorialProgress(
+            @RequestHeader("Authorization") String token,
+            @RequestBody MemberStatusDto.SetProgress requestBody) {
+        long tokenId = jwtTokenizer.getMemberId(token);
+        int newVal = requestBody.getTutorialProgress();
+
+        int val = memberService.setTutorialProgress(tokenId,newVal);
+
+        return new ResponseEntity<>(val,HttpStatus.OK);
     }
 
     @PostMapping("/members/status/newbie")

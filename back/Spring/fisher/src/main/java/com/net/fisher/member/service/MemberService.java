@@ -60,7 +60,7 @@ public class MemberService {
     @Value("${app.fileupload.uploadPath}")
     String uploadPath;
 
-    @PostConstruct
+    /*@PostConstruct
     public void initialize(){ // server on mattermost bot
         String ipAddressStr = "ip"; //test
         try {//test2
@@ -96,7 +96,7 @@ public class MemberService {
 
         }
 
-    }
+    }*/
 
     @Transactional
     public Member createMember(Member member, MultipartHttpServletRequest httpServletRequest) {
@@ -189,6 +189,11 @@ public class MemberService {
 
     public Page<Member> getFollowingList(long memberId, Pageable pageable){
         return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
+    }
+
+    public int setTutorialProgress(long memberId,int tutorialProgress){
+        memberStatusRepository.setStatusForTutorialProgress(memberId,tutorialProgress);
+        return memberStatusRepository.getTutorialProgress(memberId);
     }
 
     public int setIsNewbie(long memberId,int isNewbie){
