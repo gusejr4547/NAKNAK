@@ -45,7 +45,6 @@ function Firstpage({ handleChangeParentState }) {
     } else if (step === 4) {
       // 원투낚시
       setType("원투");
-      changeNewbie(1);
       setShow(false);
       newbie(1);
       setTimeout(() => {
@@ -77,6 +76,7 @@ function Firstpage({ handleChangeParentState }) {
 
         // navigate("/Secondpage", { state: "Lure" });
       }, 3000);
+    } else if (step === 4) {
       // 루어낚시
       setType("루어");
       changeNewbie(2);
