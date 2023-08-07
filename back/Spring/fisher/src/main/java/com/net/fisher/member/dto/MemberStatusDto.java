@@ -17,7 +17,7 @@ public class MemberStatusDto {
         private int point;
         private long exp;
         private int level;
-        private boolean isNewBee;
+        private int isNewBee;
         private int tutorialProgress;
     }
 
