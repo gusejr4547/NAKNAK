@@ -14,6 +14,7 @@ function Firstpage({ handleChangeParentState }) {
   const [type, setType] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const navigate = useNavigate();
+  const [accesstoken, setAccesstoken] = useRecoilState(token);
 
   // 뉴비 상태 변경
   // 0 : 뉴비 아님 1 : 원투  2: 루어
