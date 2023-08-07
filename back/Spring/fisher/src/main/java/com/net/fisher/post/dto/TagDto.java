@@ -26,4 +26,20 @@ public class TagDto {
     public static class Response{
         List<Tag> tags;
     }
+
+    public interface Info{
+        Long getTagId();
+//        Long getTagCount();
+    }
+
+//    @Setter
+//    @Getter
+//    @NoArgsConstructor
+//    @AllArgsConstructor
+//    @Builder
+//    @ToString
+//    public static class Info{
+//        long tagId;
+//        long tagCount;
+//    }
 }

@@ -8,6 +8,7 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
+import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
 import jakarta.transaction.Transactional;
@@ -16,13 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,7 +53,7 @@ public class PostService {
 
             // Tag 테이블에 등록, PostTag 에 등록
             PostTag postTag = null;
-            if(tagList != null){
+            if (tagList != null) {
                 for (Tag tagInfo : tagList) {
                     Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
                             Tag.builder().tagName(tagInfo.getTagName()).build());
@@ -152,7 +154,7 @@ public class PostService {
         newTags.removeAll(copyTags);
         System.out.println(newTags);
         PostTag postTag = null;
-        for(Tag tag : newTags){
+        for (Tag tag : newTags) {
             postTag = PostTag.builder().tag(tag).post(post).build();
             postTagRepository.save(postTag);
         }
@@ -196,24 +198,24 @@ public class PostService {
     }
 
     @Transactional
-    public void likePost(long tokenId, LikeDto.Post likePostDto) {
+    public void likePost(long tokenId, long postId) {
 
         Member member = memberRepository.findById(tokenId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        Post post = postRepository.findById(likePostDto.getPostId())
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         // 이미 좋아요를 눌린 사람이 접근 한 경우
-        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId())
+        Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId)
                 .orElse(Like.builder().post(post).member(member).build());
 
         likeRepository.save(like);
     }
 
     @Transactional
-    public void unlikePost(long tokenId, LikeDto.Post likePostDto) {
-        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
+    public void unlikePost(long tokenId, long postId) {
+        Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
     }
@@ -230,7 +232,7 @@ public class PostService {
         return tagRepository.findAll();
     }
 
-    public List<Post> getMyAllPost(long tokenId){
+    public List<Post> getMyAllPost(long tokenId) {
 
 
         return null;
@@ -240,7 +242,7 @@ public class PostService {
         return postRepository.findPostByMemberIdFromPage(pageable, tokenId);
     }
 
-    public PostImage getOnePostImageByPost(Post post){
+    public PostImage getOnePostImageByPost(Post post) {
         return postImageRepository.findFirstByPost(post);
     }
 
@@ -252,7 +254,39 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
-    public Page<Post> getPostFromFollowing(Long memberId, Pageable pageable) {
+    public Page<Post> getPostFromFollowing(long memberId, Pageable pageable, LocalDateTime time) {
+
+        Page<Post> postPage = postRepository.findPostByFollowing(pageable, memberId, time);
+        System.out.println(postPage.getTotalElements());
+        System.out.println(postPage.getContent().size());
+        return postPage;
+    }
+
+    public Page<Post> getPostFromMyWay(long tokenId, Pageable pageable) {
+        // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 3개 선택
+        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 3), tokenId);
+
+        System.out.println(myTagInfo);
+
+//        for (TagDto.Info info : myTagInfo) {
+//            System.out.println("##############");
+//            System.out.println(info.getTagId());
+////            System.out.println(info.getTagCount());
+//        }
+
+        // 태그가 없는 경우는
+        Page<Post> postPage = null;
+        if (!myTagInfo.isEmpty()) {
+            postPage = postRepository.findPostFromMyTag(pageable, tokenId, myTagInfo);
+        } else {
+            System.out.println("tag 가 없네용");
+        }
+
+        for(Post p : postPage.getContent()){
+            System.out.println(p);
+        }
+
+
         return null;
     }
 }
