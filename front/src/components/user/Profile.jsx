@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import * as S from "./profileStyle";
-
+import "./profile.css";
 // import axios from "axios";
 // import { useRecoilState } from "recoil";
 // import { loginuser, token } from "../../utils/atoms";
@@ -32,6 +32,7 @@ function Profile(props) {
         url: `/api1/api/members/${temp}`,
       });
       setProfileData(response.data);
+      console.log(response.data);
       setLoading(false); // 데이터 로딩 완료
     } catch (error) {
       console.error("Error posting data:", error);
@@ -80,14 +81,18 @@ function Profile(props) {
             </span>
             {profileData.memberResponse.nickname}
           </p>
-          {profileData.memberResponse.memberImage?.fileUrl && (
+          <div className="profileimgbox">
             <img
               className="profileImg"
-              src={profileData.memberResponse.memberImage.fileUrl}
+              src={
+                profileData.memberResponse.memberImage?.fileUrl
+                  ? profileData.memberResponse.memberImage?.fileUrl
+                  : "/assets/cats/cat.png"
+              }
               alt="profileimg"
-              style={{ width: "150px" }}
+              // style={{ width: "150px" }}
             />
-          )}
+          </div>
         </div>
         <div
           className="profilefollowContainer"
@@ -118,31 +123,21 @@ function Profile(props) {
           point={profileData.memberStatusResponse.point}
         />
       </div>
-      {/* <p className="usernewBee">
-        초보자 : {profileData.memberStatusResponse.newBee ? "Newbee" : "Expert"}
-      </p> */}
-      <div
-        className="profileBottom"
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          // borderBottom: "1px solid #000",
-        }}
-      >
+      <div className="profileBottom">
         <div className="profiletoggleBar" style={{ display: "flex" }}>
           <button
             onClick={() => handleToggle("myPosts")}
-            style={{
-              background: activeView === "myPosts" ? "#ccc" : "transparent",
-            }}
+            className={
+              activeView === "myPosts" ? "profileactive" : "profiledefault"
+            }
           >
-            내가 쓴 게시글
+            게시글
           </button>
           <button
             onClick={() => handleToggle("aquarium")}
-            style={{
-              background: activeView === "aquarium" ? "#ccc" : "transparent",
-            }}
+            className={
+              activeView === "aquarium" ? "profileactive" : "profiledefault"
+            }
           >
             수조
           </button>

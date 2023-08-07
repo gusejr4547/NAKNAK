@@ -6,11 +6,13 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { token } from "../../utils/atoms";
 import { useNavigate } from "react-router-dom";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 function Firstpage({ handleChangeParentState }) {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
-  const [accesstoken, setAccessToken] = useRecoilState(token);
+  const [type, setType] = useState(null);
+  const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const navigate = useNavigate();
 
   // 뉴비 상태 변경
@@ -40,7 +42,9 @@ function Firstpage({ handleChangeParentState }) {
     } else if (step === 3) {
       setStep(4);
     } else if (step === 4) {
-      setStep(7);
+      // 원투낚시
+      setType("원투");
+      changeNewbie(1);
       setShow(false);
       newbie(1);
       setTimeout(() => {
@@ -48,7 +52,8 @@ function Firstpage({ handleChangeParentState }) {
         //   navigate("/Secondpage", { state: "Onetwo" });
       }, 3000);
     } else if (step === 5) {
-      setStep(8);
+      changeNewbie(0);
+      console.log("뉴비아님");
       setShow(false);
       // 뉴비아님
       newbie(0);
@@ -62,7 +67,8 @@ function Firstpage({ handleChangeParentState }) {
     } else if (step === 2) {
       setStep(4);
     } else if (step === 3) {
-      setStep(6);
+      setType("루어");
+      changeNewbie(2);
       setShow(false);
       newbie(2);
       setTimeout(() => {
@@ -71,8 +77,8 @@ function Firstpage({ handleChangeParentState }) {
         // navigate("/Secondpage", { state: "Lure" });
       }, 3000);
       // 루어낚시
-    } else if (step === 4) {
-      setStep(6);
+      setType("루어");
+      changeNewbie(2);
       setShow(false);
       newbie(2);
       setTimeout(() => {
@@ -82,6 +88,21 @@ function Firstpage({ handleChangeParentState }) {
       }, 3000);
     } else if (step === 5) {
       setStep(3);
+    }
+  };
+  // 뉴비 상태 변경
+  const changeNewbie = async (status) => {
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/members/status/newbie",
+        data: { isNewbie: status },
+      });
+      console.log(response.data);
+      setLoading(false); // 데이터 로딩 완료
+    } catch (error) {
+      console.error("Error posting data:", error);
+      setLoading(false); // 데이터 로딩 완료 (에러 발생)
     }
   };
 
