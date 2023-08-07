@@ -52,7 +52,7 @@ public class PostDto {
         private String memberNickname;
 
         private List<PostImageDto.Response> images;
-        private List<Tag> tags;
+        private List<TagDto.SingleResponse> tags;
 
         private long likeCount;
     }

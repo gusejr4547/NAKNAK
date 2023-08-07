@@ -1,5 +1,6 @@
 package com.net.fisher.post.controller;
 
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
@@ -15,6 +16,7 @@ import com.net.fisher.response.PageResponse;
 import com.net.fisher.response.PostResponse;
 import com.net.fisher.response.PostSimpleResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -214,6 +216,8 @@ public class PostController {
         List<Post> postList = postPage.getContent();
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println(postMapper.toTagList(postList.get(0).getPostTagList()));
+        System.out.println(postMapper.toTagList(postList.get(1).getPostTagList()));
+        System.out.println(postMapper.toTagList(postList.get(2).getPostTagList()));
 
         PageResponse<PostDto.Response> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toPostResponseDtos(postList));
 

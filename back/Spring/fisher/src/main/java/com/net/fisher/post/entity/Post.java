@@ -1,5 +1,6 @@
 package com.net.fisher.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.net.fisher.member.entity.Member;
 import jakarta.persistence.*;
@@ -53,7 +54,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @Setter
-    @JsonIgnore
+    @JsonBackReference
     @BatchSize(size = 100)
     private List<PostTag> postTagList = new ArrayList<>();
 

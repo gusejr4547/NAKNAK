@@ -24,6 +24,14 @@ public interface PostMapper {
         return postTag.getTag();
     }
 
+    default TagDto.SingleResponse toTagDto(Tag tag){
+        return TagDto.SingleResponse.builder()
+                .tagId(tag.getTagId())
+                .tagName(tag.getTagName()).build();
+    }
+
+    List<TagDto.SingleResponse> toTagDtos(List<Tag> tags);
+
     List<Tag> toTagList(List<PostTag> postTagList);
 
     default PostDto.Response toPostResponseDto(Post post){
@@ -38,7 +46,7 @@ public interface PostMapper {
                 .memberNickname(post.getMember().getNickname())
                 .memberImageUrl(fileUrl)
                 .images(toPostImageDtos(post.getPostImageList()))
-                .tags(toTagList(post.getPostTagList()))
+                .tags(toTagDtos(toTagList(post.getPostTagList())))
                 .likeCount(post.getLikes())
                 .build();
         return response;
