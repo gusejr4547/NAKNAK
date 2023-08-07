@@ -60,7 +60,7 @@ public class MemberService {
     @Value("${app.fileupload.uploadPath}")
     String uploadPath;
 
-    /*@PostConstruct
+    @PostConstruct
     public void initialize(){ // server on mattermost bot
         String ipAddressStr = "ip"; //test
         try {//test2
@@ -70,7 +70,7 @@ public class MemberService {
         } catch (UnknownHostException e) {
             System.out.println("Unable to determine your IP address: " + e.getMessage());
         }
-        String toIp = "192.168.30.161";
+        String toIp = "127.0.1.1";
         if(ipAddressStr.equals(toIp)){
             RestTemplate restTemplate = new RestTemplate();
 
@@ -96,7 +96,7 @@ public class MemberService {
 
         }
 
-    }*/
+    }
 
     @Transactional
     public Member createMember(Member member, MultipartHttpServletRequest httpServletRequest) {
