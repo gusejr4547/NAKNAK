@@ -191,24 +191,24 @@ public class PostService {
     }
 
     @Transactional
-    public void likePost(long tokenId, LikeDto.Post likePostDto) {
+    public void likePost(long tokenId, long postId) {
 
         Member member = memberRepository.findById(tokenId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        Post post = postRepository.findById(likePostDto.getPostId())
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         // 이미 좋아요를 눌린 사람이 접근 한 경우
-        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId())
+        Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId)
                 .orElse(Like.builder().post(post).member(member).build());
 
         likeRepository.save(like);
     }
 
     @Transactional
-    public void unlikePost(long tokenId, LikeDto.Post likePostDto) {
-        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
+    public void unlikePost(long tokenId, long postId) {
+        Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
     }

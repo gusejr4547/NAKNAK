@@ -15,6 +15,7 @@ import com.net.fisher.response.PostResponse;
 import com.net.fisher.response.PostSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -115,24 +116,24 @@ public class PostController {
 
     @PostMapping("/posts/likes")
     public ResponseEntity<String> likePost(
-            @RequestHeader(name = "Authorization") String token,
-            @RequestBody LikeDto.Post likePostDto) {
+            @RequestParam(name = "post") Long postId,
+            @RequestHeader(name = "Authorization") String token) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        postService.likePost(tokenId, likePostDto);
+        postService.likePost(tokenId, postId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/posts/unlikes")
     public ResponseEntity<String> unlikePost(
-            @RequestHeader(name = "Authorization") String token,
-            @RequestBody LikeDto.Post likePostDto) {
+            @RequestParam(name = "post") Long postId,
+            @RequestHeader(name = "Authorization") String token) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        postService.unlikePost(tokenId, likePostDto);
+        postService.unlikePost(tokenId, postId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -202,10 +203,10 @@ public class PostController {
         // 팔로잉 기준으로 게시글 조회
         Page<Post> postPageFollowing = postService.getPostFromFollowing(tokenId, pageable, time);
         // 태그 기준으로 게시글 조회
-        Page<Post> postPageTag = postService.getPostFromMyWay(tokenId, pageable);
+//        Page<Post> postPageTag = postService.getPostFromMyWay(tokenId, pageable);
 
-        // 더미 데이터
-        postPage = postService.getDefaultPost(pageable);
+        // 더미 데이터 -- 나중에 지워야함
+        postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"));
 
         List<Post> postList = postPage.getContent();
         List<PostResponse> postResponses = new ArrayList<>();
