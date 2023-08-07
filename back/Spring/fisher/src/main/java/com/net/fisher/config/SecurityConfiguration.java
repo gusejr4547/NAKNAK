@@ -87,6 +87,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:8080");
+        configuration.addAllowedOriginPattern("https://accounts.google.com");
         configuration.addAllowedOriginPattern("*:3000");
         configuration.addExposedHeader("*");
         configuration.setAllowCredentials(true);
