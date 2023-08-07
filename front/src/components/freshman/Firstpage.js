@@ -2,17 +2,35 @@ import React, { useState } from "react";
 import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
-import { constSelector } from "recoil";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { token } from "../../utils/atoms";
 import { useNavigate } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
-function Firstpage() {
+function Firstpage({ handleChangeParentState }) {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
   const [type, setType] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const navigate = useNavigate();
-  // 낚시 결과 함수
+  const [accesstoken, setAccesstoken] = useRecoilState(token);
+
+  // 뉴비 상태 변경
+  // 0 : 뉴비 아님 1 : 원투  2: 루어
+  const newbie = async (status) => {
+    try {
+      await axios.post(
+        "/api1/api/members/status/newbie",
+        { data: { isNewbie: status } },
+        {
+          headers: { authorization: accesstoken },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // 낚시 설문조사 함수
   const btn1 = () => {
@@ -25,20 +43,21 @@ function Firstpage() {
     } else if (step === 3) {
       setStep(4);
     } else if (step === 4) {
-      setStep(7);
-      setShow(false);
       // 원투낚시
-      // 유저정보에도 원 투 저장하기
-      // 3초 후에 화면 넘어가기
       setType("원투");
       changeNewbie(1);
       setShow(false);
+      newbie(1);
+      setTimeout(() => {
+        handleChangeParentState("Onetwo");
+        //   navigate("/Secondpage", { state: "Onetwo" });
+      }, 3000);
     } else if (step === 5) {
       changeNewbie(0);
       console.log("뉴비아님");
-      setStep(8);
       setShow(false);
-      // 유저 정보에 false 저장하기
+      // 뉴비아님
+      newbie(0);
     }
   };
   const btn2 = () => {
@@ -52,11 +71,22 @@ function Firstpage() {
       setType("루어");
       changeNewbie(2);
       setShow(false);
-      // 유저정보에도 루어 저장하기
+      newbie(2);
+      setTimeout(() => {
+        handleChangeParentState("Lure");
+
+        // navigate("/Secondpage", { state: "Lure" });
+      }, 3000);
+      // 루어낚시
       setType("루어");
       changeNewbie(2);
       setShow(false);
-      setType("루어");
+      newbie(2);
+      setTimeout(() => {
+        handleChangeParentState("Lure");
+
+        // navigate("/Secondpage", { state: "Lure" });
+      }, 3000);
     } else if (step === 5) {
       setStep(3);
     }
@@ -79,62 +109,61 @@ function Firstpage() {
 
   return (
     <div className="first_wrapper">
+      <div className="first_island_img"></div>
+      <div className="first_cat_img"></div>
       <div className="first_talk">
         <span className="first_title">{talk[step].content}</span>
       </div>
-      <div className="first_wave_wrap">
-        <div className="first_island_img"></div>
-        <div className="first_cat_img"></div>
-        {/* 가장 가까운 파도 */}
-        <Wave
-          className="first_wave2"
-          fill="#82E7ED"
-          paused={false}
-          style={{ display: "flex" }}
-          options={{
-            height: 45,
-            amplitude: 20,
-            speed: 0.3,
-            points: 3,
-          }}
-        />
-        {/*중간 파도  */}
-        <Wave
-          className="first_wave1"
-          fill="#408BD0"
-          paused={false}
-          // style={{ display: "flex" }}
-          options={{
-            height: 20,
-            amplitude: 20,
-            speed: 0.25,
-            points: 4,
-          }}
-        ></Wave>
-        {/* 마지막파도 */}
-        <Wave
-          className="first_wave3"
-          fill="#6ec1df"
-          paused={false}
-          style={{ display: "flex" }}
-          options={{
-            height: 35,
-            amplitude: 20,
-            speed: 0.2,
-            points: 4,
-          }}
-        />
-        {show && (
-          <div className="btns">
-            <span className="answer1" onClick={() => btn1()}>
-              {talk[step].answer1}
-            </span>
-            <span className="answer2" onClick={() => btn2()}>
-              {talk[step].answer2}
-            </span>
-          </div>
-        )}
-      </div>
+
+      {/* 가장 가까운 파도 */}
+      <Wave
+        className="first_wave2"
+        fill="#82E7ED"
+        paused={false}
+        style={{ display: "flex" }}
+        options={{
+          height: 45,
+          amplitude: 20,
+          speed: 0.3,
+          points: 3,
+        }}
+      />
+      {/*중간 파도  */}
+      <Wave
+        className="first_wave1"
+        fill="#408BD0"
+        paused={false}
+        // style={{ display: "flex" }}
+        options={{
+          height: 20,
+          amplitude: 20,
+          speed: 0.25,
+          points: 4,
+        }}
+      ></Wave>
+      {/* 마지막파도 */}
+      <Wave
+        className="first_wave3"
+        fill="#6ec1df"
+        paused={false}
+        style={{ display: "flex" }}
+        options={{
+          height: 35,
+          amplitude: 20,
+          speed: 0.2,
+          points: 4,
+        }}
+      />
+      {show && (
+        <div className="btns">
+          <span className="answer1" onClick={() => btn1()}>
+            {talk[step].answer1}
+          </span>
+          <span className="answer2" onClick={() => btn2()}>
+            {talk[step].answer2}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
