@@ -44,7 +44,7 @@ function Secondpage({ show }) {
             &lt; 이전
           </span>
         )}
-        {step < (fishingType === "Lure" ? Lure : Onetwo).length - 1 && (
+        {(fishingType === "Lure" ? Lure : Onetwo) && (
           <span className="btn2" onClick={() => nextTalk()}>
             다음 &gt;
           </span>
