@@ -18,7 +18,7 @@ const Inventory = () => {
 
         const response = await authorizedRequest({
           method: "get",
-          url: `/api/fishes/inventory/view`,
+          url: `api1/api/fishes/inventory/view`,
         });
 
         console.log("response success", response.data.data);
@@ -45,7 +45,7 @@ const Inventory = () => {
     try {
       const response = await authorizedRequest({
         method: "post",
-        url: `/api/fishes/inventory/delete`,
+        url: `api1/api/fishes/inventory/delete`,
         data: {
           inventoryId: deletedFishInfo.inventoryId,
         },
@@ -64,29 +64,29 @@ const Inventory = () => {
   ////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////
 
-  // const addItem = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const fish = {
-  //       fishCode: "A003",
-  //       size: 41.3,
-  //     };
+  const addItem = async () => {
+    try {
+      setLoading(true);
+      const fish = {
+        fishCode: "A003",
+        size: 41.3,
+      };
 
-  //     const response = await authorizedRequest({
-  //       method: "post",
-  //       url: `/api/fishes/catch`,
-  //       data: fish,
-  //     });
+      const response = await authorizedRequest({
+        method: "post",
+        url: `api1/api/fishes/catch`,
+        data: fish,
+      });
 
-  //     console.log("response success", response.data);
-  //     setInventoryData(response.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching inventory");
-  //     setError("데이터 로드에 실패했습니다.");
-  //     setLoading(false);
-  //   }
-  // };
+      console.log("response success", response.data);
+      setInventoryData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching inventory");
+      setError("데이터 로드에 실패했습니다.");
+      setLoading(false);
+    }
+  };
 
   ////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////
@@ -100,14 +100,13 @@ const Inventory = () => {
         className="dogam-back-button"
         onClick={goBack}
       />
-      {/* 
-      // add dummy data code
+      {/* // add dummy data code */}
       <img
         src="/assets/icons/x.png"
         alt="exit"
         // className="dogam-back-button"
         onClick={addItem}
-      /> */}
+      />
       <div className="inven-board">
         <div className="inven-carousel inven-disable-scrollbar">
           {Object.keys(inventoryData).map((key) => {

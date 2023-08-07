@@ -46,7 +46,7 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
     <div ref={slideRef} className="inven-slide" onClick={handleSlideClick}>
       {/* 동적으로 받아온 슬라이드 내용 표시 */}
       <img
-        src={`http://192.168.30.161:8080/img/fishes/${fishInfo.fishCode}.png`}
+        src={`${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fishInfo.fishCode}.png`}
         alt={"fish img"}
       />
       <h6>
