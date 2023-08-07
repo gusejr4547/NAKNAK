@@ -23,7 +23,7 @@ services:
   react:
     build:
       context: ./front
-      dockerfile: dockerfile_test
+      dockerfile: dockerfile
     ports:
       - "443:443"
       - "80:80"
