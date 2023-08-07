@@ -86,7 +86,9 @@ const Feed = ({
 
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.post.memberId ? (
-            <div className="feed-not-follow">본인</div>
+            <Link to={`/`} className="feed-modify">
+              수정
+            </Link>
           ) : (
             <div className={followStateClass} onClick={followClickHandler}>
               {currentFollowState ? "팔로잉" : "팔로우"}

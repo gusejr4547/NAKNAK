@@ -3,6 +3,7 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 import axios from "axios";
 import Feed from "./Feed";
 import FeedTag from "./FeedTag";
+import "../../utils/util";
 
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
@@ -10,6 +11,7 @@ import { loginuser } from "../../utils/atoms";
 import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
+import { getCurrentTime } from "../../utils/util";
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
 
@@ -32,7 +34,7 @@ const Board = () => {
         setLoading(true);
 
         const response = await axios.get("api1/api/tags");
-        // console.log("tag load success", response.data);
+        console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
         console.error("tag load error");
@@ -51,6 +53,7 @@ const Board = () => {
           method: "get",
           url: `api1/api/members/follow/${userInfo.memberId}`,
         });
+        // console.log("followList success");
         setFollowList(response.data);
       } catch (error) {
         console.error("can't get current users followers");
@@ -64,16 +67,22 @@ const Board = () => {
     try {
       setLoading(true);
 
+      console.log();
+
       const response = await authorizedRequest({
         method: "get",
-        url: `api1/api/posts?page=${page}&size=2`,
+        url: `api1/api/posts?page=${page}&size=2&time=${getCurrentTime(
+          Date.now()
+        )}`,
       });
-      console.log("feed load success", response.data.data);
+      if (response.data.data.length === 0) {
+        return;
+      }
+      console.log("feed load success", response);
+      console.log("feed load data", response.data.data);
       setFeedListData((prevData) => prevData.concat(response.data.data));
 
       console.log(feedListData);
-
-      // console.log("feedListData", feedListData);
     } catch (error) {
       console.error("feed load error");
     } finally {
