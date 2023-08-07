@@ -37,5 +37,4 @@ networks:
     driver: bridge
 
 volumes:
-  vol:
-    external: true
+  vol: {}
