@@ -15,10 +15,3 @@ services:
     command: ["redis-server", "--requirepass", "1747"]
     ports:
       - "6379:6379"
-
-  react:
-    build:
-      context: ./front
-      dockerfile: dockerfile
-    ports:
-      - "3000:3000"
