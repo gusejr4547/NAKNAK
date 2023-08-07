@@ -22,6 +22,8 @@ import Map from "./components/map/Map";
 import Inventory from "./components/fishbowl/Inventory";
 // import Bowl from "./components/fishbowl/Bowl";
 import Balls from "./components/fishbowl/Balls";
+import Secondpage from "./components/freshman/Secondpage";
+import Freshman from "./components/freshman/Freshman";
 
 function AppRouter(props) {
   return (
@@ -63,6 +65,8 @@ function AppRouter(props) {
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>
+            <Route path="/Freshman" element={<Freshman />}></Route>
+            <Route path="/Secondpage" element={<Secondpage />}></Route>
             {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
             <Route path="*" element={<NotFound />}></Route>
           </Routes>

@@ -1,6 +1,6 @@
 .board-wrapper {
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
+  background-color: rgb(255, 255, 255);
   position: relative;
   height: 100%;
   /* display: flex; */
@@ -44,7 +44,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  background-color: aqua;
+  background-color: rgb(118, 118, 118);
 }
 
 .board-title-container {

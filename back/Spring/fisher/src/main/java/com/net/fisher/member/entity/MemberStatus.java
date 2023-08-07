@@ -33,7 +33,7 @@ public class MemberStatus{
     private int level;
 
     @Column(name = "is_newbee")
-    private boolean isNewBee;
+    private int isNewBee;
 
     @Column(name = "tutorial_progress")
     private int tutorialProgress;
