@@ -11,6 +11,7 @@ import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
+import com.net.fisher.response.PostResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -107,7 +109,6 @@ public class PostService {
 
         return postImages;
     }
-
 
     @Transactional
     public void increaseViews(long postId) {
@@ -211,6 +212,10 @@ public class PostService {
                 .orElse(Like.builder().post(post).member(member).build());
 
         likeRepository.save(like);
+
+        long likes = likeRepository.countByPost_PostId(postId);
+        post.setLikes(likes);
+        postRepository.save(post);
     }
 
     @Transactional
@@ -218,6 +223,12 @@ public class PostService {
         Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
+
+        long likes = likeRepository.countByPost_PostId(postId);
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        post.setLikes(likes);
+        postRepository.save(post);
     }
 
     public long getLikeCount(long postId) {
@@ -282,11 +293,12 @@ public class PostService {
             System.out.println("tag 가 없네용");
         }
 
-        for(Post p : postPage.getContent()){
+        for (Post p : postPage.getContent()) {
             System.out.println(p);
         }
 
 
         return null;
     }
+
 }

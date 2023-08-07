@@ -2,6 +2,7 @@ package com.net.fisher.post.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.net.fisher.member.entity.Member;
+import com.net.fisher.post.entity.PostTag;
 import com.net.fisher.post.entity.Tag;
 import lombok.*;
 
@@ -49,6 +50,11 @@ public class PostDto {
         private long memberId;
         private String memberImageUrl;
         private String memberNickname;
+
+        private List<PostImageDto.Response> images;
+        private List<Tag> tags;
+
+        private long likeCount;
     }
 
     @Getter

@@ -60,4 +60,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                     "and pt.tag_id in :tagList",
             nativeQuery = true)
     Page<Post> findPostFromMyTag(Pageable pageable, long memberId, List<Long> tagList);
+
+
+
 }

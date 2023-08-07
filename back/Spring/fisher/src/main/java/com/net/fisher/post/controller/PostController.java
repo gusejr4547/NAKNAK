@@ -3,6 +3,7 @@ package com.net.fisher.post.controller;
 import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
+import com.net.fisher.post.dto.PostImageDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
 import com.net.fisher.post.entity.Tag;
@@ -192,7 +193,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<PageResponse<PostResponse>> getPosts(
+    public ResponseEntity getPosts(
             @RequestHeader(name = "Authorization") String token,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime time,
             @PageableDefault(size = 10, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -201,24 +202,23 @@ public class PostController {
         Page<Post> postPage = null;
 
         // 팔로잉 기준으로 게시글 조회
-        Page<Post> postPageFollowing = postService.getPostFromFollowing(tokenId, pageable, time);
+//        Page<Post> postPageFollowing = postService.getPostFromFollowing(tokenId, pageable, time);
         // 태그 기준으로 게시글 조회
 //        Page<Post> postPageTag = postService.getPostFromMyWay(tokenId, pageable);
 
         // 더미 데이터 -- 나중에 지워야함
+        System.out.println("############# page 객체 얻기 시작");
         postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"));
+        System.out.println("############# page 객체 얻기 완료");
 
         List<Post> postList = postPage.getContent();
-        List<PostResponse> postResponses = new ArrayList<>();
-        for (Post post : postList) {
-            postResponses.add(new PostResponse(
-                    postMapper.toPostResponseDto(post),
-                    postImageMapper.toPostImageDtos(postService.getPostImage(post.getPostId())),
-                    postService.getLikeCount(post.getPostId()),
-                    postService.getTags(post.getPostId())));
-        }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(postMapper.toTagList(postList.get(0).getPostTagList()));
 
-        PageResponse<PostResponse> response = new PageResponse<>(postPage.getTotalElements(), postResponses);
+        PageResponse<PostDto.Response> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toPostResponseDtos(postList));
+
+
+       // PageResponse<PostResponse> response = new PageResponse<>(postPage.getTotalElements(), postResponses);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
