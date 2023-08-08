@@ -9,9 +9,17 @@ services:
       - "8080:8080"
     depends_on:
       - redis
+    networks:
+      - spring-redis
 
   redis:
     image: "redis:alpine"
     command: ["redis-server", "--requirepass", "1747"]
     ports:
       - "6379:6379"
+    networks:
+      - spring-redis
+
+networks:
+  spring-redis:
+    driver: bridge
