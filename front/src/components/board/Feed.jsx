@@ -77,7 +77,7 @@ const Feed = ({
   return (
     <div className="feed-wrapper">
       {/* data */}
-      <div>
+      {/* <div>
         <h4>FeedInfo</h4>
         "postId": {feedInfo.postId}, <br />
         "content": {feedInfo.content}, <br />
@@ -99,7 +99,7 @@ const Feed = ({
         {feedInfo.tags.map((tag, index) => {
           return <p key={index}>{tag.name}</p>;
         })}
-      </div>
+      </div> */}
       {/* data */}
 
       <div className="feed-board">
@@ -110,13 +110,13 @@ const Feed = ({
             src={null || `/assets/images/jge.png`}
             alt="progile"
           />
-          <Link to={`/Profile/${feedInfo.memberId}`} className="feed-username">
+          <Link to={`/Profile/:${feedInfo.memberId}`} className="feed-username">
             {feedInfo.memberNickname}
           </Link>
 
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.memberId ? (
-            <Link to={`/`} className="feed-modify">
+            <Link to={`/FeedModify`} className="feed-modify">
               수정
             </Link>
           ) : (

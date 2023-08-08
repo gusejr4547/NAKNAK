@@ -12,6 +12,9 @@ import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
 import { getCurrentTime } from "../../utils/util";
+
+import Test from "./Testcode";
+
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
 
@@ -29,6 +32,8 @@ const Board = () => {
 
   // 좋아요 상태들을 저장하는 변수
   const [likedFeedData, setLikedFeedData] = useState([]);
+
+  const [selectedTag, setSelectedTag] = useState(null);
 
   // 태그의 이름들을 가져옵니다
   useEffect(() => {
@@ -154,23 +159,48 @@ const Board = () => {
     }
   };
 
+  const tagClickHandler = (tag) => {
+    console.log("태크클릭핸들러작동");
+    if (tag.tagName === "ALL") {
+      setSelectedTag(null);
+    } else {
+      setSelectedTag(tag);
+    }
+  };
+
   return (
     <div className="board-wrapper">
+      {/* <Test></Test> */}
+
       <div className="board-header">
         <div className="board-title-container">
-          <div>
-            <h3>NAKNAK</h3>
-          </div>
+          <h1>NAKNAK</h1>
         </div>
         <div className="board-search-img-container">
           <img src="/assets/cats/cat.PNG" alt="검색버튼" />
         </div>
       </div>
       <div className="board-tag-wrapper">
-        <FeedTag tagInfo={{ tagId: 0, tagName: "ALL" }} />
+        <FeedTag
+          tagInfo={{ tagId: -1, tagName: "ALL" }}
+          active={!selectedTag ? true : false}
+          onClick={tagClickHandler}
+        />
         {Object.keys(tagListData).map((key) => {
           const tag = tagListData[key];
-          return <FeedTag tagInfo={tag} />;
+          return (
+            <FeedTag
+              tagInfo={tag}
+              active={
+                !selectedTag
+                  ? false
+                  : tag.tagId === selectedTag.tagId
+                  ? true
+                  : false
+              }
+              onClick={tagClickHandler}
+            />
+          );
         })}
         {/* dummy data start */}
 
@@ -182,26 +212,32 @@ const Board = () => {
           {feedListData.length > 0 &&
             Object.keys(feedListData).map((index) => {
               const feed = feedListData[index];
-              return (
-                <div ref={ref}>
-                  {inView.toString()}
-                  <Feed
-                    key={index}
-                    //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
-                    feedInfo={feed}
-                    currentFollowState={
-                      followerList.data.find(
-                        (follower) => follower.memberId === feed.memberId
-                      )
-                        ? true
-                        : false
-                    }
-                    likedFeedData={likedFeedData}
-                    userId={userInfo.userId}
-                    onFollowChange={followChange}
-                  />
-                </div>
-              );
+              if (
+                !selectedTag ||
+                feed.tags.find((tag) => tag.tagId === selectedTag.tagId)
+              ) {
+                return (
+                  <div ref={ref}>
+                    {/* {inView.toString()} */}
+                    <Feed
+                      key={index}
+                      //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
+                      feedInfo={feed}
+                      currentFollowState={
+                        followerList.data.find(
+                          (follower) => follower.memberId === feed.memberId
+                        )
+                          ? true
+                          : false
+                      }
+                      likedFeedData={likedFeedData}
+                      userId={userInfo.userId}
+                      onFollowChange={followChange}
+                    />
+                  </div>
+                );
+              }
+              return null;
             })}
 
           {/* dummy feed data start */}
