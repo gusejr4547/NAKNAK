@@ -25,7 +25,14 @@ function Home({ newbieVersion }) {
   return (
     <div className="home-container">
       <div className="home-image-container">
-        <img src="assets/images/mainballoon.png" alt="mainimg import error" />
+        {newbieVersion ? (
+          <img
+            src="assets/images/mainballoon2.png"
+            alt="mainimg import error"
+          />
+        ) : (
+          <img src="assets/images/mainballoon.png" alt="mainimg import error" />
+        )}
       </div>
       <div className="home-board">
         <Slider {...settings} className="home-carousel">

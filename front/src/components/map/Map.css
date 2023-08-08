@@ -2,8 +2,10 @@
   position: absolute;
   width: 90%;
   height: 500px;
-  top: 7rem;
-  left: 5%;
+  top: 3rem;
+  left: 4.5%;
+  border-radius: 20px;
+  border: 8px solid #ffffff;
 }
 #title {
   display: absolute;
@@ -20,7 +22,7 @@
   bottom: 20%;
 }
 
-.newbie_talk {
+.newbie-talk {
   width: 85%;
   height: 10%;
   background-color: bisque;

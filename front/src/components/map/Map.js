@@ -1,5 +1,4 @@
 import MapModal from "./MapModal";
-import $ from "jquery";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { mapModal_recoil, fishingInfo_recoil } from "../../utils/atoms";
@@ -9,6 +8,7 @@ import bada_axios from "../../api/BadanuriAPI";
 import badanuriPositions from "./badanuriPositions";
 import markerPositions from "./markerPositions";
 import { useLocation } from "react-router-dom";
+import Talk2 from "../freshman/Talk2";
 
 function Map() {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
@@ -19,12 +19,9 @@ function Map() {
 
   // 뉴비버전
   const location = useLocation();
-  console.log(location);
   const newbieVersionProp = location.state
     ? location.state.newbieVersionProp
     : false;
-
-  console.log(newbieVersionProp);
 
   const Search = (event) => {
     if (event.key === "Enter") {
@@ -181,14 +178,12 @@ function Map() {
   return (
     <div>
       {newbieVersionProp ? (
-        <div className="newbie-talk">
-          자. 이제 현재 네 위치에서 갈 만한 낚시터를 찾아줄게
-        </div>
+        <div className="newbie-talk">{Talk2[1].content}</div>
       ) : (
         ""
       )}
       {modalOpen && <MapModal setModalOpen={setModalOpen} />}
-      <div id="map" className="map"></div> {/* 뉴비버젼일 경우 대화 추가 */}
+      <div id="map" className="map"></div>
       <input
         className="mapsearch"
         placeholder="검색"
