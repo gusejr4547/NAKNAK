@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import { loginuser, token } from "../../utils/atoms";
 import { Button } from "react-bootstrap";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import Camera from "yolov8-onnxruntime-web@0.1.0";
 
 function Getfish(props) {
   const [fishData, setFishData] = useState({});
@@ -20,7 +19,7 @@ function Getfish(props) {
       //   const response = await axios.post("/api/fishes/catch", fishData, {headers: header});
       const response = await authorizedRequest({
         method: "post",
-        url: "/api/fishes/catch",
+        url: "/api1/api/fishes/catch",
         data: fishData,
       });
       setFishData(response.data);
@@ -42,7 +41,6 @@ function Getfish(props) {
   return (
     <div>
       <h1>어획 등록</h1>
-      <Camera />
       <input
         type="text"
         placeholder="code"

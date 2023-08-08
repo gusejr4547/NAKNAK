@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
@@ -171,6 +172,25 @@ image.src = "./assets/dom1.png";
 const ballSize = 50;
 
 const Balls = () => {
+  const [fishBowlData, setFishBowlData] = useState(undefined);
+
+  const getFishBowl = async () => {
+    try {
+      const response = await authorizedRequest({
+        method: "get",
+        url: "/api1/api/fishes/fishbowl/view",
+      });
+      setFishBowlData(response.data);
+      console.log(response);
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getFishBowl();
+  }, []);
+
   const onStart = () => {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");

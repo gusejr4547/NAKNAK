@@ -94,6 +94,7 @@ function Profile(props) {
             />
           </div>
         </div>
+        <img className="profilesetting" src="/assets/icons/set.png" alt="" />
         <div
           className="profilefollowContainer"
           style={{

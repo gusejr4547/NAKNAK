@@ -100,7 +100,7 @@ function Home(props) {
             </Link>
           </div> */}
           <div className="home-slide">
-            <Link to="/SeaScene" className="nav-link">
+            <Link to="/Balls" className="nav-link">
               <img src="/assets/icons/tank.PNG" alt="icon" />
               <h6>수조</h6>
             </Link>

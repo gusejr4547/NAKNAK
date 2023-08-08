@@ -32,9 +32,8 @@ function Map() {
       setinputData(Data);
     }
   };
-
+  const kakao = window["kakao"];
   useEffect(() => {
-    const kakao = window["kakao"];
     kakao.maps.load(() => {
       const mapContainer = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
 
