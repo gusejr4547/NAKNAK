@@ -3,6 +3,7 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 import axios from "axios";
 import Feed from "./Feed";
 import FeedTag from "./FeedTag";
+import "../../utils/util";
 
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
@@ -10,6 +11,10 @@ import { loginuser } from "../../utils/atoms";
 import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
+import { getCurrentTime } from "../../utils/util";
+
+import Test from "./Testcode";
+
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
 
@@ -25,6 +30,11 @@ const Board = () => {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
 
+  // 좋아요 상태들을 저장하는 변수
+  const [likedFeedData, setLikedFeedData] = useState([]);
+
+  const [selectedTag, setSelectedTag] = useState(null);
+
   // 태그의 이름들을 가져옵니다
   useEffect(() => {
     const getTagList = async () => {
@@ -32,7 +42,7 @@ const Board = () => {
         setLoading(true);
 
         const response = await axios.get("api1/api/tags");
-        // console.log("tag load success", response.data);
+        console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
         console.error("tag load error");
@@ -51,6 +61,7 @@ const Board = () => {
           method: "get",
           url: `api1/api/members/follow/${userInfo.memberId}`,
         });
+        // console.log("followList success");
         setFollowList(response.data);
       } catch (error) {
         console.error("can't get current users followers");
@@ -60,20 +71,59 @@ const Board = () => {
     // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
   }, [followerList]);
 
+  // 좋아요하는 게시글에 대한 정보를 가져옵니다
+  useEffect(() => {
+    console.log("firststart");
+
+    const getLikedFeeds = async () => {
+      setLoading(true);
+      try {
+        const response = await authorizedRequest({
+          method: "get",
+          url: `api1/api/posts/my-like?page=1&size=`,
+        });
+        console.log("success get likedFeedList", response.data);
+        // if (
+        //   response.data.data.find(
+        //     (post) => post.postId === feedInfo.post.postId
+        //   )
+        // ) {
+        //   setFeedLikeState(true);
+        // } else {
+        //   setFeedLikeState(false);
+        // }
+        setLikedFeedData((prevData) => prevData.concat(response.data.data));
+      } catch (error) {
+        console.error("failed get likedFeedList");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getLikedFeeds();
+  }, []);
+
+  const showFeedCount = 3;
   const getFeedList = useCallback(async () => {
+    console.log(getCurrentTime(Date.now()));
     try {
       setLoading(true);
 
+      console.log();
+
       const response = await authorizedRequest({
         method: "get",
-        url: `api1/api/posts?page=${page}&size=2`,
+        url: `api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
+          Date.now()
+        )}`,
       });
-      console.log("feed load success", response.data.data);
+      if (response.data.data.length === 0) {
+        return;
+      }
+      console.log("feed load success", response);
+      console.log("feed load data", response.data.data);
       setFeedListData((prevData) => prevData.concat(response.data.data));
 
       console.log(feedListData);
-
-      // console.log("feedListData", feedListData);
     } catch (error) {
       console.error("feed load error");
     } finally {
@@ -109,23 +159,48 @@ const Board = () => {
     }
   };
 
+  const tagClickHandler = (tag) => {
+    console.log("태크클릭핸들러작동");
+    if (tag.tagName === "ALL") {
+      setSelectedTag(null);
+    } else {
+      setSelectedTag(tag);
+    }
+  };
+
   return (
     <div className="board-wrapper">
+      {/* <Test></Test> */}
+
       <div className="board-header">
         <div className="board-title-container">
-          <div>
-            <h3>NAKNAK</h3>
-          </div>
+          <h1>NAKNAK</h1>
         </div>
         <div className="board-search-img-container">
           <img src="/assets/cats/cat.PNG" alt="검색버튼" />
         </div>
       </div>
       <div className="board-tag-wrapper">
-        <FeedTag tagInfo={{ tagId: 0, tagName: "ALL" }} />
+        <FeedTag
+          tagInfo={{ tagId: -1, tagName: "ALL" }}
+          active={!selectedTag ? true : false}
+          onClick={tagClickHandler}
+        />
         {Object.keys(tagListData).map((key) => {
           const tag = tagListData[key];
-          return <FeedTag tagInfo={tag} />;
+          return (
+            <FeedTag
+              tagInfo={tag}
+              active={
+                !selectedTag
+                  ? false
+                  : tag.tagId === selectedTag.tagId
+                  ? true
+                  : false
+              }
+              onClick={tagClickHandler}
+            />
+          );
         })}
         {/* dummy data start */}
 
@@ -137,26 +212,32 @@ const Board = () => {
           {feedListData.length > 0 &&
             Object.keys(feedListData).map((index) => {
               const feed = feedListData[index];
-              return (
-                <div ref={ref}>
-                  {inView.toString()}
-                  <Feed
-                    key={index}
-                    //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
-                    feedInfo={feed}
-                    followerList={followerList}
-                    userId={userInfo.userId}
-                    currentFollowState={
-                      followerList.data.find(
-                        (follower) => follower.memberId === feed.post.memberId
-                      )
-                        ? true
-                        : false
-                    }
-                    onFollowChange={followChange}
-                  />
-                </div>
-              );
+              if (
+                !selectedTag ||
+                feed.tags.find((tag) => tag.tagId === selectedTag.tagId)
+              ) {
+                return (
+                  <div ref={ref}>
+                    {/* {inView.toString()} */}
+                    <Feed
+                      key={index}
+                      //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
+                      feedInfo={feed}
+                      currentFollowState={
+                        followerList.data.find(
+                          (follower) => follower.memberId === feed.memberId
+                        )
+                          ? true
+                          : false
+                      }
+                      likedFeedData={likedFeedData}
+                      userId={userInfo.userId}
+                      onFollowChange={followChange}
+                    />
+                  </div>
+                );
+              }
+              return null;
             })}
 
           {/* dummy feed data start */}
