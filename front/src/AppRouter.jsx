@@ -23,7 +23,7 @@ import Inventory from "./components/fishbowl/Inventory";
 import Balls from "./components/fishbowl/Balls";
 import Freshman from "./components/freshman/Freshman";
 import Kakao from "./components/account/Kakao";
-// import Camera from "./components/Camera/Camera";
+import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
 
 function AppRouter(props) {
@@ -65,7 +65,7 @@ function AppRouter(props) {
             <Route path="/Board" element={<Board />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
-            {/* <Route path="Camera" element={<Camera />}></Route> */}
+            <Route path="Camera" element={<Camera />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>

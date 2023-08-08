@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import { each } from "jquery";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
@@ -196,7 +197,9 @@ const Balls = () => {
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
+    // fishBowlData.forEach((fish) => {
+    //   fish;
+    // });
     let images = []; // 배열 이름을 'images'로 변경
     const imageUrls = [
       "./assets/dom1.png",
