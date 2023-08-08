@@ -58,21 +58,15 @@ public class PostController {
 
     // post 자세히 보기(수정화면?)
     @GetMapping("/posts/{post-id}")
-    public ResponseEntity<PostResponse> getPost(
+    public ResponseEntity<PostDto.Response> getPost(
             @PathVariable("post-id") long postId) {
 
         Post post = postService.getPost(postId);
-        List<PostImage> postImages = postService.getPostImage(postId);
-
-        long likeCount = postService.getLikeCount(postId);
-
-        // 태그 얻어오기
-        List<Tag> tagList = postService.getTags(postId);
 
         // view 증가
         postService.increaseViews(postId);
 
-        return new ResponseEntity<>(new PostResponse(postMapper.toPostResponseDto(post), postImageMapper.toPostImageDtos(postImages), likeCount, tagList), HttpStatus.OK);
+        return new ResponseEntity<>(postMapper.toPostResponseDto(post), HttpStatus.OK);
     }
 
     // 자신의 post 를 수정
@@ -149,7 +143,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/my-post")
-    public ResponseEntity<PageResponse<PostSimpleResponse>> getMyPosts(
+    public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyPosts(
             @RequestHeader(name = "Authorization") String token,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
@@ -159,20 +153,13 @@ public class PostController {
         Page<Post> postPage = postService.getPostFromMember(tokenId, pageable);
         List<Post> postList = postPage.getContent();
 
-        List<PostSimpleResponse> simpleResponses = new ArrayList<>();
-        for (Post post : postList) {
-            simpleResponses.add(new PostSimpleResponse(
-                    postMapper.toPostSimpleResponseDto(post),
-                    postImageMapper.postImageToPostImageResponseDto(postService.getOnePostImageByPost(post)),
-                    postService.getTags(post.getPostId())));
-        }
-        PageResponse<PostSimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), simpleResponses);
+        PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/posts/my-like")
-    public ResponseEntity<PageResponse<PostSimpleResponse>> getMyLikes(
+    public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyLikes(
             @RequestHeader(name = "Authorization") String token,
             @PageableDefault(size = 9, sort = "likeId", direction = Sort.Direction.DESC) Pageable pageable) {
 
@@ -181,14 +168,7 @@ public class PostController {
         Page<Post> postPage = postService.getPostFromMemberLike(tokenId, pageable);
         List<Post> postList = postPage.getContent();
 
-        List<PostSimpleResponse> simpleResponses = new ArrayList<>();
-        for (Post post : postList) {
-            simpleResponses.add(new PostSimpleResponse(
-                    postMapper.toPostSimpleResponseDto(post),
-                    postImageMapper.postImageToPostImageResponseDto(postService.getOnePostImageByPost(post)),
-                    postService.getTags(post.getPostId())));
-        }
-        PageResponse<PostSimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), simpleResponses);
+        PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -204,11 +184,11 @@ public class PostController {
 
         postPage = postService.getPostFromMyWay(tokenId, pageable, time);
 
-
-        System.out.println(postPage.getContent());
+//        System.out.println("############ postPage myWay");
+//        System.out.println(postPage.getContent());
 
         // 더미 데이터 -- 나중에 지워야함
-        postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"));
+//        postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"), time);
 
         List<Post> postList = postPage.getContent();
 

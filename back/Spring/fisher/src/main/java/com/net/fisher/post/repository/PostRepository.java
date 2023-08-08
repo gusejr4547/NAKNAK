@@ -4,6 +4,7 @@ import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,7 +13,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -42,11 +45,16 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "order by count(*) desc")
     List<Long> countTagByMemberId(Pageable pageable, long memberId);
 
+    @Query(value = "select pt.tag.tagId as tagId from posts p join PostTag pt on p.postId = pt.post.postId " +
+            "group by pt.tag.tagId order by count(*) desc")
+    List<Long> countTag(Pageable pageable);
 
-    @Query(value = "select distinct p from posts p join PostTag pt on p.postId = pt.post.postId " +
+
+    @Query(value = "select distinct p from posts p join fetch PostTag pt on p.postId = pt.post.postId " +
             "where p.member.memberId not in :followingMemberList and pt.tag.tagId in :tagList and p.registeredAt <= :time")
     Page<Post> findPostFromMyTag(Pageable pageable, @Param("followingMemberList") List<Long> followingMemberList,
-                                 @Param("tagList") List<Long> tagList, LocalDateTime time);
+                                 @Param("tagList") Set<Long> tagList, LocalDateTime time);
+
 
 
 }

@@ -72,5 +72,10 @@ public class PostDto {
         private long memberId;
         private String memberImageUrl;
         private String memberNickname;
+
+        private PostImageDto.Response image;
+        private List<TagDto.SingleResponse> tags;
+
+        private long likeCount;
     }
 }

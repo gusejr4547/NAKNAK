@@ -54,7 +54,7 @@ public interface PostMapper {
 
     List<PostDto.Response> toPostResponseDtos(List<Post> postList);
 
-    default PostDto.SimpleResponse toPostSimpleResponseDto(Post post){
+    default PostDto.SimpleResponse toSimpleResponseDto(Post post){
         String fileUrl = "/upload/man.jpeg";
         if(post.getMember().getMemberImage() !=null) fileUrl = post.getMember().getMemberImage().getFileUrl();
         PostDto.SimpleResponse response = PostDto.SimpleResponse.builder()
@@ -64,7 +64,12 @@ public interface PostMapper {
                 .memberId(post.getMember().getMemberId())
                 .memberNickname(post.getMember().getNickname())
                 .memberImageUrl(fileUrl)
+                .image(toPostImageDto(post.getPostImageList().get(0)))
+                .tags(toTagDtos(toTagList(post.getPostTagList())))
+                .likeCount(post.getLikes())
                 .build();
         return response;
     }
+
+    List<PostDto.SimpleResponse> toSimpleResponseDtos(List<Post> postList);
 }

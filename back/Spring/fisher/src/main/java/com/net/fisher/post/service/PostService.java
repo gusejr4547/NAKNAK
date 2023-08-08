@@ -258,7 +258,7 @@ public class PostService {
         return likeRepository.findPostByMemberId(pageable, tokenId);
     }
 
-    public Page<Post> getDefaultPost(Pageable pageable) {
+    public Page<Post> getDefaultPost(Pageable pageable, LocalDateTime time) {
         return postRepository.findAll(pageable);
     }
 
@@ -276,26 +276,43 @@ public class PostService {
 
         // 팔로잉한 사람의 게시글을 조회
         List<Long> followingMemberList = followRepository.findFollowMemberIdByMember_MemberId(memberId).orElse(new ArrayList<>());
-//        System.out.println((followingMemberList));
+//        System.out.println("############# 팔로잉");
+//        System.out.println(followingMemberList);
+
+        if(followingMemberList.isEmpty()){
+            followingMemberList.add(-1l);
+        }
+
         Page<Post> postPageFollowing = postRepository.findPostByFollowing(slicePageable, followingMemberList, time);
 
-        // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 3개 선택
-        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 3), memberId);
+//        System.out.println("########### 팔로잉한 사람의 게시글");
+//        System.out.println(postPageFollowing.getContent());
 
-        System.out.println(myTagInfo);
+        // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 5개 선택
+        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 5), memberId);
+
+        // 모든 이용자가 작성한 태그 중 인기 많은
+        myTagInfo.addAll(postRepository.countTag(PageRequest.of(0,3)));
+
+//        System.out.println("############# taginfo");
+//        System.out.println(myTagInfo);
 
         // 태그가 없는 경우는
         Page<Post> postPageTag = null;
         if (!myTagInfo.isEmpty()) {
-            postPageTag = postRepository.findPostFromMyTag(slicePageable, followingMemberList, myTagInfo, time);
+            postPageTag = postRepository.findPostFromMyTag(slicePageable, followingMemberList, new HashSet<>(myTagInfo), time);
         } else {
             System.out.println("tag 가 없네용");
         }
+//        System.out.println("######## 태그 기반 게시글");
+//        System.out.println(postPageTag.getContent());
 
         // 합치기
         List<Post> postFollowing = postPageFollowing.getContent();
         List<Post> postTag = postPageTag.getContent();
         List<Post> totalPostList = sorting(postFollowing, postTag);
+
+//        System.out.println(totalPostList);
 
 
         Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
