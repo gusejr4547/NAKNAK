@@ -211,6 +211,9 @@ public class PostService {
         likeRepository.save(like);
 
         long likes = likeRepository.countByPost_PostId(postId);
+        System.out.println("########### 왜 안올라가냐");
+        System.out.println(likes);
+
         post.setLikes(likes);
         postRepository.save(post);
     }

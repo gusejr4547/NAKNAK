@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class PostController {
@@ -124,7 +124,7 @@ public class PostController {
 
     @PostMapping("/posts/unlikes")
     public ResponseEntity<String> unlikePost(
-            @RequestParam(name = "post") Long postId,
+            @RequestParam(name = "post") long postId,
             @RequestHeader(name = "Authorization") String token) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
