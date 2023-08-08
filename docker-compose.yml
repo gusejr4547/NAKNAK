@@ -11,6 +11,7 @@ services:
       - redis
     networks:
       - spring-redis
+    container_name: spring
 
   redis:
     image: "redis:alpine"
@@ -19,6 +20,7 @@ services:
       - "6379:6379"
     networks:
       - spring-redis
+    container_name: redis
 
 networks:
   spring-redis:
