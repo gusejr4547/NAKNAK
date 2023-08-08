@@ -14,7 +14,7 @@ services:
     container_name: spring
 
   redis:
-    image: "redis:alpine"
+    image: "redis:latest"
     command: ["redis-server", "--requirepass", "1747"]
     ports:
       - "6379:6379"
@@ -22,7 +22,7 @@ services:
       - spring-redis
     container_name: redis
 
-  react:
+  nginx:
     build:
       context: ./front
       dockerfile: dockerfile
