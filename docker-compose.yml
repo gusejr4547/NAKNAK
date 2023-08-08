@@ -7,10 +7,10 @@ services:
       dockerfile: dockerfile
     ports:
       - "8080:8080"
-    depends_on:
-      - redis
     networks:
       - spring-redis
+    depends_on:
+      - redis
     container_name: spring
 
   redis:
@@ -22,6 +22,22 @@ services:
       - spring-redis
     container_name: redis
 
+  react:
+    build:
+      context: ./front
+      dockerfile: dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - spring-redis
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    container_name: nginx
+
 networks:
   spring-redis:
     driver: bridge
+
+volumes:
+  vol:
