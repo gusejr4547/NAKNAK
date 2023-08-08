@@ -32,13 +32,13 @@ public class FishController {
     private final FishMapper fishMapper;
     private final FishService fishService;
 
-    @PostMapping("/fishes/upload")
+    /*@PostMapping("/fishes/upload")
     public ResponseEntity<InventoryDto.SingleResponse> postFishImage(
             @RequestHeader(name = "Authorization") String token,
             @RequestParam("image") MultipartFile image){
         FishRecogDto recogDto = fishService.recognizeFish(token,image);
         return postInventory(token,new InventoryDto.Post(recogDto.getCode(), recogDto.getSize()));
-    }
+    }*/
 
     // 물고기 인식 모듈에서 인벤토리에 추가하는 로직
     @PostMapping("/fishes/catch")
