@@ -260,7 +260,7 @@ const badanuriPositions = [
   },
   {
     title: "해운대해수욕장",
-    obsCode: "TW_0062	",
+    obsCode: "TW_0062",
     content: `<div id='title'>해운대해수욕장</div>`,
     lat: 35.148,
     lng: 129.17,

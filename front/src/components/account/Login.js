@@ -21,6 +21,11 @@ function Login(props) {
   const [userData, setUserData] = useRecoilState(loginuser);
   const [accesstoken, setAccessToken] = useRecoilState(token);
   const navigate = useNavigate();
+  const CLIENT_ID = "6a4bb2fa60ad461ae820953255846ebf";
+  const REDIRECT_URI =
+    "http://passportlkm.iptime.org:20101/login/oauth2/code/kakao";
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
   // useEffect(() => {
   //   if (accesstoken) {
   //     navigate('/');
@@ -56,11 +61,11 @@ function Login(props) {
   };
 
   const logout = () => {
-    setUserData(null);
+    setUserData(undefined);
     console.log(userData);
-    setAccessToken(null);
+    setAccessToken(undefined);
     console.log(accesstoken);
-    localStorage.setItem("key", null);
+    localStorage.setItem("key", undefined);
     const tt = localStorage.getItem("key");
     console.log(tt);
   };
@@ -239,6 +244,12 @@ function Login(props) {
             backgroundPosition: "center",
           }}
         ></Button>
+        <a
+          // href={KAKAO_AUTH_URL}
+          href="api1/oauth2/authorization/google"
+        >
+          <p>123</p>
+        </a>
       </div>
     </div>
   );

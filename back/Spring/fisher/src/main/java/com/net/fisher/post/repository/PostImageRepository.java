@@ -17,4 +17,5 @@ public interface PostImageRepository extends JpaRepository<PostImage, Long> {
 
     PostImage findFirstByPost(Post post);
 
+
 }

@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../utils/atoms";
 
-function Home(props) {
+function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
   const settings = {
     dots: true, // 페이지 번호를 나타냄
@@ -25,12 +25,20 @@ function Home(props) {
   return (
     <div className="home-container">
       <div className="home-image-container">
-        <img src="assets/images/mainballoon.png" alt="mainimg import error" />
+        {newbieVersion ? (
+          <img
+            src="assets/images/mainballoon2.png"
+            alt="mainimg import error"
+          />
+        ) : (
+          <img src="assets/images/mainballoon.png" alt="mainimg import error" />
+        )}
       </div>
       <div className="home-board">
         <Slider {...settings} className="home-carousel">
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Dogam" className="nav-link">
               <img src="/assets/icons/do.PNG" alt="icon" />
               <h6>도감</h6>
@@ -39,7 +47,8 @@ function Home(props) {
           {/* slide unit end */}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Fishpic" className="nav-link">
               <img src="/assets/icons/camera.PNG" alt="icon" />
               <h6>카메라</h6>
@@ -48,7 +57,8 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Inventory" className="nav-link">
               <img src="/assets/icons/on.PNG" alt="icon" />
               <h6>인벤토리</h6>
@@ -57,17 +67,32 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
-            <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
+          {/* <div className="home-slide"> */}
+          {userData?.memberId !== undefined ? (
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
+                <img src="/assets/icons/pro.PNG" alt="icon" />
+                <h6>프로필</h6>
+              </Link>
+            </div>
+          ) : (
+            <div className="home-slide">
               <img src="/assets/icons/pro.PNG" alt="icon" />
               <h6>프로필</h6>
-            </Link>
-          </div>
+            </div>
+          )}
+
           {/* slide unit end*/}
 
           {/* slide unit start*/}
           <div className="home-slide">
-            <Link to="/Map" className="nav-link">
+            <Link
+              to="/Map"
+              state={{ newbieVersionProp: newbieVersion }}
+              className="nav-link"
+            >
               <img src="/assets/icons/ji.PNG" alt="icon" />
               <h6>지도</h6>
             </Link>
@@ -75,7 +100,8 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Board" className="nav-link">
               <img src="/assets/icons/ge.PNG" alt="icon" />
               <h6>SNS</h6>
@@ -90,8 +116,9 @@ function Home(props) {
               <h6>Map</h6>
             </Link>
           </div> */}
-          <div className="home-slide">
-            <Link to="/SeaScene" className="nav-link">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
+            <Link to="/Balls" className="nav-link">
               <img src="/assets/icons/tank.PNG" alt="icon" />
               <h6>수조</h6>
             </Link>
@@ -99,7 +126,8 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* dummy data start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <img src="/assets/icons/google.PNG" alt="icon" />
             <h6>dummy</h6>
           </div>

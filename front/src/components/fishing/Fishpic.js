@@ -30,7 +30,11 @@ function CameraApp() {
   const getCameraStream = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
+        video: {
+          facingMode: "environment",
+          width: { ideal: 1800 },
+          height: { ideal: 900 },
+        },
         audio: false,
       });
       if (videoRef.current) {

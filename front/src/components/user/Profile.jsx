@@ -94,6 +94,7 @@ function Profile(props) {
             />
           </div>
         </div>
+        <img className="profilesetting" src="/assets/icons/set.png" alt="" />
         <div
           className="profilefollowContainer"
           style={{
@@ -134,6 +135,14 @@ function Profile(props) {
             게시글
           </button>
           <button
+            onClick={() => handleToggle("likePosts")}
+            className={
+              activeView === "likePosts" ? "profileactive" : "profiledefault"
+            }
+          >
+            좋아요한 게시글
+          </button>
+          <button
             onClick={() => handleToggle("aquarium")}
             className={
               activeView === "aquarium" ? "profileactive" : "profiledefault"
@@ -142,13 +151,18 @@ function Profile(props) {
             수조
           </button>
         </div>
-        {activeView === "myPosts" ? (
+        {activeView === "myPosts" && (
           <div className="profileMiddle">
             <Mypost id={temp} ver="my-post" />
+          </div>
+        )}
+        {activeView === "likePosts" && (
+          <div className="profileMiddle">
             <Mypost id={temp} ver="my-like" />
           </div>
-        ) : (
-          <div className="profileaquarium">
+        )}
+        {activeView === "aquarium" && (
+          <div className="profileMiddle">
             <p>아쿠아리움</p>
           </div>
         )}

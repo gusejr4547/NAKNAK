@@ -8,8 +8,6 @@ const MapModal = () => {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
 
   useEffect(() => {
-    // 근데 콘솔창이 두번찍히네..
-    console.log(data);
     return () => {};
   }, [data]);
 
@@ -23,16 +21,16 @@ const MapModal = () => {
         <div className="modal"></div>
         <div className="modal-title">{data[0].MMSI_NM}</div>
         <div className="modal-information">
-          <p>습도: {data[0].HUMIDITY}</p>
-          <p>기온: {data[0].AIR_TEMPERATURE}</p>
+          {data[0].HUMIDITY && <p>습도: {data[0].HUMIDITY}</p>}
+          {data[0].AIR_TEMPERATURE && <p>기온: {data[0].AIR_TEMPERATURE}</p>}
           <p>위도: {data[0].LATITUDE}</p>
           <p>경도: {data[0].LONGITUDE}</p>
-          <p>풍향: {data[0].WIND_DIRECT}</p>
-          <p>기압: {data[0].AIR_PRESSURE}</p>
-          <p>풍속: {data[0].WIND_SPEED}</p>
-          <p>수온: {data[0].WATER_TEMPER}</p>
-          <p>파고: {data[0].WAVE_HEIGHT}</p>
-          <p>염분: {data[0].SALINITY}</p>
+          {data[0].WIND_DIRECT && <p>풍향: {data[0].WIND_DIRECT}</p>}
+          {data[0].AIR_PRESSURE && <p>기압: {data[0].AIR_PRESSURE}</p>}
+          {data[0].WIND_SPEED && <p>풍속: {data[0].WIND_SPEED}</p>}
+          {data[0].WATER_TEMPER && <p>수온: {data[0].WATER_TEMPER}</p>}
+          {data[0].WAVE_HEIGHT && <p>파고: {data[0].WAVE_HEIGHT}</p>}
+          {data[0].SALINITY && <p>염분: {data[0].SALINITY}</p>}
         </div>
 
         {/* <h2>{marker}</h2> */}

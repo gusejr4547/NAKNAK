@@ -19,7 +19,7 @@ function Getfish(props) {
       //   const response = await axios.post("/api/fishes/catch", fishData, {headers: header});
       const response = await authorizedRequest({
         method: "post",
-        url: "/api/fishes/catch",
+        url: "/api1/api/fishes/catch",
         data: fishData,
       });
       setFishData(response.data);

@@ -109,10 +109,11 @@ const Inventory = () => {
       />
       <div className="inven-board">
         <div className="inven-carousel inven-disable-scrollbar">
-          {Object.keys(inventoryData).map((key) => {
+          {Object.keys(inventoryData).map((key, index) => {
             const fish = inventoryData[key];
             return (
               <ItemSlide
+                key={index}
                 fishInfo={fish}
                 onDeleteSlide={() => handleDeleteSlide(inventoryData[key])}
               />
