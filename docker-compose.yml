@@ -34,7 +34,7 @@ services:
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
     container_name: nginx
-    dns_search: .
+    #dns_search: .
 
 networks:
   spring-redis:
