@@ -52,3 +52,8 @@
 .slick-slider {
   position: static !important;
 }
+
+/* 뉴비 모드에서 클릭이벤트 막기 */
+.home-slide.non-clickable {
+  pointer-events: none;
+}

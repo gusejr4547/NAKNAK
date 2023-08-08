@@ -70,7 +70,7 @@ public class MemberService {
         } catch (UnknownHostException e) {
             System.out.println("Unable to determine your IP address: " + e.getMessage());
         }
-        String toIp = "192.168.30.161";
+        String toIp = "127.0.1.1";
         if(ipAddressStr.equals(toIp)){
             RestTemplate restTemplate = new RestTemplate();
 
@@ -191,8 +191,14 @@ public class MemberService {
         return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
     }
 
+    public int setTutorialProgress(long memberId,int tutorialProgress){
+        memberStatusRepository.setStatusForTutorialProgress(memberId,tutorialProgress);
+        return memberStatusRepository.getTutorialProgress(memberId);
+    }
+
     public int setIsNewbie(long memberId,int isNewbie){
-        return memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
+        memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
+        return memberStatusRepository.getIsNewbie(memberId);
     }
 
     public Follow makeFollowTo(long toId, long fromId){
