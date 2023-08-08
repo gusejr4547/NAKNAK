@@ -57,9 +57,15 @@ public class MemberController {
         return new ResponseEntity<>(new MemberStatusResponse(memberResponse, statusResponse), HttpStatus.OK);
     }
 
-    /*@PostMapping("/members/update")e
-    public ResponseEntity<MemberDto.Response> updateMember
-            (@RequestBody )*/
+    @PostMapping("/members/update")
+    public ResponseEntity<MemberDto.Response> updateMember(
+                    @RequestHeader("Authorization")String token,
+                    MemberDto.Update requestBody,
+                    MultipartHttpServletRequest multiRequest){
+        long tokenId = jwtTokenizer.getMemberId(token);
+        Member member = memberService.updateMember(tokenId,requestBody,multiRequest);
+        return new ResponseEntity<>(memberMapper.memberToResponseDto(member),HttpStatus.OK);
+    }
 
 
     @GetMapping("/members/list")
