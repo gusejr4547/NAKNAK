@@ -25,5 +25,4 @@ export const getLocation = () => {
     }
     return location;
   };
-  console.log(getLocation());
 };

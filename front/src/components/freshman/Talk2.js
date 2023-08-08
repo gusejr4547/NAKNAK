@@ -2,6 +2,7 @@
 import React from "react";
 import fishingSpots from "../map/fishingSpots";
 
+// 가까운 낚시터 찾는 함수
 const getLocation = () => {
   let Lat = 35.095651;
   let Lng = 128.854831;
@@ -9,6 +10,8 @@ const getLocation = () => {
   let location = {
     distance: 10,
     title: "",
+    lat: 0,
+    lng: 0,
   };
   for (let i = 0; i < fishingSpots.length; i++) {
     const cal_lat = Math.abs(fishingSpots[i].lat - Lat);
@@ -17,10 +20,12 @@ const getLocation = () => {
     const distance = cal_lat * cal_lat + cal_lng * cal_lng;
     if (distance < location.distance) {
       location.distance = distance;
-      location.title = fishingSpots[i];
+      location.title = fishingSpots[i].title;
+      location.lat = fishingSpots[i].lat;
+      location.lng = fishingSpots[i].lng;
     }
   }
-  return location.title.title;
+  return location;
 };
 
 const Talk2 = [
@@ -29,16 +34,14 @@ const Talk2 = [
   },
   {
     content: (
-      <span>
-        현재 네가 있는 여기에서, 갈만한 낚시 장소를 찾아볼까? 지도를 요리조리
-        움직여봐. 음.. 내가 보기엔{" "}
-        <span className="location">{getLocation()}</span>가 제일 좋을 것 같아!
-        한번 클릭해볼래?
+      <span className="map-newbie-talk">
+        현재 네가 있는 여기에서, 갈만한 낚시 장소를 찾아보자. 음.. 내가 보기엔{" "}
+        <span className="location">{getLocation().title}</span>가 제일 좋을 것
+        같아!
       </span>
     ),
-  },
-  {
-    content: "",
+    spot_lng: `${getLocation().lng}`,
+    spot_lat: `${getLocation().lat}`,
   },
 ];
 

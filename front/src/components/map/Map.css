@@ -11,25 +11,41 @@
   display: absolute;
   padding-top: 20%;
 }
-
-.mapsearch {
+.search {
   position: fixed;
-  bottom: 30%;
+  bottom: 17rem;
+  left: 1rem;
 }
 
-.mapsearchresult {
+.search-wrapper {
   position: fixed;
-  bottom: 20%;
+  height: 10rem;
+  left: 1.4rem;
+  bottom: 6.5rem;
 }
 
-.newbie-talk {
-  width: 85%;
-  height: 10%;
+.map-newbie-talk-box {
+  display: flex;
+  width: 90%;
+  height: 12%;
+  border-radius: 35px;
   background-color: bisque;
   position: absolute;
-  bottom: 2rem;
+  bottom: 5rem;
+  left: 5%;
+  align-items: center;
 }
-
+.map-newbie-talk {
+  padding: 4%;
+}
 .location {
   color: rgb(0, 74, 211);
+}
+.next {
+  color: blueviolet;
+  font-weight: bold;
+  position: absolute;
+  right: 1rem;
+  padding-top: 4%;
+  bottom: 0.5rem;
 }
