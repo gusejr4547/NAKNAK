@@ -13,12 +13,19 @@ const Feed = ({
   feedInfo,
   // followerList,
   currentFollowState,
-  feedLikeState,
+  // feedLikeState,
+  likedFeedData,
   userId,
   onFollowChange,
 }) => {
   // props 를 여기 usestate로 받을 것인지
-  // const [feedLikeState, setFeedLikeState] = useState();
+  const [feedLikeState, setFeedLikeState] = useState(
+    likedFeedData
+      ? likedFeedData.find((likedFeed) => likedFeed.postId === feedInfo.postId)
+        ? true
+        : false
+      : false
+  );
   const [loading, setLoading] = useState(false);
 
   const followStateClass = currentFollowState
@@ -36,80 +43,34 @@ const Feed = ({
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
   };
 
-  // useEffect(() => {
-  //   console.log("firststart");
-
-  //   const checkFeedLikeState = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await authorizedRequest({
-  //         method: "get",
-  //         url: `api1/api/posts/my-like?page=1&size=`,
-  //       });
-  //       console.log("success get likedFeedList", response.data);
-  //       if (
-  //         response.data.data.find(
-  //           (post) => post.postId === feedInfo.post.postId
-  //         )
-  //       ) {
-  //         setFeedLikeState(true);
-  //       } else {
-  //         setFeedLikeState(false);
-  //       }
-  //     } catch (error) {
-  //       console.error("failed get likedFeedList");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   checkFeedLikeState();
-  // }, []);
-
   const followClickHandler = async () => {
-    onFollowChange(currentFollowState, feedInfo.post.memberId);
-    console.log("follow btn clicked", feedInfo.post.memberId);
+    onFollowChange(currentFollowState, feedInfo.memberId);
+    console.log("follow btn clicked", feedInfo.memberId);
   };
 
-  const likeClickHandler = async () => {
-    feedLikeState = !feedLikeState;
-    setLoading(true);
-    // console.log(feedLikeState, feedInfo.post.postId);
-    try {
-      await authorizedRequest({
-        method: "post",
-        url: `api1/api/posts/${feedLikeState ? "likes" : "unlikes"}?post=${
-          feedInfo.post.postId
-        }`,
-      });
-      // console.log("success toggle likedstate", response);
-    } catch (error) {
-      console.error("fail toggle likedstate");
-    } finally {
-      setLoading(false);
-    }
-
-    console.log("like btn clicked", feedInfo.likeCount);
+  const likeClickHandler = () => {
+    console.log("like btn clicked", feedLikeState);
+    setFeedLikeState(!feedLikeState);
   };
-  // 수정해야함 ㅁ나어루머ㅏㄴㅇ뤄ㅏㅁㄴ우러ㅏㅁ눙러ㅏa
+
   useEffect(() => {
     const toggleLikeState = async () => {
       setLoading(true);
-
-      // console.log(feedLikeState, feedInfo.post.postId);
       try {
-        await authorizedRequest({
+        let urlString = feedLikeState ? "likes" : "unlikes";
+        console.log("feedlikestste id", feedLikeState);
+        const response = await authorizedRequest({
           method: "post",
-          url: `api1/api/posts/${feedLikeState ? "likes" : "unlikes"}?post=${
-            feedInfo.post.postId
-          }`,
+          url: `api1/api/posts/${urlString}?post=${feedInfo.postId}`,
         });
-        // console.log("success toggle likedstate", response);
+        console.log(feedLikeState, response);
+        setLoading(false);
       } catch (error) {
         console.error("fail toggle likedstate");
-      } finally {
         setLoading(false);
       }
     };
+
     toggleLikeState();
   }, [feedLikeState]);
 
@@ -118,14 +79,14 @@ const Feed = ({
       {/* data */}
       <div>
         <h4>FeedInfo</h4>
-        "postId": {feedInfo.post.postId}, <br />
-        "content": {feedInfo.post.content}, <br />
-        "views":{feedInfo.post.views}, <br />
+        "postId": {feedInfo.postId}, <br />
+        "content": {feedInfo.content}, <br />
+        "views":{feedInfo.views}, <br />
         "likecnt":{feedInfo.likeCount}, <br />
-        "registeredAt":{feedInfo.post.registeredAt}, <br />
-        "memberId":{feedInfo.post.memberId}, <br />
-        "memberImageUrl": {feedInfo.post.memberImageUrl}, <br />
-        "memberNickname": {feedInfo.post.memberNickname}, <br />
+        "registeredAt":{feedInfo.registeredAt}, <br />
+        "memberId":{feedInfo.memberId}, <br />
+        "memberImageUrl": {feedInfo.memberImageUrl}, <br />
+        "memberNickname": {feedInfo.memberNickname}, <br />
         "images":
         {feedInfo.images.map((image, index) => {
           return (
@@ -149,15 +110,12 @@ const Feed = ({
             src={null || `/assets/images/jge.png`}
             alt="progile"
           />
-          <Link
-            to={`/Profile/${feedInfo.post.memberId}`}
-            className="feed-username"
-          >
-            {feedInfo.post.memberNickname}
+          <Link to={`/Profile/${feedInfo.memberId}`} className="feed-username">
+            {feedInfo.memberNickname}
           </Link>
 
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
-          {userId === feedInfo.post.memberId ? (
+          {userId === feedInfo.memberId ? (
             <Link to={`/`} className="feed-modify">
               수정
             </Link>
@@ -232,7 +190,7 @@ const Feed = ({
               onClick={likeClickHandler}
             />
           </div>
-          <div className="feed-caption">{feedInfo.post.content}</div>
+          <div className="feed-caption">{feedInfo.content}</div>
           <div className="feed-tags">
             {feedInfo.tags.map((tag, index) => {
               return <FeedTag key={index} tagInfo={tag} />;

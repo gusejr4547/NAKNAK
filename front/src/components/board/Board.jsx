@@ -191,19 +191,12 @@ const Board = () => {
                     feedInfo={feed}
                     currentFollowState={
                       followerList.data.find(
-                        (follower) => follower.memberId === feed.post.memberId
+                        (follower) => follower.memberId === feed.memberId
                       )
                         ? true
                         : false
                     }
-                    feedLikeState={
-                      likedFeedData.find(
-                        (likedFeed) =>
-                          likedFeed.post.postId === feed.post.postId
-                      )
-                        ? true
-                        : false
-                    }
+                    likedFeedData={likedFeedData}
                     userId={userInfo.userId}
                     onFollowChange={followChange}
                   />
