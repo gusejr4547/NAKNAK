@@ -1,13 +1,23 @@
-import MapModal from "./MapModal";
-import $ from "jquery";
 import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { mapModal_recoil, fishingInfo_recoil } from "../../utils/atoms";
 import "./Map.css";
+
+import MapModal from "./MapModal";
+
+import { useRecoilState } from "recoil";
+import {
+  mapModal_recoil,
+  fishingInfo_recoil,
+  myLocation_recoil,
+} from "../../utils/atoms";
+import { useLocation } from "react-router-dom";
+
 import axios from "../../api/SeaAPI";
+
 import bada_axios from "../../api/BadanuriAPI";
 import badanuriPositions from "./badanuriPositions";
+import fishingSpots from "./fishingSpots";
 import markerPositions from "./markerPositions";
+import Talk2 from "../freshman/Talk2";
 
 function Map() {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
@@ -15,6 +25,15 @@ function Map() {
   const [mapInfomation, setMapInfomation] = useState({});
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
+  const [myLocation, setMyLocation] = useState(null);
+  // 현재 내 위치 받아오기 그리고 저장하기
+  let Lat = 35.181473;
+  let Lng = 129.211389;
+  // 뉴비버전
+  const location = useLocation();
+  const newbieVersionProp = location.state
+    ? location.state.newbieVersionProp
+    : false;
 
   const Search = (event) => {
     if (event.key === "Enter") {
@@ -22,7 +41,19 @@ function Map() {
       const arr = [];
       badanuriPositions.forEach((ele) => {
         if (ele.title.includes(inputData)) {
-          arr.push(ele.title);
+          arr.push(ele);
+          setSearchData(...searchData, arr);
+        }
+      });
+      markerPositions.forEach((ele) => {
+        if (ele.title.includes(inputData)) {
+          arr.push(ele);
+          setSearchData(...searchData, arr);
+        }
+      });
+      fishingSpots.forEach((ele) => {
+        if (ele.title.includes(inputData)) {
+          arr.push(ele);
           setSearchData(...searchData, arr);
         }
       });
@@ -42,18 +73,71 @@ function Map() {
         //지도를 생성할 때 필요한 기본 옵션
 
         // 로드될때 어디서 로드되는지를 보여줌 => 현재위치 받아서 박기
-        center: new kakao.maps.LatLng(35.084833333, 129.033166667), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(Lat, Lng), //지도의 중심좌표.
         // center: new kakao.maps.LatLng(35.095651, 128.854831), //지도의 중심좌표.
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       const map = new kakao.maps.Map(mapContainer, options); //지도 생성 및 객체 리턴
-
       const clusterer = new kakao.maps.MarkerClusterer({
         map: map,
         averageCenter: true,
         minLevel: 5,
         // markers: markers,
       });
+      // 위치 이동 함수
+      function panTo(move_lat, move_lng) {
+        const moveLatLon = new kakao.maps.LatLng(move_lat, move_lng);
+        console.log(moveLatLon);
+        map.panTo(moveLatLon);
+      }
+      if (myLocation) {
+        panTo(myLocation.lat, myLocation.lng);
+        console.log("저기");
+      }
+
+      // 낚시스팟 마커 생성
+      for (let i = 0; i < fishingSpots.length; i++) {
+        // 마커 생성
+        const marker = new kakao.maps.Marker({
+          map: map, // 마커를 표시할 지도
+          title: fishingSpots[i].title,
+          obsCode: fishingSpots[i].obsCode,
+          position: new kakao.maps.LatLng(
+            fishingSpots[i].lat,
+            fishingSpots[i].lng
+          ), // 마커를 표시할 위치
+        });
+
+        clusterer.addMarker(marker);
+
+        const overlay = new kakao.maps.CustomOverlay({
+          content: fishingSpots[i].content,
+          map: map,
+          position: marker.getPosition(),
+        });
+        overlay.setMap(map);
+
+        kakao.maps.event.addListener(map, "zoom_changed", function () {
+          // 지도의 현재 레벨을 얻어옵니다
+
+          function closeOverlay() {
+            overlay.setMap(null);
+          }
+          const level = map.getLevel();
+          if (level > 8) {
+            closeOverlay();
+          } else {
+            overlay.setMap(map);
+          }
+        });
+
+        kakao.maps.event.addListener(
+          marker,
+          "click",
+          makeOverListener("badanuri", fishingSpots[i])
+        );
+      }
+
       // 바다 누리 마커 생성
       for (let i = 0; i < badanuriPositions.length; i++) {
         // 마커 생성
@@ -69,11 +153,27 @@ function Map() {
 
         clusterer.addMarker(marker);
 
-        // const overlay = new kakao.maps.CustomOverlay({
-        //   content: badanuriPositions[i].content,
-        //   map: map,
-        //   position: marker.getPosition(),
-        // });
+        const overlay = new kakao.maps.CustomOverlay({
+          content: badanuriPositions[i].content,
+          map: map,
+          position: marker.getPosition(),
+        });
+        overlay.setMap(map);
+
+        kakao.maps.event.addListener(map, "zoom_changed", function () {
+          // 지도의 현재 레벨을 얻어옵니다
+
+          function closeOverlay() {
+            overlay.setMap(null);
+          }
+          const level = map.getLevel();
+          if (level > 8) {
+            closeOverlay();
+          } else {
+            overlay.setMap(map);
+          }
+        });
+
         kakao.maps.event.addListener(
           marker,
           "click",
@@ -95,12 +195,27 @@ function Map() {
           ), // 마커를 표시할 위치
         });
         clusterer.addMarker(marker);
-        // const overlay = new kakao.maps.CustomOverlay({
-        //   content: markerPositions[i].content,
-        //   map: map,
-        //   position: marker.getPosition(),
-        // });
 
+        const overlay = new kakao.maps.CustomOverlay({
+          content: markerPositions[i].content,
+          map: map,
+          position: marker.getPosition(),
+        });
+        overlay.setMap(map);
+
+        kakao.maps.event.addListener(map, "zoom_changed", function () {
+          // 지도의 현재 레벨을 얻어옵니다
+
+          function closeOverlay() {
+            overlay.setMap(null);
+          }
+          const level = map.getLevel();
+          if (level > 8) {
+            closeOverlay();
+          } else {
+            overlay.setMap(map);
+          }
+        });
         kakao.maps.event.addListener(
           marker,
           "click",
@@ -165,23 +280,58 @@ function Map() {
         }
       };
       // 마커 클러스터 생성
+
+      //
     });
-  }, []);
+  }, [myLocation]);
 
   return (
     <div>
+      {newbieVersionProp ? (
+        <div className="map-newbie-talk-box">
+          {Talk2[1].content}{" "}
+          <div
+            className="next"
+            onClick={() =>
+              setMyLocation({
+                lat: Talk2[1]?.spot_lat,
+                lng: Talk2[1]?.spot_lng,
+              })
+            }
+          >
+            다음 &gt;
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {modalOpen && <MapModal setModalOpen={setModalOpen} />}
+      {/* 카카오맵 */}
       <div id="map" className="map"></div>
-      <input
-        className="mapsearch"
-        placeholder="검색"
-        onChange={Search}
-        onKeyPress={Search}
-      />
-      <div className="mapsearchresult">
-        {searchData.map((data, index) => (
-          <p key={index}>{data}</p>
-        ))}
+
+      <div className="search-location">
+        <input
+          className="search"
+          placeholder="장소를 검색해주세요."
+          onChange={Search}
+          onKeyPress={Search}
+        />
+        <div className="search-wrapper">
+          {searchData.map((data, index) => (
+            <p
+              className="mapsearchresult"
+              onClick={() =>
+                setMyLocation({
+                  lat: data.lat,
+                  lng: data.lng,
+                })
+              }
+              key={index}
+            >
+              {data.title}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );

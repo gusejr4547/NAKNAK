@@ -78,24 +78,36 @@ const Lure = [
   },
   {
     content:
-      "다음으로 원줄 묶는 법을 알려줄게.생각보다 어려울테니까 천천히 따라해봐! \n 미리 연습해봐야 실제로 갔을 때 빨리 할 수 있어! \n",
-    image: `../assets/firstpage/lure3-1.png`,
-  },
-  {
-    content: "이렇게 줄을 한바퀴 돌려",
-    image: `../assets/firstpage/lure3-2.png`,
-  },
-  {
-    content: "그리고 중심 줄을 축으로 5-6번 정도 돌리고, 돌렸던 줄을 당겨.",
-    image: `../assets/firstpage/lure3-3.png`,
-  },
-  {
-    content: "그리고 다른 줄을 쭉 당기면 끝이야.",
-    image: `../assets/firstpage/lure3-4.png`,
+      "이제 원줄을 알아볼게. 원줄은 낚시대에서 목줄까지를 연결하는 줄인데 재질에 따라 나일론, 카본, 합사가 있어.",
   },
   {
     content:
-      "마지막 순서까지 끝이 났어. 지금까지 본 내용은 다시 확인 할 수 있으니까 보면서 천천히 연습해봐!.",
+      "초보자라면 나일론 원줄을 추천할게. 카본과 합사에 비해 강도가 떨어지지만 잘 늘어나고 수면에 뜨는 성질이 있어 다루기가 쉽기 때문이야.",
+    image: `../assets/firstpage/common1-1.png`,
+  },
+  {
+    content:
+      "다음으로 원줄 묶는 법을\n알려줄게. 생각보다 어려울테니까 천천히 따라해봐! \n 미리 연습해봐야 실제로 갔을 때 빨리 할 수 있어! \n",
+    image: `../assets/firstpage/common1-2.png`,
+  },
+  {
+    content: "이렇게 줄을 한바퀴 돌려",
+    image: `../assets/firstpage/common1-3.png`,
+  },
+  {
+    content: "그리고 중심 줄을 축으로 5-6번 정도 돌리고, 돌렸던 줄을 당겨.",
+    image: `../assets/firstpage/common1-4.png`,
+  },
+  {
+    content: "그리고 다른 줄을 쭉 당기면 끝이야.",
+    image: `../assets/firstpage/common1-5.png`,
+  },
+  {
+    content:
+      "마지막 순서까지 끝이 났어. 지금까지 본 내용은 다시 확인 할 수 있으니까 보면서 \n천천히 연습해봐!",
+  },
+  {
+    content: "자. 이제 어플 사용법을 간단히 알려줄게. 나를 따라와~",
   },
 ];
 
