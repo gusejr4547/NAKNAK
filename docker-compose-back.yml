@@ -30,11 +30,11 @@ services:
     networks:
       - spring-redis
     volumes:
-      - vol:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
 
 networks:
   spring-redis:
     driver: bridge
 
 volumes:
-  - /etc/letsencrypt:/etc/letsencrypt
+  vol:
