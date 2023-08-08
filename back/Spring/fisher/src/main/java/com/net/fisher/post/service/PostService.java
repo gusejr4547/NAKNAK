@@ -5,29 +5,27 @@ import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
 import com.net.fisher.file.service.FileService;
 import com.net.fisher.member.entity.Member;
+import com.net.fisher.member.repository.FollowRepository;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
+import com.net.fisher.response.PostResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +38,7 @@ public class PostService {
     private final LikeRepository likeRepository;
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
+    private final FollowRepository followRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
@@ -107,7 +106,6 @@ public class PostService {
 
         return postImages;
     }
-
 
     @Transactional
     public void increaseViews(long postId) {
@@ -211,6 +209,10 @@ public class PostService {
                 .orElse(Like.builder().post(post).member(member).build());
 
         likeRepository.save(like);
+
+        long likes = likeRepository.countByPost_PostId(postId);
+        post.setLikes(likes);
+        postRepository.save(post);
     }
 
     @Transactional
@@ -218,6 +220,12 @@ public class PostService {
         Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
+
+        long likes = likeRepository.countByPost_PostId(postId);
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        post.setLikes(likes);
+        postRepository.save(post);
     }
 
     public long getLikeCount(long postId) {
@@ -250,7 +258,7 @@ public class PostService {
         return likeRepository.findPostByMemberId(pageable, tokenId);
     }
 
-    public Page<Post> getDefaultPost(Pageable pageable) {
+    public Page<Post> getDefaultPost(Pageable pageable, LocalDateTime time) {
         return postRepository.findAll(pageable);
     }
 
@@ -262,31 +270,62 @@ public class PostService {
         return postPage;
     }
 
-    public Page<Post> getPostFromMyWay(long tokenId, Pageable pageable) {
-        // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 3개 선택
-        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 3), tokenId);
+    public Page<Post> getPostFromMyWay(long memberId, Pageable pageable, LocalDateTime time) {
+        // 3, 3 조회
+        Pageable slicePageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize() / 2, Sort.Direction.DESC, "postId");
 
-        System.out.println(myTagInfo);
+        // 팔로잉한 사람의 게시글을 조회
+        List<Long> followingMemberList = followRepository.findFollowMemberIdByMember_MemberId(memberId).orElse(new ArrayList<>());
+//        System.out.println("############# 팔로잉");
+//        System.out.println(followingMemberList);
 
-//        for (TagDto.Info info : myTagInfo) {
-//            System.out.println("##############");
-//            System.out.println(info.getTagId());
-////            System.out.println(info.getTagCount());
-//        }
+        if(followingMemberList.isEmpty()){
+            followingMemberList.add(-1l);
+        }
+
+        Page<Post> postPageFollowing = postRepository.findPostByFollowing(slicePageable, followingMemberList, time);
+
+//        System.out.println("########### 팔로잉한 사람의 게시글");
+//        System.out.println(postPageFollowing.getContent());
+
+        // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 5개 선택
+        List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 5), memberId);
+
+        // 모든 이용자가 작성한 태그 중 인기 많은
+        myTagInfo.addAll(postRepository.countTag(PageRequest.of(0,3)));
+
+//        System.out.println("############# taginfo");
+//        System.out.println(myTagInfo);
 
         // 태그가 없는 경우는
-        Page<Post> postPage = null;
+        Page<Post> postPageTag = null;
         if (!myTagInfo.isEmpty()) {
-            postPage = postRepository.findPostFromMyTag(pageable, tokenId, myTagInfo);
+            postPageTag = postRepository.findPostFromMyTag(slicePageable, followingMemberList, new HashSet<>(myTagInfo), time);
         } else {
             System.out.println("tag 가 없네용");
         }
+//        System.out.println("######## 태그 기반 게시글");
+//        System.out.println(postPageTag.getContent());
 
-        for(Post p : postPage.getContent()){
-            System.out.println(p);
-        }
+        // 합치기
+        List<Post> postFollowing = postPageFollowing.getContent();
+        List<Post> postTag = postPageTag.getContent();
+        List<Post> totalPostList = sorting(postFollowing, postTag);
+
+//        System.out.println(totalPostList);
 
 
-        return null;
+        Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
+                postPageFollowing.getTotalElements() + postPageTag.getTotalElements());
+
+        return postPage;
+    }
+
+    public List<Post> sorting(List<Post> post1, List<Post> post2) {
+        List<Post> totalPost = new ArrayList<>(post1);
+        totalPost.addAll(post2);
+        Collections.sort(totalPost, (e1, e2) -> e2.getRegisteredAt().compareTo(e1.getRegisteredAt()));
+
+        return totalPost;
     }
 }
