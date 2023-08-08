@@ -68,8 +68,17 @@ function Home({ newbieVersion }) {
 
           {/* slide unit start*/}
           {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
+          {userData?.memberId !== undefined ? (
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
+                <img src="/assets/icons/pro.PNG" alt="icon" />
+                <h6>프로필</h6>
+              </Link>
+            </div>
+          ) : (
+            <div className="home-slide">
               <img src="/assets/icons/pro.PNG" alt="icon" />
               <h6>프로필</h6>
             </div>
@@ -109,7 +118,7 @@ function Home({ newbieVersion }) {
           </div> */}
           {/* <div className="home-slide"> */}
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/SeaScene" className="nav-link">
+            <Link to="/Balls" className="nav-link">
               <img src="/assets/icons/tank.PNG" alt="icon" />
               <h6>수조</h6>
             </Link>
