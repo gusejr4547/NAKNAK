@@ -29,3 +29,7 @@
   position: absolute;
   bottom: 2rem;
 }
+
+.location {
+  color: rgb(0, 74, 211);
+}

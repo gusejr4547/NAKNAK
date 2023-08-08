@@ -38,3 +38,7 @@ export const fishingInfo_recoil = atom({
   key: "fishingInfo_recoil",
   default: {},
 });
+export const myLocation_recoil = atom({
+  key: "myLocation_recoil",
+  default: {},
+});

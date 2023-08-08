@@ -7,6 +7,7 @@ import axios from "../../api/SeaAPI";
 import bada_axios from "../../api/BadanuriAPI";
 import badanuriPositions from "./badanuriPositions";
 import markerPositions from "./markerPositions";
+import fishingSpots from "./fishingSpots";
 import { useLocation } from "react-router-dom";
 import Talk2 from "../freshman/Talk2";
 
@@ -16,6 +17,31 @@ function Map() {
   const [mapInfomation, setMapInfomation] = useState({});
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
+
+  // // 현재 내 위치 받아오기 그리고 저장하기
+  // let Lat = 35.181473;
+  // let Lng = 129.211389;
+  // // 내 위치에서 가까운 낚시터 찾기
+  // // 추가해야할 것 : 원투 루어에 맞춰서 나오게 하기
+
+  // const getLocation = () => {
+  //   let location = {
+  //     distance: 10,
+  //     title: "",
+  //   };
+  //   for (let i = 0; i < fishingSpots.length; i++) {
+  //     const cal_lat = Math.abs(fishingSpots[i].lat - Lat);
+  //     const cal_lng = Math.abs(fishingSpots[i].lng - Lng);
+
+  //     const distance = cal_lat * cal_lat + cal_lng * cal_lng;
+  //     if (distance < location.distance) {
+  //       location.distance = distance;
+  //       location.title = fishingSpots[i];
+  //     }
+  //   }
+  //   return location;
+  // };
+  // console.log(getLocation());
 
   // 뉴비버전
   const location = useLocation();
@@ -49,8 +75,8 @@ function Map() {
         //지도를 생성할 때 필요한 기본 옵션
 
         // 로드될때 어디서 로드되는지를 보여줌 => 현재위치 받아서 박기
-        center: new kakao.maps.LatLng(35.084833333, 129.033166667), //지도의 중심좌표.
-        // center: new kakao.maps.LatLng(35.095651, 128.854831), //지도의 중심좌표.
+        // center: new kakao.maps.LatLng(Lat, Lng), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(35.095651, 128.854831), //지도의 중심좌표.
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       const map = new kakao.maps.Map(mapContainer, options); //지도 생성 및 객체 리턴
@@ -61,6 +87,28 @@ function Map() {
         minLevel: 5,
         // markers: markers,
       });
+      // 낚시스팟 마커 생성
+      for (let i = 0; i < fishingSpots.length; i++) {
+        // 마커 생성
+        const marker = new kakao.maps.Marker({
+          map: map, // 마커를 표시할 지도
+          title: fishingSpots[i].title,
+          obsCode: fishingSpots[i].obsCode,
+          position: new kakao.maps.LatLng(
+            fishingSpots[i].lat,
+            fishingSpots[i].lng
+          ), // 마커를 표시할 위치
+        });
+
+        clusterer.addMarker(marker);
+
+        kakao.maps.event.addListener(
+          marker,
+          "click",
+          makeOverListener("badanuri", fishingSpots[i])
+        );
+      }
+
       // 바다 누리 마커 생성
       for (let i = 0; i < badanuriPositions.length; i++) {
         // 마커 생성
@@ -76,11 +124,6 @@ function Map() {
 
         clusterer.addMarker(marker);
 
-        // const overlay = new kakao.maps.CustomOverlay({
-        //   content: badanuriPositions[i].content,
-        //   map: map,
-        //   position: marker.getPosition(),
-        // });
         kakao.maps.event.addListener(
           marker,
           "click",
@@ -172,6 +215,8 @@ function Map() {
         }
       };
       // 마커 클러스터 생성
+
+      //
     });
   }, []);
 
