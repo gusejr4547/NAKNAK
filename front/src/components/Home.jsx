@@ -72,8 +72,9 @@ function Home({ newbieVersion }) {
             <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
               <img src="/assets/icons/pro.PNG" alt="icon" />
               <h6>프로필</h6>
-            </Link>
-          </div>
+            </div>
+          )}
+
           {/* slide unit end*/}
 
           {/* slide unit start*/}
