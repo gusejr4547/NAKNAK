@@ -211,7 +211,9 @@ public class PostService {
         likeRepository.save(like);
 
         long likes = likeRepository.countByPost_PostId(postId);
+
         post.setLikes(likes);
+
         postRepository.save(post);
     }
 
