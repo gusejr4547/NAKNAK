@@ -183,6 +183,7 @@ const Balls = () => {
       });
       setFishBowlData(response.data);
       console.log(response);
+      onStart();
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -197,15 +198,22 @@ const Balls = () => {
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // fishBowlData.forEach((fish) => {
-    //   fish;
-    // });
+    const imageUrls = [];
+    console.log(fishBowlData);
+    if (fishBowlData) {
+      fishBowlData.forEach((fish) => {
+        console.log(fish);
+        imageUrls.push(
+          `${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fish.fishCode}.png`
+        );
+      });
+    }
     let images = []; // 배열 이름을 'images'로 변경
-    const imageUrls = [
-      "./assets/dom1.png",
-      "./assets/dom1.png",
-      "./assets/dom1.png",
-    ]; // 표시할 이미지 URL을 추가합니다.
+    // const imageUrls = [
+    //   "./assets/dom1.png",
+    //   "./assets/dom1.png",
+    //   "./assets/dom1.png",
+    // ]; // 표시할 이미지 URL을 추가합니다.
 
     const init = () => {
       for (let i = 0; i < imageUrls.length; i++) {
@@ -305,8 +313,10 @@ const Balls = () => {
   };
 
   useEffect(() => {
-    onStart();
-  }, []);
+    if (fishBowlData) {
+      onStart();
+    }
+  }, [fishBowlData]);
 
   return (
     <canvas
