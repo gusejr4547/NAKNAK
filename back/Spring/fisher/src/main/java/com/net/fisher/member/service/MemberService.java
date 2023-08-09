@@ -203,14 +203,14 @@ public class MemberService {
         return memberRepository.findMembersFromFollowerIdFollowing(memberId,pageable);
     }
 
-    public int setTutorialProgress(long memberId,int tutorialProgress){
+    public MemberStatus setTutorialProgress(long memberId,int tutorialProgress){
         memberStatusRepository.setStatusForTutorialProgress(memberId,tutorialProgress);
-        return memberStatusRepository.getTutorialProgress(memberId);
+        return memberStatusRepository.findMemberStatusByMember_MemberId(memberId);
     }
 
-    public int setIsNewbie(long memberId,int isNewbie){
+    public MemberStatus setIsNewbie(long memberId,int isNewbie){
         memberStatusRepository.setStatusForIsNewbie(memberId,isNewbie);
-        return memberStatusRepository.getIsNewbie(memberId);
+        return memberStatusRepository.findMemberStatusByMember_MemberId(memberId);
     }
 
     public Follow makeFollowTo(long toId, long fromId){

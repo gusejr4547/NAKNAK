@@ -127,27 +127,27 @@ public class MemberController {
     }*/
 
     @PostMapping("/members/status/progress")
-    public ResponseEntity<Integer> changeTutorialProgress(
+    public ResponseEntity<MemberStatusDto.Response> changeTutorialProgress(
             @RequestHeader("Authorization") String token,
             @RequestBody MemberStatusDto.SetProgress requestBody) {
         long tokenId = jwtTokenizer.getMemberId(token);
         int newVal = requestBody.getTutorialProgress();
 
-        int val = memberService.setTutorialProgress(tokenId,newVal);
+        MemberStatus memberStatus = memberService.setTutorialProgress(tokenId,newVal);
 
-        return new ResponseEntity<>(val,HttpStatus.OK);
+        return new ResponseEntity<>(memberMapper.toMemberStatusDto(memberStatus),HttpStatus.OK);
     }
 
     @PostMapping("/members/status/newbie")
-    public ResponseEntity<Integer> changeIsNewbie(
+    public ResponseEntity<MemberStatusDto.Response> changeIsNewbie(
             @RequestHeader("Authorization") String token,
             @RequestBody MemberStatusDto.SetNewbie requestBody) {
             long tokenId = jwtTokenizer.getMemberId(token);
             int newVal = requestBody.getIsNewbie();
 
-            int val = memberService.setIsNewbie(tokenId,newVal);
+            MemberStatus memberStatus = memberService.setIsNewbie(tokenId,newVal);
 
-        return new ResponseEntity<>(val,HttpStatus.OK);
+        return new ResponseEntity<>(memberMapper.toMemberStatusDto(memberStatus),HttpStatus.OK);
     }
 
 
