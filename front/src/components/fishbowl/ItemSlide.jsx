@@ -5,7 +5,7 @@ import SlideInnerMenu from "./SlideInnerMenu";
 
 import "./Inventory.css";
 
-const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
+const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide }) => {
   const [showSlideInnerMenu, setShowSlideInnerMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState(false);
   const slideRef = useRef(null);
@@ -45,10 +45,19 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
   return (
     <div ref={slideRef} className="inven-slide" onClick={handleSlideClick}>
       {/* 동적으로 받아온 슬라이드 내용 표시 */}
-      <img
-        src={`${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fishInfo.fishCode}.png`}
-        alt={"fish img"}
-      />
+      {isFishBowl == "true" ? (
+        <img
+          style={{ filter: "grayscale(100)" }}
+          src={`${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fishInfo.fishCode}.png`}
+          alt={"fish img"}
+        />
+      ) : (
+        <img
+          src={`${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fishInfo.fishCode}.png`}
+          alt={"fish img"}
+        />
+      )}
+
       <h6>
         {fishInfo.fishName} <br />({fishInfo.fishSize}cm)
       </h6>
@@ -59,6 +68,7 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
           onDeleteSlide={handleDeleteSlide}
           menuPosition={menuPosition}
           fishInfo={fishInfo}
+          isFishBowl={isFishBowl}
         />
       )}
     </div>

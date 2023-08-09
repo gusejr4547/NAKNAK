@@ -10,6 +10,7 @@ import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
 import Board from "./components/board/Board";
+
 import CreateFeed from "./components/board/CreateFeed";
 
 // import Getfish from "./components/fishing/Getfish";
@@ -27,8 +28,12 @@ import Freshman from "./components/freshman/Freshman";
 import Kakao from "./components/account/Kakao";
 import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
+
+import UserUpdate from "./components/account/Userupdate";
+
 import Checkbox from "./components/freshman/Checkbox";
 import Newbie from "./components/freshman/Newbie";
+
 
 function AppRouter(props) {
   return (
@@ -58,6 +63,7 @@ function AppRouter(props) {
 
             {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
+            <Route path="/UserUpdate" element={<UserUpdate />}></Route>
             <Route path="/Balls" element={<Balls />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
@@ -69,7 +75,7 @@ function AppRouter(props) {
             <Route path="/CreateFeed" element={<CreateFeed />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
-            <Route path="Camera" element={<Camera />}></Route>
+            <Route path="/Camera" element={<Camera />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>

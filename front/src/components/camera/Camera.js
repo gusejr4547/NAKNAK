@@ -6,6 +6,7 @@ import Loader from "./components/loader";
 import { detectImage } from "./utils/detect";
 import { download } from "./utils/download";
 import "./style/App.css";
+import Detectdata from "./Detectdata";
 
 const Camera = () => {
   const [session, setSession] = useState(null);
@@ -19,6 +20,8 @@ const Camera = () => {
   const canvasRef = useRef(null);
   const webcamRef = useRef(null); // Reference to the webcam component
   const [detecting, setDetecting] = useState(false); // State to control automatic detection
+  const [lastCapturedImage, setLastCapturedImage] = useState(null);
+  const [webcamActive, setWebcamActive] = useState(true);
 
   // Configs
   const modelName = "best.onnx";
@@ -26,7 +29,7 @@ const Camera = () => {
   const topk = 100;
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
-  const detectionInterval = 5000;
+  const detectionInterval = 1000;
 
   // wait until opencv.js initialized
   cv["onRuntimeInitialized"] = async () => {
@@ -59,7 +62,7 @@ const Camera = () => {
 
   // Function to handle webcam capture
   const captureWebcam = () => {
-    if (webcamRef.current) {
+    if (webcamRef.current && webcamActive) {
       const webcamImage = webcamRef.current.getScreenshot();
       setImage(webcamImage);
     }
@@ -68,12 +71,18 @@ const Camera = () => {
   // Function to start automatic detection
   const startDetection = () => {
     setDetecting(true);
+    // setWebcamActive(true);
+    // setLastCapturedImage(undefined)
   };
 
   // Function to stop automatic detection
   const stopDetection = () => {
     setDetecting(false);
+    setWebcamActive(false);
   };
+  useEffect(() => {
+    startDetection();
+  });
 
   useEffect(() => {
     let detectionTimer = null;
@@ -106,24 +115,14 @@ const Camera = () => {
       )}
 
       <div className="cameracontent">
-        {image ? (
-          <img
-            ref={imageRef}
-            src={image}
-            alt=""
-            style={{ display: "block" }}
-            onLoad={() => {
-              detectImage(
-                imageRef.current,
-                canvasRef.current,
-                session,
-                topk,
-                iouThreshold,
-                scoreThreshold,
-                modelInputShape
-              );
-            }}
-          />
+        {lastCapturedImage ? (
+          <div className="last-captured-image">
+            <img
+              src={lastCapturedImage}
+              alt="Last Captured"
+              style={{ maxWidth: "100%" }}
+            />
+          </div>
         ) : (
           <Webcam
             audio={false}
@@ -133,7 +132,15 @@ const Camera = () => {
               facingMode: "environment", // or "user" for front-facing camera
             }}
             onUserMediaError={handleWebcamError} // Handle webcam errors
-            style={{ display: "block", width: "100%" }}
+            style={{
+              display: "block",
+              // transform: "rotate(90deg)",
+              height: "100%",
+              // objectFit: "cover",
+              width: "100%",
+              maxWidth: "800px",
+              margin: "0 auto",
+            }}
           />
         )}
         <canvas
@@ -143,7 +150,60 @@ const Camera = () => {
           ref={canvasRef}
         />
       </div>
+      {/* <Detectdata
+        imageRef={imageRef.current}
+        canvasRef={canvasRef.current}
+        session={session}
+        topk={topk}
+        iouThreshold={iouThreshold}
+        scoreThreshold={scoreThreshold}
+        modelInputShape={modelInputShape}
+      /> */}
 
+      {image && (
+        <img
+          ref={imageRef}
+          src={image}
+          alt=""
+          style={{
+            display: "none",
+            // transform: "rotate(90deg)",
+            // height: "100%",
+            // objectFit: "cover",
+            // width: "100%",
+            maxWidth: "800px",
+            margin: "0 auto",
+          }}
+          onLoad={() => {
+            detectImage(
+              imageRef.current,
+              canvasRef.current,
+              session,
+              topk,
+              iouThreshold,
+              scoreThreshold,
+              modelInputShape
+            )
+              .then((boxes) => {
+                if (!boxes) {
+                  return;
+                }
+                // boxes 배열 내부의 데이터에 접근하여 활용
+                const firstBox = boxes[0];
+                const pro = firstBox.probability * 100; // 검출된 첫 번째 상자의 정보
+                if (pro >= 50) {
+                  console.log(123);
+                  stopDetection();
+                  setLastCapturedImage(image); // 마지막 캡처 이미지 저장
+                }
+                // 여기에 원하는 작업 추가
+              })
+              .catch((error) => {
+                console.error("Error in detectImage:", error);
+              });
+          }}
+        />
+      )}
       {image ? (
         <div className="btn-container">
           <button
@@ -157,12 +217,15 @@ const Camera = () => {
         </div>
       ) : (
         <div className="btn-container">
-          {detecting ? (
-            <button className="camerabutton" onClick={stopDetection}>
+          {webcamActive ? (
+            <button className="camerabutton" onClick={() => stopDetection()}>
               Stop Detection
             </button>
           ) : (
-            <button className="camerabutton" onClick={startDetection}>
+            <button
+              className="camerabutton"
+              onClick={() => startDetection() && setWebcamActive(true)}
+            >
               Start Detection
             </button>
           )}
