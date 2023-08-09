@@ -1,11 +1,8 @@
-import { React, useState } from "react";
-import { useRecoilState } from "recoil";
-import Talk2 from "./Talk2";
+import React, { useState } from "react";
 import "./Checkbox.css";
 import Checklist from "./Checklist";
 
 function Checkbox() {
-  const [number, setNumber] = useState(1);
   const [item, setItem] = useState("");
   const [items, setItems] = useState(() => {
     const storedItems = localStorage.getItem("items");
@@ -17,12 +14,13 @@ function Checkbox() {
           { id: 3, text: "장소찾기", completed: false },
         ];
   });
+
   const addItem = () => {
     if (item.trim() !== "") {
       const newItem = { id: Date.now(), text: item, completed: false };
       setItems([...items, newItem]);
-      setItem("");
       localStorage.setItem("items", JSON.stringify([...items, newItem]));
+      setItem("");
     }
   };
 
@@ -35,28 +33,14 @@ function Checkbox() {
   };
 
   const removeItem = (id) => {
-    const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
-    localStorage.setItem("items", JSON.stringify(updatedItems));
+    const removeedItems = items.filter((item) => item.id !== id);
+    setItems(removeedItems);
+    localStorage.setItem("items", JSON.stringify(removeedItems));
   };
 
   return (
-    <div className="checkbox_wrapper">
+    <div className="checkbox-wrapper">
       <div>
-        <div className="checkbox_input">
-          <input
-            type="text"
-            placeholder="추가로 할 일을 입력해주세요."
-            className="checkbox_inputbox"
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-          />
-          <span className="check_btn">
-            <button type="submit" onClick={addItem}>
-              추가
-            </button>
-          </span>
-        </div>
         <div className="checklist">
           {items.map((item) => (
             <Checklist
@@ -67,6 +51,18 @@ function Checkbox() {
               onRemove={() => removeItem(item.id)}
             />
           ))}
+        </div>
+        <div className="checkbox-input">
+          <input
+            type="text"
+            placeholder="추가로 할 일을 입력해주세요."
+            className="checkbox-inputbox"
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
+          />
+          <button className="check-btn" type="submit" onClick={addItem}>
+            추가
+          </button>
         </div>
       </div>
     </div>
