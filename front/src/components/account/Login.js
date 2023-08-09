@@ -26,6 +26,10 @@ function Login(props) {
     "http://passportlkm.iptime.org:20101/login/oauth2/code/kakao";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
+  const latitude = localStorage.getItem("latitude");
+  const longitude = localStorage.getItem("longitude");
+  
+
   // useEffect(() => {
   //   if (accesstoken) {
   //     navigate('/');
@@ -228,6 +232,9 @@ function Login(props) {
             backgroundPosition: "left center",
           }}
         ></Button>
+
+          {latitude && <p>{latitude}</p>}
+          {longitude && <p>{longitude}</p>}
 
         <Button
           as="input"
