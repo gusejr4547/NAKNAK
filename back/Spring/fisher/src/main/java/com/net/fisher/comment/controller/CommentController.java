@@ -67,4 +67,17 @@ public class CommentController {
         return new ResponseEntity("Delete complete", HttpStatus.OK);
     }
 
+    @PatchMapping("/posts/{post-id}/comments/{comment-id]")
+    public ResponseEntity patchComment(
+            @PathVariable("post-id") long postId,
+            @PathVariable("comment-id") long commentId,
+            @RequestHeader(name = "Authorization") String token,
+            @RequestBody CommentDto.Patch patchDto){
+
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        commentService.updateComment(tokenId, commentId, patchDto);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
