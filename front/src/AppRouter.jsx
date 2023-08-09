@@ -56,7 +56,7 @@ function AppRouter(props) {
             <Route path="/Dict" element={<Dict />}></Route>
             <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
 
-            <Route path="/Getfish" element={<Getfish />}></Route>
+            {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
             <Route path="/Balls" element={<Balls />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
