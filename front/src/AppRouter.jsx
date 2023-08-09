@@ -13,7 +13,6 @@ import Board from "./components/board/Board";
 // import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
-import Infoapi from "./components/map/Infoapi";
 import Profile from "./components/user/Profile";
 import SeaScene from "./components/fishbowl/SeaScene";
 import ImgTest from "./temp/Teacherable/ImgTest";
@@ -28,7 +27,6 @@ import Kakao from "./components/account/Kakao";
 import Dict from "./components/dict/Dict";
 
 import Newbie from "./components/freshman/Newbie";
-
 
 function AppRouter(props) {
   return (
@@ -62,7 +60,6 @@ function AppRouter(props) {
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/ImgTest" element={<ImgTest />}></Route>
-            <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Inventory" element={<Inventory />}></Route>
             <Route path="/Loading" element={<Loading />}></Route>
             <Route path="/SeaScene" element={<SeaScene />}></Route>

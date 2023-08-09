@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
@@ -6,10 +6,16 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import { loginuser } from "../utils/atoms";
+import { loginuser, newbie_recoil } from "../utils/atoms";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+
+  useEffect(() => {
+    setNewbie(newbieVersion);
+  }, [newbieVersion]);
+
   const settings = {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
@@ -17,9 +23,10 @@ function Home({ newbieVersion }) {
     slidesToShow: 3, // 한 번에 보여질 슬라이드 수
     slidesToScroll: 3, // 스크롤할 슬라이드 수
     rows: 2,
-    swipe: true,
+    // swipe: true,
     prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    swipe: !newbieVersion,
   };
 
   return (
@@ -88,11 +95,12 @@ function Home({ newbieVersion }) {
 
           {/* slide unit start*/}
           <div className="home-slide">
-            <Link
+            <Link to="/Map" className="nav-link">
+              {/* <Link
               to="/Map"
               state={{ newbieVersionProp: newbieVersion }}
               className="nav-link"
-            >
+            > */}
               <img src="/assets/icons/ji.PNG" alt="icon" />
               <h6>지도</h6>
             </Link>
