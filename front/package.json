@@ -36,10 +36,12 @@
     "styled-components": "^6.0.5",
     "three": "^0.155.0",
     "three-orbitcontrols": "^2.110.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@techstark/opencv-js": "4.5.5-release.2",
+    "onnxruntime-web": "^1.13.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "craco start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -61,5 +63,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "gh-pages": "^4.0.0"
   }
 }

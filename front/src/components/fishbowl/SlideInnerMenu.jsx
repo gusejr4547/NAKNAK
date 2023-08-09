@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import "./SlideInnerMenu.css";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
-const SlideInnerMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
+const SlideInnerMenu = ({ onClose, menuPosition, onDeleteSlide, fishInfo }) => {
   const handleMenuClose = (e) => {
     e.stopPropagation();
     onClose(); // 부모 컴포넌트로부터 받은 onClose 함수 호출
@@ -11,6 +12,19 @@ const SlideInnerMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
     e.stopPropagation();
     onDeleteSlide();
     // onClose();
+  };
+
+  const handleChange = async (id) => {
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/fishes/intobowl",
+        data: { targetId: id },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
   };
 
   useEffect(() => {
@@ -31,6 +45,7 @@ const SlideInnerMenu = ({ onClose, menuPosition, onDeleteSlide }) => {
     <div className="slide-inner-menu">
       <button onClick={handleDelete}>Delete</button>
       <button onClick={handleMenuClose}>Close</button>
+      <button onClick={() => handleChange(fishInfo.inventoryId)}>change</button>
     </div>
   );
 };

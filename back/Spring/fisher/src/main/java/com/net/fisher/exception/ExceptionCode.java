@@ -21,6 +21,7 @@ public enum ExceptionCode {
     FAILED_TO_DELETE_MEMBER(500, "Failed Delete Member"),
     FAILED_TO_UPDATE_FILE(500, "Failed Update Member"),
     WRONG_PASSWORD(400,"Wrong Password"),
+    NOT_ALLOWED_FILES(405,"Cannot upload Multi Image File"),
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
     UNACCEPTABLE_EXTENSION(403,"Unacceptable Extension"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
@@ -36,7 +37,9 @@ public enum ExceptionCode {
     FILE_NOT_FOUND(404, "File Not Found"),
     LIKE_NOT_FOUND(404, "Like Not Found"),
     NOT_OWNER_OF(409,"Not owner of item"),
-    TAG_NOT_FOUNT(404, "Tag Not Found");
+    TAG_NOT_FOUNT(404, "Tag Not Found"),
+    PARENT_NOT_MATCH(404, "Parent Not Match");
+
 
     @Getter
     private final int status;
