@@ -104,16 +104,6 @@ const Camera = () => {
             : loading.text}
         </Loader>
       )}
-      <div className="cameraheader">
-        <h1>YOLOv8 Object Detection App</h1>
-        <p>
-          YOLOv8 object detection application live on browser powered by{" "}
-          <code>onnxruntime-web</code>
-        </p>
-        <p>
-          Serving : <code className="cameracode">{modelName}</code>
-        </p>
-      </div>
 
       <div className="cameracontent">
         {image ? (
