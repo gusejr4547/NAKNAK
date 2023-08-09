@@ -38,7 +38,6 @@ spring:
   mvc:
     converters:
       preferred-json-mapper: jackson
-    static-path-pattern: /**
   data:
     web:
       pageable:
@@ -69,10 +68,6 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-  web:
-    resources:
-      static-locations: "classpath:/resources/static/"
-
 logging:
   level:
     root: info
