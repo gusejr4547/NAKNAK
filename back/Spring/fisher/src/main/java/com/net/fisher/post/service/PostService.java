@@ -196,7 +196,7 @@ public class PostService {
     }
 
     @Transactional
-    public void likePost(long tokenId, long postId) {
+    public long likePost(long tokenId, long postId) {
 
         Member member = memberRepository.findById(tokenId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -215,10 +215,12 @@ public class PostService {
         post.setLikes(likes);
 
         postRepository.save(post);
+
+        return post.getLikes();
     }
 
     @Transactional
-    public void unlikePost(long tokenId, long postId) {
+    public long unlikePost(long tokenId, long postId) {
         Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
@@ -228,6 +230,8 @@ public class PostService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
         post.setLikes(likes);
         postRepository.save(post);
+
+        return post.getLikes();
     }
 
     public long getLikeCount(long postId) {
