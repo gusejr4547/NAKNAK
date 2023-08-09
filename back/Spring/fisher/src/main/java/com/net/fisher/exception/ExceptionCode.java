@@ -37,8 +37,9 @@ public enum ExceptionCode {
     FILE_NOT_FOUND(404, "File Not Found"),
     LIKE_NOT_FOUND(404, "Like Not Found"),
     NOT_OWNER_OF(409,"Not owner of item"),
-    TAG_NOT_FOUNT(404, "Tag Not Found"),
-    PARENT_NOT_MATCH(404, "Parent Not Match");
+    TAG_NOT_FOUND(404, "Tag Not Found"),
+    PARENT_NOT_MATCH(404, "Parent Not Match"),
+    COMMENT_NOT_MATCH(400, "Comment Not Match");
 
 
     @Getter

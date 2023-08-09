@@ -135,7 +135,7 @@ public class PostService {
                 tag = tagRepository.save(tag);
                 newTags.add(tag);
             } else {
-                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
                 newTags.add(tag);
             }
         }
@@ -346,7 +346,7 @@ public class PostService {
     }
 
     public Page<Post> getPostByTag(Pageable pageable, long tagId){
-        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
 
         return postRepository.findByTag(pageable, tag);
     }

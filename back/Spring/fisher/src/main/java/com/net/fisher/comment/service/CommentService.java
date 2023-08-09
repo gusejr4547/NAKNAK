@@ -71,4 +71,33 @@ public class CommentService {
 
         return commentList;
     }
+
+    @Transactional
+    public void deleteComment(long tokenId, long commentId) {
+        Member member = memberRepository.findById(tokenId).orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()->new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+
+        if(member.getMemberId() != comment.getMember().getMemberId()){
+            throw new BusinessLogicException(ExceptionCode.NOT_AUTHORIZED_USER);
+        }
+
+        commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public void updateComment(long tokenId, long commentId, CommentDto.Patch patchDto) {
+        Member member = memberRepository.findById(tokenId).orElseThrow(()->new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()->new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+        if(member.getMemberId() != comment.getMember().getMemberId()){
+            throw new BusinessLogicException(ExceptionCode.NOT_AUTHORIZED_USER);
+        }
+
+        if(commentId != patchDto.getCommentId()){
+            throw new BusinessLogicException(ExceptionCode.COMMENT_NOT_MATCH);
+        }
+
+        comment.setContent(patchDto.getContent());
+
+        commentRepository.save(comment);
+    }
 }

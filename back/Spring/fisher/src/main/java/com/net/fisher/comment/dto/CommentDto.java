@@ -17,6 +17,16 @@ public class CommentDto {
         private String content;
         private long parentCommentId;
     }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    public static class Patch{
+        private long commentId;
+        private String content;
+    }
 
     @Getter
     @Setter
