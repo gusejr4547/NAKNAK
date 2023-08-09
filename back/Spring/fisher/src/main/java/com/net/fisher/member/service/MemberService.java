@@ -154,13 +154,14 @@ public class MemberService {
     public Member updateMember(long memberId, MemberDto.Update requestBody, MultipartHttpServletRequest multiRequest){
         Member member = findMember(memberId);
 
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        member.setPassword(passwordEncoder.encode(requestBody.getPassword()));
         member.setNickname(requestBody.getNickname());
 
         File rollback = null;
 
         try {
             List<MultipartFile> fileList = multiRequest.getFiles("file");
+            if(fileList.size()>1) throw new BusinessLogicException(ExceptionCode.NOT_ALLOWED_FILES);
             List<FileInfo> infoList = fileService.uploadFiles(fileList);
             if(infoList.size()==1) {
                 if (member.getMemberImage() != null) {
@@ -171,10 +172,20 @@ public class MemberService {
                     memberImageRepository.delete(member.getMemberImage());
                 }
 
+                MemberImage memberImage = null;
 
-                File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+                for (FileInfo info : infoList) {
+                    memberImage = MemberImage.builder()
+                            .fileName(info.getFileName())
+                            .fileSize(info.getFileSize())
+                            .fileContentType(info.getContentType())
+                            .fileUrl(info.getFileUrl())
+                            .build();
 
+                    memberImage = memberImageRepository.save(memberImage);
 
+                    member.setMemberImage(memberImage);
+                }
             }
 
             return memberRepository.save(member);
