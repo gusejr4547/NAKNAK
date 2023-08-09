@@ -89,6 +89,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:8080");
         configuration.addAllowedOriginPattern("https://accounts.google.com");
+        configuration.addAllowedOriginPattern("https://otakubot.store:20101");
         configuration.addAllowedOriginPattern("*:3000");
         configuration.addExposedHeader("*");
         configuration.setAllowCredentials(true);
