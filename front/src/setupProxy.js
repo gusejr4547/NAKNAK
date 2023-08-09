@@ -4,11 +4,11 @@ module.exports = function (app) {
   // 프록시1 설정
   app.use(
     "/api1",
-    createProxyMiddleware({
+    createProxyMiddleware('/api1',{
       target: process.env.REACT_APP_BACKEND_URL,
       changeOrigin: true,
       pathRewrite: {
-        "^/api1": "",
+        '^/api1': '',
       },
     })
   );
