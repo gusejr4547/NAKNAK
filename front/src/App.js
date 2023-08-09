@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import AppRouter from "./AppRouter";
 
@@ -12,8 +12,8 @@ function App(props) {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   });
-  
-  return <AppRouter/>
+
+  return <AppRouter />;
 }
 
 export default App;

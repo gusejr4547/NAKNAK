@@ -9,10 +9,20 @@ import "./style/App.css";
 import Detectdata from "./Detectdata";
 
 const Camera = () => {
+  // 페이지에 처음 접근할 때
+  if (!sessionStorage.getItem("pageLoaded")) {
+    sessionStorage.setItem("pageLoaded", "true");
+    window.location.reload();
+  }
+  window.onbeforeunload = () => {
+    sessionStorage.removeItem("pageLoaded");
+  };
+  // window.location.replace("/Camera");
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState({
     text: "Loading OpenCV.js",
     progress: null,
+    isStuck: false, // 새로고침 유도 상태 변수
   });
   const [image, setImage] = useState(null);
   const inputImage = useRef(null);
@@ -22,7 +32,7 @@ const Camera = () => {
   const [detecting, setDetecting] = useState(false); // State to control automatic detection
   const [lastCapturedImage, setLastCapturedImage] = useState(null);
   const [webcamActive, setWebcamActive] = useState(true);
-
+  const [errData, setErrData] = useState(false);
   // Configs
   const modelName = "best.onnx";
   const modelInputShape = [1, 3, 320, 320];
@@ -31,35 +41,57 @@ const Camera = () => {
   const scoreThreshold = 0.25;
   const detectionInterval = 1000;
 
-  // wait until opencv.js initialized
   cv["onRuntimeInitialized"] = async () => {
-    const baseModelURL = `${process.env.PUBLIC_URL}/model`;
+    setErrData(true);
+    console.log(errData, 111);
+    try {
+      console.log(123);
+      const baseModelURL = `${process.env.PUBLIC_URL}/model`;
+      console.log(baseModelURL);
 
-    // create session
-    const arrBufNet = await download(
-      `${baseModelURL}/${modelName}`, // url
-      ["Loading YOLOv8 Segmentation model", setLoading] // logger
-    );
-    const yolov8 = await InferenceSession.create(arrBufNet);
-    const arrBufNMS = await download(
-      `${baseModelURL}/nms-yolov8.onnx`, // url
-      ["Loading NMS model", setLoading] // logger
-    );
-    const nms = await InferenceSession.create(arrBufNMS);
+      // create session
+      const arrBufNet = await download(
+        `${baseModelURL}/${modelName}`, // url
+        ["Loading YOLOv8 Segmentation model", setLoading] // logger
+      );
+      const yolov8 = await InferenceSession.create(arrBufNet);
 
-    // warmup main model
-    setLoading({ text: "Warming up model...", progress: null });
-    const tensor = new Tensor(
-      "float32",
-      new Float32Array(modelInputShape.reduce((a, b) => a * b)),
-      modelInputShape
-    );
-    await yolov8.run({ images: tensor });
+      const arrBufNMS = await download(
+        `${baseModelURL}/nms-yolov8.onnx`, // url
+        ["Loading NMS model", setLoading] // logger
+      );
+      const nms = await InferenceSession.create(arrBufNMS);
 
-    setSession({ net: yolov8, nms: nms });
-    setLoading(null);
+      console.log(arrBufNet, yolov8, arrBufNMS, nms);
+
+      // warmup main model
+      setLoading({ text: "Warming up model...", progress: null });
+      const tensor = new Tensor(
+        "float32",
+        new Float32Array(modelInputShape.reduce((a, b) => a * b)),
+        modelInputShape
+      );
+      await yolov8.run({ images: tensor });
+
+      setSession({ net: yolov8, nms: nms });
+      setLoading(null);
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle the error as needed, e.g., show an error message to the user.
+    }
   };
+  console.log(errData, 222);
+  // setTimeout(() => {
+  //   rere();
+  // }, 5000);
 
+  // const rere = () => {
+  //   if (!errData) {
+  //     window.location.reload();
+  //   }
+  // };
+
+  console.log(cv);
   // Function to handle webcam capture
   const captureWebcam = () => {
     if (webcamRef.current && webcamActive) {
@@ -81,8 +113,11 @@ const Camera = () => {
     setWebcamActive(false);
   };
   useEffect(() => {
-    startDetection();
-  });
+    startDetection(); // 페이지에 처음 접근할 때 감지 시작
+    return () => {
+      stopDetection(); // 페이지를 떠날 때 감지 중지
+    };
+  }, []);
 
   useEffect(() => {
     let detectionTimer = null;
@@ -103,6 +138,7 @@ const Camera = () => {
     console.error("Webcam error:", error);
     // Handle the error here (e.g., display an error message or redirect to a different page)
   };
+  console.log(session);
 
   return (
     <div className="camera">
