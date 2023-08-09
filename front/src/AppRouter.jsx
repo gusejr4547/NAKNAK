@@ -10,6 +10,8 @@ import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
 import Board from "./components/board/Board";
+import CreateFeed from "./components/board/CreateFeed";
+
 // import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
@@ -28,7 +30,6 @@ import Kakao from "./components/account/Kakao";
 import Dict from "./components/dict/Dict";
 
 import Newbie from "./components/freshman/Newbie";
-
 
 function AppRouter(props) {
   return (
@@ -67,6 +68,7 @@ function AppRouter(props) {
             <Route path="/Loading" element={<Loading />}></Route>
             <Route path="/SeaScene" element={<SeaScene />}></Route>
             <Route path="/Board" element={<Board />}></Route>
+            <Route path="/CreateFeed" element={<CreateFeed />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
             {/* <Route path="Camera" element={<Camera />}></Route> */}

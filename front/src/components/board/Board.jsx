@@ -13,6 +13,8 @@ import { useInView } from "react-intersection-observer";
 import "./Board.css";
 import { getCurrentTime } from "../../utils/util";
 
+import { Link } from "react-router-dom";
+
 import Test from "./Testcode";
 
 const Board = () => {
@@ -86,15 +88,7 @@ const Board = () => {
           url: `api1/api/posts/my-like?page=1&size=`,
         });
         console.log("success get likedFeedList", response.data);
-        // if (
-        //   response.data.data.find(
-        //     (post) => post.postId === feedInfo.post.postId
-        //   )
-        // ) {
-        //   setFeedLikeState(true);
-        // } else {
-        //   setFeedLikeState(false);
-        // }
+
         setLikedFeedData((prevData) => prevData.concat(response.data.data));
       } catch (error) {
         console.error("failed get likedFeedList");
@@ -105,7 +99,7 @@ const Board = () => {
     getLikedFeeds();
   }, []);
 
-  const showFeedCount = 3;
+  const showFeedCount = 2;
   const getFeedList = useCallback(async () => {
     console.log(getCurrentTime(Date.now()));
     try {
@@ -162,6 +156,14 @@ const Board = () => {
     }
   };
 
+  const likeStateChange = (feedInfo, like) => {
+    if (like) {
+      likedFeedData.filter((likedFeed) => likedFeed.postId === feedInfo.postId);
+    } else {
+      likedFeedData.push(feedInfo);
+    }
+  };
+
   const tagClickHandler = (tag) => {
     if (tagTargetDiv.current) {
       tagTargetDiv.current.scrollTo({
@@ -177,6 +179,19 @@ const Board = () => {
       setSelectedTag(tag);
     }
   };
+
+  // useEffect(() => {
+  //   if (selectedTag && feedListData.length > 0) {
+  //     const hasTaggedFeeds = feedListData.some((feed) =>
+  //       feed.tags.some((tag) => tag.tagId === selectedTag.tagId)
+  //     );
+
+  //     if (!hasTaggedFeeds) {
+  //       // 태그에 해당하는 게시글이 없으면 추가적으로 게시글 로드
+  //       getFeedList();
+  //     }
+  //   }
+  // }, [selectedTag, feedListData]);
 
   return (
     <div className="board-wrapper">
@@ -219,7 +234,12 @@ const Board = () => {
       <div ref={tagTargetDiv} className="board-board board-disable-scrollbar">
         <div className="board-carousel ">
           {/* feedListData의 데이터를 HTML로 출력 */}
-          {feedListData.length > 0 &&
+          {feedListData.length === 0 ? (
+            <div className="board-loading">
+              게시글이 없습니다.
+              {/* <img src="/assets/loading.gif" alt="" /> */}
+            </div>
+          ) : (
             Object.keys(feedListData).map((index) => {
               const feed = feedListData[index];
               if (
@@ -243,18 +263,25 @@ const Board = () => {
                       likedFeedData={likedFeedData}
                       userId={userInfo.userId}
                       onFollowChange={followChange}
+                      onLikeStateChange={likeStateChange}
                     />
                   </div>
                 );
+              } else {
+                // console.log("hellooooo", feedListData);
+
+                return null;
               }
+
               return null;
-            })}
-
-          {/* dummy feed data start */}
-
-          {/* dummy feed data end */}
+            })
+          )}
         </div>
       </div>
+
+      <Link to={`/CreateFeed`} className="board-create-feed">
+        게시글 작성하기
+      </Link>
     </div>
   );
 };
