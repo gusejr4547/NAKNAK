@@ -15,7 +15,11 @@ public interface CommentMapper {
         if (comment.getMember().getMemberImage() != null) fileUrl = comment.getMember().getMemberImage().getFileUrl();
 
         String mentionMemberNickname = null;
-        if(comment.getMentionMember() != null) mentionMemberNickname = comment.getMentionMember().getNickname();
+        long mentionMemberId = 0;
+        if(comment.getMentionMember() != null) {
+            mentionMemberNickname = comment.getMentionMember().getNickname();
+            mentionMemberId = comment.getMentionMember().getMemberId();
+        }
 
         CommentDto.Response response = CommentDto.Response.builder()
                 .commentId(comment.getCommentId())
@@ -25,6 +29,7 @@ public interface CommentMapper {
                 .memberNickname(comment.getMember().getNickname())
                 .memberImageUrl(fileUrl)
                 .postId(comment.getPost().getPostId())
+                .mentionMemberId(mentionMemberId)
                 .mentionMemberNickname(mentionMemberNickname)
                 .build();
 

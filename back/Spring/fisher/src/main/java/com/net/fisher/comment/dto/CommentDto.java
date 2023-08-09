@@ -35,6 +35,7 @@ public class CommentDto {
 
         private long postId;
 
+        private long mentionMemberId;
         private String mentionMemberNickname;
     }
 }
