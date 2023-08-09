@@ -94,3 +94,7 @@ mail:
     admin: ssafy@ssafy.com
 server:
   port: 7070
+  ssl:
+    key-store: classpath:ssl/keystore.p12
+    key-store-type: PKCS12
+    key-store-password: cjswo1!
