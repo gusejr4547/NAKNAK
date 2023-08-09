@@ -4,9 +4,12 @@ module.exports = function (app) {
   // 프록시1 설정
   app.use(
     "/api1",
-    createProxyMiddleware('/api1',{
-      target: 'https://otakubot.store:20101',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_BACKEND_URL,
       changeOrigin: true,
+      pathRewrite: {
+        "^/api1": "",
+      },
     })
   );
 
