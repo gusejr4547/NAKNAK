@@ -17,7 +17,10 @@ const Feed = ({
   likedFeedData,
   userId,
   onFollowChange,
+  onLikeStateChange,
 }) => {
+  // console.log(likedFeedData);
+
   // props 를 여기 usestate로 받을 것인지
   const [feedLikeState, setFeedLikeState] = useState(
     likedFeedData
@@ -50,7 +53,10 @@ const Feed = ({
 
   const likeClickHandler = () => {
     console.log("like btn clicked", feedLikeState);
+    feedInfo.likeCount += !feedLikeState ? 1 : -1;
     setFeedLikeState(!feedLikeState);
+
+    onLikeStateChange(feedInfo, feedLikeState);
   };
 
   useEffect(() => {

@@ -602,4 +602,29 @@ const markerPositions = [
   },
 ];
 
+for (let i = 0; i < markerPositions.length; i++) {
+  const fields = {
+    mmaf: "",
+    mmsi: "",
+  };
+
+  fields["mmaf"] = markerPositions[i].mmaf;
+  fields["mmsi"] = markerPositions[i].mmsi;
+  const all = {
+    pk: i + 1,
+    title: markerPositions[i].title,
+    lat: markerPositions[i].lat,
+    lng: markerPositions[i].lng,
+    fields: fields,
+  };
+  console.log(all);
+}
+
+//   console.log('"pk":', i + 1);
+//   console.log('"title":', markerPositions[i].title);
+//   console.log('"lat":', markerPositions[i].lat);
+//   console.log('"lng":', markerPositions[i].lng);
+//   console.log('"fields":', fields);
+// }
+
 export default markerPositions;

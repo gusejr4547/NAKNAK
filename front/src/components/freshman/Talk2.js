@@ -43,6 +43,15 @@ const Talk2 = [
     spot_lng: `${getLocation().lng}`,
     spot_lat: `${getLocation().lat}`,
   },
+  {
+    content: "자 마커를 한번 클릭해볼래?",
+  },
+  {
+    content: "여기서 낚시에 필요한 정보들을 볼 수 있어.",
+  },
+  {
+    content: "자 이제 밖으로 나가볼까?",
+  },
 ];
 
 export default Talk2;
