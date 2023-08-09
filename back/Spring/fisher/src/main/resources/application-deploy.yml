@@ -38,9 +38,7 @@ spring:
   mvc:
     converters:
       preferred-json-mapper: jackson
-    static-path-pattern: /resources/**
-  thymeleaf:
-    prefix: classpath:/static/
+    static-path-pattern: /**
   data:
     web:
       pageable:
@@ -73,7 +71,7 @@ spring:
             user-name-attribute: id
   web:
     resources:
-      static-locations: "classpath:/resources/"
+      static-locations: "classpath:/resources/static/"
 
 logging:
   level:
