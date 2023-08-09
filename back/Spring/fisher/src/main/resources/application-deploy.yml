@@ -38,6 +38,8 @@ spring:
   mvc:
     converters:
       preferred-json-mapper: jackson
+  thymeleaf:
+    prefix: classpath:/static/
   data:
     web:
       pageable:
