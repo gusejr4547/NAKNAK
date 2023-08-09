@@ -26,7 +26,7 @@ const Camera = () => {
   const topk = 100;
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
-  const detectionInterval = 5000;
+  const detectionInterval = 1000;
 
   // wait until opencv.js initialized
   cv["onRuntimeInitialized"] = async () => {
@@ -74,6 +74,9 @@ const Camera = () => {
   const stopDetection = () => {
     setDetecting(false);
   };
+  useEffect(() => {
+    startDetection();
+  });
 
   useEffect(() => {
     let detectionTimer = null;
@@ -104,48 +107,26 @@ const Camera = () => {
             : loading.text}
         </Loader>
       )}
-      <div className="cameraheader">
-        <h1>YOLOv8 Object Detection App</h1>
-        <p>
-          YOLOv8 object detection application live on browser powered by{" "}
-          <code>onnxruntime-web</code>
-        </p>
-        <p>
-          Serving : <code className="cameracode">{modelName}</code>
-        </p>
-      </div>
 
       <div className="cameracontent">
-        {image ? (
-          <img
-            ref={imageRef}
-            src={image}
-            alt=""
-            style={{ display: "block" }}
-            onLoad={() => {
-              detectImage(
-                imageRef.current,
-                canvasRef.current,
-                session,
-                topk,
-                iouThreshold,
-                scoreThreshold,
-                modelInputShape
-              );
-            }}
-          />
-        ) : (
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={{
-              facingMode: "environment", // or "user" for front-facing camera
-            }}
-            onUserMediaError={handleWebcamError} // Handle webcam errors
-            style={{ display: "block", width: "100%" }}
-          />
-        )}
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          videoConstraints={{
+            facingMode: "environment", // or "user" for front-facing camera
+          }}
+          onUserMediaError={handleWebcamError} // Handle webcam errors
+          style={{
+            display: "block",
+            // transform: "rotate(90deg)",
+            height: "100%",
+            // objectFit: "cover",
+            width: "100%",
+            maxWidth: "800px",
+            margin: "0 auto",
+          }}
+        />
         <canvas
           id="canvas"
           width={modelInputShape[2]}
@@ -153,7 +134,33 @@ const Camera = () => {
           ref={canvasRef}
         />
       </div>
-
+      {image && (
+        <img
+          ref={imageRef}
+          src={image}
+          alt=""
+          style={{
+            display: "block",
+            // transform: "rotate(90deg)",
+            // height: "100%",
+            // objectFit: "cover",
+            // width: "100%",
+            maxWidth: "800px",
+            margin: "0 auto",
+          }}
+          onLoad={() => {
+            detectImage(
+              imageRef.current,
+              canvasRef.current,
+              session,
+              topk,
+              iouThreshold,
+              scoreThreshold,
+              modelInputShape
+            );
+          }}
+        />
+      )}
       {image ? (
         <div className="btn-container">
           <button

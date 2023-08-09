@@ -10,7 +10,7 @@ import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
 import Board from "./components/board/Board";
-import Getfish from "./components/fishing/Getfish";
+// import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
 import Infoapi from "./components/map/Infoapi";
@@ -25,6 +25,7 @@ import Freshman from "./components/freshman/Freshman";
 import Kakao from "./components/account/Kakao";
 import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
+import UserUpdate from "./components/account/Userupdate";
 
 function AppRouter(props) {
   return (
@@ -52,8 +53,9 @@ function AppRouter(props) {
             <Route path="/Dict" element={<Dict />}></Route>
             <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
 
-            <Route path="/Getfish" element={<Getfish />}></Route>
+            {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
+            <Route path="/UserUpdate" element={<UserUpdate />}></Route>
             <Route path="/Balls" element={<Balls />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>

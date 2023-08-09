@@ -109,8 +109,10 @@ function Home(props) {
 
           {/* dummy data start*/}
           <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>dummy</h6>
+            <Link to="/Dict" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>사전</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />

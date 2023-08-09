@@ -21,9 +21,25 @@ export const detectImage = async (
   scoreThreshold,
   inputShape
 ) => {
+  // console.log(
+  //   image,
+  //   "1",
+  //   canvas,
+  //   "2",
+  //   session,
+  //   "3",
+  //   topk,
+  //   "4",
+  //   iouThreshold,
+  //   "5",
+  //   scoreThreshold,
+  //   "6",
+  //   inputShape
+  // );
   const [modelWidth, modelHeight] = inputShape.slice(2);
+  // 이미지 전처리를 수행하여 input, xRatio, yRatio를 얻음
   const [input, xRatio, yRatio] = preprocessing(image, modelWidth, modelHeight);
-
+  //모델입력
   const tensor = new Tensor("float32", input.data32F, inputShape); // to ort.Tensor
   const config = new Tensor(
     "float32",
@@ -33,14 +49,23 @@ export const detectImage = async (
       scoreThreshold, // score threshold
     ])
   ); // nms config tensor
+  // 모델 실행 및 결과 획득
   const { output0 } = await session.net.run({ images: tensor }); // run session and get output layer
-  const { selected } = await session.nms.run({ detection: output0, config: config }); // perform nms and filter boxes
-
+  console.log(output0);
+  // NMS를 사용하여 박스 필터링
+  const { selected } = await session.nms.run({
+    detection: output0,
+    config: config,
+  }); // perform nms and filter boxes
+  console.log(selected);
   const boxes = [];
 
   // looping through output
   for (let idx = 0; idx < selected.dims[1]; idx++) {
-    const data = selected.data.slice(idx * selected.dims[2], (idx + 1) * selected.dims[2]); // get rows
+    const data = selected.data.slice(
+      idx * selected.dims[2],
+      (idx + 1) * selected.dims[2]
+    ); // get rows
     const box = data.slice(0, 4);
     const scores = data.slice(4); // classes probability scores
     const score = Math.max(...scores); // maximum probability scores
@@ -72,7 +97,9 @@ export const detectImage = async (
  * @return preprocessed image and configs
  */
 const preprocessing = (source, modelWidth, modelHeight) => {
+  // 이미지를 OpenCV.js Mat 객체로 읽어옴
   const mat = cv.imread(source); // read from img tag
+  // 이미지를 BGR 형식으로 변환
   const matC3 = new cv.Mat(mat.rows, mat.cols, cv.CV_8UC3); // new image matrix
   cv.cvtColor(mat, matC3, cv.COLOR_RGBA2BGR); // RGBA to BGR
 
