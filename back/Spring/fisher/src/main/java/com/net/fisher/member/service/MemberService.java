@@ -7,6 +7,7 @@ import com.net.fisher.exception.BusinessLogicException;
 import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
 import com.net.fisher.file.service.FileService;
+import com.net.fisher.member.dto.MemberDto;
 import com.net.fisher.member.entity.Follow;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.entity.MemberImage;
@@ -111,42 +112,8 @@ public class MemberService {
             member.setRoles(roles);
 
             Member savingMember = memberRepository.save(member);
-
-            /*List<MultipartFile> fileList = httpServletRequest.getFiles("file");
-            File uploadDir = new File(uploadPath+File.separator+uploadFolder);
-
-            if(!uploadDir.exists()) uploadDir.mkdir();
-
-            MemberImage memberImage = null;
-
-            for(MultipartFile part:fileList){
-                String fileName = part.getOriginalFilename();
-                UUID uuid = UUID.randomUUID();
-
-                String extension = FilenameUtils.getExtension(fileName);
-
-                String savingFileName = uuid+"."+extension;
-
-                File destFile = new File(uploadPath+File.separator+uploadFolder+File.separator+savingFileName);
-
-                rollback = destFile;
-
-                part.transferTo(destFile);
-
-                String memberFileUrl = uploadFolder + "/"+ savingFileName;
-
-                memberImage = MemberImage.builder()
-                        .fileName(fileName)
-                        .fileSize(part.getSize())
-                        .fileContentType(part.getContentType())
-                        .fileUrl(memberFileUrl)
-                        .build();
-
-                memberImage = memberImageRepository.save(memberImage);
-            }
-            savingMember.setMemberImage(memberImage); // 왜 영속화 된 이후의 객체에 setMemberImage 를 하는데 영속화가 되는가?? CASCADE?
-            return savingMember;*/
             List<MultipartFile> fileList = httpServletRequest.getFiles("file");
+            if(fileList.size()>1) throw new BusinessLogicException(ExceptionCode.NOT_ALLOWED_FILES);
             List<FileInfo> infoList = fileService.uploadFiles(fileList);
 
             MemberImage memberImage = null;
@@ -178,6 +145,51 @@ public class MemberService {
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(ExceptionCode.EMAIL_ALREADY_EXISTS);
         } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_MEMBER);
+        }
+    }
+
+    @Transactional
+    public Member updateMember(long memberId, MemberDto.Update requestBody, MultipartHttpServletRequest multiRequest){
+        Member member = findMember(memberId);
+
+        member.setPassword(passwordEncoder.encode(requestBody.getPassword()));
+        member.setNickname(requestBody.getNickname());
+
+        File rollback = null;
+
+        try {
+            List<MultipartFile> fileList = multiRequest.getFiles("file");
+            if(fileList.size()>1) throw new BusinessLogicException(ExceptionCode.NOT_ALLOWED_FILES);
+            List<FileInfo> infoList = fileService.uploadFiles(fileList);
+            if(infoList.size()==1) {
+                if (member.getMemberImage() != null) {
+                    MemberImage toDeleteImage = member.getMemberImage();
+                    String savedFileName = toDeleteImage.getFileUrl();
+                    File toDelete = new File(uploadPath + File.separator + savedFileName);
+                    toDelete.delete();
+                    memberImageRepository.delete(member.getMemberImage());
+                }
+
+                MemberImage memberImage = null;
+
+                for (FileInfo info : infoList) {
+                    memberImage = MemberImage.builder()
+                            .fileName(info.getFileName())
+                            .fileSize(info.getFileSize())
+                            .fileContentType(info.getContentType())
+                            .fileUrl(info.getFileUrl())
+                            .build();
+
+                    memberImage = memberImageRepository.save(memberImage);
+
+                    member.setMemberImage(memberImage);
+                }
+            }
+
+            return memberRepository.save(member);
+        }catch (Exception e) {
             e.printStackTrace();
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_MEMBER);
         }
