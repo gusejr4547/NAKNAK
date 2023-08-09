@@ -27,7 +27,7 @@ import Freshman from "./components/freshman/Freshman";
 import Kakao from "./components/account/Kakao";
 import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
-
+import Checkbox from "./components/freshman/Checkbox";
 import Newbie from "./components/freshman/Newbie";
 
 function AppRouter(props) {
@@ -56,7 +56,7 @@ function AppRouter(props) {
             <Route path="/Dict" element={<Dict />}></Route>
             <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
 
-            <Route path="/Getfish" element={<Getfish />}></Route>
+            {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
             <Route path="/Login" element={<Login />}></Route>
             <Route path="/Balls" element={<Balls />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
@@ -73,6 +73,7 @@ function AppRouter(props) {
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>
+            <Route path="/Checkbox" element={<Checkbox />}></Route>
             <Route path="/Newbie" element={<Newbie />}></Route>
             <Route path="/Freshman" element={<Freshman />}></Route>
             {/* <Route path="/Bowl" element={<Bowl />}></Route> */}

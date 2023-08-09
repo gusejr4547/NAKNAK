@@ -6,13 +6,13 @@ import Onetwo from "./Onetwo";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { token } from "../../utils/atoms";
-import upgradeProgress from "../../api/upgradeProgress";
+import upgradeProgress from "../freshman/upgradeProgress";
 
 function Secondpage({ show }) {
   const [fishingType, setFishingType] = useState("Lure");
-  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [accesstoken, setAccesstoken] = useRecoilState(token);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (show === "Lure") {
@@ -34,7 +34,6 @@ function Secondpage({ show }) {
 
   const nextTalk = () => {
     if (step > (fishingType === "Lure" ? Lure : Onetwo).length - 2) {
-      // 진척도 40프로 넣기
       // 메인으로 라우터 이동
       navigate("/Newbie");
       handleUpgradeProgress(40);

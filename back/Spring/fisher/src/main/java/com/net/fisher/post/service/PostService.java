@@ -157,6 +157,16 @@ public class PostService {
             postTagRepository.save(postTag);
         }
 
+        // 이미지 삭제 할 것 있으면 삭제
+        for(long id : postPatchDto.getDeleteImageList()){
+            deleteImage(id);
+        }
+    }
+
+    @Transactional
+    public void deleteImage(long fileId) {
+        PostImage postImage = postImageRepository.findById(fileId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
+        postImageRepository.delete(postImage);
     }
 
     @Transactional

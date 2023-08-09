@@ -24,7 +24,7 @@ public class CommentDto {
     @AllArgsConstructor
     @Builder
     public static class Response{
-        private long comment_id;
+        private long commentId;
         private String content;
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime registeredAt;
@@ -33,7 +33,9 @@ public class CommentDto {
         private String memberImageUrl;
         private String memberNickname;
 
-        private long parentId;
+        private long postId;
 
+        private long mentionMemberId;
+        private String mentionMemberNickname;
     }
 }
