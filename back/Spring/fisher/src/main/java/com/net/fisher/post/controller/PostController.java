@@ -196,4 +196,17 @@ public class PostController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/posts/search")
+    public ResponseEntity<PageResponse<PostDto.Response>> getPosts(
+            @RequestParam(value = "tag") long tagId,
+            @PageableDefault(size = 6, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<Post> postPage = postService.getPostByTag(pageable, tagId);
+
+        PageResponse<PostDto.Response> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toPostResponseDtos(postPage.getContent()));
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
