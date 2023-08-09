@@ -9,14 +9,25 @@ import "./style/App.css";
 import Detectdata from "./Detectdata";
 
 const Camera = () => {
-  // 페이지에 처음 접근할 때
-  if (!sessionStorage.getItem("pageLoaded")) {
-    sessionStorage.setItem("pageLoaded", "true");
-    window.location.reload();
-  }
-  window.onbeforeunload = () => {
-    sessionStorage.removeItem("pageLoaded");
-  };
+  useEffect(() => {
+    if (!sessionStorage.getItem("pageLoaded")) {
+      sessionStorage.setItem("pageLoaded", "true");
+      window.location.reload();
+    }
+    return () => {
+      sessionStorage.removeItem("pageLoaded");
+    };
+  }, []);
+  // // 페이지에 처음 접근할 때
+  // if (!sessionStorage.getItem("pageLoaded")) {
+  //   sessionStorage.setItem("pageLoaded", "true");
+  //   window.location.reload();
+  // } else {
+  //   window.onbeforeunload = () => {
+  //     sessionStorage.removeItem("pageLoaded");
+  //   };
+  // }
+
   // window.location.replace("/Camera");
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState({
@@ -40,6 +51,8 @@ const Camera = () => {
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
   const detectionInterval = 1000;
+
+  console.log(cv);
 
   cv["onRuntimeInitialized"] = async () => {
     setErrData(true);
