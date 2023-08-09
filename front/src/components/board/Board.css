@@ -79,3 +79,23 @@
   margin-top: 1rem;
   margin-left: 1rem;
 }
+
+.board-loading {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.board-loading img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.board-create-feed {
+  background-color: #ffe48e;
+  overflow: hidden;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 3.8rem;
+}
