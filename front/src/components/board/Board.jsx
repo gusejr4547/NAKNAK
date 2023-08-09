@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import axios from "axios";
 import Feed from "./Feed";
@@ -33,7 +33,10 @@ const Board = () => {
   // 좋아요 상태들을 저장하는 변수
   const [likedFeedData, setLikedFeedData] = useState([]);
 
+  // 선택된 태그의 상태를 가지는 변수
   const [selectedTag, setSelectedTag] = useState(null);
+  // 태그 버튼 눌렀을 때 스크룰을 최상단으로 올리는 변수
+  const tagTargetDiv = useRef(null);
 
   // 태그의 이름들을 가져옵니다
   useEffect(() => {
@@ -160,6 +163,13 @@ const Board = () => {
   };
 
   const tagClickHandler = (tag) => {
+    if (tagTargetDiv.current) {
+      tagTargetDiv.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
     console.log("태크클릭핸들러작동");
     if (tag.tagName === "ALL") {
       setSelectedTag(null);
@@ -206,7 +216,7 @@ const Board = () => {
 
         {/* dummy data end */}
       </div>
-      <div className="board-board board-disable-scrollbar">
+      <div ref={tagTargetDiv} className="board-board board-disable-scrollbar">
         <div className="board-carousel ">
           {/* feedListData의 데이터를 HTML로 출력 */}
           {feedListData.length > 0 &&
