@@ -5,23 +5,11 @@ module.exports = function (app) {
   app.use(
     "/api1",
     createProxyMiddleware({
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      //target: "http://192.168.30.161:8080",
-      target: "http://i9E105.p.ssafy.io:8080",
-=======
-      // target: "http://192.168.30.161:8080",
-=======
->>>>>>> origin/develop
-      target: process.env.REACT_APP_BACKEND_URL,
->>>>>>> origin/develop
-=======
 
       //target: "http://192.168.30.161:8080",
       target: "http://i9E105.p.ssafy.io:8080",
 
->>>>>>> 60861a6228f089de5cf76183d196ea90acd3687f
+
       changeOrigin: true,
       pathRewrite: {
         "^/api1": "",
