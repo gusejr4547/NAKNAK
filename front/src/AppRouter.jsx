@@ -67,7 +67,7 @@ function AppRouter(props) {
             <Route path="/Board" element={<Board />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
-            <Route path="Camera" element={<Camera />}></Route>
+            <Route path="/Camera" element={<Camera />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>

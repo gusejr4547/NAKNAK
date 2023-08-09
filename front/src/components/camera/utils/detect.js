@@ -4,13 +4,13 @@ import { renderBoxes } from "./renderBox";
 
 /**
  * Detect Image
- * @param {HTMLImageElement} image Image to detect
- * @param {HTMLCanvasElement} canvas canvas to draw boxes
+ * @param {HTMLImageElement} image 검출할 이미지
+ * @param {HTMLCanvasElement} canvas 박스 그릴 캔버스
  * @param {ort.InferenceSession} session YOLOv8 onnxruntime session
  * @param {Number} topk Integer representing the maximum number of boxes to be selected per class
- * @param {Number} iouThreshold Float representing the threshold for deciding whether boxes overlap too much with respect to IOU
- * @param {Number} scoreThreshold Float representing the threshold for deciding when to remove boxes based on score
- * @param {Number[]} inputShape model input shape. Normally in YOLO model [batch, channels, width, height]
+ * @param {Number} iouThreshold iouThreshold IOU에 따라 상자가 너무 많이 겹치는지를 결정하는 임계값을 나타내는 부동 소수점
+ * @param {Number} scoreThreshold scoreThreshold 점수에 따라 상자를 제거할 때의 임계값을 나타내는 부동 소수점
+ * @param {Number[]} inputShape inputShape 모델 입력 형태. 일반적으로 YOLO 모델에서 [batch, channels, width, height] 형태
  */
 export const detectImage = async (
   image,
@@ -57,7 +57,10 @@ export const detectImage = async (
     detection: output0,
     config: config,
   }); // perform nms and filter boxes
-  console.log(selected);
+  console.log(selected.data.length);
+  if (!selected.data.length) {
+    return;
+  }
   const boxes = [];
 
   // looping through output
@@ -69,6 +72,10 @@ export const detectImage = async (
     const box = data.slice(0, 4);
     const scores = data.slice(4); // classes probability scores
     const score = Math.max(...scores); // maximum probability scores
+    console.log(score * 100);
+    if (score * 100 <= 50) {
+      return;
+    }
     const label = scores.indexOf(score); // class id of maximum probability scores
 
     const [x, y, w, h] = [
@@ -87,6 +94,7 @@ export const detectImage = async (
 
   renderBoxes(canvas, boxes); // Draw boxes
   input.delete(); // delete unused Mat
+  return boxes;
 };
 
 /**
@@ -96,6 +104,7 @@ export const detectImage = async (
  * @param {Number} modelHeight model input height
  * @return preprocessed image and configs
  */
+//  이미지를 모델이 요구하는 형식에 맞게 변환하는 함수
 const preprocessing = (source, modelWidth, modelHeight) => {
   // 이미지를 OpenCV.js Mat 객체로 읽어옴
   const mat = cv.imread(source); // read from img tag

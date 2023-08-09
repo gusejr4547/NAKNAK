@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,6 +10,7 @@ import { loginuser } from "../utils/atoms";
 
 function Home(props) {
   const [userData] = useRecoilState(loginuser);
+  const navigate = useNavigate();
   const settings = {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
@@ -40,7 +41,7 @@ function Home(props) {
 
           {/* slide unit start*/}
           <div className="home-slide">
-            <Link to="/Fishpic" className="nav-link">
+            <Link to="/Camera" className="nav-link">
               <img src="/assets/icons/camera.PNG" alt="icon" />
               <h6>카메라</h6>
             </Link>
