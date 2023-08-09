@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import AWS from "aws-sdk";
 
 function ImageUpload() {
   const [selectedFiles, setSelectedFiles] = useState([]);

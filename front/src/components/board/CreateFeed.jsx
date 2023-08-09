@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AWS from "aws-sdk";
-import uuid from "react-uuid";
 
 import "./CreateFeed.css";
 
