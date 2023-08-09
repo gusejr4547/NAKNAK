@@ -5,11 +5,8 @@ module.exports = function (app) {
   app.use(
     "/api1",
     createProxyMiddleware('/api1',{
-      target: process.env.REACT_APP_BACKEND_URL,
+      target: 'https://otakubot.store:20101',
       changeOrigin: true,
-      pathRewrite: {
-        '^/api1': '',
-      },
     })
   );
 
