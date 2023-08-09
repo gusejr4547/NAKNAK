@@ -51,7 +51,7 @@ spring:
           google:
             client-id: 541309009451-92mhcite978a3ortbm2c6ruce68hr0lj.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: http://passportlkm.iptime.org:20101/login/oauth2/code/google
+            redirect-uri: https://otakubot.store:20101/login/oauth2/code/google
             scope:
               - profile
               - email
@@ -61,7 +61,7 @@ spring:
               - account_email
               - profile_nickname
             authorization-grant-type: authorization_code
-            redirect-uri: http://passportlkm.iptime.org:20101/login/oauth2/code/kakao
+            redirect-uri: https://otakubot.store:20101:20101/login/oauth2/code/kakao
             client-name: Kakao
             client-authentication-method: client_secret_post
         provider:
