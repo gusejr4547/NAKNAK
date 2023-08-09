@@ -50,6 +50,10 @@ public class Comment {
     @BatchSize(size = 100)
     Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mention_member_id")
+    private Member mentionMember;
+
     @ManyToOne
     @JoinColumn(name = "parent_id")
     @Setter

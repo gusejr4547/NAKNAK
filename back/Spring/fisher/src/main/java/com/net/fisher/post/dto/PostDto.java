@@ -33,6 +33,7 @@ public class PostDto {
         private long postId;
         private String content;
         private List<Tag> tags;
+        private List<Long> deleteImageList;
     }
 
     @Getter
