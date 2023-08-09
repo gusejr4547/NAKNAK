@@ -334,4 +334,10 @@ public class PostService {
 
         return totalPost;
     }
+
+    public Page<Post> getPostByTag(Pageable pageable, long tagId){
+        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+
+        return postRepository.findByTag(pageable, tag);
+    }
 }
