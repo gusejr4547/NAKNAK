@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import axios from "axios";
@@ -6,11 +6,20 @@ import { useNavigate } from "react-router-dom";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
+import "./signup.css";
 
 function Signup(props) {
   // const [signupData, setSignupData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
+  const ALLOW_FILE_EXTENSION = "jpg,jpeg,png";
+  const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024; // 5MB
+  const header = {
+    "Content-Type": "multipart/form-data",
+  };
+
   // const [postData, setPostData] = useState({});
   const navigate = useNavigate();
 
@@ -60,6 +69,25 @@ function Signup(props) {
     }
   };
 
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    console.log(file);
+    const allowedExtensions = ALLOW_FILE_EXTENSION.split(",");
+    const fileExtension = file.name.split(".").pop().toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+      console.log("올바른 이미지 파일 형식이 아닙니다.");
+      imgRef.current.value = null;
+      setImgFile(null);
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log(reader);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+  };
+
   const signupHandleClick = async () => {
     const signupData = {
       email: userIdValue,
@@ -99,9 +127,14 @@ function Signup(props) {
       formData.append("password", signupData.password);
       formData.append("name", signupData.name);
       formData.append("nickname", signupData.nickname);
+      if (imgFile) {
+        formData.append("file", imgFile);
+      }
       const member = "/api/members/register";
       // const response = await axios.post("/api1/api/members/register", formData);
-      const response = await axios.post("/api1" + member, formData);
+      const response = await axios.post("/api1" + member, formData, {
+        headers: header,
+      });
       // setPostData(response.data);
       navigate("/Login");
       // console.log(postData, 123);
@@ -197,7 +230,33 @@ function Signup(props) {
           $errorText="필수 입력값입니다"
           onKeyPress={signupHandleKey}
         />
-
+        {/* // 업로드 된 이미지 미리보기 */}
+        <img
+          src={imgFile ? imgFile : "assets/cats/cat.png"}
+          alt="프로필 이미지"
+          style={{ width: "100px", height: "100px" }}
+        />
+        {/* // 이미지 업로드 input */}
+        <form>
+          <label className="signup-profileImg-label" htmlFor="profileImg">
+            프로필 이미지 추가
+          </label>
+          <input
+            className="signup-profileImg-input"
+            type="file"
+            accept=".gif, .jpg, .png, .jpeg"
+            onChange={saveImgFile}
+            id="profileImg"
+            ref={imgRef}
+          />
+        </form>
+        {/* <input
+          type="file"
+          accept=".gif, .jpg, .png, .jpeg"
+          id="profileImg"
+          onChange={saveImgFile}
+          ref={imgRef}
+        /> */}
         <Button
           as="input"
           type="button"

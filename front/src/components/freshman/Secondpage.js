@@ -3,11 +3,16 @@ import Wave from "react-wavify";
 import "./Secondpage.css";
 import Lure from "./Lure";
 import Onetwo from "./Onetwo";
+import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { token } from "../../utils/atoms";
+import upgradeProgress from "../../api/upgradeProgress";
 
 function Secondpage({ show }) {
   const [fishingType, setFishingType] = useState("Lure");
   const navigate = useNavigate();
+  const [step, setStep] = useState(0);
+  const [accesstoken, setAccesstoken] = useRecoilState(token);
 
   useEffect(() => {
     if (show === "Lure") {
@@ -16,13 +21,23 @@ function Secondpage({ show }) {
       setFishingType("OneTwo");
     }
   }, []);
-  const [step, setStep] = useState(0);
+
+  // 뉴비 튜토리얼 업그레이드
+  const handleUpgradeProgress = async (status) => {
+    try {
+      const response = await upgradeProgress(status, accesstoken);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const nextTalk = () => {
     if (step > (fishingType === "Lure" ? Lure : Onetwo).length - 2) {
       // 진척도 40프로 넣기
       // 메인으로 라우터 이동
       navigate("/Newbie");
+      handleUpgradeProgress(40);
     } else {
       setStep(step + 1);
     }

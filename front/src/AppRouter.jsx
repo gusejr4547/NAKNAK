@@ -15,7 +15,6 @@ import CreateFeed from "./components/board/CreateFeed";
 // import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
-import Infoapi from "./components/map/Infoapi";
 import Profile from "./components/user/Profile";
 import SeaScene from "./components/fishbowl/SeaScene";
 import ImgTest from "./temp/Teacherable/ImgTest";
@@ -26,7 +25,7 @@ import Balls from "./components/fishbowl/Balls";
 import Freshman from "./components/freshman/Freshman";
 
 import Kakao from "./components/account/Kakao";
-// import Camera from "./components/Camera/Camera";
+import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
 
 import Newbie from "./components/freshman/Newbie";
@@ -57,13 +56,12 @@ function AppRouter(props) {
             <Route path="/Dict" element={<Dict />}></Route>
             <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
 
-            {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
+            <Route path="/Getfish" element={<Getfish />}></Route>
             <Route path="/Login" element={<Login />}></Route>
             <Route path="/Balls" element={<Balls />}></Route>
             <Route path="/Signup" element={<Signup />}></Route>
             <Route path="/Dogam" element={<Dogam />}></Route>
             <Route path="/ImgTest" element={<ImgTest />}></Route>
-            <Route path="/Infoapi" element={<Infoapi />}></Route>
             <Route path="/Inventory" element={<Inventory />}></Route>
             <Route path="/Loading" element={<Loading />}></Route>
             <Route path="/SeaScene" element={<SeaScene />}></Route>
@@ -71,7 +69,7 @@ function AppRouter(props) {
             <Route path="/CreateFeed" element={<CreateFeed />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
-            {/* <Route path="Camera" element={<Camera />}></Route> */}
+            <Route path="Camera" element={<Camera />}></Route>
             {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
             <Route path="/Map" element={<Map />}></Route>

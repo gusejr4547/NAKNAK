@@ -2,6 +2,7 @@ package com.net.fisher.post.repository;
 
 import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
+import com.net.fisher.post.entity.Tag;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -56,5 +57,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                                  @Param("tagList") Set<Long> tagList, LocalDateTime time);
 
 
+    @Query(value = "select p from posts p " +
+            "join fetch PostTag pt on p.postId = pt.post.postId " +
+            "where pt.tag = :tag")
+    Page<Post> findByTag(Pageable pageable, Tag tag);
 
 }

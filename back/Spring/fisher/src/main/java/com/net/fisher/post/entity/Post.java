@@ -43,7 +43,7 @@ public class Post {
     @Column(name = "views",updatable = false)
     private int views;
 
-    @Column(name = "likes",updatable = false)
+    @Column(name = "likes")
     @Setter
     private long likes;
 

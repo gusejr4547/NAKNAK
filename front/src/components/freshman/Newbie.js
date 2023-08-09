@@ -8,7 +8,9 @@ function Newbie() {
   return (
     <div className="newbie-wrapper">
       <Home newbieVersion={newbieVersion} />
-      <div className="newbie-talk">{Talk2[0].content}</div>
+      <div className="newbie-talk-box">
+        <span className="newbie-talk">{Talk2[0].content}</span>
+      </div>
     </div>
   );
 }
