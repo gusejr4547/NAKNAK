@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import upgradeProgress from "../../api/upgradeProgress";
+import upgradeProgress from "./upgradeProgress";
 import { token } from "../../utils/atoms";
 import Talk2 from "../freshman/Talk2";
 

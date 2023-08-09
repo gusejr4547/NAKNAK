@@ -7,8 +7,10 @@ import {
   newbie_recoil,
   token,
 } from "../../utils/atoms";
+import { useNavigate } from "react-router-dom";
+
 import Talk2 from "../freshman/Talk2";
-import upgradeProgress from "../../api/upgradeProgress";
+import upgradeProgress from "../freshman/upgradeProgress";
 
 const MapModal = () => {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
@@ -16,18 +18,21 @@ const MapModal = () => {
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(3);
   const [accesstoken, setAccesstoken] = useRecoilState(token);
+  const navigate = useNavigate();
 
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
-      const response = await upgradeProgress(status, accesstoken);
-      console.log(response);
+      await upgradeProgress(status);
     } catch (err) {
       console.log(err);
     }
   };
   // 뉴비버젼
   const next = () => {
+    if (step === 4) {
+      navigate("/Newbie", { state: 5 });
+    }
     setStep(step + 1);
     handleUpgradeProgress(60);
   };
@@ -41,18 +46,14 @@ const MapModal = () => {
       {newbie && (
         <div className="map-modal-newbie-talk-box">
           {Talk2[step].content}
-          {step < 4 ? (
-            <div
-              className="next"
-              onClick={() => {
-                next();
-              }}
-            >
-              다음 &gt;
-            </div>
-          ) : (
-            <div className="map-modal-newbie-cover" />
-          )}
+          <div
+            className="next"
+            onClick={() => {
+              next();
+            }}
+          >
+            다음 &gt;
+          </div>
         </div>
       )}
       <div className="modal_wrap">
@@ -60,10 +61,11 @@ const MapModal = () => {
         <span onClick={() => setModalOpen(false)} className="modal-close">
           X
         </span>
-        <div className="modal-title">
+
+        <div className={`modal-title ${newbie ? "newbie-data" : ""}`}>
           {data[0].TITLE ? data[0].TITLE : data[0].MMSI_NM}
         </div>
-        <div className="modal-information">
+        <div className={`modal-information" && newbie ? "newbie-data" : ""}`}>
           {data[0].HUMIDITY && <p>습도: {data[0].HUMIDITY}</p>}
           {data[0].AIR_TEMPERATURE && <p>기온: {data[0].AIR_TEMPERATURE}</p>}
           {/* <p>위도: {data[0].LATITUDE}</p>

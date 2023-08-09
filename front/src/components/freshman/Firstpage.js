@@ -2,37 +2,33 @@ import React, { useState } from "react";
 import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
-import axios from "axios";
-import { useRecoilState } from "recoil";
-import { token } from "../../utils/atoms";
-import upgradeProgress from "../../api/upgradeProgress";
+import upgradeProgress from "../freshman/upgradeProgress";
+import { useNavigate } from "react-router-dom";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 function Firstpage({ handleChangeParentState }) {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
-  const [accesstoken, setAccesstoken] = useRecoilState(token);
+  const navigate = useNavigate();
 
   // 뉴비 상태 변경
   // 0 : 뉴비 아님 1 : 원투  2: 루어
   const newbie = async (status) => {
     try {
-      const response = await axios.post(
-        "/api1/api/members/status/newbie",
-        { data: { isNewbie: status } },
-        {
-          headers: { authorization: accesstoken },
-        }
-      );
-      console.log(response.data);
+      await authorizedRequest({
+        method: "post",
+        url: "/api1/api/members/status/newbie",
+        data: { isNewbie: status },
+      });
     } catch (err) {
       console.log(err);
     }
   };
+
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
-      const response = await upgradeProgress(status, accesstoken);
-      console.log(response);
+      await upgradeProgress(status);
     } catch (err) {
       console.log(err);
     }
@@ -62,6 +58,10 @@ function Firstpage({ handleChangeParentState }) {
       setShow(false);
       // 뉴비아님
       newbie(0);
+      setStep(8);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
       handleUpgradeProgress(100);
     }
   };
