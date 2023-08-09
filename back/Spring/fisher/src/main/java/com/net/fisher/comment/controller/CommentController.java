@@ -56,9 +56,15 @@ public class CommentController {
 
     @DeleteMapping("/posts/{post-id}/comments")
     public ResponseEntity deleteComemnt(
+            @PathVariable("post-id") long postId,
+            @RequestHeader(name = "Authorization") String token,
             @RequestParam(value="comment-id") long commentId){
 
-        return new ResponseEntity(HttpStatus.OK);
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        commentService.deleteComment(tokenId, commentId);
+
+        return new ResponseEntity("Delete complete", HttpStatus.OK);
     }
 
 }
