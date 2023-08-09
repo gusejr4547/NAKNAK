@@ -37,6 +37,15 @@ public class MemberStatusDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
+    public static class SetProgress{
+        private int tutorialProgress;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class SetNewbie{
         private int isNewbie;
     }

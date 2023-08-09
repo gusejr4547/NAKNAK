@@ -1,16 +1,22 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { React, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import { loginuser } from "../utils/atoms";
+import { loginuser, newbie_recoil } from "../utils/atoms";
 
-function Home(props) {
+function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
-  const navigate = useNavigate();
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+
+  useEffect(() => {
+    console.log(newbie);
+    setNewbie(newbieVersion);
+  }, [newbieVersion]);
+
   const settings = {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
@@ -18,20 +24,34 @@ function Home(props) {
     slidesToShow: 3, // 한 번에 보여질 슬라이드 수
     slidesToScroll: 3, // 스크롤할 슬라이드 수
     rows: 2,
-    swipe: true,
+    // swipe: true,
     prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    swipe: !newbieVersion,
   };
 
   return (
     <div className="home-container">
       <div className="home-image-container">
-        <img src="assets/images/mainballoon.png" alt="mainimg import error" />
+        {newbieVersion === 1 ? (
+          <img
+            src="assets/images/mainballoon2.png"
+            alt="mainimg import error"
+          />
+        ) : newbieVersion === 5 ? (
+          <img
+            src="assets/images/mainballoon3.png"
+            alt="mainimg import error"
+          />
+        ) : (
+          <img src="assets/images/mainballoon.png" alt="mainimg import error" />
+        )}
       </div>
       <div className="home-board">
         <Slider {...settings} className="home-carousel">
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Dogam" className="nav-link">
               <img src="/assets/icons/do.PNG" alt="icon" />
               <h6>도감</h6>
@@ -40,8 +60,13 @@ function Home(props) {
           {/* slide unit end */}
 
           {/* slide unit start*/}
-          <div className="home-slide">
-            <Link to="/Camera" className="nav-link">
+          {/* <div className="home-slide"> */}
+          <div
+            className={`home-slide ${
+              newbieVersion === 1 ? "non-clickable" : ""
+            }`}
+          >
+            <Link to="/Fishpic" className="nav-link">
               <img src="/assets/icons/camera.PNG" alt="icon" />
               <h6>카메라</h6>
             </Link>
@@ -49,7 +74,8 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Inventory" className="nav-link">
               <img src="/assets/icons/on.PNG" alt="icon" />
               <h6>인벤토리</h6>
@@ -58,10 +84,12 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-
+          {/* <div className="home-slide"> */}
           {userData?.memberId !== undefined ? (
-            <div className="home-slide">
-              <Link to={`/Profile/:${userData?.memberId}`} className="nav-link">
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
                 <img src="/assets/icons/pro.PNG" alt="icon" />
                 <h6>프로필</h6>
               </Link>
@@ -76,8 +104,18 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div
+            className={`home-slide ${
+              newbieVersion === 5 ? "non-clickable" : ""
+            }`}
+          >
             <Link to="/Map" className="nav-link">
+              {/* <Link
+              to="/Map"
+              state={{ newbieVersionProp: newbieVersion }}
+              className="nav-link"
+            > */}
               <img src="/assets/icons/ji.PNG" alt="icon" />
               <h6>지도</h6>
             </Link>
@@ -85,7 +123,8 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Board" className="nav-link">
               <img src="/assets/icons/ge.PNG" alt="icon" />
               <h6>SNS</h6>
@@ -100,7 +139,8 @@ function Home(props) {
               <h6>Map</h6>
             </Link>
           </div> */}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Balls" className="nav-link">
               <img src="/assets/icons/tank.PNG" alt="icon" />
               <h6>수조</h6>
@@ -109,11 +149,10 @@ function Home(props) {
           {/* slide unit end*/}
 
           {/* dummy data start*/}
-          <div className="home-slide">
-            <Link to="/Dict" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
-              <h6>사전</h6>
-            </Link>
+          {/* <div className="home-slide"> */}
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
+            <img src="/assets/icons/google.PNG" alt="icon" />
+            <h6>dummy</h6>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />

@@ -1,12 +1,24 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { token } from "../../utils/atoms";
-import { getFish_recoil, fishingMode_recoil } from "../../utils/atoms";
+import {
+  getFish_recoil,
+  fishingMode_recoil,
+  newbie_recoil,
+} from "../../utils/atoms";
 import "./Fishpic.css";
 import Picresult from "./Picresult";
+import Talk2 from "../freshman/Talk2";
+import upgradeProgress from "../freshman/upgradeProgress";
 
 function CameraApp() {
+  // 뉴비모드
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [step, setStep] = useState(6);
+  const navigate = useNavigate();
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [accesstoken] = useRecoilState(token);
@@ -22,6 +34,25 @@ function CameraApp() {
   const [capturedImageFile, setCapturedImageFile] = useState(null); // 촬영한 사진의 URL을 저장하는 상태 변수
   const [fishImg, setfishImg] = useState("");
   const [isCameraOn, setIsCameraOn] = useState(false); // 카메라가 활성화되었는지 여부 상태 변수
+
+  // 뉴비 튜토리얼 업그레이드
+  const handleUpgradeProgress = async (status) => {
+    try {
+      const response = await upgradeProgress(status, accesstoken);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // 뉴비버젼
+  const next = () => {
+    if (step < 8) {
+      setStep(step + 1);
+    } else {
+      navigate("/Checklist");
+      handleUpgradeProgress(80);
+    }
+  };
 
   useEffect(() => {
     getCameraStream();
@@ -116,6 +147,21 @@ function CameraApp() {
 
   return (
     <div className="fishcamerabox">
+      {/* 뉴비모드 시작 */}
+      {newbie && (
+        <div className="pic-newbie-talk-box">
+          {Talk2[step].content}
+          <div
+            className="next"
+            onClick={() => {
+              next();
+            }}
+          >
+            다음 &gt;
+          </div>
+        </div>
+      )}
+      {/* 뉴비모드 끝 */}
       <video className="fishcamera" ref={videoRef} autoPlay playsInline />
       {isCameraOn && (
         <img src="./assets/icons/fishpic.png" className="shape-overlay" />

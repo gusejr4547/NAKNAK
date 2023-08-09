@@ -19,3 +19,11 @@
   /* font-weight: bold; */
   margin: 0;
 }
+
+.feed-tag-active {
+  background-color: #ffe48e;
+}
+
+.feed-tag-inactive {
+  background-color: #f4f4f4;
+}

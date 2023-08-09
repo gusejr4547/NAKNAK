@@ -57,9 +57,15 @@ public class MemberController {
         return new ResponseEntity<>(new MemberStatusResponse(memberResponse, statusResponse), HttpStatus.OK);
     }
 
-    /*@PostMapping("/members/update")e
-    public ResponseEntity<MemberDto.Response> updateMember
-            (@RequestBody )*/
+    @PostMapping("/members/update")
+    public ResponseEntity<MemberDto.Response> updateMember(
+                    @RequestHeader("Authorization")String token,
+                    MemberDto.Update requestBody,
+                    MultipartHttpServletRequest multiRequest){
+        long tokenId = jwtTokenizer.getMemberId(token);
+        Member member = memberService.updateMember(tokenId,requestBody,multiRequest);
+        return new ResponseEntity<>(memberMapper.memberToResponseDto(member),HttpStatus.OK);
+    }
 
 
     @GetMapping("/members/list")
@@ -111,23 +117,37 @@ public class MemberController {
                         memberMapper.toMemberResponseDtos(memberList)), HttpStatus.OK);
     }
 
-    @PostMapping("/members/status/change")
+    /*@PostMapping("/members/status/change")
     public ResponseEntity<MemberStatusDto.Response> upExperiencePoint(
-            @RequestBody MemberStatusDto.UpStatus upStatus) {
-        //status 변경
+            @RequestBody MemberStatusDto.SetProgress requestBody) {
+            long tokenId = jwtTokenizer.getMemberId();
+
+
         return null;
+    }*/
+
+    @PostMapping("/members/status/progress")
+    public ResponseEntity<MemberStatusDto.Response> changeTutorialProgress(
+            @RequestHeader("Authorization") String token,
+            @RequestBody MemberStatusDto.SetProgress requestBody) {
+        long tokenId = jwtTokenizer.getMemberId(token);
+        int newVal = requestBody.getTutorialProgress();
+
+        MemberStatus memberStatus = memberService.setTutorialProgress(tokenId,newVal);
+
+        return new ResponseEntity<>(memberMapper.toMemberStatusDto(memberStatus),HttpStatus.OK);
     }
 
     @PostMapping("/members/status/newbie")
-    public ResponseEntity<Integer> changeIsNewbie(
+    public ResponseEntity<MemberStatusDto.Response> changeIsNewbie(
             @RequestHeader("Authorization") String token,
             @RequestBody MemberStatusDto.SetNewbie requestBody) {
             long tokenId = jwtTokenizer.getMemberId(token);
             int newVal = requestBody.getIsNewbie();
 
-            int val = memberService.setIsNewbie(tokenId,newVal);
+            MemberStatus memberStatus = memberService.setIsNewbie(tokenId,newVal);
 
-        return new ResponseEntity<>(val,HttpStatus.OK);
+        return new ResponseEntity<>(memberMapper.toMemberStatusDto(memberStatus),HttpStatus.OK);
     }
 
 

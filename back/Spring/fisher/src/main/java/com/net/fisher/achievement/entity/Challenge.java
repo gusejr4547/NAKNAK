@@ -6,16 +6,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "achieves")
+@Entity(name = "challenges")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Achievement {
+public class Challenge {
     @Id
-    @Column(name = "achievement_id")
+    @Column(name = "challenge_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long achievementId;
+    private long challengeId;
 
     @Column(name = "numbering")
     private String numbering; // 001
@@ -23,8 +23,8 @@ public class Achievement {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "condition")
-    private String condition;
+    @Column(name = "task")
+    private String task;
 
     @Column(name = "content")
     private String content;

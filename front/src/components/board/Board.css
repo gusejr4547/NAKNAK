@@ -44,13 +44,15 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  background-color: rgb(118, 118, 118);
+  background-color: #ffe48e;
 }
 
 .board-title-container {
+  margin-left: 1rem;
 }
-.board-title-container h3 {
-  width: 100%;
+.board-title-container h1 {
+  margin: 0;
+  font-weight: bold;
 }
 
 .board-search-img-container {
@@ -76,4 +78,24 @@
   display: flex;
   margin-top: 1rem;
   margin-left: 1rem;
+}
+
+.board-loading {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.board-loading img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.board-create-feed {
+  background-color: #ffe48e;
+  overflow: hidden;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 3.8rem;
 }

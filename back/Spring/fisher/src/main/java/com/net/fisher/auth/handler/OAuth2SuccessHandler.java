@@ -73,8 +73,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setHeader("Access-Control-Expose-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-        redirectStrategy.sendRedirect(request,response,"/");
-        // 이 방식은 지금 SPA 에서 잘못됨. 기본적으로 핸들링되는 Redirection URL 을 스프링에서 처리하면된다고함.
+
+        request.getRequestDispatcher("/api/login/success/oauth").forward(request, response);
+
+
+
+        /*RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+        redirectStrategy.sendRedirect(request,response,"/");*/
+        // 이 방식은 지금 SPA 에서 잘못됨. 기본적으로 핸들링되는 Redirection URL 을 스프링에서 처리하면된다고함. -> 변경완료
     }
 }
