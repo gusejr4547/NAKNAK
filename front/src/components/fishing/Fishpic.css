@@ -50,3 +50,18 @@
   /* background-color: red; */
   /* 도형에 대한 스타일 (예: 너비, 높이, 배경 등) */
 }
+
+.pic-newbie-talk-box {
+  display: flex;
+  width: 90%;
+  height: 12%;
+  border-radius: 35px;
+  background-color: #ffe48e;
+  border: dashed #ffffff 0.2rem;
+  position: fixed;
+  bottom: 5rem;
+  left: 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}

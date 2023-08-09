@@ -13,6 +13,7 @@ function Home({ newbieVersion }) {
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
 
   useEffect(() => {
+    console.log(newbie);
     setNewbie(newbieVersion);
   }, [newbieVersion]);
 
@@ -32,9 +33,14 @@ function Home({ newbieVersion }) {
   return (
     <div className="home-container">
       <div className="home-image-container">
-        {newbieVersion ? (
+        {newbieVersion === 1 ? (
           <img
             src="assets/images/mainballoon2.png"
+            alt="mainimg import error"
+          />
+        ) : newbieVersion === 5 ? (
+          <img
+            src="assets/images/mainballoon3.png"
             alt="mainimg import error"
           />
         ) : (
@@ -55,7 +61,11 @@ function Home({ newbieVersion }) {
 
           {/* slide unit start*/}
           {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
+          <div
+            className={`home-slide ${
+              newbieVersion === 1 ? "non-clickable" : ""
+            }`}
+          >
             <Link to="/Fishpic" className="nav-link">
               <img src="/assets/icons/camera.PNG" alt="icon" />
               <h6>카메라</h6>
@@ -94,7 +104,12 @@ function Home({ newbieVersion }) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
+          {/* <div className="home-slide"> */}
+          <div
+            className={`home-slide ${
+              newbieVersion === 5 ? "non-clickable" : ""
+            }`}
+          >
             <Link to="/Map" className="nav-link">
               {/* <Link
               to="/Map"
