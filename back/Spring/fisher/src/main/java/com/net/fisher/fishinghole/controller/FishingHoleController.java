@@ -46,7 +46,7 @@ public class FishingHoleController {
 
         FavoritePoint favoritePoint = fishingHoleService.registerFavorite(tokenId,pointId);
 
-        return new ResponseEntity<>(FavoritePointDto.Response.builder().fishingHoleId(favoritePoint.getFishingHole().getFishingHoleId())
+        return new ResponseEntity<>(FavoritePointDto.Response.builder().favoritePointId(favoritePoint.getFavoritePointId()).fishingHoleId(favoritePoint.getFishingHole().getFishingHoleId())
                 .memberId(favoritePoint.getMember().getMemberId())
                 .build(),HttpStatus.CREATED);
     }
@@ -64,6 +64,5 @@ public class FishingHoleController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }
