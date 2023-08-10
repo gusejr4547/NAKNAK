@@ -7,6 +7,7 @@ import {
   limit_length,
   action,
 } from "../../utils/data/point";
+import Dictlist from "./Dictlist";
 
 function Dict(props) {
   console.log(point);
@@ -14,9 +15,7 @@ function Dict(props) {
     <div>
       <input type="text" />
       {point.map((item) => (
-        <p key={item.pk}>
-          <span>{item.title}</span>
-        </p>
+        <Dictlist key={item.pk} data={item} />
       ))}
     </div>
   );

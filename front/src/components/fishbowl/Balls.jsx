@@ -204,7 +204,7 @@ const Balls = () => {
       fishBowlData.forEach((fish) => {
         console.log(fish);
         imageUrls.push(
-          `${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fish.fishCode}.png`
+          `${process.env.REACT_APP_BACKEND_URL}img/fishes/${fish.fishCode}.png`
         );
       });
     }
