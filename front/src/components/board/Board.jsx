@@ -15,8 +15,6 @@ import { getCurrentTime } from "../../utils/util";
 
 import { Link } from "react-router-dom";
 
-import Test from "./Testcode";
-
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
 
@@ -46,7 +44,11 @@ const Board = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get("api1/api/tags");
+        const response = await authorizedRequest({
+          method: "get",
+          url: `api1/api/tags`,
+        });
+
         console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
@@ -201,9 +203,11 @@ const Board = () => {
         <div className="board-title-container">
           <h1>NAKNAK</h1>
         </div>
-        <div className="board-search-img-container">
-          <img src="/assets/cats/cat.PNG" alt="검색버튼" />
-        </div>
+        <img
+          className="board-search-img-container"
+          src="/assets/cats/cat.PNG"
+          alt="검색버튼"
+        />
       </div>
       <div className="board-tag-wrapper">
         <FeedTag
