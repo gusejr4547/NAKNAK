@@ -57,6 +57,10 @@ const Feed = ({
     onLikeStateChange(feedInfo, feedLikeState);
   };
 
+  const tagClickHandler = () => {
+    console.log("tagClicked", userId, feedInfo);
+  };
+
   useEffect(() => {
     const toggleLikeState = async () => {
       setLoading(true);
@@ -197,7 +201,9 @@ const Feed = ({
           <div className="feed-caption">{feedInfo.content}</div>
           <div className="feed-tags">
             {feedInfo.tags.map((tag, index) => {
-              return <FeedTag key={index} tagInfo={tag} />;
+              return (
+                <FeedTag key={index} tagInfo={tag} onClick={tagClickHandler} />
+              );
             })}
           </div>
         </div>

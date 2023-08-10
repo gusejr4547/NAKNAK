@@ -54,17 +54,14 @@ const CreateFeed = () => {
   };
 
   const tagClickHandler = (tag) => {
-    if (selectedTags.includes(tag.tagId)) {
-      // 이미 선택된 태그인 경우 제거
-      setSelectedTags((prevTags) =>
-        prevTags.filter((t) => t.tagId !== tag.tagId)
-      );
+    if (selectedTags.includes(tag.tagName)) {
+      // 이미 선택된 태그를 클릭하여 취소하는 경우
+      setSelectedTags((prevTags) => prevTags.filter((t) => t !== tag.tagName));
     } else {
-      // 선택되지 않은 태그인 경우 추가
-      setSelectedTags((prevTags) => [...prevTags, tag.tagId]);
+      // 선택되지 않은 태그를 클릭하여 선택하는 경우
+      setSelectedTags((prevTags) => [...prevTags, tag.tagName]);
     }
   };
-
   const createFeed = async () => {
     const formData = new FormData();
     formData.append("content", content);
@@ -107,18 +104,10 @@ const CreateFeed = () => {
         {/* 여기서부터 하나씩 집어넣으면 됨 */}
 
         {/* 이미지첨부버튼 */}
-        <div className="create-feed-contents-inner">
+        <div className="create-feed-image-select-header">
           <h2>Images</h2>
           <label htmlFor="fileInput">
-            <img
-              src="/assets/cats/cat.png"
-              alt="Select Images"
-              style={{
-                maxWidth: "100px",
-                maxHeight: "100px",
-                margin: "10px",
-              }}
-            />
+            <div className="create-feed-image-select-button"> select</div>
           </label>
           <input
             type="file"
@@ -165,14 +154,15 @@ const CreateFeed = () => {
         {/* 태그 선택부분 */}
         <div className="create-feed-contents-inner">
           <h2>Tag</h2>
-          <div className="create-feed-tag-container">
+          <hr />
+          <div className="create-feed-tag-container create-feed-disable-scrollbar">
             {Object.keys(tagListData).map((key) => {
               const tag = tagListData[key];
               return (
                 <FeedTag
                   key={tag.tagId} // 고유한 키를 제공해야 합니다.
                   tagInfo={tag}
-                  active={selectedTags.includes(tag)} // 선택 여부를 배열 포함 여부로 판단
+                  active={selectedTags.includes(tag.tagName)} // 선택 여부를 배열 포함 여부로 판단
                   onClick={() => tagClickHandler(tag)}
                 />
               );
