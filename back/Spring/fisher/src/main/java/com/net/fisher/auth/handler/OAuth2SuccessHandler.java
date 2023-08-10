@@ -74,7 +74,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
 
-        request.getRequestDispatcher("/api/login/success/oauth").forward(request, response);
+        request.getRequestDispatcher("/api/login/Fsuccess/oauth").forward(request, response);
 
 
 

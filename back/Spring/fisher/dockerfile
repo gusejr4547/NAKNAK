@@ -6,6 +6,8 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
+COPY application-prod.yml src/main/resources/application.yml  # Copy application-prod.yml to resources directory
+
 RUN chmod +x ./gradlew
 RUN ls -la # Check the list of files and their permissions
 RUN ./gradlew build
