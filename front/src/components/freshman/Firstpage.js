@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
 import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import { useRecoilState } from "recoil";
+import { profileData_recoil } from "../../utils/atoms";
 
 function Firstpage({ handleChangeParentState }) {
   const [step, setStep] = useState(0);
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
+  const [profileData, setProfileData] = useRecoilState(profileData_recoil);
+
+  // 리코일이 변경됐는지 확인
+  // useEffect(() => {
+  //   console.log("유저리코일", profileData);
+  // }, [profileData]);
 
   // 뉴비 상태 변경
   // 0 : 뉴비 아님 1 : 원투  2: 루어
@@ -20,6 +28,14 @@ function Firstpage({ handleChangeParentState }) {
         url: "/api1/api/members/status/newbie",
         data: { isNewbie: status },
       });
+      // 뉴비 상태 변경된 값 리코일도 변경해주기
+      setProfileData((prevData) => ({
+        ...prevData,
+        memberStatusResponse: {
+          ...prevData.memberStatusResponse,
+          isNewBie: status,
+        },
+      }));
     } catch (err) {
       console.log(err);
     }
@@ -29,6 +45,14 @@ function Firstpage({ handleChangeParentState }) {
   const handleUpgradeProgress = async (status) => {
     try {
       await upgradeProgress(status);
+      // 뉴비 상태 변경된 값 리코일도 변경해주기
+      setProfileData((prevData) => ({
+        ...prevData,
+        memberStatusResponse: {
+          ...prevData.memberStatusResponse,
+          tutorialProgress: status,
+        },
+      }));
     } catch (err) {
       console.log(err);
     }

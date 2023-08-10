@@ -13,7 +13,6 @@ function Home({ newbieVersion }) {
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
 
   useEffect(() => {
-    console.log(newbie);
     setNewbie(newbieVersion);
   }, [newbieVersion]);
 

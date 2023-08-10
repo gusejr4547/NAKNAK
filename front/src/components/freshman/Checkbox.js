@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import "./Checkbox.css";
 import Checklist from "./Checklist";
+import { useRecoilState } from "recoil";
+import upgradeProgress from "../freshman/upgradeProgress";
+import { newbie_recoil, profileData_recoil } from "../../utils/atoms";
+import Talk2 from "../freshman/Talk2";
+import { authorizedRequest } from "../account/AxiosInterceptor";
+import { useNavigate } from "react-router-dom";
 
 function Checkbox() {
+  const navigate = useNavigate();
+  const [step, setStep] = useState(9);
+  const [profileData, setProfileData] = useRecoilState(profileData_recoil);
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [item, setItem] = useState("");
   const [items, setItems] = useState(() => {
     const storedItems = localStorage.getItem("items");
@@ -38,6 +48,48 @@ function Checkbox() {
     localStorage.setItem("items", JSON.stringify(removeedItems));
   };
 
+  // 뉴비 상태 변경
+  // 0 : 뉴비 아님 1 : 원투  2: 루어
+  const newbieState = async (status) => {
+    try {
+      await authorizedRequest({
+        method: "post",
+        url: "/api1/api/members/status/newbie",
+        data: { isNewbie: status },
+      });
+      // 뉴비 상태 변경된 값 리코일도 변경해주기
+      setProfileData((prevData) => ({
+        ...prevData,
+        memberStatusResponse: {
+          ...prevData.memberStatusResponse,
+          isNewBie: status,
+        },
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 뉴비 튜토리얼 업그레이드
+  const handleUpgradeProgress = async (status) => {
+    try {
+      await upgradeProgress(status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const next = () => {
+    // 뉴비 해제 axios 보내기 및 현재 newbie false 적용하기.
+    if (step === 9) {
+      setStep(step + 1);
+    } else {
+      newbieState(0);
+      setNewbie();
+      handleUpgradeProgress(100);
+      navigate("/");
+    }
+  };
+
   return (
     <div className="checkbox-wrapper">
       <div>
@@ -64,6 +116,20 @@ function Checkbox() {
             추가
           </button>
         </div>
+        {/* 뉴비버전 */}
+        {newbie && (
+          <div className="checkbox-newbie-talk-box">
+            {Talk2[step].content}
+            <div
+              className="next"
+              onClick={() => {
+                next();
+              }}
+            >
+              다음 &gt;
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

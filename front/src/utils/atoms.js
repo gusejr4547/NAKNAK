@@ -15,6 +15,11 @@ export const token = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const profileData_recoil = atom({
+  key: "profileData_recoil",
+  default: {},
+});
+
 export const fishingMode_recoil = atom({
   key: "fishingMode_recoil",
   default: "selectMode",
