@@ -21,4 +21,12 @@ public class FavoritePointDto {
         private long memberId;
         private long fishingHoleId;
     }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Cancel{
+        private long favoritePointId;
+    }
 }

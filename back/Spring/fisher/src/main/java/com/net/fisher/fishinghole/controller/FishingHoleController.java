@@ -51,7 +51,19 @@ public class FishingHoleController {
                 .build(),HttpStatus.CREATED);
     }
 
+    @PostMapping("/fishingholes/favorites/cancel")
+    public ResponseEntity<HttpStatus> cancelFavoritePoint(
+            @RequestHeader("Authorization") String token,
+            @RequestBody FavoritePointDto.Cancel requestBody
+    ){
 
+        long tokenId = jwtTokenizer.getMemberId(token);
+        long favoriteId = requestBody.getFavoritePointId();
+
+        fishingHoleService.cancelFavorite(tokenId,favoriteId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

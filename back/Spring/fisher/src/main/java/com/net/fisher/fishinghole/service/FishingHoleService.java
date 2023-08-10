@@ -123,4 +123,15 @@ public class FishingHoleService {
         return favoritePointRepository.save(favoritePoint);
     }
 
+    public void cancelFavorite(long memberId, long favoriteId){
+        FavoritePoint favoritePoint = findFavoritePointById(favoriteId);
+
+        if(favoritePoint.getMember().getMemberId() != memberId) throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        favoritePointRepository.delete(favoritePoint);
+    }
+
+    private FavoritePoint findFavoritePointById(long favoriteId){
+        return favoritePointRepository.findById(favoriteId).orElseThrow(()->new BusinessLogicException(ExceptionCode.FAVORITEPOINTS_NOT_FOUND));
+    }
+
 }

@@ -16,6 +16,7 @@ public enum ExceptionCode {
     INVENTORY_NOT_FOUND(404, "Inventory Not Found in DB"),
     FISHBOWLS_NOT_FOUND(404, "Fishbowls Not Found in DB"),
     FISHINGHOLES_NOT_FOUND(404, "Fishing holes Not Found in DB"),
+    FAVORITEPOINTS_NOT_FOUND(404, "Favorite points Not Found in DB"),
     ATTRACTION_NOT_FOUND(404, "Attraction Not Found"),
     MEMBER_NOT_FOUND(404, "Member Not Found"),
     FAILED_TO_UPDATE_MEMBER(500, "Failed Update Member"),
