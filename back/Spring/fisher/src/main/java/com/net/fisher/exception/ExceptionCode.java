@@ -28,6 +28,7 @@ public enum ExceptionCode {
     UNACCEPTABLE_EXTENSION(403,"Unacceptable Extension"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
     FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
+    FAVORITEPOINT_ALREADY_EXISTS(409, "Favorite Point Already Exists"),
     FAILED_TO_WRITE_BOARD(500, "Failed Write Board"),
     FAILED_TO_DELETE_BOARD(500, "Failed Delete Board"),
 

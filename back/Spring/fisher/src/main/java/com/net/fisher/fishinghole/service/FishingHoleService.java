@@ -115,6 +115,8 @@ public class FishingHoleService {
         Member member = memberService.findMember(memberId);
         FishingHole fishingHole = findByFishingHoleId(pointId);
 
+        if(favoritePointRepository.findByMemberIdAndFishingHoleId(member,fishingHole) >= 1) throw new BusinessLogicException(ExceptionCode.FAVORITEPOINT_ALREADY_EXISTS);
+
         FavoritePoint favoritePoint = FavoritePoint.builder()
                 .member(member)
                 .fishingHole(fishingHole)
