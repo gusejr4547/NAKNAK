@@ -143,7 +143,7 @@ export const equipment = [
   },
   {
     title: "라인",
-    content: "낚시줄 ",
+    content: "낚시줄",
   },
   {
     title: "노브",

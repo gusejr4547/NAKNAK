@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
@@ -6,15 +6,16 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import { loginuser, newbie_recoil } from "../utils/atoms";
+import { loginuser, newbie_recoil, yolo_recoil } from "../utils/atoms";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(newbie);
+    // console.log(newbie);
     setNewbie(newbieVersion);
   }, [newbieVersion]);
 
@@ -159,9 +160,12 @@ function Home({ newbieVersion }) {
 
           {/* dummy data start*/}
           {/* <div className="home-slide"> */}
+
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>dummy</h6>
+            <Link to="/Dict" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>사전</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />
