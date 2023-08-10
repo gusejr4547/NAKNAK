@@ -18,6 +18,7 @@ public class FavoritePointDto {
     @AllArgsConstructor
     @Builder
     public static class Response{
+        private long favoritePointId;
         private long memberId;
         private long fishingHoleId;
     }
