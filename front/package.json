@@ -41,13 +41,9 @@
     "onnxruntime-web": "^1.13.1"
   },
   "scripts": {
-<<<<<<< HEAD
+
     "start": "HOST=0.0.0.0 DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start",
     "build": "react-scripts build",
-=======
-    "start": "craco start",
-    "build": "craco build",
->>>>>>> origin/develop
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
