@@ -114,7 +114,7 @@ function ImageUpload() {
         <h2>게시글 작성</h2>
         <textarea
           rows="5"
-          cols="50"
+          cols="45"
           value={content}
           onChange={handleContentChange}
           placeholder="게시글 내용을 작성하세요..."

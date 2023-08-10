@@ -101,6 +101,7 @@ const Board = () => {
     getLikedFeeds();
   }, []);
 
+  //보여줄 피드의 개수를 정합니다
   const showFeedCount = 2;
   const getFeedList = useCallback(async () => {
     console.log(getCurrentTime(Date.now()));
@@ -258,6 +259,7 @@ const Board = () => {
                       //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
                       feedInfo={feed}
                       currentFollowState={
+                        followerList.data &&
                         followerList.data.find(
                           (follower) => follower.memberId === feed.memberId
                         )
@@ -265,7 +267,7 @@ const Board = () => {
                           : false
                       }
                       likedFeedData={likedFeedData}
-                      userId={userInfo.userId}
+                      userId={userInfo.memberId}
                       onFollowChange={followChange}
                       onLikeStateChange={likeStateChange}
                     />

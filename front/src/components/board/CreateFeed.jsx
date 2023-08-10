@@ -1,30 +1,184 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 import { Link } from "react-router-dom";
 
 import "./CreateFeed.css";
-
-import Testcode from "./Testcode";
+import FeedTag from "./FeedTag";
 
 const CreateFeed = () => {
-  return (
-    // board-wrapper 변경 후 적용할 것
-    <div className="create-feed-wrapper">
-      {/* <Test></Test> */}
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-      {/* board-header 변경 후 적용필요 */}
+  const [content, setContent] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [tagListData, setTagListData] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {
+    const getTagList = async () => {
+      try {
+        setLoading(true);
+
+        const response = await authorizedRequest({
+          method: "get",
+          url: `api1/api/tags`,
+        });
+        console.log("tag load success", response.data);
+        setTagListData(response.data);
+      } catch (error) {
+        console.error("tag load error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getTagList();
+  }, []);
+
+  const fileChangeHandler = (e) => {
+    setSelectedFiles((prevFiles) => [
+      ...prevFiles,
+      ...Array.from(e.target.files),
+    ]);
+  };
+
+  const contentChangeHandler = (e) => {
+    setContent(e.target.value);
+  };
+
+  const removeSelectedFile = (indexToRemove) => {
+    setSelectedFiles((prevFiles) =>
+      prevFiles.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+  const tagClickHandler = (tag) => {
+    if (selectedTags.includes(tag.tagId)) {
+      // 이미 선택된 태그인 경우 제거
+      setSelectedTags((prevTags) =>
+        prevTags.filter((t) => t.tagId !== tag.tagId)
+      );
+    } else {
+      // 선택되지 않은 태그인 경우 추가
+      setSelectedTags((prevTags) => [...prevTags, tag.tagId]);
+    }
+  };
+
+  const createFeed = async () => {
+    const formData = new FormData();
+    formData.append("content", content);
+    formData.append("file", selectedFiles);
+    formData.append("tags", selectedTags);
+    console.log("formData", formData.data);
+    try {
+      setLoading(true);
+      const response = await authorizedRequest({
+        method: "post",
+        url: `api1/api/posts/upload`,
+        data: formData,
+      });
+      console.log("feed load success", response.data);
+
+      setContent("");
+      setSelectedFiles([]);
+      setSelectedTags([]);
+    } catch (error) {
+      console.error("feed load error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="create-feed-wrapper">
       <div className="create-feed-header">
         <Link to={`/Board`} className="create-feed-cancel">
           <img src="" alt="취소" />
         </Link>
         <div className="create-feed-title">
-          <h1>새 게시글</h1>
+          <h1>간지나는글쓰기라는문구가필요함</h1>
         </div>
-        <div className="create-feed-submit">
+        <div className="create-feed-submit" onClick={createFeed}>
           <img src="" alt="작성" />
         </div>
       </div>
       <div className="create-feed-contents">
-        <div>여기 안에 게시글 작성 데이터를 넣을거임</div>
+        {/* 여기서부터 하나씩 집어넣으면 됨 */}
+
+        {/* 이미지첨부버튼 */}
+        <div className="create-feed-contents-inner">
+          <h2>Images</h2>
+          <label htmlFor="fileInput">
+            <img
+              src="/assets/cats/cat.png"
+              alt="Select Images"
+              style={{
+                maxWidth: "100px",
+                maxHeight: "100px",
+                margin: "10px",
+              }}
+            />
+          </label>
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: "none" }}
+            onChange={fileChangeHandler}
+            multiple
+          />
+        </div>
+
+        {/* 이미지출력 */}
+        <div className="create-feed-selected-files-carousel create-feed-disable-scrollbar">
+          {selectedFiles.map((file, index) => (
+            <div className="create-feed-selected-file-container">
+              <img
+                key={index}
+                src={URL.createObjectURL(file)}
+                alt={`Image ${index}`}
+                className="create-feed-selected-file"
+                onClick={() => removeSelectedFile(index)}
+              />
+              <img
+                src="/assets/icons/x.pn" // 마이너스 아이콘 이미지 경로
+                alt="Delete"
+                className="create-feed-image-delete-button minus-icon"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* 게시글 작성부분 */}
+        <div className="create-feed-contents-inner">
+          <h2>Contents</h2>
+          <textarea
+            className="create-feed-textarea"
+            rows="5"
+            cols="45"
+            value={content}
+            onChange={contentChangeHandler}
+            placeholder="피드 내용을 작성하세요..."
+          />
+        </div>
+
+        {/* 태그 선택부분 */}
+        <div className="create-feed-contents-inner">
+          <h2>Tag</h2>
+          <div className="create-feed-tag-container">
+            {Object.keys(tagListData).map((key) => {
+              const tag = tagListData[key];
+              return (
+                <FeedTag
+                  key={tag.tagId} // 고유한 키를 제공해야 합니다.
+                  tagInfo={tag}
+                  active={selectedTags.includes(tag)} // 선택 여부를 배열 포함 여부로 판단
+                  onClick={() => tagClickHandler(tag)}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

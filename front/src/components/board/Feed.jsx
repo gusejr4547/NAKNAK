@@ -19,8 +19,6 @@ const Feed = ({
   onFollowChange,
   onLikeStateChange,
 }) => {
-  // console.log(likedFeedData);
-
   // props 를 여기 usestate로 받을 것인지
   const [feedLikeState, setFeedLikeState] = useState(
     likedFeedData
