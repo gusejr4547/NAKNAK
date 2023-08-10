@@ -5,16 +5,106 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97506196-8d17-4631-b84e-e2dc50a47b4a" name="Changes" comment="">
-
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/account/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/account/Signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Profile.jsx" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/src/components/freshman/Firstpage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/freshman/Firstpage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/freshman/Firstpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/freshman/Firstpage.js" afterDir="false" />
-
+      <change afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/java/com/net/fisher/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/java/com/net/fisher/config/MvcConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/java/com/net/fisher/config/MvcConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/123123123.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/cats/cat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/dom1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/common1-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/common1-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/common1-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/common1-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/common1-5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure1-8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure2-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure2-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/lure2-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo1-9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo2-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/firstpage/onetwo2-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/Google1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/btn_google_light_normal_hdpi.9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/btn_google_signin_light_focus_hdpi.9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/btn_google_signin_light_normal_hdpi.9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/camera.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/camera1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/do.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/fishpic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/ge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/google.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/heart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/ji.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/kakao.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/kakao_login_large.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/pro.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/seagull.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/set.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/tank.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/icons/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/background1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/background2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/badabada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/bookcover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/cl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/cl1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/cover1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/fishbowl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/island.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/island2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/island3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/jge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/mainballoon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/mainballoon2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/mainballoon3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/mallpoong.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/mallpoong2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/images/mallpoong3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/json/dict.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/json/fish.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/assets/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/css/main.8033c9c7.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/css/main.8033c9c7.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/651.5ac6180b.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/651.5ac6180b.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/main.65a49e9c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/main.65a49e9c.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-simd-threaded.jsep.wasm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-simd-threaded.wasm" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-simd-threaded.wasm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-simd.jsep.wasm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-simd.wasm" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-simd.wasm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-threaded.wasm" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm-threaded.wasm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm.wasm" beforeDir="false" afterPath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/js/ort-wasm.wasm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/background1.b60c53749f0ea3291744.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/cat.047ede868e16a77e042b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/fishbowl.eb57eb04480ec3b78629.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/mallpoong.9576f69d3adbb1686361.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/mallpoong2.993000c4c2ccfb9ee15c.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/slick.2630a3e3eab21c607e21.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/slick.295183786cd8a1389865.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/slick.a4e97f5a2a64f0ab1323.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back/Spring/fisher/src/main/resources/static/static/media/slick.c94f7671dcc99dce43e2.ttf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +166,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
