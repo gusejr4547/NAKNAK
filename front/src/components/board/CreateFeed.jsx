@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./CreateFeed.css";
 import FeedTag from "./FeedTag";
 
 const CreateFeed = () => {
+  const navigate = useNavigate();
+
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [content, setContent] = useState("");
@@ -63,6 +65,11 @@ const CreateFeed = () => {
     }
   };
   const createFeed = async () => {
+    if (selectedFiles.length === 0 || selectedTags.length === 0) {
+      alert("이미지와 태그를 선택해주세요.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("content", content);
     formData.append("file", selectedFiles);
@@ -70,6 +77,7 @@ const CreateFeed = () => {
     console.log("formData", formData.data);
     try {
       setLoading(true);
+
       const response = await authorizedRequest({
         method: "post",
         url: `api1/api/posts/upload`,
@@ -80,6 +88,8 @@ const CreateFeed = () => {
       setContent("");
       setSelectedFiles([]);
       setSelectedTags([]);
+
+      navigate("/Board");
     } catch (error) {
       console.error("feed load error");
     } finally {

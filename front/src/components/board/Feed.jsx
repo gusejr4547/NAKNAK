@@ -192,11 +192,13 @@ const Feed = ({
           <div className="feed-insight">
             <div className="feed-likes ">{feedInfo.likeCount} likes</div>
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
-            <img
-              src={feedLikeState ? "/assets/icons/heart.png" : ""}
-              alt="하트"
-              onClick={likeClickHandler}
-            />
+            {feedInfo.memberId !== userId && (
+              <img
+                src={feedLikeState ? "/assets/icons/heart.png" : ""}
+                alt="하트"
+                onClick={likeClickHandler}
+              />
+            )}
           </div>
           <div className="feed-caption">{feedInfo.content}</div>
           <div className="feed-tags">
