@@ -10,6 +10,7 @@ import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
 import Board from "./components/board/Board";
+import ModifyFeed from "./components/board/ModifyFeed";
 
 import CreateFeed from "./components/board/CreateFeed";
 
@@ -33,7 +34,6 @@ import UserUpdate from "./components/account/Userupdate";
 
 import Checkbox from "./components/freshman/Checkbox";
 import Newbie from "./components/freshman/Newbie";
-
 
 function AppRouter(props) {
   return (
@@ -73,6 +73,7 @@ function AppRouter(props) {
             <Route path="/SeaScene" element={<SeaScene />}></Route>
             <Route path="/Board" element={<Board />}></Route>
             <Route path="/CreateFeed" element={<CreateFeed />}></Route>
+            <Route path="/ModifyFeed/:postId" element={<ModifyFeed />}></Route>
             {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
             <Route path="/Profile/:userId" element={<Profile />}></Route>
             <Route path="/Camera" element={<Camera />}></Route>

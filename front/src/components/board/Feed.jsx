@@ -124,7 +124,13 @@ const Feed = ({
 
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.memberId ? (
-            <Link to={`/FeedModify`} className="feed-modify">
+            <Link
+              to={{
+                pathname: `/ModifyFeed/${feedInfo.postId}`,
+                state: feedInfo.postId,
+              }}
+              className="feed-modify"
+            >
               수정
             </Link>
           ) : (
