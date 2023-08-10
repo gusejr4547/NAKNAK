@@ -111,27 +111,27 @@ public class PostController {
     }
 
     @PostMapping("/posts/likes")
-    public ResponseEntity<String> likePost(
+    public ResponseEntity likePost(
             @RequestParam(name = "post") Long postId,
             @RequestHeader(name = "Authorization") String token) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        postService.likePost(tokenId, postId);
+        long likeCount = postService.likePost(tokenId, postId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(likeCount, HttpStatus.OK);
     }
 
     @PostMapping("/posts/unlikes")
-    public ResponseEntity<String> unlikePost(
+    public ResponseEntity unlikePost(
             @RequestParam(name = "post") long postId,
             @RequestHeader(name = "Authorization") String token) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        postService.unlikePost(tokenId, postId);
+        long likeCount = postService.unlikePost(tokenId, postId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(likeCount, HttpStatus.OK);
     }
 
     @GetMapping("/tags")
@@ -196,4 +196,17 @@ public class PostController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/posts/search")
+    public ResponseEntity<PageResponse<PostDto.Response>> getPosts(
+            @RequestParam(value = "tag") long tagId,
+            @PageableDefault(size = 6, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<Post> postPage = postService.getPostByTag(pageable, tagId);
+
+        PageResponse<PostDto.Response> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toPostResponseDtos(postPage.getContent()));
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

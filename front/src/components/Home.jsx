@@ -1,15 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import { loginuser } from "../utils/atoms";
+import { loginuser, newbie_recoil, yolo_recoil } from "../utils/atoms";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // console.log(newbie);
+    setNewbie(newbieVersion);
+  }, [newbieVersion]);
+
+  const cameraClick = () => {
+    navigate("/Camera");
+  };
+
   const settings = {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
@@ -17,17 +30,23 @@ function Home({ newbieVersion }) {
     slidesToShow: 3, // 한 번에 보여질 슬라이드 수
     slidesToScroll: 3, // 스크롤할 슬라이드 수
     rows: 2,
-    swipe: true,
+    // swipe: true,
     prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    swipe: !newbieVersion,
   };
 
   return (
     <div className="home-container">
       <div className="home-image-container">
-        {newbieVersion ? (
+        {newbieVersion === 1 ? (
           <img
             src="assets/images/mainballoon2.png"
+            alt="mainimg import error"
+          />
+        ) : newbieVersion === 5 ? (
+          <img
+            src="assets/images/mainballoon3.png"
             alt="mainimg import error"
           />
         ) : (
@@ -48,11 +67,19 @@ function Home({ newbieVersion }) {
 
           {/* slide unit start*/}
           {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Fishpic" className="nav-link">
-              <img src="/assets/icons/camera.PNG" alt="icon" />
-              <h6>카메라</h6>
-            </Link>
+          <div
+            className={`home-slide ${
+              newbieVersion === 1 ? "non-clickable" : ""
+            }`}
+          >
+            {/* <Link to="/Fishpic" className="nav-link"> */}
+            <img
+              src="/assets/icons/camera.PNG"
+              alt="icon"
+              onClick={() => cameraClick()}
+            />
+            <h6>카메라</h6>
+            {/* </Link> */}
           </div>
           {/* slide unit end*/}
 
@@ -87,12 +114,18 @@ function Home({ newbieVersion }) {
           {/* slide unit end*/}
 
           {/* slide unit start*/}
-          <div className="home-slide">
-            <Link
+          {/* <div className="home-slide"> */}
+          <div
+            className={`home-slide ${
+              newbieVersion === 5 ? "non-clickable" : ""
+            }`}
+          >
+            <Link to="/Map" className="nav-link">
+              {/* <Link
               to="/Map"
               state={{ newbieVersionProp: newbieVersion }}
               className="nav-link"
-            >
+            > */}
               <img src="/assets/icons/ji.PNG" alt="icon" />
               <h6>지도</h6>
             </Link>
@@ -127,9 +160,12 @@ function Home({ newbieVersion }) {
 
           {/* dummy data start*/}
           {/* <div className="home-slide"> */}
+
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>dummy</h6>
+            <Link to="/Dict" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>사전</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />

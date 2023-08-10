@@ -64,15 +64,6 @@ function Login(props) {
     navigate("/Signup");
   };
 
-  const logout = () => {
-    setUserData(undefined);
-    console.log(userData);
-    setAccessToken(undefined);
-    console.log(accesstoken);
-    localStorage.setItem("key", undefined);
-    const tt = localStorage.getItem("key");
-    console.log(tt);
-  };
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
@@ -195,13 +186,6 @@ function Login(props) {
             value="로그인"
             style={{ margin: "auto" }}
             onClick={loginHandleClick}
-          />
-          <Button
-            as="input"
-            type="button"
-            value="로그아웃"
-            style={{ margin: "auto" }}
-            onClick={logout}
           />
         </div>
       </div>

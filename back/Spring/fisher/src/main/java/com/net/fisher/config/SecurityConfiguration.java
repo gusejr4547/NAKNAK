@@ -62,8 +62,12 @@ public class SecurityConfiguration {
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
                         .requestMatchers(toH2Console()).permitAll() // H2 Console 에 대한 모든 접근을 허용하기 위한 메서드
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
+                        .requestMatchers("/static/*").permitAll()
+                        .requestMatchers("/model/*").permitAll()
+                        .requestMatchers("/assets/*").permitAll()
                         .requestMatchers("/oauth2/*").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/reissue").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/members/register**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/fishes/catch").hasRole("USER")

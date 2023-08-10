@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8033c9c7.css",
+    "main.js": "/static/js/main.5174b273.js",
+    "static/js/651.5ac6180b.chunk.js": "/static/js/651.5ac6180b.chunk.js",
+    "static/js/ort-wasm-simd-threaded.jsep.wasm": "/static/js/ort-wasm-simd-threaded.jsep.wasm",
+    "static/js/ort-wasm-simd.jsep.wasm": "/static/js/ort-wasm-simd.jsep.wasm",
+    "static/js/ort-wasm-simd.wasm": "/static/js/ort-wasm-simd.wasm",
+    "static/js/ort-wasm-simd-threaded.wasm": "/static/js/ort-wasm-simd-threaded.wasm",
+    "static/js/ort-wasm.wasm": "/static/js/ort-wasm.wasm",
+    "static/js/ort-wasm-threaded.wasm": "/static/js/ort-wasm-threaded.wasm",
+    "static/media/fishbowl.png": "/static/media/fishbowl.eb57eb04480ec3b78629.png",
+    "static/media/cat.png": "/static/media/cat.047ede868e16a77e042b.png",
+    "static/media/background1.png": "/static/media/background1.b60c53749f0ea3291744.png",
+    "static/media/mallpoong2.png": "/static/media/mallpoong2.993000c4c2ccfb9ee15c.png",
+    "static/media/mallpoong.png": "/static/media/mallpoong.9576f69d3adbb1686361.png",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "main.8033c9c7.css.map": "/static/css/main.8033c9c7.css.map",
+    "main.5174b273.js.map": "/static/js/main.5174b273.js.map",
+    "651.5ac6180b.chunk.js.map": "/static/js/651.5ac6180b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8033c9c7.css",
+    "static/js/main.5174b273.js"
+  ]
+}

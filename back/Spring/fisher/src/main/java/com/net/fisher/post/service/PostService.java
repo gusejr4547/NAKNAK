@@ -135,7 +135,7 @@ public class PostService {
                 tag = tagRepository.save(tag);
                 newTags.add(tag);
             } else {
-                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
+                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
                 newTags.add(tag);
             }
         }
@@ -157,6 +157,16 @@ public class PostService {
             postTagRepository.save(postTag);
         }
 
+        // 이미지 삭제 할 것 있으면 삭제
+        for(long id : postPatchDto.getDeleteImageList()){
+            deleteImage(id);
+        }
+    }
+
+    @Transactional
+    public void deleteImage(long fileId) {
+        PostImage postImage = postImageRepository.findById(fileId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
+        postImageRepository.delete(postImage);
     }
 
     @Transactional
@@ -196,7 +206,7 @@ public class PostService {
     }
 
     @Transactional
-    public void likePost(long tokenId, long postId) {
+    public long likePost(long tokenId, long postId) {
 
         Member member = memberRepository.findById(tokenId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -215,10 +225,12 @@ public class PostService {
         post.setLikes(likes);
 
         postRepository.save(post);
+
+        return post.getLikes();
     }
 
     @Transactional
-    public void unlikePost(long tokenId, long postId) {
+    public long unlikePost(long tokenId, long postId) {
         Like like = likeRepository.findByMemberIdAndPostId(tokenId, postId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
 
         likeRepository.delete(like);
@@ -228,6 +240,8 @@ public class PostService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
         post.setLikes(likes);
         postRepository.save(post);
+
+        return post.getLikes();
     }
 
     public long getLikeCount(long postId) {
@@ -329,5 +343,11 @@ public class PostService {
         Collections.sort(totalPost, (e1, e2) -> e2.getRegisteredAt().compareTo(e1.getRegisteredAt()));
 
         return totalPost;
+    }
+
+    public Page<Post> getPostByTag(Pageable pageable, long tagId){
+        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+
+        return postRepository.findByTag(pageable, tag);
     }
 }

@@ -7,9 +7,8 @@ import { useRecoilState } from "recoil";
 import {
   mapModal_recoil,
   fishingInfo_recoil,
-  myLocation_recoil,
+  newbie_recoil,
 } from "../../utils/atoms";
-import { useLocation } from "react-router-dom";
 
 import axios from "../../api/SeaAPI";
 
@@ -26,14 +25,17 @@ function Map() {
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [myLocation, setMyLocation] = useState(null);
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [step, setStep] = useState(1);
+
   // 현재 내 위치 받아오기 그리고 저장하기
   let Lat = 35.181473;
   let Lng = 129.211389;
-  // 뉴비버전
-  const location = useLocation();
-  const newbieVersionProp = location.state
-    ? location.state.newbieVersionProp
-    : false;
+
+  // 뉴비버젼
+  const next = () => {
+    setStep(step + 1);
+  };
 
   const Search = (event) => {
     if (event.key === "Enter") {
@@ -86,12 +88,10 @@ function Map() {
       // 위치 이동 함수
       function panTo(move_lat, move_lng) {
         const moveLatLon = new kakao.maps.LatLng(move_lat, move_lng);
-        console.log(moveLatLon);
         map.panTo(moveLatLon);
       }
       if (myLocation) {
         panTo(myLocation.lat, myLocation.lng);
-        console.log("저기");
       }
 
       // 낚시스팟 마커 생성
@@ -232,10 +232,15 @@ function Map() {
               api: api,
               mmaf: markerPosition.mmaf,
               mmsi: markerPosition.mmsi,
+              title: markerPosition.title,
             });
           } else if (api === "badanuri") {
             // console.log(markerPosition);
-            fetchData({ api: api, ObsCode: markerPosition.obsCode });
+            fetchData({
+              api: api,
+              ObsCode: markerPosition.obsCode,
+              title: markerPosition.title,
+            });
           }
           // 모달을 만들어보자
           // setModalOpen(true);
@@ -257,6 +262,7 @@ function Map() {
             );
             const new_data = [
               {
+                TITLE: props.title,
                 MMSI_NM: response.data.result.meta.obs_post_name,
                 AIR_TEMPERATURE: response.data.result.data.air_temp,
                 LATITUDE: response.data.result.meta.obs_lat,
@@ -286,17 +292,21 @@ function Map() {
 
   return (
     <div>
-      {newbieVersionProp ? (
+      {!modalOpen && newbie ? (
         <div className="map-newbie-talk-box">
-          {Talk2[1].content}{" "}
+          {Talk2[step].content}{" "}
           <div
             className="next"
-            onClick={() =>
-              setMyLocation({
-                lat: Talk2[1]?.spot_lat,
-                lng: Talk2[1]?.spot_lng,
-              })
-            }
+            onClick={() => {
+              if (step === 1) {
+                setMyLocation({
+                  lat: Talk2[1]?.spot_lat,
+                  lng: Talk2[1]?.spot_lng,
+                });
+                next();
+              } else {
+              }
+            }}
           >
             다음 &gt;
           </div>
