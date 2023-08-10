@@ -4,6 +4,7 @@ import com.net.fisher.auth.jwt.JwtTokenizer;
 import com.net.fisher.fishinghole.dto.FavoritePointDto;
 import com.net.fisher.fishinghole.dto.FishingHoleDto;
 import com.net.fisher.fishinghole.entity.FavoritePoint;
+import com.net.fisher.fishinghole.entity.FishingHole;
 import com.net.fisher.fishinghole.mapper.FishingHoleMapper;
 import com.net.fisher.fishinghole.service.FishingHoleService;
 import lombok.RequiredArgsConstructor;
@@ -64,5 +65,16 @@ public class FishingHoleController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/fishingholes/favorites")
+    public ResponseEntity<List<FishingHoleDto.Response>> getFavoritePointOfMember(
+            @RequestHeader("Authorization") String token){
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        List<FishingHole> fishingHoles = fishingHoleService.findFavoriteFishingHoleOfMember(tokenId);
+
+        return new ResponseEntity<>(fishingHoleMapper.toResponseDtos(fishingHoles),HttpStatus.OK);
+    }
+
 
 }

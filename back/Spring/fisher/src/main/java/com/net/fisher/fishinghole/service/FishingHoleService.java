@@ -132,8 +132,15 @@ public class FishingHoleService {
         favoritePointRepository.delete(favoritePoint);
     }
 
+    public List<FishingHole> findFavoriteFishingHoleOfMember(long memberId){
+        Member member = memberService.findMember(memberId);
+
+        return fishingHoleRepository.findFishingHolesOfMember(member);
+    }
+
     private FavoritePoint findFavoritePointById(long favoriteId){
         return favoritePointRepository.findById(favoriteId).orElseThrow(()->new BusinessLogicException(ExceptionCode.FAVORITEPOINTS_NOT_FOUND));
     }
+
 
 }
