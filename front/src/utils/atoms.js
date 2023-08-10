@@ -47,6 +47,10 @@ export const myLocation_recoil = atom({
   key: "myLocation_recoil",
   default: {},
 });
+export const mooltae_recoil = atom({
+  key: "mooltae_recoil",
+  default: 0,
+});
 
 export const newbie_recoil = atom({
   key: "newbie_recoil",
