@@ -19,6 +19,10 @@ export const profileData_recoil = atom({
   key: "profileData_recoil",
   default: {},
 });
+export const favoritePoint_recoil = atom({
+  key: "favoritePoint_recoil",
+  default: {},
+});
 
 export const fishingMode_recoil = atom({
   key: "fishingMode_recoil",

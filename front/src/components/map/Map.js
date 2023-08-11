@@ -175,7 +175,7 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("badanuri", fishingSpots[i])
+          makeOverListener("badanuri", fishingSpots[i], i + 114)
         );
       }
 
@@ -218,7 +218,7 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("badanuri", badanuriPositions[i])
+          makeOverListener("badanuri", badanuriPositions[i], i + 76)
         );
       }
 
@@ -240,7 +240,6 @@ function Map() {
         const overlay = new kakao.maps.CustomOverlay({
           content: markerPositions[i].content,
           title: markerPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-
           map: map,
           position: marker.getPosition(),
         });
@@ -262,11 +261,11 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("sea", markerPositions[i])
+          makeOverListener("sea", markerPositions[i], i + 1)
         );
       }
 
-      function makeOverListener(api, markerPosition) {
+      function makeOverListener(api, markerPosition, pk) {
         return function () {
           // infowindow.open(map, marker);
 
@@ -274,6 +273,7 @@ function Map() {
           if (api === "sea") {
             fetchData({
               api: api,
+              pk: pk,
               mmaf: markerPosition.mmaf,
               mmsi: markerPosition.mmsi,
               title: markerPosition.title,
@@ -284,6 +284,7 @@ function Map() {
             // console.log(markerPosition);
             fetchData({
               api: api,
+              pk: pk,
               ObsCode: markerPosition.obsCode,
               title: markerPosition.title,
               lat: markerPosition.lat,
@@ -303,11 +304,15 @@ function Map() {
             const response = await axios.get(
               `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
             );
-            setData(response.data.result.recordset);
+            const id = { ID: props.pk };
+            const new_data = [...response.data.result.recordset, id];
+            // setData(response.data.result.recordset);
+            setData(new_data);
           } else if (props.api === "badanuri") {
             const response = await bada_axios.get(
               `buObsRecent/search.do?ObsCode=${props.ObsCode}`
             );
+
             const new_data = [
               {
                 TITLE: props.title,
@@ -321,6 +326,9 @@ function Map() {
                 WAVE_HEIGHT: response.data.result.data.wave_height,
                 SALINITY: response.data.result.data.Salinity,
                 WATER_TEMPER: response.data.result.data.water_temp,
+              },
+              {
+                ID: props.pk,
               },
             ];
             setData(new_data);
