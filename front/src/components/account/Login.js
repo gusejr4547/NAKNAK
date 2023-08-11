@@ -34,14 +34,10 @@ function Login(props) {
     "http://passportlkm.iptime.org:20101/login/oauth2/code/kakao";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-<<<<<<< HEAD
-  const latitude = localStorage.getItem("latitude");
-  const longitude = localStorage.getItem("longitude");
-  
-=======
+
   //뉴비버젼 유무
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
->>>>>>> origin/develop
+
 
   // useEffect(() => {
   //   if (accesstoken) {
