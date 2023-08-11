@@ -14,31 +14,40 @@ function Footer(props) {
   return (
     <nav className="nav-wrapper">
       <div>
-        <FontAwesomeIcon
-          icon="home"
-          className={activeNav === 1 ? "nav-item nav-active" : "nav-item"}
-        >
-          {" "}
-          {!newbie && (
-            <Link to="/" className="nav-link" onClick={() => setActiveNav(1)} />
-          )}
-        </FontAwesomeIcon>
+        {!newbie ? (
+          <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
+            <FontAwesomeIcon
+              icon="home"
+              className={activeNav === 1 ? "nav-item nav-active" : "nav-item"}
+            />
+          </Link>
+        ) : (
+          <FontAwesomeIcon
+            icon="home"
+            className={activeNav === 1 ? "nav-item nav-active" : "nav-item"}
+          />
+        )}
       </div>
       <div
         className={fishingMode === "selectMode" ? "nav-basic" : "nav-hidden"}
       >
-        <FontAwesomeIcon
-          icon="fish"
-          className={activeNav === 2 ? "nav-item nav-active" : "nav-item"}
-        >
-          {!newbie && (
-            <Link
-              to="/fishing"
-              className="nav-link"
-              onClick={() => setActiveNav(2)}
+        {!newbie ? (
+          <Link
+            to="/fishing"
+            className="nav-link"
+            onClick={() => setActiveNav(2)}
+          >
+            <FontAwesomeIcon
+              icon="fish"
+              className={activeNav === 2 ? "nav-item nav-active" : "nav-item"}
             />
-          )}
-        </FontAwesomeIcon>
+          </Link>
+        ) : (
+          <FontAwesomeIcon
+            icon="fish"
+            className={activeNav === 2 ? "nav-item nav-active" : "nav-item"}
+          />
+        )}
       </div>
 
       <div

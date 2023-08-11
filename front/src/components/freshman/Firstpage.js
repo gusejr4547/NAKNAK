@@ -6,7 +6,7 @@ import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { useRecoilState } from "recoil";
-import { profileData_recoil } from "../../utils/atoms";
+import { profileData_recoil, newbie_recoil } from "../../utils/atoms";
 
 function Firstpage({ handleChangeParentState }) {
   const [step, setStep] = useState(0);
@@ -14,6 +14,8 @@ function Firstpage({ handleChangeParentState }) {
   const navigate = useNavigate();
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
 
+  //뉴비버젼 유무
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   // 리코일이 변경됐는지 확인
   // useEffect(() => {
   //   console.log("유저리코일", profileData);
@@ -21,7 +23,7 @@ function Firstpage({ handleChangeParentState }) {
 
   // 뉴비 상태 변경
   // 0 : 뉴비 아님 1 : 원투  2: 루어
-  const newbie = async (status) => {
+  const newbieStauts = async (status) => {
     try {
       await authorizedRequest({
         method: "post",
@@ -72,7 +74,7 @@ function Firstpage({ handleChangeParentState }) {
       // 원투낚시
       setStep(7);
       setShow(false);
-      newbie(1);
+      newbieStauts(1);
       handleUpgradeProgress(20);
       setTimeout(() => {
         handleChangeParentState("Onetwo");
@@ -81,12 +83,13 @@ function Firstpage({ handleChangeParentState }) {
     } else if (step === 5) {
       setShow(false);
       // 뉴비아님
-      newbie(0);
+      newbieStauts(0);
       setStep(8);
+      setNewbie(false);
+      handleUpgradeProgress(100);
       setTimeout(() => {
         navigate("/");
       }, 3000);
-      handleUpgradeProgress(100);
     }
   };
   const btn2 = () => {
@@ -99,7 +102,7 @@ function Firstpage({ handleChangeParentState }) {
     } else if (step === 3) {
       setStep(6);
       setShow(false);
-      newbie(2);
+      newbieStauts(2);
       handleUpgradeProgress(20);
       setTimeout(() => {
         handleChangeParentState("Lure");
@@ -109,7 +112,7 @@ function Firstpage({ handleChangeParentState }) {
       // 루어낚시
       setStep(6);
       setShow(false);
-      newbie(2);
+      newbieStauts(2);
       handleUpgradeProgress(20);
       setTimeout(() => {
         handleChangeParentState("Lure");
