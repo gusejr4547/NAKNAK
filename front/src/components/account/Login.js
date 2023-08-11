@@ -174,6 +174,7 @@ function Login(props) {
         `/api1/oauth2/authorization/${provider}`
         // "/api1/oauth2/authorization/google"
       );
+      //window.location.href = `/api1/oauth2/authorization/${provider}`;
       setUserData(response.data);
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
@@ -283,10 +284,10 @@ function Login(props) {
         ></Button>
 
          
-        <a href={`/api1/oauth2/authorization/kakao`}>  
+       
         <Button
           as="input"
-          //onClick={() => socialLoginHandler("kakao")}
+          onClick={() => socialLoginHandler("kakao")}
           type="button"
           value=""
           style={{
@@ -299,7 +300,7 @@ function Login(props) {
             backgroundPosition: "center",
           }}
         ></Button>
-        </a>
+        
         <a
           // href={KAKAO_AUTH_URL}
           href="api1/oauth2/authorization/google"
