@@ -39,6 +39,14 @@ const CreateFeed = () => {
   }, []);
 
   const fileChangeHandler = (e) => {
+    //입력되는 이미지의 요소 중 fileId 는 직접 인덱싱한것..?
+    // "fileId": 1,
+    // "fileName": "image (1).png",
+    // "fileSize": 36951,
+    // "fileContentType": "image/png",
+    // "fileUrl": "
+    console.log(e);
+
     setSelectedFiles((prevFiles) => [
       ...prevFiles,
       ...Array.from(e.target.files),
@@ -72,13 +80,16 @@ const CreateFeed = () => {
 
     const formData = new FormData();
     formData.append("content", content);
-    formData.append("file", selectedFiles);
+    selectedFiles.forEach((file) => {
+      formData.append("file", file);
+    });
     formData.append("tags", selectedTags);
     console.log("formData", formData.data);
     try {
       setLoading(true);
 
       const response = await authorizedRequest({
+        header: { "Content-Type": "multipart/form-data" },
         method: "post",
         url: `api1/api/posts/upload`,
         data: formData,
