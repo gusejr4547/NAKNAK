@@ -8,6 +8,7 @@ import {
   mapModal_recoil,
   fishingInfo_recoil,
   newbie_recoil,
+  mooltae_recoil,
 } from "../../utils/atoms";
 
 import axios from "../../api/SeaAPI";
@@ -27,6 +28,47 @@ function Map() {
   const [myLocation, setMyLocation] = useState(null);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(1);
+  const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
+  const lunar = require("cky-lunar-calendar");
+
+  // 음력 날짜구하기
+  function lunarDate() {
+    let now = new Date();
+
+    let dateLunar = lunar.solar2Lunar(
+      now.getDate(),
+      now.getMonth() + 1,
+      now.getFullYear()
+    );
+    let day = dateLunar[0];
+    day += 6;
+    while (day >= 15) {
+      day -= 15;
+    }
+
+    return day;
+  }
+  const luna = lunarDate();
+
+  function mool(day, lng) {
+    // 기준점 34.326232, 126.528165
+    // 서해임 => 7물때식
+    if (lng < 126.528165) {
+      if (day === 0) {
+        setMooltae("무시 (7물때식)");
+      } else if (day === 14) {
+        setMooltae("조금 (7물때식)");
+      } else {
+        setMooltae(day + "물 (7물때식)");
+      }
+    } else {
+      if (day === 14) {
+        setMooltae("조금 (8물때식)");
+      } else {
+        setMooltae(day + 1 + "물 (8물때식)");
+      }
+    }
+  }
 
   // 현재 내 위치 받아오기 그리고 저장하기
   let Lat = 35.181473;
@@ -133,7 +175,7 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("badanuri", fishingSpots[i])
+          makeOverListener("badanuri", fishingSpots[i], i + 114)
         );
       }
 
@@ -176,7 +218,7 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("badanuri", badanuriPositions[i])
+          makeOverListener("badanuri", badanuriPositions[i], i + 76)
         );
       }
 
@@ -197,6 +239,7 @@ function Map() {
 
         const overlay = new kakao.maps.CustomOverlay({
           content: markerPositions[i].content,
+          title: markerPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
           map: map,
           position: marker.getPosition(),
         });
@@ -218,11 +261,11 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("sea", markerPositions[i])
+          makeOverListener("sea", markerPositions[i], i + 1)
         );
       }
 
-      function makeOverListener(api, markerPosition) {
+      function makeOverListener(api, markerPosition, pk) {
         return function () {
           // infowindow.open(map, marker);
 
@@ -230,16 +273,22 @@ function Map() {
           if (api === "sea") {
             fetchData({
               api: api,
+              pk: pk,
               mmaf: markerPosition.mmaf,
               mmsi: markerPosition.mmsi,
               title: markerPosition.title,
+              lat: markerPosition.lat,
+              lng: markerPosition.lng,
             });
           } else if (api === "badanuri") {
             // console.log(markerPosition);
             fetchData({
               api: api,
+              pk: pk,
               ObsCode: markerPosition.obsCode,
               title: markerPosition.title,
+              lat: markerPosition.lat,
+              lng: markerPosition.lng,
             });
           }
           // 모달을 만들어보자
@@ -255,11 +304,15 @@ function Map() {
             const response = await axios.get(
               `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
             );
-            setData(response.data.result.recordset);
+            const id = { ID: props.pk };
+            const new_data = [...response.data.result.recordset, id];
+            // setData(response.data.result.recordset);
+            setData(new_data);
           } else if (props.api === "badanuri") {
             const response = await bada_axios.get(
               `buObsRecent/search.do?ObsCode=${props.ObsCode}`
             );
+
             const new_data = [
               {
                 TITLE: props.title,
@@ -274,10 +327,14 @@ function Map() {
                 SALINITY: response.data.result.data.Salinity,
                 WATER_TEMPER: response.data.result.data.water_temp,
               },
+              {
+                ID: props.pk,
+              },
             ];
             setData(new_data);
             // console.log(response.data.result.data);
           }
+          mool(luna, props.lng);
           // 모달열기
           setModalOpen(true);
         } catch (e) {

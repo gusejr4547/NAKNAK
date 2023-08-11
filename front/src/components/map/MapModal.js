@@ -5,9 +5,11 @@ import {
   mapModal_recoil,
   fishingInfo_recoil,
   newbie_recoil,
-  token,
+  mooltae_recoil,
+  favoritePoint_recoil,
 } from "../../utils/atoms";
 import { useNavigate } from "react-router-dom";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import Talk2 from "../freshman/Talk2";
 import upgradeProgress from "../freshman/upgradeProgress";
@@ -17,9 +19,25 @@ const MapModal = () => {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(3);
-  const [accesstoken, setAccesstoken] = useRecoilState(token);
+  const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
+  const [favoritePoint, setFavoritePoint] =
+    useRecoilState(favoritePoint_recoil);
   const navigate = useNavigate();
-
+  // favorite 유무
+  const [like, setLike] = useState(() => {
+    console.log(favoritePoint);
+    for (let i = 0; i < favoritePoint.length; i++) {
+      console.log(i);
+      // 이미 즐겨찾기가 되어있다면
+      console.log("여기", favoritePoint[i].fishingHoleId);
+      console.log("저기", data[1].ID);
+      if (favoritePoint[i].fishingHoleId === data[1].ID) {
+        return i;
+      }
+    }
+    return false;
+  });
+  console.log(like);
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
@@ -31,15 +49,59 @@ const MapModal = () => {
   // 뉴비버젼
   const next = () => {
     if (step === 4) {
+      setModalOpen(false);
       navigate("/Newbie", { state: 5 });
+      handleUpgradeProgress(60);
     }
     setStep(step + 1);
-    handleUpgradeProgress(60);
   };
 
   useEffect(() => {
     return () => {};
   }, [data]);
+
+  // 장소 좋아요
+  const likeLocation = async () => {
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/fishingholes/favorites/register",
+        data: { fishingHoleId: data[1].ID },
+      });
+      console.log(response);
+      setLike(favoritePoint.length);
+      const new_data = {
+        fishingHoleId: data[1].ID,
+        title: data[0].TITLE ? data[0].TITLE : data[0].MMSI_NM,
+        latitude: data[0].LATITUDE,
+        longitude: data[0].LONGITUDE,
+      };
+      setFavoritePoint([...favoritePoint, new_data]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 장소 좋아요취소
+  const unlikeLocation = async () => {
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/fishingholes/favorites/cancel",
+        data: { favoritePointId: like },
+      });
+      console.log(response);
+      const new_data = favoritePoint.filter(
+        (item) => item.fishingHoleId !== data[1].ID
+      );
+      setFavoritePoint(new_data);
+      setLike(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {}, [like]);
 
   return (
     <div className="presentation" role="presentation">
@@ -61,6 +123,16 @@ const MapModal = () => {
         <span onClick={() => setModalOpen(false)} className="modal-close">
           X
         </span>
+        {/* 즐겨찾기 버튼 */}
+        {like === false ? (
+          <span onClick={() => likeLocation()} className="like-location">
+            star{like}
+          </span>
+        ) : (
+          <span onClick={() => unlikeLocation()} className="unlike-location">
+            unstar {like}
+          </span>
+        )}
 
         <div className={`modal-title ${newbie ? "newbie-data" : ""}`}>
           {data[0].TITLE ? data[0].TITLE : data[0].MMSI_NM}
@@ -76,6 +148,7 @@ const MapModal = () => {
           {data[0].WATER_TEMPER && <p>수온: {data[0].WATER_TEMPER}</p>}
           {data[0].WAVE_HEIGHT && <p>파고: {data[0].WAVE_HEIGHT}</p>}
           {data[0].SALINITY && <p>염분: {data[0].SALINITY}</p>}
+          <p>물때 : {mooltae}</p>
         </div>
       </div>
     </div>

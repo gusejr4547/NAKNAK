@@ -11,6 +11,7 @@ import Mypost from "./Mypost";
 import Profileinventory from "./Profileinventory";
 import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import ProfileModal from "./ProfileModal";
 
 function Profile(props) {
   const userId = useParams().userId;
@@ -21,6 +22,13 @@ function Profile(props) {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const [activeView, setActiveView] = useState("myPosts");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
   const handleToggle = (view) => {
     setActiveView(view);
   };
@@ -86,7 +94,8 @@ function Profile(props) {
               className="profileImg"
               src={
                 profileData.memberResponse.memberImage?.fileUrl
-                  ? profileData.memberResponse.memberImage?.fileUrl
+                  ? `${process.env.REACT_APP_BACKEND_URL}/` +
+                    `${profileData.memberResponse.memberImage?.fileUrl}`
                   : "/assets/cats/cat.png"
               }
               alt="profileimg"
@@ -94,7 +103,15 @@ function Profile(props) {
             />
           </div>
         </div>
-        <img className="profilesetting" src="/assets/icons/set.png" alt="" />
+        <img
+          className="profilesetting"
+          src="/assets/icons/set.png"
+          alt=""
+          onClick={showModal}
+        />
+        {modalOpen && (
+          <ProfileModal closeModal={setModalOpen} data={profileData} />
+        )}
         <div
           className="profilefollowContainer"
           style={{

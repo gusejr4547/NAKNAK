@@ -143,7 +143,7 @@ public class MemberService {
             savingMember.setMemberImage(memberImage);
             return savingMember;
         } catch (BusinessLogicException e) {
-            throw new BusinessLogicException(ExceptionCode.EMAIL_ALREADY_EXISTS);
+            throw new BusinessLogicException(e.getExceptionCode());
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_MEMBER);

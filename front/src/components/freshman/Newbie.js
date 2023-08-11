@@ -3,12 +3,20 @@ import Home from "../Home";
 import "./Newbie.css";
 import Talk2 from "./Talk2";
 import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { newbie_recoil } from "../../utils/atoms";
 
 function Newbie() {
   let newbieVersion = 1;
   const { state } = useLocation();
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+
+  // 뉴비버젼 홈화면 스테이트가 1 또는 5로 되어있음
+  // 1=> 지도 이동 해주는 거
+  // 5 => 카메라 이동 해주는 거
   if (state) {
     newbieVersion = state;
+    setNewbie(state);
   }
   return (
     <div className="newbie-wrapper">

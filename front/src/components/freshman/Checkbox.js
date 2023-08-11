@@ -1,11 +1,18 @@
-import { React, useState } from "react";
-import { useRecoilState } from "recoil";
-import Talk2 from "./Talk2";
+import React, { useState } from "react";
 import "./Checkbox.css";
 import Checklist from "./Checklist";
+import { useRecoilState } from "recoil";
+import upgradeProgress from "../freshman/upgradeProgress";
+import { newbie_recoil, profileData_recoil } from "../../utils/atoms";
+import Talk2 from "../freshman/Talk2";
+import { authorizedRequest } from "../account/AxiosInterceptor";
+import { useNavigate } from "react-router-dom";
 
 function Checkbox() {
-  const [number, setNumber] = useState(1);
+  const navigate = useNavigate();
+  const [step, setStep] = useState(9);
+  const [profileData, setProfileData] = useRecoilState(profileData_recoil);
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [item, setItem] = useState("");
   const [items, setItems] = useState(() => {
     const storedItems = localStorage.getItem("items");
@@ -17,12 +24,13 @@ function Checkbox() {
           { id: 3, text: "장소찾기", completed: false },
         ];
   });
+
   const addItem = () => {
     if (item.trim() !== "") {
       const newItem = { id: Date.now(), text: item, completed: false };
       setItems([...items, newItem]);
-      setItem("");
       localStorage.setItem("items", JSON.stringify([...items, newItem]));
+      setItem("");
     }
   };
 
@@ -35,28 +43,57 @@ function Checkbox() {
   };
 
   const removeItem = (id) => {
-    const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
-    localStorage.setItem("items", JSON.stringify(updatedItems));
+    const removeedItems = items.filter((item) => item.id !== id);
+    setItems(removeedItems);
+    localStorage.setItem("items", JSON.stringify(removeedItems));
+  };
+
+  // 뉴비 상태 변경
+  // 0 : 뉴비 아님 1 : 원투  2: 루어
+  const newbieState = async (status) => {
+    try {
+      await authorizedRequest({
+        method: "post",
+        url: "/api1/api/members/status/newbie",
+        data: { isNewbie: status },
+      });
+      // 뉴비 상태 변경된 값 리코일도 변경해주기
+      setProfileData((prevData) => ({
+        ...prevData,
+        memberStatusResponse: {
+          ...prevData.memberStatusResponse,
+          isNewBie: status,
+        },
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 뉴비 튜토리얼 업그레이드
+  const handleUpgradeProgress = async (status) => {
+    try {
+      const response = await upgradeProgress(status);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const next = () => {
+    // 뉴비 해제 axios 보내기 및 현재 newbie false 적용하기.
+    if (step === 9) {
+      setStep(step + 1);
+    } else {
+      newbieState(0);
+      handleUpgradeProgress(100);
+      setNewbie(false);
+      navigate("/");
+    }
   };
 
   return (
-    <div className="checkbox_wrapper">
+    <div className="checkbox-wrapper">
       <div>
-        <div className="checkbox_input">
-          <input
-            type="text"
-            placeholder="추가로 할 일을 입력해주세요."
-            className="checkbox_inputbox"
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-          />
-          <span className="check_btn">
-            <button type="submit" onClick={addItem}>
-              추가
-            </button>
-          </span>
-        </div>
         <div className="checklist">
           {items.map((item) => (
             <Checklist
@@ -68,6 +105,32 @@ function Checkbox() {
             />
           ))}
         </div>
+        <div className="checkbox-input">
+          <input
+            type="text"
+            placeholder="추가로 할 일을 입력해주세요."
+            className="checkbox-inputbox"
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
+          />
+          <button className="check-btn" type="submit" onClick={addItem}>
+            추가
+          </button>
+        </div>
+        {/* 뉴비버전 */}
+        {newbie && (
+          <div className="checkbox-newbie-talk-box">
+            {Talk2[step].content}
+            <div
+              className="next"
+              onClick={() => {
+                next();
+              }}
+            >
+              다음 &gt;
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
