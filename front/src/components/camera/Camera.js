@@ -13,6 +13,7 @@ import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import Talk2 from "../freshman/Talk2";
 import "./Camera.css";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 const Camera = () => {
   // useEffect(() => {
@@ -203,6 +204,54 @@ const Camera = () => {
   };
   // console.log(session);
 
+  const uploadImage = async () => {
+    const canvas = image;
+    const context = canvas.getContext("2d");
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    // 캡처한 이미지를 Blob으로 변환
+    const imageBlob = await new Promise((resolve) => {
+      image.toBlob((blob) => {
+        resolve(blob);
+      }, "image/jpg");
+    });
+
+    // 이미지 파일 생성
+    const imageFile = new File([imageBlob], "fish.jpg", {
+      type: "image/jpg",
+    });
+
+    // 이미지 파일을 FormData에 추가
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    console.log(formData.get("image"));
+
+    const header = {
+      "Content-Type": "multipart/form-data",
+    };
+
+    try {
+      // 이미지 데이터를 서버로 전송
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/fishes/upload",
+        data: formData,
+        headers: header,
+      });
+      // 서버로부터 응답을 받고 처리할 로직 추가 가능
+      console.log("서버 응답:", response.data);
+      // if (fishingMode !== "selectMode") {
+      //   setGetFish(getFish + 1);
+      // }
+
+      // setfishImg(response.data);
+      // 서버로부터 응답받은 이미지 URL을 저장
+      // stopCamera();
+    } catch (error) {
+      console.error("이미지 업로드 오류:", error);
+    }
+  };
+
   return (
     <div className="camera">
       {/* 뉴비모드 시작 */}
@@ -234,7 +283,16 @@ const Camera = () => {
             <img
               src={lastCapturedImage}
               alt="Last Captured"
-              style={{ maxWidth: "100%" }}
+              style={{
+                maxWidth: "100%",
+                display: "block",
+                // transform: "rotate(90deg)",
+                height: "100%",
+                objectFit: "fill",
+                width: "100%",
+                maxWidth: "800px",
+                margin: "0 auto",
+              }}
             />
           </div>
         ) : (
@@ -250,7 +308,7 @@ const Camera = () => {
               display: "block",
               // transform: "rotate(90deg)",
               height: "100%",
-              // objectFit: "cover",
+              objectFit: "fill",
               width: "100%",
               maxWidth: "800px",
               margin: "0 auto",
@@ -350,6 +408,7 @@ const Camera = () => {
           )}
         </div>
       )}
+      <button onClick={() => uploadImage()}>123</button>
     </div>
   );
 };

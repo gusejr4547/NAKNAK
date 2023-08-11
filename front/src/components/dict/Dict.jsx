@@ -20,6 +20,18 @@ function Dict(props) {
   const [searchData, setSearchData] = useState([]);
   const [lodata, setlodata] = useState("");
 
+  const [message, setMessage] = useState("");
+
+  const fetchDataFromFlutter = () => {
+    // Call the JavaScript function defined in the WebView.
+    window.requestFlutterData();
+  };
+
+  // Define the function to receive data from Flutter.
+  window.receiveDataFromFlutter = (data) => {
+    setMessage(data);
+  };
+
   const getlocation = () => {
     console.log(123);
     // 리액트 웹 앱의 JavaScript 코드
@@ -103,6 +115,35 @@ function Dict(props) {
       setinputData(Data);
     }
   };
+
+  function getLocation() {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        const now = new Date();
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setlodata(position.coords.latitude, position.coords.longitude);
+            resolve({
+              err: 0,
+              time: now.toLocaleTimeString(),
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (err) => {
+            resolve({
+              err: -1,
+              latitude: -1,
+              longitude: -1,
+            });
+          },
+          { enableHighAccuracy: true, maximumAge: 2000, timeout: 5000 }
+        );
+      } else {
+        reject({ error: -2, latitude: -1, longitude: -1 });
+      }
+    });
+  }
 
   return (
     <div>
@@ -206,7 +247,8 @@ function Dict(props) {
           </div>
         )}
       </div>
-      <button onClick={() => getlocation()}>123123{}</button>
+      <p>{message}</p>
+      <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
       {location && (
         <p>
           123
@@ -214,7 +256,7 @@ function Dict(props) {
           {location}
         </p>
       )}
-      {lodata && <p>{lodata.latitude}</p>}
+      {lodata && <p>{lodata}</p>}
     </div>
   );
 }

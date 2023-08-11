@@ -77,6 +77,7 @@ export const detectImage = async (
       return;
     }
     const label = scores.indexOf(score); // class id of maximum probability scores
+    console.log(box[0], box[1], box[2], box[3]);
 
     const [x, y, w, h] = [
       (box[0] - 0.5 * box[2]) * xRatio, // upscale left
@@ -84,7 +85,7 @@ export const detectImage = async (
       box[2] * xRatio, // upscale width
       box[3] * yRatio, // upscale height
     ]; // keep boxes in maxSize range
-
+    console.log(x, y, w, h);
     boxes.push({
       label: label,
       probability: score,
