@@ -8,11 +8,9 @@ function Freshman() {
   const [show, setShow] = useState(false);
   const location = useLocation();
 
-  const page = location.state.page;
-
   useEffect(() => {
-    setShow(page);
-  }, [page]);
+    setShow(location.state.page);
+  }, [location]);
 
   // 자식 컴포넌트에서 상태를 변경하기 위한 함수 정의
   const handleChangeParentState = (status) => {
