@@ -32,32 +32,31 @@ function Dict(props) {
     setMessage(data);
   };
 
-  const getlocation = () => {
-    console.log(123);
-    // 리액트 웹 앱의 JavaScript 코드
-    window.addEventListener(
-      "flutterInAppWebViewPlatformReady",
-      function (event) {
-        if (window.flutter_inappwebview.callHandler) {
-          window.flutter_inappwebview
-            .callHandler("myHandlerName")
-            .then(function (result) {
-              const loca = JSON.stringify(result);
-              console.log(JSON.stringify(result));
-              setlodata(loca);
-            });
-          console.log(123);
-        } else {
-          window.flutter_inappwebview
-            ._callHandler("myHandlerName")
-            .then(function (result) {
-              console.log(JSON.stringify(result));
-            });
-        }
-      }
-    );
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
   };
 
+  const [position, setPosition] = useState(null);
+
+  function success(pos) {
+    const crd = pos.coords;
+
+    setPosition({
+      latitude: crd.latitude,
+      longitude: crd.longitude,
+      accuracy: crd.accuracy,
+    });
+  }
+
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  function handleGetLocation() {
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  }
   const handleToggle = (view) => {
     setActiveView(view);
   };
@@ -247,7 +246,15 @@ function Dict(props) {
           </div>
         )}
       </div>
-      <p>{message}</p>
+      <button onClick={handleGetLocation}>Get Current Location</button>
+      {position && (
+        <div>
+          <p>Your current position is:</p>
+          <p>Latitude: {position.latitude}</p>
+          <p>Longitude: {position.longitude}</p>
+        </div>
+      )}
+      {/* <p>{message}</p>
       <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
       {location && (
         <p>
@@ -256,7 +263,7 @@ function Dict(props) {
           {location}
         </p>
       )}
-      {lodata && <p>{lodata}</p>}
+      {lodata && <p>{lodata}</p>} */}
     </div>
   );
 }
