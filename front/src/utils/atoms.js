@@ -62,3 +62,9 @@ export const yolo_recoil = atom({
   default: undefined,
   // effects_UNSTABLE: [persistAtom],
 });
+
+export const location_recoil = atom({
+  key: "location_recoil",
+  default: undefined,
+  effects_UNSTABLE: [persistAtom],
+});
