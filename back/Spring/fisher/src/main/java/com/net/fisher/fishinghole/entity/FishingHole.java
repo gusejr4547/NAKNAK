@@ -13,9 +13,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FishingHole {
     @Id
-    @Column(name = "fishing_hole_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fishing_hole_id",unique = true)
     private long fishingHoleId;
 
+    @Column(name = "title")
+    private String title;
 
+    @Column(name = "latitude") //위도
+    private double latitude;
+
+    @Column(name = "longitude") //경도
+    private double longitude;
 }

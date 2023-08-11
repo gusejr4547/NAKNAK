@@ -73,7 +73,7 @@ export const detectImage = async (
     const scores = data.slice(4); // classes probability scores
     const score = Math.max(...scores); // maximum probability scores
     console.log(score * 100);
-    if (score * 100 <= 50) {
+    if (score * 100 <= 60) {
       return;
     }
     const label = scores.indexOf(score); // class id of maximum probability scores

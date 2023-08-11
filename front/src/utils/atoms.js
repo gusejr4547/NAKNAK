@@ -52,3 +52,9 @@ export const newbie_recoil = atom({
   key: "newbie_recoil",
   default: false,
 });
+
+export const yolo_recoil = atom({
+  key: "yolo_recoil",
+  default: undefined,
+  // effects_UNSTABLE: [persistAtom],
+});

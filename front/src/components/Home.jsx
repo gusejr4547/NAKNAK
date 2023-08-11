@@ -1,20 +1,26 @@
-import { React, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import { loginuser, newbie_recoil } from "../utils/atoms";
+import { loginuser, newbie_recoil, yolo_recoil } from "../utils/atoms";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setNewbie(newbieVersion);
   }, [newbieVersion]);
+
+  const cameraClick = () => {
+    navigate("/Camera");
+  };
 
   const settings = {
     dots: true, // 페이지 번호를 나타냄
@@ -65,10 +71,14 @@ function Home({ newbieVersion }) {
               newbieVersion === 1 ? "non-clickable" : ""
             }`}
           >
-            <Link to="/Fishpic" className="nav-link">
-              <img src="/assets/icons/camera.PNG" alt="icon" />
-              <h6>카메라</h6>
-            </Link>
+            {/* <Link to="/Fishpic" className="nav-link"> */}
+            <img
+              src="/assets/icons/camera.PNG"
+              alt="icon"
+              onClick={() => cameraClick()}
+            />
+            <h6>카메라</h6>
+            {/* </Link> */}
           </div>
           {/* slide unit end*/}
 
@@ -149,9 +159,12 @@ function Home({ newbieVersion }) {
 
           {/* dummy data start*/}
           {/* <div className="home-slide"> */}
+
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>dummy</h6>
+            <Link to="/Dict" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>사전</h6>
+            </Link>
           </div>
           <div className="home-slide">
             <img src="/assets/icons/google.PNG" alt="icon" />

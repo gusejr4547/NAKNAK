@@ -1,9 +1,14 @@
 import React from "react";
-import { point } from "../../utils/data/point";
+import {
+  point,
+  equipment,
+  Chaebi,
+  manner,
+  limit_length,
+  action,
+} from "../../utils/data/point";
 
 function Dict(props) {
-  const latitude = localStorage.getItem("latitude");
-  const longitude = localStorage.getItem("longitude");
   console.log(point);
   return (
     <div>
@@ -13,9 +18,6 @@ function Dict(props) {
           <span>{item.title}</span>
         </p>
       ))}
-
-      {latitude && <p>{latitude}</p>}
-      {longitude && <p>{longitude}</p>}
     </div>
   );
 }
