@@ -20,7 +20,9 @@ function Footer(props) {
           />
         </Link>
       </div>
-      <div className={fishingMode === "selectMode" ? "nav-basic" : "nav-hidden"}>
+      <div
+        className={fishingMode === "selectMode" ? "nav-basic" : "nav-hidden"}
+      >
         <Link
           to="/fishing"
           className="nav-link"
@@ -33,12 +35,10 @@ function Footer(props) {
         </Link>{" "}
       </div>
 
-      <div className={fishingMode === "selectMode" ? "nav-hidden" : "nav-basic"}>
-        <Link
-          to="/Fishpic"
-          className="nav-link"
-          onClick={() => setActiveNav(2)}
-        >
+      <div
+        className={fishingMode === "selectMode" ? "nav-hidden" : "nav-basic"}
+      >
+        <Link to="/Camera" className="nav-link" onClick={() => setActiveNav(2)}>
           카메라
           {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
         </Link>{" "}

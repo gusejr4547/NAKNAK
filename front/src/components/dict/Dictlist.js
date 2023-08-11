@@ -1,30 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+import Dictdetail from "./Dictdetail";
 import "./Dictlist.css";
 
-function Dictlist(props) {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleTitleClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
+function dictlist(props) {
   return (
-    <div>
-      <p onClick={handleTitleClick}>{props.data.title}</p>
-      {showModal && (
-        <div className="dict-list-modal">
-          <div className="dict-list-modal-content">
-            <p>{props.data.content}</p>
-            <button onClick={handleCloseModal}>Close</button>
-          </div>
-        </div>
-      )}
+    <div
+      className="dict-disable-scrollbar"
+      style={{ overflowY: "scroll", maxHeight: "500px" }}
+    >
+      {props.data &&
+        props.data.map((item) => <Dictdetail key={item.pk} data={item} />)}
+      {props.limit &&
+        props.limit.map((item) => <Dictdetail key={item.pk} data={item} />)}
     </div>
   );
 }
 
-export default Dictlist;
+export default dictlist;

@@ -24,7 +24,7 @@ import Inventory from "./components/fishbowl/Inventory";
 // import Bowl from "./components/fishbowl/Bowl";
 import Balls from "./components/fishbowl/Balls";
 import Freshman from "./components/freshman/Freshman";
-
+import Achievements from "./components/achievements/Achievements";
 import Kakao from "./components/account/Kakao";
 import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
@@ -142,6 +142,7 @@ function AppRouter(props) {
           <Route path="/Checkbox" element={<Checkbox />}></Route>
           <Route path="/Newbie" element={<Newbie />}></Route>
           <Route path="/Freshman" element={<Freshman />}></Route>
+          <Route path="/Achievements" element={<Achievements />}></Route>
           {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

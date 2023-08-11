@@ -1,18 +1,10 @@
-/* CSS 파일 */
-.dict-list-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* 스크룰 바 숨기기 */
+.dict-disable-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.dict-list-modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
+.dict-disable-scrollbar::-webkit-scrollbar {
+  display: none;
 }

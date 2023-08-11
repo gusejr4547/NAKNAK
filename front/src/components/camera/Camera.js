@@ -54,7 +54,7 @@ const Camera = () => {
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
   const detectionInterval = 1000;
-  console.log(cv, 12345);
+  // console.log(cv, 12345);
   useEffect(() => {
     // setSession({ net: yoloRecoil.net, nms: yoloRecoil.nms });
     setLoading(null);
@@ -113,7 +113,7 @@ const Camera = () => {
   //     // Handle the error as needed, e.g., show an error message to the user.
   //   }
   // };
-  console.log(errData, 222);
+  // console.log(errData, 222);
   // setTimeout(() => {
   //   rere();
   // }, 5000);
@@ -124,12 +124,13 @@ const Camera = () => {
   //   }
   // };
 
-  console.log(cv);
+  // console.log(cv);
   // Function to handle webcam capture
   const captureWebcam = () => {
     if (webcamRef.current && webcamActive) {
       const webcamImage = webcamRef.current.getScreenshot();
       setImage(webcamImage);
+      console.log(image);
     }
   };
 
@@ -261,11 +262,13 @@ const Camera = () => {
                   }
                   // boxes 배열 내부의 데이터에 접근하여 활용
                   const firstBox = boxes[0];
+                  console.log(firstBox);
                   const pro = firstBox.probability * 100; // 검출된 첫 번째 상자의 정보
                   if (pro >= 50) {
                     console.log(123);
                     stopDetection();
                     setLastCapturedImage(image); // 마지막 캡처 이미지 저장
+                    // console.log(lastCapturedImage);
                   }
                   // 여기에 원하는 작업 추가
                 })

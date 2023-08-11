@@ -167,9 +167,11 @@ function Home({ newbieVersion }) {
               <h6>사전</h6>
             </Link>
           </div>
-          <div className="home-slide">
-            <img src="/assets/icons/google.PNG" alt="icon" />
-            <h6>dummy</h6>
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
+            <Link to="/Achievements" className="nav-link">
+              <img src="/assets/icons/google.PNG" alt="icon" />
+              <h6>업적</h6>
+            </Link>
           </div>
           {/* dummy data end*/}
         </Slider>
