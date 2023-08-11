@@ -28,6 +28,6 @@ public class FavoritePointDto {
     @AllArgsConstructor
     @Builder
     public static class Cancel{
-        private long favoritePointId;
+        private long fishingHoleId;
     }
 }

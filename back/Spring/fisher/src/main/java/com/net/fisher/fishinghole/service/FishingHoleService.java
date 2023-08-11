@@ -126,9 +126,9 @@ public class FishingHoleService {
     }
 
     public void cancelFavorite(long memberId, long favoriteId){
-        FavoritePoint favoritePoint = findFavoritePointById(favoriteId);
+        FavoritePoint favoritePoint = favoritePointRepository.findFavoritePointByMemberAndId(memberId,favoriteId);
 
-        if(favoritePoint.getMember().getMemberId() != memberId) throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        if(favoritePoint ==null) throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         favoritePointRepository.delete(favoritePoint);
     }
 

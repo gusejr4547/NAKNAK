@@ -59,9 +59,9 @@ public class FishingHoleController {
     ){
 
         long tokenId = jwtTokenizer.getMemberId(token);
-        long favoriteId = requestBody.getFavoritePointId();
+        long fishingHoleId = requestBody.getFishingHoleId();
 
-        fishingHoleService.cancelFavorite(tokenId,favoriteId);
+        fishingHoleService.cancelFavorite(tokenId,fishingHoleId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
