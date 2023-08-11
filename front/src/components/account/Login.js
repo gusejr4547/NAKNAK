@@ -282,8 +282,7 @@ function Login(props) {
           }}
         ></Button>
 
-          {latitude && <p>{latitude}</p>}
-          {longitude && <p>{longitude}</p>}
+         
 
         <Button
           as="input"
