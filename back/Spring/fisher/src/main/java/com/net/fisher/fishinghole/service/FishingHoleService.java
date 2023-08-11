@@ -115,6 +115,8 @@ public class FishingHoleService {
         Member member = memberService.findMember(memberId);
         FishingHole fishingHole = findByFishingHoleId(pointId);
 
+        if(favoritePointRepository.findByMemberIdAndFishingHoleId(member,fishingHole) >= 1) throw new BusinessLogicException(ExceptionCode.FAVORITEPOINT_ALREADY_EXISTS);
+
         FavoritePoint favoritePoint = FavoritePoint.builder()
                 .member(member)
                 .fishingHole(fishingHole)
@@ -122,5 +124,23 @@ public class FishingHoleService {
 
         return favoritePointRepository.save(favoritePoint);
     }
+
+    public void cancelFavorite(long memberId, long favoriteId){
+        FavoritePoint favoritePoint = findFavoritePointById(favoriteId);
+
+        if(favoritePoint.getMember().getMemberId() != memberId) throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        favoritePointRepository.delete(favoritePoint);
+    }
+
+    public List<FishingHole> findFavoriteFishingHoleOfMember(long memberId){
+        Member member = memberService.findMember(memberId);
+
+        return fishingHoleRepository.findFishingHolesOfMember(member);
+    }
+
+    private FavoritePoint findFavoritePointById(long favoriteId){
+        return favoritePointRepository.findById(favoriteId).orElseThrow(()->new BusinessLogicException(ExceptionCode.FAVORITEPOINTS_NOT_FOUND));
+    }
+
 
 }

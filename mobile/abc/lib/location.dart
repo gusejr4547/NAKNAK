@@ -35,6 +35,8 @@ class _LoadingState extends State<Loading> {
         final prefs = await SharedPreferences.getInstance();
         prefs.setDouble('latitude', currentPosition!.latitude);
         prefs.setDouble('longitude', currentPosition!.longitude);
+        final myData = prefs.getDouble('latitude');
+        print(myData);
         // sendLocationDataToServer(currentPosition!.latitude, currentPosition!.longitude);
         print("Current Position: $currentPosition");
       } catch (e) {
@@ -77,19 +79,7 @@ class _LoadingState extends State<Loading> {
       },
     );
   }
-  // void getLocation() async {
-  //   try {
-  //     Position position = await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.high,
-  //     );
-  //     setState(() {
-  //       currentPosition = position; // 현위치 데이터를 상태 변수에 저장
-  //     });
-  //     print("Current Position: $currentPosition");
-  //   } catch (e) {
-  //     print("Error getting location: $e");
-  //   }
-  // }
+
 
   @override
   Widget build(BuildContext context) {

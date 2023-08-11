@@ -10,6 +10,7 @@ import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
 import Board from "./components/board/Board";
+import ModifyFeed from "./components/board/ModifyFeed";
 
 import CreateFeed from "./components/board/CreateFeed";
 
@@ -24,7 +25,7 @@ import Inventory from "./components/fishbowl/Inventory";
 // import Bowl from "./components/fishbowl/Bowl";
 import Balls from "./components/fishbowl/Balls";
 import Freshman from "./components/freshman/Freshman";
-
+import Achievements from "./components/achievements/Achievements";
 import Kakao from "./components/account/Kakao";
 import Camera from "./components/camera/Camera";
 import Dict from "./components/dict/Dict";
@@ -48,7 +49,7 @@ function AppRouter(props) {
     isStuck: false, // 새로고침 유도 상태 변수
   });
   useEffect(() => {
-    if (yolo == undefined) {
+    if (yolo === undefined) {
       cv["onRuntimeInitialized"] = async () => {
         try {
           console.log(123);
@@ -133,6 +134,7 @@ function AppRouter(props) {
           <Route path="/SeaScene" element={<SeaScene />}></Route>
           <Route path="/Board" element={<Board />}></Route>
           <Route path="/CreateFeed" element={<CreateFeed />}></Route>
+          <Route path="/ModifyFeed/:postId" element={<ModifyFeed />}></Route>
           {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
           <Route path="/Profile/:userId" element={<Profile />}></Route>
           <Route path="/Camera" element={<Camera />}></Route>
@@ -142,6 +144,7 @@ function AppRouter(props) {
           <Route path="/Checkbox" element={<Checkbox />}></Route>
           <Route path="/Newbie" element={<Newbie />}></Route>
           <Route path="/Freshman" element={<Freshman />}></Route>
+          <Route path="/Achievements" element={<Achievements />}></Route>
           {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

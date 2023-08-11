@@ -13,6 +13,7 @@ function Signup(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [imgFile, setImgFile] = useState("");
+  const [showImgFile, setShowImgFile] = useState("");
   const imgRef = useRef();
   const ALLOW_FILE_EXTENSION = "jpg,jpeg,png";
   const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024; // 5MB
@@ -80,11 +81,12 @@ function Signup(props) {
       setImgFile(null);
       return;
     }
+    setImgFile(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     console.log(reader);
     reader.onloadend = () => {
-      setImgFile(reader.result);
+      setShowImgFile(reader.result);
     };
   };
 
@@ -129,6 +131,9 @@ function Signup(props) {
       formData.append("nickname", signupData.nickname);
       if (imgFile) {
         formData.append("file", imgFile);
+      }
+      for (const pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
       }
       const member = "/api/members/register";
 
@@ -234,7 +239,7 @@ function Signup(props) {
         />
         {/* // 업로드 된 이미지 미리보기 */}
         <img
-          src={imgFile ? imgFile : "assets/cats/cat.png"}
+          src={showImgFile ? showImgFile : "assets/cats/cat.png"}
           alt="프로필 이미지"
           style={{ width: "100px", height: "100px" }}
         />

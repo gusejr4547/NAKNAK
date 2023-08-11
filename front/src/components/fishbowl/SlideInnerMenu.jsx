@@ -63,8 +63,8 @@ const SlideInnerMenu = ({
 
   return (
     <div className="slide-inner-menu">
-      <button onClick={handleDelete}>Delete</button>
-      <button onClick={handleMenuClose}>Close</button>
+      {isFishBowl == "false" && <button onClick={handleDelete}>삭제</button>}
+      {/* <button onClick={handleMenuClose}>Close</button> */}
       <button
         onClick={() => {
           isFishBowl == "false"
@@ -72,7 +72,7 @@ const SlideInnerMenu = ({
             : handleChange(fishInfo.fishBowlId);
         }}
       >
-        change
+        이동
       </button>
     </div>
   );
