@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   point,
   equipment,
@@ -9,16 +9,12 @@ import {
 } from "../../utils/data/point";
 import Dictlist from "./Dictlist";
 import "./Dict.css";
+import { useRecoilState } from "recoil";
+import { location_recoil } from "../../utils/atoms";
 
 function Dict(props) {
   const [activeView, setActiveView] = useState("");
-  const [location, setLocation] = useState("");
-
-  function updateLocation(latitude, longitude) {
-    setLocation({ latitude, longitude });
-    console.log("Received location:", latitude, longitude);
-    // 리액트에서 현위치 정보 활용
-  }
+  const [location, setLocation] = useRecoilState(location_recoil);
 
   const handleToggle = (view) => {
     setActiveView(view);
@@ -101,7 +97,12 @@ function Dict(props) {
           </div>
         )}
       </div>
-      {location && <p>{location}</p>}
+      {location && (
+        <p>
+          {location.latitude}
+          {location}
+        </p>
+      )}
     </div>
   );
 }

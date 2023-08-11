@@ -38,7 +38,7 @@ import cv from "@techstark/opencv-js";
 import { Tensor, InferenceSession } from "onnxruntime-web";
 import { download } from "./components/camera/utils/download";
 import { useRecoilState } from "recoil";
-import { yolo_recoil } from "./utils/atoms";
+import { yolo_recoil, location_recoil } from "./utils/atoms";
 
 function AppRouter(props) {
   const [yolo, setYolo] = useRecoilState(yolo_recoil);
@@ -48,6 +48,14 @@ function AppRouter(props) {
     progress: null,
     isStuck: false, // 새로고침 유도 상태 변수
   });
+  const [location, setLocation] = useRecoilState(location_recoil);
+
+  function updateLocation(latitude, longitude) {
+    setLocation({ latitude, longitude });
+    console.log("Received location:", latitude, longitude);
+    // 리액트에서 현위치 정보 활용
+  }
+
   useEffect(() => {
     if (yolo === undefined) {
       cv["onRuntimeInitialized"] = async () => {

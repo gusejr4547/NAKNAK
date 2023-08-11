@@ -94,7 +94,7 @@ function Profile(props) {
               className="profileImg"
               src={
                 profileData.memberResponse.memberImage?.fileUrl
-                  ? `${process.env.REACT_APP_BACKEND_URL}` +
+                  ? `${process.env.REACT_APP_BACKEND_URL}/` +
                     `${profileData.memberResponse.memberImage?.fileUrl}`
                   : "/assets/cats/cat.png"
               }
