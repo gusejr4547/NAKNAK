@@ -15,8 +15,6 @@ import { getCurrentTime } from "../../utils/util";
 
 import { Link } from "react-router-dom";
 
-import Test from "./Testcode";
-
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
 
@@ -46,7 +44,11 @@ const Board = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get("api1/api/tags");
+        const response = await authorizedRequest({
+          method: "get",
+          url: `/api1/api/tags`,
+        });
+
         console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
@@ -64,7 +66,7 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/members/follow/${userInfo.memberId}`,
+          url: `/api1/api/members/follow/${userInfo.memberId}`,
         });
         // console.log("followList success");
         setFollowList(response.data);
@@ -85,7 +87,7 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/posts/my-like?page=1&size=`,
+          url: `/api1/api/posts/my-like?page=1&size=`,
         });
         console.log("success get likedFeedList", response.data);
 
@@ -99,6 +101,7 @@ const Board = () => {
     getLikedFeeds();
   }, []);
 
+  //보여줄 피드의 개수를 정합니다
   const showFeedCount = 2;
   const getFeedList = useCallback(async () => {
     console.log(getCurrentTime(Date.now()));
@@ -109,7 +112,7 @@ const Board = () => {
 
       const response = await authorizedRequest({
         method: "get",
-        url: `api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
+        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
           Date.now()
         )}`,
       });
@@ -146,7 +149,7 @@ const Board = () => {
     try {
       const response = await authorizedRequest({
         method: "post",
-        url: `api1/api/follow/${
+        url: `/api1/api/follow/${
           state ? "cancel" : "register"
         }?follow=${postMemberId}`,
       });
@@ -201,9 +204,11 @@ const Board = () => {
         <div className="board-title-container">
           <h1>NAKNAK</h1>
         </div>
-        <div className="board-search-img-container">
-          <img src="/assets/cats/cat.PNG" alt="검색버튼" />
-        </div>
+        <img
+          className="board-search-img-container"
+          src="/assets/cats/cat.PNG"
+          alt="검색버튼"
+        />
       </div>
       <div className="board-tag-wrapper">
         <FeedTag
@@ -254,6 +259,7 @@ const Board = () => {
                       //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
                       feedInfo={feed}
                       currentFollowState={
+                        followerList.data &&
                         followerList.data.find(
                           (follower) => follower.memberId === feed.memberId
                         )
@@ -261,7 +267,7 @@ const Board = () => {
                           : false
                       }
                       likedFeedData={likedFeedData}
-                      userId={userInfo.userId}
+                      userId={userInfo.memberId}
                       onFollowChange={followChange}
                       onLikeStateChange={likeStateChange}
                     />

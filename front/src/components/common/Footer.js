@@ -4,35 +4,50 @@ import "../../utils/FontAwesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { fishingMode_recoil } from "../../utils/atoms";
+import { fishingMode_recoil, newbie_recoil } from "../../utils/atoms";
 
 function Footer(props) {
   const [activeNav, setActiveNav] = useState(1);
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
-
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  console.log(newbie);
   return (
     <nav className="nav-wrapper">
       <div>
-        <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
+        {!newbie ? (
+          <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
+            <FontAwesomeIcon
+              icon="home"
+              className={activeNav === 1 ? "nav-item nav-active" : "nav-item"}
+            />
+          </Link>
+        ) : (
           <FontAwesomeIcon
             icon="home"
             className={activeNav === 1 ? "nav-item nav-active" : "nav-item"}
           />
-        </Link>
+        )}
       </div>
       <div
         className={fishingMode === "selectMode" ? "nav-basic" : "nav-hidden"}
       >
-        <Link
-          to="/fishing"
-          className="nav-link"
-          onClick={() => setActiveNav(2)}
-        >
+        {!newbie ? (
+          <Link
+            to="/fishing"
+            className="nav-link"
+            onClick={() => setActiveNav(2)}
+          >
+            <FontAwesomeIcon
+              icon="fish"
+              className={activeNav === 2 ? "nav-item nav-active" : "nav-item"}
+            />
+          </Link>
+        ) : (
           <FontAwesomeIcon
             icon="fish"
             className={activeNav === 2 ? "nav-item nav-active" : "nav-item"}
           />
-        </Link>{" "}
+        )}
       </div>
 
       <div

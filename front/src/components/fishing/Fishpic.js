@@ -49,7 +49,7 @@ function CameraApp() {
     if (step < 8) {
       setStep(step + 1);
     } else {
-      navigate("/Checklist");
+      navigate("/Checkbox");
       handleUpgradeProgress(80);
     }
   };
