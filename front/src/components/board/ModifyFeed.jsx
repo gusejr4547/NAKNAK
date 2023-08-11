@@ -33,9 +33,9 @@ const ModifyFeed = () => {
 
         console.log("feed load success", response.data);
 
-        setContent(response.data.con);
-
         setFeedInfo(response.data);
+        setSelectedFiles(response.data.images);
+        setContent(response.data.content);
       } catch (error) {
         console.error("feed load error");
       } finally {
@@ -52,7 +52,7 @@ const ModifyFeed = () => {
 
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/tags`,
+          url: `/api1/api/tags`,
         });
         console.log("tag load success", response.data);
         setTagListData(response.data);
@@ -107,7 +107,7 @@ const ModifyFeed = () => {
 
       const response = await authorizedRequest({
         method: "post",
-        url: `api1/api/posts/upload`,
+        url: `/api1/api/posts/upload`,
         data: formData,
       });
       console.log("feed load success", response.data);

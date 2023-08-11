@@ -46,7 +46,7 @@ const Board = () => {
 
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/tags`,
+          url: `/api1/api/tags`,
         });
 
         console.log("tag load success", response.data);
@@ -66,7 +66,7 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/members/follow/${userInfo.memberId}`,
+          url: `/api1/api/members/follow/${userInfo.memberId}`,
         });
         // console.log("followList success");
         setFollowList(response.data);
@@ -87,7 +87,7 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/posts/my-like?page=1&size=`,
+          url: `/api1/api/posts/my-like?page=1&size=`,
         });
         console.log("success get likedFeedList", response.data);
 
@@ -112,7 +112,7 @@ const Board = () => {
 
       const response = await authorizedRequest({
         method: "get",
-        url: `api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
+        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
           Date.now()
         )}`,
       });
@@ -149,7 +149,7 @@ const Board = () => {
     try {
       const response = await authorizedRequest({
         method: "post",
-        url: `api1/api/follow/${
+        url: `/api1/api/follow/${
           state ? "cancel" : "register"
         }?follow=${postMemberId}`,
       });

@@ -69,7 +69,7 @@ const Feed = ({
         console.log("feedlikestste id", feedLikeState);
         const response = await authorizedRequest({
           method: "post",
-          url: `api1/api/posts/${urlString}?post=${feedInfo.postId}`,
+          url: `/api1/api/posts/${urlString}?post=${feedInfo.postId}`,
         });
         console.log(feedLikeState, response);
         setLoading(false);

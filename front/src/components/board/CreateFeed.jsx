@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -25,8 +26,9 @@ const CreateFeed = () => {
 
         const response = await authorizedRequest({
           method: "get",
-          url: `api1/api/tags`,
+          url: `/api1/api/tags`,
         });
+
         console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
@@ -84,14 +86,13 @@ const CreateFeed = () => {
       formData.append("file", file);
     });
     formData.append("tags", selectedTags);
-    console.log("formData", formData.data);
     try {
       setLoading(true);
 
       const response = await authorizedRequest({
         header: { "Content-Type": "multipart/form-data" },
         method: "post",
-        url: `api1/api/posts/upload`,
+        url: `/api1/api/posts/upload`,
         data: formData,
       });
       console.log("feed load success", response.data);
