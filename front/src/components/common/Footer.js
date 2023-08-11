@@ -53,11 +53,7 @@ function Footer(props) {
       <div
         className={fishingMode === "selectMode" ? "nav-hidden" : "nav-basic"}
       >
-        <Link
-          to="/Fishpic"
-          className="nav-link"
-          onClick={() => setActiveNav(2)}
-        >
+        <Link to="/Camera" className="nav-link" onClick={() => setActiveNav(2)}>
           카메라
           {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
         </Link>{" "}
