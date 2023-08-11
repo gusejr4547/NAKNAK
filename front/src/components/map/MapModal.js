@@ -25,12 +25,8 @@ const MapModal = () => {
   const navigate = useNavigate();
   // favorite 유무
   const [like, setLike] = useState(() => {
-    console.log(favoritePoint);
     for (let i = 0; i < favoritePoint.length; i++) {
-      console.log(i);
       // 이미 즐겨찾기가 되어있다면
-      console.log("여기", favoritePoint[i].fishingHoleId);
-      console.log("저기", data[1].ID);
       if (favoritePoint[i].fishingHoleId === data[1].ID) {
         return i;
       }
@@ -63,12 +59,11 @@ const MapModal = () => {
   // 장소 좋아요
   const likeLocation = async () => {
     try {
-      const response = await authorizedRequest({
+      await authorizedRequest({
         method: "post",
         url: "/api1/api/fishingholes/favorites/register",
         data: { fishingHoleId: data[1].ID },
       });
-      console.log(response);
       setLike(favoritePoint.length);
       const new_data = {
         fishingHoleId: data[1].ID,
@@ -77,6 +72,7 @@ const MapModal = () => {
         longitude: data[0].LONGITUDE,
       };
       setFavoritePoint([...favoritePoint, new_data]);
+      console.log(favoritePoint);
     } catch (err) {
       console.log(err);
     }
@@ -85,17 +81,17 @@ const MapModal = () => {
   // 장소 좋아요취소
   const unlikeLocation = async () => {
     try {
-      const response = await authorizedRequest({
+      await authorizedRequest({
         method: "post",
         url: "/api1/api/fishingholes/favorites/cancel",
-        data: { favoritePointId: like },
+        data: { fishingHoleId: data[1].ID },
       });
-      console.log(response);
       const new_data = favoritePoint.filter(
         (item) => item.fishingHoleId !== data[1].ID
       );
       setFavoritePoint(new_data);
       setLike(false);
+      console.log(favoritePoint);
     } catch (err) {
       console.log(err);
     }
