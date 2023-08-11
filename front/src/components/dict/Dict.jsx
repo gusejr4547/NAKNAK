@@ -12,6 +12,13 @@ import "./Dict.css";
 
 function Dict(props) {
   const [activeView, setActiveView] = useState("");
+  const [location, setLocation] = useState("");
+
+  function updateLocation(latitude, longitude) {
+    setLocation({ latitude, longitude });
+    console.log("Received location:", latitude, longitude);
+    // 리액트에서 현위치 정보 활용
+  }
 
   const handleToggle = (view) => {
     setActiveView(view);
@@ -94,6 +101,7 @@ function Dict(props) {
           </div>
         )}
       </div>
+      {location && <p>{location}</p>}
     </div>
   );
 }
