@@ -94,6 +94,8 @@ public class SecurityConfiguration {
         configuration.addAllowedOriginPattern("https://accounts.google.com");
         configuration.addAllowedOrigin("https://i9E105.p.ssafy.io");
         configuration.addAllowedOrigin("http://i9E105.p.ssafy.io:8080");
+        configuration.addAllowedOrigin("https://accounts.kakao.com");
+
         configuration.addAllowedOriginPattern("*:3000");
         configuration.addExposedHeader("*");
         configuration.setAllowCredentials(true);
