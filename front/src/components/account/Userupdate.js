@@ -18,6 +18,7 @@ function UserUpdate(props) {
   const [imgFile, setImgFile] = useState("");
   const [userData, setUserData] = useRecoilState(loginuser);
   const imgRef = useRef();
+  const [showImgFile, setShowImgFile] = useState("");
   const ALLOW_FILE_EXTENSION = "jpg,jpeg,png";
   const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024; // 5MB
   const header = {
@@ -84,11 +85,12 @@ function UserUpdate(props) {
       setImgFile(null);
       return;
     }
+    setImgFile(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     console.log(reader);
     reader.onloadend = () => {
-      setImgFile(reader.result);
+      setShowImgFile(reader.result);
     };
   };
 
@@ -121,6 +123,7 @@ function UserUpdate(props) {
         method: "post",
         url: "/api1/api/members/update",
         data: formData,
+        headers: header,
       });
       // setPostData(response.data);
       navigate("/Login");
@@ -221,7 +224,7 @@ function UserUpdate(props) {
         />
         {/* // 업로드 된 이미지 미리보기 */}
         <img
-          src={imgFile ? imgFile : "assets/cats/cat.png"}
+          src={showImgFile ? showImgFile : "assets/cats/cat.png"}
           alt="프로필 이미지"
           style={{ width: "100px", height: "100px" }}
         />

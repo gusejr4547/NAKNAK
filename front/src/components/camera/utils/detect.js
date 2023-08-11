@@ -51,13 +51,13 @@ export const detectImage = async (
   ); // nms config tensor
   // 모델 실행 및 결과 획득
   const { output0 } = await session.net.run({ images: tensor }); // run session and get output layer
-  console.log(output0);
+  // console.log(output0);
   // NMS를 사용하여 박스 필터링
   const { selected } = await session.nms.run({
     detection: output0,
     config: config,
   }); // perform nms and filter boxes
-  console.log(selected.data.length);
+  // console.log(selected.data.length);
   if (!selected.data.length) {
     return;
   }
@@ -73,7 +73,7 @@ export const detectImage = async (
     const scores = data.slice(4); // classes probability scores
     const score = Math.max(...scores); // maximum probability scores
     console.log(score * 100);
-    if (score * 100 <= 50) {
+    if (score * 100 <= 60) {
       return;
     }
     const label = scores.indexOf(score); // class id of maximum probability scores

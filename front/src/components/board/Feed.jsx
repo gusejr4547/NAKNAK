@@ -19,8 +19,6 @@ const Feed = ({
   onFollowChange,
   onLikeStateChange,
 }) => {
-  // console.log(likedFeedData);
-
   // props 를 여기 usestate로 받을 것인지
   const [feedLikeState, setFeedLikeState] = useState(
     likedFeedData
@@ -59,6 +57,10 @@ const Feed = ({
     onLikeStateChange(feedInfo, feedLikeState);
   };
 
+  const tagClickHandler = () => {
+    console.log("tagClicked", userId, feedInfo);
+  };
+
   useEffect(() => {
     const toggleLikeState = async () => {
       setLoading(true);
@@ -67,7 +69,7 @@ const Feed = ({
         console.log("feedlikestste id", feedLikeState);
         const response = await authorizedRequest({
           method: "post",
-          url: `api1/api/posts/${urlString}?post=${feedInfo.postId}`,
+          url: `/api1/api/posts/${urlString}?post=${feedInfo.postId}`,
         });
         console.log(feedLikeState, response);
         setLoading(false);
@@ -122,7 +124,13 @@ const Feed = ({
 
           {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.memberId ? (
-            <Link to={`/FeedModify`} className="feed-modify">
+            <Link
+              to={{
+                pathname: `/ModifyFeed/${feedInfo.postId}`,
+                state: feedInfo.postId,
+              }}
+              className="feed-modify"
+            >
               수정
             </Link>
           ) : (
@@ -190,16 +198,20 @@ const Feed = ({
           <div className="feed-insight">
             <div className="feed-likes ">{feedInfo.likeCount} likes</div>
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
-            <img
-              src={feedLikeState ? "/assets/icons/heart.png" : ""}
-              alt="하트"
-              onClick={likeClickHandler}
-            />
+            {feedInfo.memberId !== userId && (
+              <img
+                src={feedLikeState ? "/assets/icons/heart.png" : ""}
+                alt="하트"
+                onClick={likeClickHandler}
+              />
+            )}
           </div>
           <div className="feed-caption">{feedInfo.content}</div>
           <div className="feed-tags">
             {feedInfo.tags.map((tag, index) => {
-              return <FeedTag key={index} tagInfo={tag} />;
+              return (
+                <FeedTag key={index} tagInfo={tag} onClick={tagClickHandler} />
+              );
             })}
           </div>
         </div>

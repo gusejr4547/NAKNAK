@@ -10,7 +10,6 @@ function Footer(props) {
   const [activeNav, setActiveNav] = useState(1);
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-  console.log(newbie);
   return (
     <nav className="nav-wrapper">
       <div>
@@ -53,11 +52,7 @@ function Footer(props) {
       <div
         className={fishingMode === "selectMode" ? "nav-hidden" : "nav-basic"}
       >
-        <Link
-          to="/Fishpic"
-          className="nav-link"
-          onClick={() => setActiveNav(2)}
-        >
+        <Link to="/Camera" className="nav-link" onClick={() => setActiveNav(2)}>
           카메라
           {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
         </Link>{" "}
