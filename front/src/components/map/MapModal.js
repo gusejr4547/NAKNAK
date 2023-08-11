@@ -5,7 +5,7 @@ import {
   mapModal_recoil,
   fishingInfo_recoil,
   newbie_recoil,
-  token,
+  mooltae_recoil,
 } from "../../utils/atoms";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,8 @@ const MapModal = () => {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(3);
-  const [accesstoken, setAccesstoken] = useRecoilState(token);
+  const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
+
   const navigate = useNavigate();
 
   // 뉴비 튜토리얼 업그레이드
@@ -31,10 +32,11 @@ const MapModal = () => {
   // 뉴비버젼
   const next = () => {
     if (step === 4) {
+      setModalOpen(false);
       navigate("/Newbie", { state: 5 });
+      handleUpgradeProgress(60);
     }
     setStep(step + 1);
-    handleUpgradeProgress(60);
   };
 
   useEffect(() => {
@@ -76,6 +78,7 @@ const MapModal = () => {
           {data[0].WATER_TEMPER && <p>수온: {data[0].WATER_TEMPER}</p>}
           {data[0].WAVE_HEIGHT && <p>파고: {data[0].WAVE_HEIGHT}</p>}
           {data[0].SALINITY && <p>염분: {data[0].SALINITY}</p>}
+          <p>물때 : {mooltae}</p>
         </div>
       </div>
     </div>

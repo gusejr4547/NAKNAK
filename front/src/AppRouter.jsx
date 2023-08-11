@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+
 import Footer from "./components/common/Footer";
 import Home from "./components/Home";
 import NotFound from "./components/common/NotFound";
@@ -34,20 +34,81 @@ import UserUpdate from "./components/account/Userupdate";
 
 import Checkbox from "./components/freshman/Checkbox";
 import Newbie from "./components/freshman/Newbie";
+import cv from "@techstark/opencv-js";
+import { Tensor, InferenceSession } from "onnxruntime-web";
+import { download } from "./components/camera/utils/download";
+import { useRecoilState } from "recoil";
+import { yolo_recoil } from "./utils/atoms";
 
 function AppRouter(props) {
+  const [yolo, setYolo] = useRecoilState(yolo_recoil);
+  const modelName = "best.onnx";
+  const [loading, setLoading] = useState({
+    text: "Loading OpenCV.js",
+    progress: null,
+    isStuck: false, // 새로고침 유도 상태 변수
+  });
+  useEffect(() => {
+    if (yolo == undefined) {
+      cv["onRuntimeInitialized"] = async () => {
+        try {
+          console.log(123);
+          const baseModelURL = `${process.env.PUBLIC_URL}/model`;
+          const modelInputShape = [1, 3, 320, 320];
+          console.log(baseModelURL);
+
+          // create session
+          const arrBufNet = await download(
+            `${baseModelURL}/${modelName}`, // url
+            ["Loading YOLOv8 Segmentation model", setLoading] // logger
+          );
+          const yolov8 = await InferenceSession.create(arrBufNet);
+
+          const arrBufNMS = await download(
+            `${baseModelURL}/nms-yolov8.onnx`, // url
+            ["Loading NMS model", setLoading] // logger
+          );
+          const nms = await InferenceSession.create(arrBufNMS);
+
+          console.log(arrBufNet, yolov8, arrBufNMS, nms);
+
+          // warmup main model
+          // setLoading({ text: "Warming up model...", progress: null });
+          const tensor = new Tensor(
+            "float32",
+            new Float32Array(modelInputShape.reduce((a, b) => a * b)),
+            modelInputShape
+          );
+          await yolov8.run({ images: tensor });
+
+          if (yolov8 && nms) {
+            setLoading(null);
+            setYolo({ net: yolov8, nms: nms });
+            console.log(yolo);
+            return;
+            // setSession({ net: yolov8, nms: nms });
+          } else {
+            console.error("'yolov8' or 'nms' is null.");
+          }
+        } catch (error) {
+          console.error("An error occurred:", error);
+          // Handle the error as needed, e.g., show an error message to the user.
+        }
+      };
+    }
+  }, []);
+
   return (
-    <RecoilRoot>
-      <div
-        className="App"
-        style={{
-          margin: "auto",
-          //   width: '80%',
-        }}
-      >
-        <BrowserRouter>
-          <Background />
-          {/* <Header style={{
+    <div
+      className="App"
+      style={{
+        margin: "auto",
+        //   width: '80%',
+      }}
+    >
+      <BrowserRouter>
+        <Background />
+        {/* <Header style={{
           margin:'auto',
          }}/> */}
           <Routes
