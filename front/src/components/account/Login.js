@@ -283,7 +283,7 @@ function Login(props) {
         ></Button>
 
          
-
+        <a href={`/api1/oauth2/authorization/${provider}`}>  
         <Button
           as="input"
           onClick={() => socialLoginHandler("kakao")}
@@ -299,6 +299,7 @@ function Login(props) {
             backgroundPosition: "center",
           }}
         ></Button>
+        </a>
         <a
           // href={KAKAO_AUTH_URL}
           href="api1/oauth2/authorization/google"
