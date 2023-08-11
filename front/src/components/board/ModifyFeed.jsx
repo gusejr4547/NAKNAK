@@ -17,6 +17,8 @@ const ModifyFeed = () => {
   const [error, setError] = useState(null);
 
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [deleteImageList, setDeleteImageList] = useState([]);
+
   const [tagListData, setTagListData] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -27,7 +29,6 @@ const ModifyFeed = () => {
 
         const response = await authorizedRequest({
           method: "get",
-          // 도무지 이해할 수 없는 다른곳은 url 앞에 다 / 를 안붙였는데 여기는 붙여야 됨... env 파일 변경 해도 다른건 다 됨..
           url: `/api1/api/posts/${postId}`,
         });
 
@@ -36,6 +37,9 @@ const ModifyFeed = () => {
         setFeedInfo(response.data);
         setSelectedFiles(response.data.images);
         setContent(response.data.content);
+
+        //tagsname 을 보내야함
+        setSelectedTags([...response.data.tags]);
       } catch (error) {
         console.error("feed load error");
       } finally {
@@ -65,24 +69,24 @@ const ModifyFeed = () => {
     getTagList();
   }, []);
 
-  const fileChangeHandler = (e) => {
-    setSelectedFiles((prevFiles) => [
-      ...prevFiles,
-      ...Array.from(e.target.files),
-    ]);
-  };
-
   const contentChangeHandler = (e) => {
     setContent(e.target.value);
   };
 
   const removeSelectedFile = (indexToRemove) => {
+    if (selectedFiles.length === 1) {
+      alert("이미지는 최소 하나 이상이어야합니다.");
+      return;
+    }
+
+    setDeleteImageList((prevFiles) => [...prevFiles, indexToRemove]);
     setSelectedFiles((prevFiles) =>
       prevFiles.filter((_, index) => index !== indexToRemove)
     );
   };
 
   const tagClickHandler = (tag) => {
+    console.log("tagClicked");
     if (selectedTags.includes(tag.tagName)) {
       // 이미 선택된 태그를 클릭하여 취소하는 경우
       setSelectedTags((prevTags) => prevTags.filter((t) => t !== tag.tagName));
@@ -91,34 +95,31 @@ const ModifyFeed = () => {
       setSelectedTags((prevTags) => [...prevTags, tag.tagName]);
     }
   };
-  const createFeed = async () => {
+  const ModifyFeed = async () => {
     if (selectedFiles.length === 0 || selectedTags.length === 0) {
       alert("이미지와 태그를 선택해주세요.");
       return;
     }
-
+    console.log(selectedTags);
     const formData = new FormData();
     formData.append("content", content);
-    formData.append("file", selectedFiles);
     formData.append("tags", selectedTags);
-    console.log("formData", formData.data);
+    formData.append("deleteImageList", deleteImageList);
+    console.log("formData", formData);
+
     try {
       setLoading(true);
 
       const response = await authorizedRequest({
-        method: "post",
-        url: `/api1/api/posts/upload`,
+        method: "patch",
+        url: `/api1/api/posts/${postId}`,
         data: formData,
       });
-      console.log("feed load success", response.data);
-
-      setContent("");
-      setSelectedFiles([]);
-      setSelectedTags([]);
+      console.log("feed modify success", response.data);
 
       navigate("/Board");
     } catch (error) {
-      console.error("feed load error");
+      console.error("feed modify error");
     } finally {
       setLoading(false);
     }
@@ -133,8 +134,7 @@ const ModifyFeed = () => {
         <div className="modify-feed-title">
           <h1>대충 수정한다는 말</h1>
         </div>
-        {/* 아래 onClick 필요 */}
-        <div className="modify-feed-submit">
+        <div className="modify-feed-submit" onClick={ModifyFeed}>
           <img src="" alt="수정" />
         </div>
       </div>
@@ -143,17 +143,7 @@ const ModifyFeed = () => {
 
         {/* 이미지첨부버튼 */}
         <div className="create-feed-image-select-header">
-          <h2>Images</h2>
-          <label htmlFor="fileInput">
-            <div className="create-feed-image-select-button"> select</div>
-          </label>
-          <input
-            type="file"
-            id="fileInput"
-            style={{ display: "none" }}
-            onChange={fileChangeHandler}
-            multiple
-          />
+          <h2>Modify Images</h2>
         </div>
 
         {/* 이미지출력 */}
@@ -162,7 +152,7 @@ const ModifyFeed = () => {
             <div className="create-feed-selected-file-container">
               <img
                 key={index}
-                src={URL.createObjectURL(file)}
+                src={`${process.env.REACT_APP_BACKEND_URL}/${selectedFiles[index].fileUrl}`}
                 alt={`Image ${index}`}
                 className="create-feed-selected-file"
                 onClick={() => removeSelectedFile(index)}
@@ -178,7 +168,7 @@ const ModifyFeed = () => {
 
         {/* 게시글 작성부분 */}
         <div className="create-feed-contents-inner">
-          <h2>Contents</h2>
+          <h2>Modify Contents</h2>
           <textarea
             className="create-feed-textarea"
             rows="5"
@@ -191,7 +181,7 @@ const ModifyFeed = () => {
 
         {/* 태그 선택부분 */}
         <div className="create-feed-contents-inner">
-          <h2>Tag</h2>
+          <h2>Modify Tag</h2>
           <hr />
           <div className="create-feed-tag-container create-feed-disable-scrollbar">
             {Object.keys(tagListData).map((key) => {
@@ -200,7 +190,9 @@ const ModifyFeed = () => {
                 <FeedTag
                   key={tag.tagId} // 고유한 키를 제공해야 합니다.
                   tagInfo={tag}
-                  active={selectedTags.includes(tag.tagName)} // 선택 여부를 배열 포함 여부로 판단
+                  active={selectedTags.some(
+                    (selectedTag) => selectedTag.tagName === tag.tagName
+                  )} // 선택 여부를 배열 포함 여부로 판단
                   onClick={() => tagClickHandler(tag)}
                 />
               );

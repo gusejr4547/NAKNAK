@@ -41,18 +41,23 @@ const CreateFeed = () => {
   }, []);
 
   const fileChangeHandler = (e) => {
-    //입력되는 이미지의 요소 중 fileId 는 직접 인덱싱한것..?
-    // "fileId": 1,
-    // "fileName": "image (1).png",
-    // "fileSize": 36951,
-    // "fileContentType": "image/png",
-    // "fileUrl": "
-    console.log(e);
+    const selectedFiles = Array.from(e.target.files);
 
-    setSelectedFiles((prevFiles) => [
-      ...prevFiles,
-      ...Array.from(e.target.files),
-    ]);
+    const validFiles = selectedFiles.map((file) => {
+      const originalExtension = file.name.split(".").pop();
+      const lowerCaseExtension = originalExtension.toLowerCase();
+      const newFileName = file.name.replace(
+        new RegExp(`\\.${originalExtension}$`, "i"),
+        `.${lowerCaseExtension}`
+      );
+      const transformedFile = new File([file], newFileName, {
+        type: file.type,
+        lastModified: file.lastModified,
+      });
+      return transformedFile;
+    });
+
+    setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
   };
 
   const contentChangeHandler = (e) => {
@@ -85,7 +90,11 @@ const CreateFeed = () => {
     selectedFiles.forEach((file) => {
       formData.append("file", file);
     });
+
     formData.append("tags", selectedTags);
+
+    console.log(formData);
+
     try {
       setLoading(true);
 
