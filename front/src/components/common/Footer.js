@@ -10,7 +10,6 @@ function Footer(props) {
   const [activeNav, setActiveNav] = useState(1);
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-  console.log(newbie);
   return (
     <nav className="nav-wrapper">
       <div>

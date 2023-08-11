@@ -49,7 +49,7 @@ function AppRouter(props) {
     isStuck: false, // 새로고침 유도 상태 변수
   });
   useEffect(() => {
-    if (yolo == undefined) {
+    if (yolo === undefined) {
       cv["onRuntimeInitialized"] = async () => {
         try {
           console.log(123);
@@ -111,47 +111,46 @@ function AppRouter(props) {
         {/* <Header style={{
           margin:'auto',
          }}/> */}
-          <Routes
-            style={{
-              margin: "auto",
-            }}
-          >
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/fishing" element={<Fishing />}></Route>
-            <Route path="/Fishpic" element={<Fishpic />}></Route>
-            <Route path="/Dict" element={<Dict />}></Route>
-            <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
+        <Routes
+          style={{
+            margin: "auto",
+          }}
+        >
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/fishing" element={<Fishing />}></Route>
+          <Route path="/Fishpic" element={<Fishpic />}></Route>
+          <Route path="/Dict" element={<Dict />}></Route>
+          <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
 
-            {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
-            <Route path="/Login" element={<Login />}></Route>
-            <Route path="/UserUpdate" element={<UserUpdate />}></Route>
-            <Route path="/Balls" element={<Balls />}></Route>
-            <Route path="/Signup" element={<Signup />}></Route>
-            <Route path="/Dogam" element={<Dogam />}></Route>
-            <Route path="/ImgTest" element={<ImgTest />}></Route>
-            <Route path="/Inventory" element={<Inventory />}></Route>
-            <Route path="/Loading" element={<Loading />}></Route>
-            <Route path="/SeaScene" element={<SeaScene />}></Route>
-            <Route path="/Board" element={<Board />}></Route>
-            <Route path="/CreateFeed" element={<CreateFeed />}></Route>
-            <Route path="/ModifyFeed/:postId" element={<ModifyFeed />}></Route>
-            {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
-            <Route path="/Profile/:userId" element={<Profile />}></Route>
-            <Route path="/Camera" element={<Camera />}></Route>
-            {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
+          {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
+          <Route path="/Login" element={<Login />}></Route>
+          <Route path="/UserUpdate" element={<UserUpdate />}></Route>
+          <Route path="/Balls" element={<Balls />}></Route>
+          <Route path="/Signup" element={<Signup />}></Route>
+          <Route path="/Dogam" element={<Dogam />}></Route>
+          <Route path="/ImgTest" element={<ImgTest />}></Route>
+          <Route path="/Inventory" element={<Inventory />}></Route>
+          <Route path="/Loading" element={<Loading />}></Route>
+          <Route path="/SeaScene" element={<SeaScene />}></Route>
+          <Route path="/Board" element={<Board />}></Route>
+          <Route path="/CreateFeed" element={<CreateFeed />}></Route>
+          <Route path="/ModifyFeed/:postId" element={<ModifyFeed />}></Route>
+          {/* <Route path="/SeaScene" element={<SeaScene />}></Route> */}
+          <Route path="/Profile/:userId" element={<Profile />}></Route>
+          <Route path="/Camera" element={<Camera />}></Route>
+          {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
-            <Route path="/Map" element={<Map />}></Route>
-            <Route path="/Checkbox" element={<Checkbox />}></Route>
-            <Route path="/Newbie" element={<Newbie />}></Route>
-            <Route path="/Freshman" element={<Freshman />}></Route>
-            <Route path="/Achievements" element={<Achievements />}></Route>
-            {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
-            <Route path="*" element={<NotFound />}></Route>
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </div>
-    </RecoilRoot>
+          <Route path="/Map" element={<Map />}></Route>
+          <Route path="/Checkbox" element={<Checkbox />}></Route>
+          <Route path="/Newbie" element={<Newbie />}></Route>
+          <Route path="/Freshman" element={<Freshman />}></Route>
+          <Route path="/Achievements" element={<Achievements />}></Route>
+          {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </div>
   );
 }
 

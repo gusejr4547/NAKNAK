@@ -3,12 +3,12 @@ import "./App.css";
 import AppRouter from "./AppRouter";
 import { RecoilRoot } from "recoil";
 
-document.addEventListener("DOMContentLoaded", function () {
-  window.flutter_inappwebview.callHandler(
-    "sendDataToReact",
-    "Hello from React!"
-  );
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   window.flutter_inappwebview.callHandler(
+//     "sendDataToReact",
+//     "Hello from React!"
+//   );
+// });
 
 function updateLocation(latitude, longitude) {
   console.log("Received location:", latitude, longitude);
