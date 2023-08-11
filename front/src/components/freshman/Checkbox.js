@@ -73,7 +73,8 @@ function Checkbox() {
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
-      await upgradeProgress(status);
+      const response = await upgradeProgress(status);
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -84,8 +85,8 @@ function Checkbox() {
       setStep(step + 1);
     } else {
       newbieState(0);
-      setNewbie();
       handleUpgradeProgress(100);
+      setNewbie(false);
       navigate("/");
     }
   };

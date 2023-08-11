@@ -8,7 +8,11 @@ import { download } from "./utils/download";
 import "./style/App.css";
 // import { initializeCV } from "./utils/initializeCV";
 import { useRecoilState } from "recoil";
-import { yolo_recoil } from "../../utils/atoms";
+import { yolo_recoil, newbie_recoil } from "../../utils/atoms";
+import upgradeProgress from "../freshman/upgradeProgress";
+import { useNavigate } from "react-router-dom";
+import Talk2 from "../freshman/Talk2";
+import "./Camera.css";
 
 const Camera = () => {
   // useEffect(() => {
@@ -31,6 +35,11 @@ const Camera = () => {
   // }
 
   // window.location.replace("/Camera");
+  // 뉴비모드
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [step, setStep] = useState(6);
+  const navigate = useNavigate();
+
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState({
     text: "Loading OpenCV.js",
@@ -54,6 +63,26 @@ const Camera = () => {
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
   const detectionInterval = 1000;
+
+  // 뉴비 튜토리얼 업그레이드
+  const handleUpgradeProgress = async (status) => {
+    try {
+      const response = await upgradeProgress(status);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // 뉴비버젼
+  const next = () => {
+    if (step < 8) {
+      setStep(step + 1);
+    } else {
+      handleUpgradeProgress(80);
+      navigate("/Checkbox");
+    }
+  };
+
   // console.log(cv, 12345);
   useEffect(() => {
     // setSession({ net: yoloRecoil.net, nms: yoloRecoil.nms });
@@ -176,6 +205,21 @@ const Camera = () => {
 
   return (
     <div className="camera">
+      {/* 뉴비모드 시작 */}
+      {newbie && (
+        <div className="pic-newbie-talk-box">
+          {Talk2[step].content}
+          <div
+            className="next"
+            onClick={() => {
+              next();
+            }}
+          >
+            다음 &gt;
+          </div>
+        </div>
+      )}
+      {/* 뉴비모드 끝 */}
       {loading && (
         <Loader>
           {loading.progress
