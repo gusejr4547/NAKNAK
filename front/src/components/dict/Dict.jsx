@@ -23,17 +23,27 @@ function Dict(props) {
   const getlocation = () => {
     console.log(123);
     // 리액트 웹 앱의 JavaScript 코드
-    window.addEventListener("message", (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        console.log("Received data from Flutter:", data);
-        // 데이터 처리를 수행합니다.
-        setlodata(data);
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
+    window.addEventListener(
+      "flutterInAppWebViewPlatformReady",
+      function (event) {
+        if (window.flutter_inappwebview.callHandler) {
+          window.flutter_inappwebview
+            .callHandler("myHandlerName")
+            .then(function (result) {
+              const loca = JSON.stringify(result);
+              console.log(JSON.stringify(result));
+              setlodata(loca);
+            });
+          console.log(123);
+        } else {
+          window.flutter_inappwebview
+            ._callHandler("myHandlerName")
+            .then(function (result) {
+              console.log(JSON.stringify(result));
+            });
+        }
       }
-    });
-    // window.flutter_inappwebview.callHandler(updatelocation, 123);
+    );
   };
 
   const handleToggle = (view) => {
