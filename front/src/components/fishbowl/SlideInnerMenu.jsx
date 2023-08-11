@@ -8,6 +8,7 @@ const SlideInnerMenu = ({
   onDeleteSlide,
   fishInfo,
   isFishBowl,
+  itemchange,
 }) => {
   console.log(fishInfo);
   const handleMenuClose = (e) => {
@@ -30,6 +31,7 @@ const SlideInnerMenu = ({
           data: { targetId: id },
         });
         console.log(response);
+        itemchange();
       } catch (error) {
         console.error("Error posting data:", error);
       }
@@ -41,6 +43,7 @@ const SlideInnerMenu = ({
           data: { targetId: id },
         });
         console.log(response);
+        itemchange();
       } catch (error) {
         console.error("Error posting data:", error);
       }

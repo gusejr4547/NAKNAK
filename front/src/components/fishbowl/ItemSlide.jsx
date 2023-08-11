@@ -5,7 +5,7 @@ import SlideInnerMenu from "./SlideInnerMenu";
 
 import "./Inventory.css";
 
-const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide }) => {
+const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
   const [showSlideInnerMenu, setShowSlideInnerMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState(false);
   const slideRef = useRef(null);
@@ -69,6 +69,7 @@ const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide }) => {
           menuPosition={menuPosition}
           fishInfo={fishInfo}
           isFishBowl={isFishBowl}
+          itemchange={itemchange}
         />
       )}
     </div>
