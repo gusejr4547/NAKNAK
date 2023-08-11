@@ -10,6 +10,6 @@ public interface FavoritePointRepository extends JpaRepository<FavoritePoint,Lon
     @Query("SELECT count(c) FROM favorite_points c WHERE c.member = :member AND c.fishingHole = :fishingHole")
     long findByMemberIdAndFishingHoleId(Member member, FishingHole fishingHole);
 
-    @Query("SELECT c FROM favorite_points c WHERE c.member.memberId = :memberId AND c.fishingHole.fishingHoleId = :fishingHole")
+    @Query("SELECT c FROM favorite_points c WHERE c.member.memberId = :memberId AND c.fishingHole.fishingHoleId = :fishingHoleId")
     FavoritePoint findFavoritePointByMemberAndId(long memberId, long fishingHoleId);
 }
