@@ -15,7 +15,6 @@ function Home({ newbieVersion }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(newbie);
     setNewbie(newbieVersion);
   }, [newbieVersion]);
 

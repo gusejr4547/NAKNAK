@@ -31,10 +31,11 @@ const MapModal = () => {
   // 뉴비버젼
   const next = () => {
     if (step === 4) {
+      setModalOpen(false);
       navigate("/Newbie", { state: 5 });
+      handleUpgradeProgress(60);
     }
     setStep(step + 1);
-    handleUpgradeProgress(60);
   };
 
   useEffect(() => {
