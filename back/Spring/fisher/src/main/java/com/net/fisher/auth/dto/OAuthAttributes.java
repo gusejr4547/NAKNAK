@@ -11,7 +11,7 @@ import java.util.Map;
 @Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
-    private String nameAttributeKey;F
+    private String nameAttributeKey;
     private String name;
     private String email;
     private String picture;
