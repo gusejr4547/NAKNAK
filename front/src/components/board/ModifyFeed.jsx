@@ -1,23 +1,49 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import { Link, useNavigate } from "react-router-dom";
 
-import "./CreateFeed.css";
+import "./ModifyFeed.css";
 import FeedTag from "./FeedTag";
 
-const CreateFeed = () => {
+const ModifyFeed = () => {
   const navigate = useNavigate();
 
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const postId = useParams().postId;
+  const [feedInfo, setFeedInfo] = useState({});
 
   const [content, setContent] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [tagListData, setTagListData] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {
+    const getTargetFeed = async () => {
+      try {
+        setLoading(true);
+
+        const response = await authorizedRequest({
+          method: "get",
+          // 도무지 이해할 수 없는 다른곳은 url 앞에 다 / 를 안붙였는데 여기는 붙여야 됨... env 파일 변경 해도 다른건 다 됨..
+          url: `/api1/api/posts/${postId}`,
+        });
+
+        console.log("feed load success", response.data);
+
+        setFeedInfo(response.data);
+        setSelectedFiles(response.data.images);
+        setContent(response.data.content);
+      } catch (error) {
+        console.error("feed load error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getTargetFeed();
+  }, []);
 
   useEffect(() => {
     const getTagList = async () => {
@@ -28,7 +54,6 @@ const CreateFeed = () => {
           method: "get",
           url: `/api1/api/tags`,
         });
-
         console.log("tag load success", response.data);
         setTagListData(response.data);
       } catch (error) {
@@ -41,14 +66,6 @@ const CreateFeed = () => {
   }, []);
 
   const fileChangeHandler = (e) => {
-    //입력되는 이미지의 요소 중 fileId 는 직접 인덱싱한것..?
-    // "fileId": 1,
-    // "fileName": "image (1).png",
-    // "fileSize": 36951,
-    // "fileContentType": "image/png",
-    // "fileUrl": "
-    console.log(e);
-
     setSelectedFiles((prevFiles) => [
       ...prevFiles,
       ...Array.from(e.target.files),
@@ -82,15 +99,13 @@ const CreateFeed = () => {
 
     const formData = new FormData();
     formData.append("content", content);
-    selectedFiles.forEach((file) => {
-      formData.append("file", file);
-    });
+    formData.append("file", selectedFiles);
     formData.append("tags", selectedTags);
+    console.log("formData", formData.data);
     try {
       setLoading(true);
 
       const response = await authorizedRequest({
-        header: { "Content-Type": "multipart/form-data" },
         method: "post",
         url: `/api1/api/posts/upload`,
         data: formData,
@@ -110,19 +125,20 @@ const CreateFeed = () => {
   };
 
   return (
-    <div className="create-feed-wrapper">
-      <div className="create-feed-header">
-        <Link to={`/Board`} className="create-feed-cancel">
+    <div className="modify-feed-wrapper">
+      <div className="modify-feed-header">
+        <Link to={`/Board`} className="modify-feed-cancel">
           <img src="" alt="취소" />
         </Link>
-        <div className="create-feed-title">
-          <h1>간지나는글쓰기라는문구가필요함</h1>
+        <div className="modify-feed-title">
+          <h1>대충 수정한다는 말</h1>
         </div>
-        <div className="create-feed-submit" onClick={createFeed}>
-          <img src="" alt="작성" />
+        {/* 아래 onClick 필요 */}
+        <div className="modify-feed-submit">
+          <img src="" alt="수정" />
         </div>
       </div>
-      <div className="create-feed-contents">
+      <div className="modify-feed-contents">
         {/* 여기서부터 하나씩 집어넣으면 됨 */}
 
         {/* 이미지첨부버튼 */}
@@ -196,4 +212,4 @@ const CreateFeed = () => {
   );
 };
 
-export default CreateFeed;
+export default ModifyFeed;

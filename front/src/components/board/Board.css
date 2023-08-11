@@ -41,8 +41,9 @@
 }
 
 .board-header {
+  height: 4rem;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   background-color: #ffe48e;
 }
@@ -56,10 +57,13 @@
 }
 
 .board-search-img-container {
+  margin: 0.2rem 0.6rem 0.2rem 0.2rem;
+  height: 3.5rem;
+  width: auto;
+  display: flex;
+  align-items: center;
 }
 .board-search-img-container img {
-  width: 4rem;
-  height: 4rem;
 }
 
 .board-tag-wrapper {
