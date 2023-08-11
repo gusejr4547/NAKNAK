@@ -9,6 +9,7 @@ import {
   token,
   newbie_recoil,
   profileData_recoil,
+  favoritePoint_recoil,
 } from "../../utils/atoms";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
@@ -37,6 +38,9 @@ function Login(props) {
 
   //뉴비버젼 유무
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  // 즐겨찾기 목록 조회
+  const [favoritePoint, setFavoritePoint] =
+    useRecoilState(favoritePoint_recoil);
 
 
   // useEffect(() => {
@@ -71,6 +75,20 @@ function Login(props) {
 
   const register = () => {
     navigate("/Signup");
+  };
+
+  // 즐겨찾기 목록
+  const getFavoritePoint = async (status) => {
+    try {
+      const response = await authorizedRequest({
+        method: "get",
+        url: "/api1/api/fishingholes/favorites",
+      });
+      setFavoritePoint(response.data);
+      console.log(response.data);
+    } catch (err) {
+      throw err;
+    }
   };
 
   //유저정보받아오기 함수
@@ -117,7 +135,7 @@ function Login(props) {
       else if (isNewBie === 0) {
         navigate("/");
       }
-
+      getFavoritePoint();
       setLoading(false); // 데이터 로딩 완료
     } catch (error) {
       console.error("Error posting data:", error);

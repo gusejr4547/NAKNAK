@@ -1,4 +1,4 @@
-package com.net.fisher.achievement.entity;
+package com.net.fisher.challenge.entity;
 
 import com.net.fisher.member.entity.Member;
 import jakarta.persistence.*;

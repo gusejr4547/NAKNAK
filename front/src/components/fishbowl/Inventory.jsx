@@ -11,11 +11,19 @@ const Inventory = () => {
   const [error, setError] = useState(null);
   const [inventoryData, setInventoryData] = useState({});
   const [fishBowlData, setFishBowlData] = useState({});
+  const [itemData, setItemData] = useState(0);
 
   useEffect(() => {
     getInventory();
     getFishBowl();
   }, []);
+
+  const itemchange = () => {
+    setItemData(itemData + 1);
+    console.log(itemData);
+    getFishBowl();
+    getInventory();
+  };
 
   const getInventory = async () => {
     try {
@@ -133,6 +141,7 @@ const Inventory = () => {
                 fishInfo={fish}
                 isFishBowl="false"
                 onDeleteSlide={() => handleDeleteSlide(inventoryData[key])}
+                itemchange={itemchange}
               />
             );
           })}
@@ -149,11 +158,12 @@ const Inventory = () => {
                 fishInfo={fish}
                 isFishBowl="true"
                 onDeleteSlide={() => handleDeleteSlide(fishBowlData[key])}
+                itemchange={itemchange}
               />
             );
           })}
           {/* dummy start */}
-
+          {/* <p>{itemData}</p> */}
           {/* dummy end */}
         </div>
       </div>

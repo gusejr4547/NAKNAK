@@ -12,6 +12,8 @@ function dictlist(props) {
         props.data.map((item) => <Dictdetail key={item.pk} data={item} />)}
       {props.limit &&
         props.limit.map((item) => <Dictdetail key={item.pk} data={item} />)}
+      {props.limit_d &&
+        props.limit_d.map((item) => <Dictdetail key={item.pk} data={item} />)}
     </div>
   );
 }
