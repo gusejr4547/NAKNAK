@@ -32,6 +32,15 @@ function Dict(props) {
     setMessage(data);
   };
 
+  // 플러터 앱에서 호출할 함수 정의
+  function receiveLocationFromFlutter(latitude, longitude) {
+    // 리액트에서 위치 정보 활용
+    console.log("Received location from Flutter:", latitude, longitude);
+
+    // 원하는 작업 수행
+    // 예: 위치 정보를 활용한 지도 표시 또는 다른 로직 처리
+  }
+
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,

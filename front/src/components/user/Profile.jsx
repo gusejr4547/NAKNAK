@@ -23,6 +23,11 @@ function Profile(props) {
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const [activeView, setActiveView] = useState("myPosts");
   const [modalOpen, setModalOpen] = useState(false);
+  const [mypost, setMypost] = useState(0);
+
+  const postplus = (data) => {
+    setMypost(data);
+  };
 
   // 모달창 노출
   const showModal = () => {
@@ -122,7 +127,7 @@ function Profile(props) {
             height: " 80%",
           }}
         >
-          <p>게시글: 0</p>
+          <p>게시글: {mypost}</p>
           <Following user={profileData.memberResponse.memberId} />
           <Follower user={profileData.memberResponse.memberId} />
         </div>
@@ -170,7 +175,7 @@ function Profile(props) {
         </div>
         {activeView === "myPosts" && (
           <div className="profileMiddle">
-            <Mypost id={temp} ver="my-post" />
+            <Mypost id={temp} ver="my-post" postplus={postplus} data={mypost} />
           </div>
         )}
         {activeView === "likePosts" && (

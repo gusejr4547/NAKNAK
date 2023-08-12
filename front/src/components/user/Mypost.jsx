@@ -3,6 +3,8 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+// import { div } from "@tensorflow/tfjs";
+import "./profile.css";
 
 function Mypost(props) {
   const [MypostData, setMypostData] = useState([]);
@@ -19,6 +21,9 @@ function Mypost(props) {
       });
       setLoading(false); // 데이터 로딩 완료
       //   setLoading(false); // 데이터 로딩 완료
+      if (props.ver === "my-post") {
+        props.postplus(response.data.count);
+      }
       console.log(response.data);
       if (response.data.count) {
         setMypostData(response.data);
@@ -41,25 +46,21 @@ function Mypost(props) {
   }
 
   return (
-    <Row xs={1} md={2} className="g-4">
+    <Row xs={1} md={2} className="g-4 mypost">
       {MypostData?.data?.map((item, idx) => (
         <Col key={idx}>
           <Card>
-            <Card.Img variant="top" src={item.image.fileUrl} />
+            <Card.Img variant="top" src={item.image} />
             <Card.Body>
-              <Card.Text>{item.post.content}</Card.Text>
+              <Card.Text>{item.content}</Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">{item.post.registeredAt}</small>
+              <small className="text-muted">{item.registeredAt}</small>
             </Card.Footer>
           </Card>
         </Col>
       ))}
     </Row>
-    // <div>
-    //   {/* <p>{MypostData.count}</p> */}
-    //   {MypostData && <div>{MypostData.data.map((item) => ({ item }))}</div>}
-    // </div>
   );
 }
 
