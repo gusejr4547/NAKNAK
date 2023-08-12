@@ -5,6 +5,7 @@ import Talk2 from "./Talk2";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { newbie_recoil } from "../../utils/atoms";
+import TTS from "./TTS";
 
 function Newbie() {
   let newbieVersion = 1;
@@ -23,7 +24,17 @@ function Newbie() {
       <Home newbieVersion={newbieVersion} />
       <div className="newbie-talk-box">
         <span className="newbie-talk">
-          {state ? Talk2[state].content : Talk2[0].content}
+          {state ? (
+            <div>
+              {Talk2[state].content}
+              <TTS message={Talk2[state].content} />
+            </div>
+          ) : (
+            <div>
+              {Talk2[0].content}
+              <TTS message={Talk2[0].content} />
+            </div>
+          )}
         </span>
       </div>
     </div>

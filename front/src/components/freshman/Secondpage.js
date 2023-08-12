@@ -5,14 +5,21 @@ import Lure from "./Lure";
 import Onetwo from "./Onetwo";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { token } from "../../utils/atoms";
+import { token, tts_recoil } from "../../utils/atoms";
 import upgradeProgress from "../freshman/upgradeProgress";
+import TTS from "./TTS";
 
 function Secondpage({ show }) {
   const [fishingType, setFishingType] = useState("Lure");
   const [step, setStep] = useState(0);
   const [accesstoken, setAccesstoken] = useRecoilState(token);
   const navigate = useNavigate();
+  const [showNext, setShowNext] = useState(false);
+  const [tts, setTts] = useRecoilState(tts_recoil);
+
+  useEffect(() => {
+    setTimeout(() => setShowNext(true), tts);
+  }, [tts]);
 
   useEffect(() => {
     if (show === "Lure") {
@@ -33,6 +40,7 @@ function Secondpage({ show }) {
   };
 
   const nextTalk = () => {
+    setShowNext(false);
     if (step > (fishingType === "Lure" ? Lure : Onetwo).length - 2) {
       // 메인으로 라우터 이동
       navigate("/Newbie");
@@ -53,20 +61,22 @@ function Secondpage({ show }) {
           <span className="second_title">
             <img src={Lure[step]?.image} alt="" />
             {Lure[step].content}
+            {Lure[step].content && <TTS message={Lure[step].content} />}
           </span>
         )}
         {fishingType === "OneTwo" && (
           <span className="second_title">
             <img src={Onetwo[step]?.image} alt="" />
             {Onetwo[step].content}
+            {Onetwo[step].content && <TTS message={Onetwo[step].content} />}
           </span>
         )}
-        {step > 0 && (
+        {/* {step > 0 && (
           <span className="btn1" onClick={() => beforeTalk()}>
             &lt; 이전
           </span>
-        )}
-        {(fishingType === "Lure" ? Lure : Onetwo) && (
+        )} */}
+        {showNext && (fishingType === "Lure" ? Lure : Onetwo) && (
           <span className="btn2" onClick={() => nextTalk()}>
             다음 &gt;
           </span>

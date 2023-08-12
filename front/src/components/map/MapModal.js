@@ -6,6 +6,7 @@ import {
   fishingInfo_recoil,
   newbie_recoil,
   mooltae_recoil,
+  tts_recoil,
   favoritePoint_recoil,
 } from "../../utils/atoms";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +14,7 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import Talk2 from "../freshman/Talk2";
 import upgradeProgress from "../freshman/upgradeProgress";
-
+import TTS from "../freshman/TTS";
 const MapModal = () => {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [data, setData] = useRecoilState(fishingInfo_recoil);
@@ -33,7 +34,14 @@ const MapModal = () => {
     }
     return false;
   });
-  console.log(like);
+
+  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShow(true), tts);
+  }, [tts]);
+
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
@@ -44,6 +52,7 @@ const MapModal = () => {
   };
   // 뉴비버젼
   const next = () => {
+    setShow(false);
     if (step === 4) {
       setModalOpen(false);
       navigate("/Newbie", { state: 5 });
@@ -104,14 +113,17 @@ const MapModal = () => {
       {newbie && (
         <div className="map-modal-newbie-talk-box">
           {Talk2[step].content}
-          <div
-            className="next"
-            onClick={() => {
-              next();
-            }}
-          >
-            다음 &gt;
-          </div>
+          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {show && (
+            <div
+              className="next"
+              onClick={() => {
+                next();
+              }}
+            >
+              다음 &gt;
+            </div>
+          )}
         </div>
       )}
       <div className="modal_wrap">

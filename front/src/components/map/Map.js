@@ -9,6 +9,7 @@ import {
   fishingInfo_recoil,
   newbie_recoil,
   mooltae_recoil,
+  tts_recoil,
 } from "../../utils/atoms";
 
 import axios from "../../api/SeaAPI";
@@ -18,6 +19,7 @@ import badanuriPositions from "./badanuriPositions";
 import fishingSpots from "./fishingSpots";
 import markerPositions from "./markerPositions";
 import Talk2 from "../freshman/Talk2";
+import TTS from "../freshman/TTS";
 
 function Map() {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
@@ -30,6 +32,14 @@ function Map() {
   const [step, setStep] = useState(1);
   const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
   const lunar = require("cky-lunar-calendar");
+  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (step === 1) {
+      setTimeout(() => setShow(true), tts);
+    }
+  }, [tts]);
 
   // 음력 날짜구하기
   function lunarDate() {
@@ -77,6 +87,7 @@ function Map() {
   // 뉴비버젼
   const next = () => {
     setStep(step + 1);
+    setShow(false);
   };
 
   const Search = (event) => {
@@ -351,22 +362,25 @@ function Map() {
     <div>
       {!modalOpen && newbie ? (
         <div className="map-newbie-talk-box">
-          {Talk2[step].content}{" "}
-          <div
-            className="next"
-            onClick={() => {
-              if (step === 1) {
-                setMyLocation({
-                  lat: Talk2[1]?.spot_lat,
-                  lng: Talk2[1]?.spot_lng,
-                });
-                next();
-              } else {
-              }
-            }}
-          >
-            다음 &gt;
-          </div>
+          {Talk2[step].content}
+          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {show && (
+            <div
+              className="next"
+              onClick={() => {
+                if (step === 1) {
+                  setMyLocation({
+                    lat: Talk2[1]?.spot_lat,
+                    lng: Talk2[1]?.spot_lng,
+                  });
+                  next();
+                } else {
+                }
+              }}
+            >
+              다음 &gt;
+            </div>
+          )}
         </div>
       ) : (
         ""

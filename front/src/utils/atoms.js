@@ -72,3 +72,8 @@ export const location_recoil = atom({
   default: undefined,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const tts_recoil = atom({
+  key: "tts_recoil",
+  default: null,
+});
