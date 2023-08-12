@@ -35,7 +35,6 @@ export default function TTS({ message }) {
           (result) => {
             if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
               setTts(Math.floor(result.audioDuration / 10000));
-              console.log(tts);
             } else {
               console.error(
                 "Speech synthesis canceled, " + result.errorDetails

@@ -9,20 +9,23 @@ function Freshman() {
   const location = useLocation();
 
   useEffect(() => {
-    setShow(location.state.page);
+    if (location.state && location.state.page !== undefined) {
+      setShow(location.state.page);
+    }
   }, [location]);
 
-  // 자식 컴포넌트에서 상태를 변경하기 위한 함수 정의
   const handleChangeParentState = (status) => {
     setShow(status);
   };
+
   return (
     <div className="freshman_wrapper">
       <div className="freshman_wave_wrap">
-        {!show && (
+        {show ? (
+          <Secondpage show={show} />
+        ) : (
           <Firstpage handleChangeParentState={handleChangeParentState} />
         )}
-        {show && <Secondpage show={show} />}
       </div>
     </div>
   );

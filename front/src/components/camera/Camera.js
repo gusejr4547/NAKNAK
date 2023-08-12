@@ -8,12 +8,13 @@ import { download } from "./utils/download";
 import "./style/App.css";
 // import { initializeCV } from "./utils/initializeCV";
 import { useRecoilState } from "recoil";
-import { yolo_recoil, newbie_recoil } from "../../utils/atoms";
+import { yolo_recoil, newbie_recoil, tts_recoil } from "../../utils/atoms";
 import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import Talk2 from "../freshman/Talk2";
 import "./Camera.css";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import TTS from "../freshman/TTS";
 
 const Camera = () => {
   // useEffect(() => {
@@ -40,6 +41,8 @@ const Camera = () => {
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(6);
   const navigate = useNavigate();
+  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [show, setShow] = useState(false);
 
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState({
@@ -65,6 +68,10 @@ const Camera = () => {
   const scoreThreshold = 0.25;
   const detectionInterval = 1000;
 
+  useEffect(() => {
+    setTimeout(() => setShow(true), tts);
+  }, [tts]);
+
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
@@ -76,6 +83,7 @@ const Camera = () => {
   };
   // 뉴비버젼
   const next = () => {
+    setShow(false);
     if (step < 8) {
       setStep(step + 1);
     } else {
@@ -258,6 +266,7 @@ const Camera = () => {
       {newbie && (
         <div className="pic-newbie-talk-box">
           {Talk2[step].content}
+          {Talk2[step].content && <TTS message={Talk2[step].content} />}
           <div
             className="next"
             onClick={() => {

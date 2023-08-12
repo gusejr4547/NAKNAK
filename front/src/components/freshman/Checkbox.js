@@ -3,16 +3,24 @@ import "./Checkbox.css";
 import Checklist from "./Checklist";
 import { useRecoilState } from "recoil";
 import upgradeProgress from "../freshman/upgradeProgress";
-import { newbie_recoil, profileData_recoil } from "../../utils/atoms";
+import {
+  newbie_recoil,
+  profileData_recoil,
+  tts_recoil,
+} from "../../utils/atoms";
 import Talk2 from "../freshman/Talk2";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
+import TTS from "./TTS";
+import { useEffect } from "react";
 
 function Checkbox() {
   const navigate = useNavigate();
   const [step, setStep] = useState(9);
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [showNext, setShowNext] = useState(false);
   const [item, setItem] = useState("");
   const [items, setItems] = useState(() => {
     const storedItems = localStorage.getItem("items");
@@ -24,6 +32,10 @@ function Checkbox() {
           { id: 3, text: "장소찾기", completed: false },
         ];
   });
+
+  useEffect(() => {
+    setTimeout(() => setShowNext(true), tts);
+  }, [tts]);
 
   const addItem = () => {
     if (item.trim() !== "") {
@@ -80,6 +92,7 @@ function Checkbox() {
     }
   };
   const next = () => {
+    setShowNext(false);
     // 뉴비 해제 axios 보내기 및 현재 newbie false 적용하기.
     if (step === 9) {
       setStep(step + 1);
@@ -121,14 +134,17 @@ function Checkbox() {
         {newbie && (
           <div className="checkbox-newbie-talk-box">
             {Talk2[step].content}
-            <div
-              className="next"
-              onClick={() => {
-                next();
-              }}
-            >
-              다음 &gt;
-            </div>
+            {Talk2[step].content && <TTS message={Talk2[step].content} />}
+            {showNext && (
+              <div
+                className="next"
+                onClick={() => {
+                  next();
+                }}
+              >
+                다음 &gt;
+              </div>
+            )}
           </div>
         )}
       </div>

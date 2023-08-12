@@ -16,8 +16,14 @@ function Secondpage({ show }) {
   const navigate = useNavigate();
   const [showNext, setShowNext] = useState(false);
   const [tts, setTts] = useRecoilState(tts_recoil);
+  const [setting, setSetting] = useState(false);
+
+  // const [voice, setVoice] = useState();
 
   useEffect(() => {
+    setSetting(true);
+    console.log("길이", fishingType, tts);
+    // setShowNext(false);
     setTimeout(() => setShowNext(true), tts);
   }, [tts]);
 
@@ -57,20 +63,27 @@ function Secondpage({ show }) {
     <div className="second_wrapper">
       <div className="second_talk">
         {/* <span className="second_img"></span> */}
-        {fishingType === "Lure" && (
-          <span className="second_title">
-            <img src={Lure[step]?.image} alt="" />
-            {Lure[step].content}
-            {Lure[step].content && <TTS message={Lure[step].content} />}
-          </span>
-        )}
-        {fishingType === "OneTwo" && (
-          <span className="second_title">
-            <img src={Onetwo[step]?.image} alt="" />
-            {Onetwo[step].content}
-            {Onetwo[step].content && <TTS message={Onetwo[step].content} />}
-          </span>
-        )}
+        <span className="second_title">
+          {fishingType === "Lure" ? (
+            <>
+              <img src={Lure[step]?.image} alt="" />
+              {Lure[step].content}
+              {Lure[step].content && setting && (
+                <TTS message={Lure[step].content} />
+              )}
+            </>
+          ) : (
+            <>
+              {/* <span className="second_title"> */}
+              <img src={Onetwo[step]?.image} alt="" />
+              {Onetwo[step].content}
+              {Onetwo[step].content && setting && (
+                <TTS message={Onetwo[step].content} />
+              )}
+              {/* </span> */}
+            </>
+          )}
+        </span>
         {/* {step > 0 && (
           <span className="btn1" onClick={() => beforeTalk()}>
             &lt; 이전

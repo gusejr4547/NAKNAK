@@ -22,8 +22,14 @@ function Firstpage({ handleChangeParentState }) {
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [tts, setTts] = useRecoilState(tts_recoil);
 
+  const [setting, setSetting] = useState(false);
+
   useEffect(() => {
+    setSetting(true);
+    console.log("길이", "first", tts);
+    // setShow(false);
     setTimeout(() => setShow(true), tts);
+    // setVoice(TTS({ message: talk[step].content }));
   }, [tts]);
 
   // 뉴비 상태 변경
@@ -134,7 +140,7 @@ function Firstpage({ handleChangeParentState }) {
       <div className="first_cat_img"></div>
       <div className="first_talk">
         <span className="first_title">{talk[step].content}</span>
-        {talk[step].content && <TTS message={talk[step].content} />}
+        {talk[step].content && setting && <TTS message={talk[step].content} />}
       </div>
 
       {/* 가장 가까운 파도 */}
