@@ -1,5 +1,5 @@
 import React from "react";
-import { quest } from "../../utils/data/quest";
+import { challenge } from "../../utils/data/challenge";
 import "./quest.css";
 import Questlist from "./Questlist";
 
@@ -19,7 +19,7 @@ function Achievements(props) {
           className="quest-back-button"
           onClick={goBack}
         />
-        {quest.map((item) => (
+        {challenge.map((item) => (
           <Questlist key={item.pk} data={item} />
         ))}
       </div>

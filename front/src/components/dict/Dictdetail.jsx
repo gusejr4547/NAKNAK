@@ -26,13 +26,17 @@ function Dictdetail(props) {
         </div>
       )}
       {showModal && props.data.start && (
-        <div className="dict-detail-modal">
-          <div className="dict-detail-modal-content">
-            <p>{props.data.start}</p>
-            <p>{props.data.end}</p>
-            <button onClick={handleCloseModal}>Close</button>
-          </div>
+        <div>
+          <p>{props.data.start}</p>
+          <p>{props.data.end}</p>
         </div>
+        // <div className="dict-detail-modal">
+        //   <div className="dict-detail-modal-content">
+        //     <p>{props.data.start}</p>
+        //     <p>{props.data.end}</p>
+        //     <button onClick={handleCloseModal}>Close</button>
+        //   </div>
+        // </div>
       )}
     </div>
   );

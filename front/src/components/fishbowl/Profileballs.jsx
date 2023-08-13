@@ -26,31 +26,31 @@ export class ImageObject {
     );
   }
 
-  onTouchStart(event) {
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
+  //   onTouchStart(event) {
+  //     const touchX = event.touches[0].clientX;
+  //     const touchY = event.touches[0].clientY;
 
-    const distance = Math.sqrt((this.x - touchX) ** 2 + (this.y - touchY) ** 2);
+  //     const distance = Math.sqrt((this.x - touchX) ** 2 + (this.y - touchY) ** 2);
 
-    if (distance <= this.size) {
-      this.isDragging = true;
-      this.dragOffsetX = this.x - touchX;
-      this.dragOffsetY = this.y - touchY;
-    }
-  }
+  //     if (distance <= this.size) {
+  //       this.isDragging = true;
+  //       this.dragOffsetX = this.x - touchX;
+  //       this.dragOffsetY = this.y - touchY;
+  //     }
+  //   }
 
-  onTouchMove(event) {
-    if (this.isDragging) {
-      const touchX = event.touches[0].clientX;
-      const touchY = event.touches[0].clientY;
-      this.x = touchX + this.dragOffsetX;
-      this.y = touchY + this.dragOffsetY;
-    }
-  }
+  //   onTouchMove(event) {
+  //     if (this.isDragging) {
+  //       const touchX = event.touches[0].clientX;
+  //       const touchY = event.touches[0].clientY;
+  //       this.x = touchX + this.dragOffsetX;
+  //       this.y = touchY + this.dragOffsetY;
+  //     }
+  //   }
 
-  onTouchEnd() {
-    this.isDragging = false;
-  }
+  //   onTouchEnd() {
+  //     this.isDragging = false;
+  //   }
 
   update(canvas) {
     this.y += this.weight;
@@ -125,31 +125,31 @@ export class Ball {
     this.dragOffsetY = 0;
   }
 
-  onTouchStart(event) {
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
+  //   onTouchStart(event) {
+  //     const touchX = event.touches[0].clientX;
+  //     const touchY = event.touches[0].clientY;
 
-    const distance = Math.sqrt((this.x - touchX) ** 2 + (this.y - touchY) ** 2);
+  //     const distance = Math.sqrt((this.x - touchX) ** 2 + (this.y - touchY) ** 2);
 
-    if (distance <= this.size) {
-      this.isDragging = true;
-      this.dragOffsetX = this.x - touchX;
-      this.dragOffsetY = this.y - touchY;
-    }
-  }
+  //     if (distance <= this.size) {
+  //       this.isDragging = true;
+  //       this.dragOffsetX = this.x - touchX;
+  //       this.dragOffsetY = this.y - touchY;
+  //     }
+  //   }
 
-  onTouchMove(event) {
-    if (this.isDragging) {
-      const touchX = event.touches[0].clientX;
-      const touchY = event.touches[0].clientY;
-      this.x = touchX + this.dragOffsetX;
-      this.y = touchY + this.dragOffsetY;
-    }
-  }
+  //   onTouchMove(event) {
+  //     if (this.isDragging) {
+  //       const touchX = event.touches[0].clientX;
+  //       const touchY = event.touches[0].clientY;
+  //       this.x = touchX + this.dragOffsetX;
+  //       this.y = touchY + this.dragOffsetY;
+  //     }
+  //   }
 
-  onTouchEnd() {
-    this.isDragging = false;
-  }
+  //   onTouchEnd() {
+  //     this.isDragging = false;
+  //   }
 
   update(canvas) {
     this.y += this.weight;
@@ -238,12 +238,12 @@ const Balls = () => {
         // const y = Math.random() * canvas.height;
         const y = 100 + Math.random() * (canvas.height - 200);
         const image = new ImageObject(canvas, x, y, imageUrls[i]);
-        image.touchstart = image.onTouchStart.bind(image);
-        image.touchmove = image.onTouchMove.bind(image);
-        image.touchend = image.onTouchEnd.bind(image);
-        canvas.addEventListener("touchstart", image.touchstart);
-        canvas.addEventListener("touchmove", image.touchmove);
-        canvas.addEventListener("touchend", image.touchend);
+        // image.touchstart = image.onTouchStart.bind(image);
+        // image.touchmove = image.onTouchMove.bind(image);
+        // image.touchend = image.onTouchEnd.bind(image);
+        // canvas.addEventListener("touchstart", image.touchstart);
+        // canvas.addEventListener("touchmove", image.touchmove);
+        // canvas.addEventListener("touchend", image.touchend);
         images.push(image);
       }
     };
@@ -340,9 +340,9 @@ const Balls = () => {
       id="canvas"
       style={{
         width: "90%",
-        height: "85%",
+        height: "60%",
         position: "absolute",
-        top: "5%",
+        bottom: "10%",
         left: "5%",
       }}
     >

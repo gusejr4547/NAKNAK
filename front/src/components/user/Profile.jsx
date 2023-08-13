@@ -12,7 +12,7 @@ import Profileinventory from "./Profileinventory";
 import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import ProfileModal from "./ProfileModal";
-import SeaScene from "../fishbowl/SeaScene";
+import Profilesea from "../fishbowl/Profilesea";
 
 function Profile(props) {
   const userId = useParams().userId;
@@ -187,7 +187,7 @@ function Profile(props) {
         )}
         {activeView === "aquarium" && (
           <div className="profilebottom">
-            {/* <SeaScene stytle={{ height: "500px" }} /> */}
+            <Profilesea />
           </div>
         )}
       </div>

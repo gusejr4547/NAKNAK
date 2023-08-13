@@ -1,0 +1,25 @@
+.dict-box {
+  margin: 5%;
+}
+
+.search-wrapper {
+}
+
+.dictBottom {
+  margin-top: 5%;
+}
+.dicttoggleBar {
+  margin-bottom: 5%;
+  display: flex;
+  justify-content: center;
+}
+
+.dictactive {
+  border-radius: 20%;
+  background-color: rgb(200, 244, 250);
+}
+
+.dictdefault {
+  border-radius: 20%;
+  background-color: aliceblue;
+}

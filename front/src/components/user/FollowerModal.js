@@ -10,8 +10,9 @@ function FollowerModal(props) {
   }
 
   function handleProfileLinkClick(memberId) {
-    closeModal();
     navigate(`/Profile/:${memberId}`);
+    window.location.reload();
+    closeModal();
   }
 
   return (
@@ -35,24 +36,3 @@ function FollowerModal(props) {
 }
 
 export default FollowerModal;
-
-// import styles from './Modal.css';
-
-// function FollowerModal({ setModalOpen, data}) {
-//     // 모달 끄기
-//     const closeModal = () => {
-//         setModalOpen(false);
-//     };
-
-//     return (
-//         <div className={styles.container}>
-//             <button className={styles.close} onClick={closeModal}>
-//                 X
-//             </button>
-//         {data.map((item) => (
-//         <p key={item.memberId}>{item.nickname}</p>
-//           ))}
-//         </div>
-//     );
-// }
-// export default FollowerModal;
