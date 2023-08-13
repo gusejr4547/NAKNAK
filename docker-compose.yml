@@ -38,9 +38,9 @@ services:
 
   
 networks:
-  default:
-    external:
-      name: spring-redis
+  spring-redis:
+    external: true
+      
 
 volumes:
   vol:
