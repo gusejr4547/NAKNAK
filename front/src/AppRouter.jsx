@@ -40,6 +40,9 @@ import { download } from "./components/camera/utils/download";
 import { useRecoilState } from "recoil";
 import { yolo_recoil, location_recoil } from "./utils/atoms";
 
+import Profileballs from "./components/fishbowl/Profileballs";
+import Profilesea from "./components/fishbowl/Profilesea";
+
 function AppRouter(props) {
   const [yolo, setYolo] = useRecoilState(yolo_recoil);
   const modelName = "best.onnx";
@@ -153,6 +156,8 @@ function AppRouter(props) {
           <Route path="/Newbie" element={<Newbie />}></Route>
           <Route path="/Freshman" element={<Freshman />}></Route>
           <Route path="/Achievements" element={<Achievements />}></Route>
+          <Route path="/Profileballs" element={<Profileballs />}></Route>
+          <Route path="/Profilesea" element={<Profilesea />}></Route>
           {/* <Route path="/Bowl" element={<Bowl />}></Route> */}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

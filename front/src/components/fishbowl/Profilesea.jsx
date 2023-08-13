@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import fish from "./fishbowl.png";
 import "./SeaScene.css";
-import Balls from "./Balls";
+import Profileballs from "./Profileballs";
 
 const SeaScene = () => {
   const containerRef = useRef();
@@ -144,17 +144,17 @@ const SeaScene = () => {
         className="Sea"
         style={{
           position: "absolute",
-          top: "5%",
+          bottom: "10%",
           left: "5%",
           width: "90%",
-          height: "85%",
+          height: "60%",
           overflow: "hidden", // 추가: 컨테이너 크기를 넘어가는 부분을 숨깁니다.
           zIndex: -1,
         }}
       >
         {/* <Balls /> */}
       </div>
-      <Balls
+      <Profileballs
         style={{
           position: "absolute",
           top: 0,

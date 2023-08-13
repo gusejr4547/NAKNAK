@@ -8,10 +8,14 @@ import {
   action,
   limit_date,
 } from "../../utils/data/point";
+import { challenge } from "../../utils/data/challenge";
 import Dictlist from "./Dictlist";
 import "./Dict.css";
 import { useRecoilState } from "recoil";
 import { location_recoil } from "../../utils/atoms";
+
+import Papa from "papaparse";
+import fs from "fs";
 
 function Dict(props) {
   const [activeView, setActiveView] = useState("");
@@ -19,7 +23,7 @@ function Dict(props) {
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [lodata, setlodata] = useState("");
-
+  console.log(challenge);
   const [message, setMessage] = useState("");
 
   const fetchDataFromFlutter = () => {
@@ -46,19 +50,8 @@ function Dict(props) {
     callFlutterFunction();
   }
 
-  // Define the function to receive data from Flutter.
-  window.receiveDataFromFlutter = (data) => {
-    setMessage(data);
-  };
-
-  // 플러터 앱에서 호출할 함수 정의
-  function receiveLocationFromFlutter(latitude, longitude) {
-    // 리액트에서 위치 정보 활용
-    console.log("Received location from Flutter:", latitude, longitude);
-
-    // 원하는 작업 수행
-    // 예: 위치 정보를 활용한 지도 표시 또는 다른 로직 처리
-  }
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {}
 
   const options = {
     enableHighAccuracy: true,
@@ -85,8 +78,14 @@ function Dict(props) {
   function handleGetLocation() {
     navigator.geolocation.getCurrentPosition(success, error, options);
   }
+
   const handleToggle = (view) => {
-    setActiveView(view);
+    if (activeView === view) {
+      setActiveView("");
+      console.log(activeView);
+    } else {
+      setActiveView(view);
+    }
   };
 
   const Search = (event) => {
@@ -173,7 +172,7 @@ function Dict(props) {
   }
 
   return (
-    <div>
+    <div className="dict-box">
       <input
         // className="search"
         placeholder="궁금한 점을 검색해주세요."
@@ -274,7 +273,8 @@ function Dict(props) {
           </div>
         )}
       </div>
-      <button onClick={handleGetLocation}>Get Current Location</button>
+      {/* <button onClick={handleClick}>123</button> */}
+      {/* <button onClick={handleGetLocation}>Get Current Location</button>
       {position && (
         <div>
           <p>Your current position is:</p>
@@ -287,18 +287,7 @@ function Dict(props) {
         <p>
           {meme.latitude} {meme.longitude}
         </p>
-      )}
-      {/* <p>{meme.message}11</p> */}
-      {/* <p>{message}</p>
-      <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
-      {location && (
-        <p>
-          123
-          {location.latitude}
-          {location}
-        </p>
-      )}
-      {lodata && <p>{lodata}</p>} */}
+      )} */}
     </div>
   );
 }

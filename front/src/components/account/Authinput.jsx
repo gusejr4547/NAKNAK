@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const AuthInput = (props) => {
   return (
@@ -25,23 +25,23 @@ export default AuthInput;
 
 const WrapperStyle = styled.div`
   width: 100%;
-  height: 65px;
+  height: 50px;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${(props) => props.marginBottom || '21px'};
+  margin-bottom: ${(props) => props.marginBottom || "21px"};
 `;
 
 const LabelStyle = styled.label`
-  font-size: 12px;
+  font-size: 11px;
   margin-bottom: 4px;
   font-family: korail_bold;
-  color: ${(props) => props.color || '#292D32'};
+  color: ${(props) => props.color || "#292D32"};
 `;
 
 const InputStyle = styled.input`
   height: 35px;
   border-width: 1px;
-  border-color: ${(props) => (props.$hasError ? '#FDA29B' : '#CED4DA')};
+  border-color: ${(props) => (props.$hasError ? "#FDA29B" : "#CED4DA")};
   border-radius: 8px;
   padding: 10px;
   border-style: solid;

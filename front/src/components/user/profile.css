@@ -99,6 +99,7 @@
   position: absolute;
   left: 1%;
   bottom: 5%;
+  background-color: transparent;
 }
 .postbody {
   margin: auto;
@@ -108,4 +109,20 @@
   margin-top: auto;
   margin-left: auto;
   margin-right: auto;
+}
+.mypost-page-btn {
+  background-color: transparent;
+  border: 0;
+}
+
+.page-btn-active {
+  /* background-color: white; */
+  background-color: transparent;
+  color: yellow;
+  border: 0;
+}
+
+.page-btn-default {
+  background-color: transparent;
+  border: 0;
 }
