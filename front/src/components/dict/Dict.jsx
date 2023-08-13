@@ -27,6 +27,24 @@ function Dict(props) {
     window.requestFlutterData();
   };
 
+  const [meme, setMeme] = useState("");
+
+  function callFlutterFunction() {
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview
+        .callHandler("flutterFunction", 123)
+        .then(function (result) {
+          console.log("Result from Flutter:", result);
+          setMeme(result);
+        });
+    }
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleButtonClick() {
+    callFlutterFunction();
+  }
+
   // Define the function to receive data from Flutter.
   window.receiveDataFromFlutter = (data) => {
     setMessage(data);
@@ -263,6 +281,8 @@ function Dict(props) {
           <p>Longitude: {position.longitude}</p>
         </div>
       )}
+      <button onClick={handleButtonClick}>버튼</button>
+      <p>{meme}11</p>
       {/* <p>{message}</p>
       <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
       {location && (

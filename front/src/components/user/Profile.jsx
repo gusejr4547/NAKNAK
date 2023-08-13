@@ -12,6 +12,7 @@ import Profileinventory from "./Profileinventory";
 import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import ProfileModal from "./ProfileModal";
+import SeaScene from "../fishbowl/SeaScene";
 
 function Profile(props) {
   const userId = useParams().userId;
@@ -135,6 +136,7 @@ function Profile(props) {
       <div
         className="profileMiddle"
         style={{
+          // height: "5%",
           display: "flex",
           justifyContent: "space-evenly",
           alignItems: "center",
@@ -174,18 +176,18 @@ function Profile(props) {
           </button>
         </div>
         {activeView === "myPosts" && (
-          <div className="profileMiddle">
+          <div className="profilebottom">
             <Mypost id={temp} ver="my-post" postplus={postplus} data={mypost} />
           </div>
         )}
         {activeView === "likePosts" && (
-          <div className="profileMiddle">
+          <div className="profilebottom">
             <Mypost id={temp} ver="my-like" />
           </div>
         )}
         {activeView === "aquarium" && (
-          <div className="profileMiddle">
-            <p>아쿠아리움</p>
+          <div className="profilebottom">
+            {/* <SeaScene stytle={{ height: "500px" }} /> */}
           </div>
         )}
       </div>
