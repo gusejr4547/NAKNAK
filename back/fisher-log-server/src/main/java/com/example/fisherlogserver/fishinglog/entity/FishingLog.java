@@ -1,22 +1,24 @@
-package com.example.fisherlogserver.kafka.dto;
+package com.example.fisherlogserver.fishinglog.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-public class LogDto {
+@Document(collation = "fishing_log")
+public class FishingLog {
+    @Id
+    private String logId;
     private long userId;
     private long fishId;
     private double size;
     private double latitude;
     private double longitude;
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd kk:mm:ss",timezone = "Asia/Seoul")
     private LocalDateTime logTime;
 }

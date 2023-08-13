@@ -30,7 +30,7 @@ public class KafkaLogDtoConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(
                 configs,
                 new StringDeserializer(),
-                new JsonDeserializer<>(LogDto.class));
+                new JsonDeserializer<>(LogDto.class,false));
     }
 
     @Bean
