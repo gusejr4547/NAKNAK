@@ -60,7 +60,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize->authorize
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
-                        .requestMatchers(toH2Console()).permitAll() // H2 Console 에 대한 모든 접근을 허용하기 위한 메서드
+                        //.requestMatchers(toH2Console()).permitAll() // H2 Console 에 대한 모든 접근을 허용하기 위한 메서드
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
                         .requestMatchers("/static/*").permitAll()
                         .requestMatchers("/model/*").permitAll()
