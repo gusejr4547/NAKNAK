@@ -62,7 +62,7 @@ function AppRouter(props) {
         try {
           console.log(123);
           const baseModelURL = `${process.env.PUBLIC_URL}/model`;
-          const modelInputShape = [1, 3, 320, 320];
+          const modelInputShape = [1, 3, 640, 640];
           console.log(baseModelURL);
 
           // create session
