@@ -81,7 +81,6 @@ const MapModal = () => {
         longitude: data[0].LONGITUDE,
       };
       setFavoritePoint([...favoritePoint, new_data]);
-      console.log(favoritePoint);
     } catch (err) {
       console.log(err);
     }

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./Checkbox.css";
 import Checklist from "./Checklist";
 import { useRecoilState } from "recoil";
-import upgradeProgress from "../freshman/upgradeProgress";
+import upgradeProgress from "./upgradeProgress";
 import {
   newbie_recoil,
   profileData_recoil,
   tts_recoil,
 } from "../../utils/atoms";
-import Talk2 from "../freshman/Talk2";
+import Talk2 from "./Talk2";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
 import TTS from "./TTS";

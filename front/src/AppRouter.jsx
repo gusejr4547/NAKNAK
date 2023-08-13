@@ -9,6 +9,7 @@ import Login from "./components/account/Login";
 import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
+import FavoriteSpots from "./components/fishing/FavoriteSpots";
 import Board from "./components/board/Board";
 import ModifyFeed from "./components/board/ModifyFeed";
 
@@ -149,6 +150,7 @@ function AppRouter(props) {
           {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
           <Route path="/Map" element={<Map />}></Route>
+          <Route path="/FavoriteSpots" element={<FavoriteSpots />}></Route>
           <Route path="/Checkbox" element={<Checkbox />}></Route>
           <Route path="/Newbie" element={<Newbie />}></Route>
           <Route path="/Freshman" element={<Freshman />}></Route>

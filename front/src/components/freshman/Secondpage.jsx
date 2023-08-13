@@ -6,7 +6,7 @@ import Onetwo from "./Onetwo";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { token, tts_recoil } from "../../utils/atoms";
-import upgradeProgress from "../freshman/upgradeProgress";
+import upgradeProgress from "./upgradeProgress";
 import TTS from "./TTS";
 
 function Secondpage({ show }) {

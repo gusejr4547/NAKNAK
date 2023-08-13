@@ -20,6 +20,7 @@ import fishingSpots from "./fishingSpots";
 import markerPositions from "./markerPositions";
 import Talk2 from "../freshman/Talk2";
 import TTS from "../freshman/TTS";
+import { useLocation } from "react-router-dom";
 
 function Map() {
   const [data, setData] = useRecoilState(fishingInfo_recoil);
@@ -34,6 +35,8 @@ function Map() {
   const lunar = require("cky-lunar-calendar");
   const [tts, setTts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
+
+  const { state } = useLocation();
 
   useEffect(() => {
     if (step === 1) {
@@ -118,6 +121,8 @@ function Map() {
       setinputData(Data);
     }
   };
+
+  // 카카오 지도
   const kakao = window["kakao"];
   useEffect(() => {
     kakao.maps.load(() => {
@@ -145,6 +150,11 @@ function Map() {
       }
       if (myLocation) {
         panTo(myLocation.lat, myLocation.lng);
+      }
+
+      // 즐겨찾기에서 온 경우
+      if (state) {
+        panTo(state.favLat, state.favLng);
       }
 
       // 낚시스팟 마커 생성

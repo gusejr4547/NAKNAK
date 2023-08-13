@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
-import upgradeProgress from "../freshman/upgradeProgress";
+import upgradeProgress from "./upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { useRecoilState } from "recoil";
@@ -26,9 +26,9 @@ function Firstpage({ handleChangeParentState }) {
 
   useEffect(() => {
     setSetting(true);
-    console.log("길이", "first", tts);
-    // setShow(false);
-    setTimeout(() => setShow(true), tts);
+    if (step !== 8) {
+      setTimeout(() => setShow(true), tts);
+    }
     // setVoice(TTS({ message: talk[step].content }));
   }, [tts]);
 
@@ -74,7 +74,6 @@ function Firstpage({ handleChangeParentState }) {
   // 낚시 설문조사 함수
   const btn1 = () => {
     setShow(false);
-
     if (step === 0) {
       setStep(1);
     } else if (step === 1) {
@@ -88,24 +87,18 @@ function Firstpage({ handleChangeParentState }) {
       setStep(7);
       newbieStauts(1);
       handleUpgradeProgress(20);
-      setTimeout(() => {
-        handleChangeParentState("Onetwo");
-        //   navigate("/Secondpage", { state: "Onetwo" });
-      }, 3000);
+      setTimeout(() => handleChangeParentState("Onetwo"), tts);
     } else if (step === 5) {
       // 뉴비아님
       newbieStauts(0);
       setStep(8);
       setNewbie(false);
       handleUpgradeProgress(100);
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      setTimeout(() => navigate("/"), tts);
     }
   };
   const btn2 = () => {
     setShow(false);
-
     if (step === 0) {
       setStep(1);
     } else if (step === 1) {
@@ -116,19 +109,13 @@ function Firstpage({ handleChangeParentState }) {
       setStep(6);
       newbieStauts(2);
       handleUpgradeProgress(20);
-      setTimeout(() => {
-        handleChangeParentState("Lure");
-        // navigate("/Secondpage", { state: "Lure" });
-      }, 3000);
+      setTimeout(() => handleChangeParentState("Lure"), tts);
     } else if (step === 4) {
       // 루어낚시
       setStep(6);
       newbieStauts(2);
       handleUpgradeProgress(20);
-      setTimeout(() => {
-        handleChangeParentState("Lure");
-        // navigate("/Secondpage", { state: "Lure" });
-      }, 3000);
+      setTimeout(() => handleChangeParentState("Lure"), tts);
     } else if (step === 5) {
       setStep(3);
     }
