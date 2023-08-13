@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { each } from "jquery";
+import SeaScene from "./SeaScene";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
@@ -263,8 +264,8 @@ const Balls = () => {
       // loadBackgroundImage("./assets/images/badabada.png", canvas, ctx);
       // ctx.fillStyle = "rgba(255,255,255,0.5)";
       // ctx.fillRect(0, 0, canvas.width, canvas.height);
-      // ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-      loadBackgroundImage("./assets/images/badabada.png", canvas, ctx); // Redraw the background image
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // 화면 지우기
+      // loadBackgroundImage("./assets/images/badabada.png", canvas, ctx); // 배경화면
       ctx.fillStyle = "rgba(255,255,255,0.5)";
       for (let i = 0; i < images.length; i++) {
         images[i].update(canvas);
@@ -323,10 +324,15 @@ const Balls = () => {
       className="h-full rounded-full"
       id="canvas"
       style={{
-        height: "95vh",
-        width: "100vw",
+        width: "90%",
+        height: "85vh",
+        position: "absolute",
+        top: "5%",
+        left: "5%",
       }}
-    ></canvas>
+    >
+      {/* <SeaScene></SeaScene> */}
+    </canvas>
   );
 };
 

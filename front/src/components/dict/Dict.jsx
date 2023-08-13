@@ -27,10 +27,37 @@ function Dict(props) {
     window.requestFlutterData();
   };
 
+  const [meme, setMeme] = useState("");
+
+  function callFlutterFunction() {
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview
+        .callHandler("flutterFunction", 123)
+        .then(function (result) {
+          console.log("Result from Flutter:", result);
+          setMeme(result);
+        });
+    }
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleButtonClick() {
+    callFlutterFunction();
+  }
+
   // Define the function to receive data from Flutter.
   window.receiveDataFromFlutter = (data) => {
     setMessage(data);
   };
+
+  // 플러터 앱에서 호출할 함수 정의
+  function receiveLocationFromFlutter(latitude, longitude) {
+    // 리액트에서 위치 정보 활용
+    console.log("Received location from Flutter:", latitude, longitude);
+
+    // 원하는 작업 수행
+    // 예: 위치 정보를 활용한 지도 표시 또는 다른 로직 처리
+  }
 
   const options = {
     enableHighAccuracy: true,
@@ -254,6 +281,8 @@ function Dict(props) {
           <p>Longitude: {position.longitude}</p>
         </div>
       )}
+      <button onClick={handleButtonClick}>버튼</button>
+      <p>{meme}11</p>
       {/* <p>{message}</p>
       <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
       {location && (
