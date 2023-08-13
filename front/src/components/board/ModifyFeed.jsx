@@ -4,6 +4,7 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import "./ModifyFeed.css";
 import FeedTag from "./FeedTag";
+import DeleteFeed from "./DeleteFeed";
 
 const ModifyFeed = () => {
   const navigate = useNavigate();
@@ -108,15 +109,15 @@ const ModifyFeed = () => {
       alert("이미지와 태그를 선택해주세요.");
       return;
     }
-    console.log(postId, selectedTags);
-    const formData = new FormData();
-    formData.append("postId", postId);
-    formData.append("content", content);
+    // const formData = new FormData();
+    // formData.append("postId", postId);
+    // formData.append("content", content);
 
-    selectedTags.forEach((tag) => {
-      formData.append("tags", tag);
-    });
-    formData.append("deleteImageList", deleteImageList);
+    // formData.append("tags", selectedTags);
+    // // selectedTags.forEach((tag) => {
+    // //   formData.append("tags", tag);
+    // // });
+    // formData.append("deleteImageList", 1);
 
     try {
       setLoading(true);
@@ -124,7 +125,12 @@ const ModifyFeed = () => {
       const response = await authorizedRequest({
         method: "patch",
         url: `/api1/api/posts/${postId}`,
-        data: formData,
+        data: {
+          postId: postId,
+          content: content,
+          tags: selectedTags,
+          deleteImageList: deleteImageList,
+        },
       });
       console.log("feed modify success", response.data);
 
@@ -136,6 +142,23 @@ const ModifyFeed = () => {
     }
   };
 
+  const deleteHandler = async () => {
+    try {
+      setLoading(true);
+
+      const response = await authorizedRequest({
+        method: "delete",
+        url: `/api1/api/posts/${postId}`,
+      });
+      console.log("feed delete success", response.data);
+
+      navigate("/Board");
+    } catch (error) {
+      console.error("feed delete error");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="modify-feed-wrapper">
       <div className="modify-feed-header">
@@ -211,6 +234,7 @@ const ModifyFeed = () => {
           </div>
         </div>
       </div>
+      <DeleteFeed onDelete={deleteHandler}>삭제..</DeleteFeed>
     </div>
   );
 };

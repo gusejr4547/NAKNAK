@@ -80,8 +80,6 @@ const Board = () => {
 
   // 좋아요하는 게시글에 대한 정보를 가져옵니다
   useEffect(() => {
-    console.log("firststart");
-
     const getLikedFeeds = async () => {
       setLoading(true);
       try {
@@ -102,9 +100,8 @@ const Board = () => {
   }, []);
 
   //보여줄 피드의 개수를 정합니다
-  const showFeedCount = 2;
+  const showFeedCount = 5;
   const getFeedList = useCallback(async () => {
-    console.log(getCurrentTime(Date.now()));
     try {
       setLoading(true);
 
