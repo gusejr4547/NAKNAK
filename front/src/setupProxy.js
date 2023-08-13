@@ -49,4 +49,16 @@ module.exports = function (app) {
       },
     })
   );
+
+  // 프록시5 설정 => 기상청
+  app.use(
+    "/api5",
+    createProxyMiddleware({
+      target: process.env.REACT_APP_KMA_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        "^/api5": "",
+      },
+    })
+  );
 };

@@ -22,6 +22,7 @@ import Profile from "./components/user/Profile";
 import SeaScene from "./components/fishbowl/SeaScene";
 import ImgTest from "./temp/Teacherable/ImgTest";
 import Map from "./components/map/Map";
+import Map2 from "./components/map/Map2";
 import Inventory from "./components/fishbowl/Inventory";
 // import Bowl from "./components/fishbowl/Bowl";
 import Balls from "./components/fishbowl/Balls";
@@ -150,6 +151,7 @@ function AppRouter(props) {
           {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
           <Route path="/Map" element={<Map />}></Route>
+          <Route path="/Map2" element={<Map2 />}></Route>
           <Route path="/FavoriteSpots" element={<FavoriteSpots />}></Route>
           <Route path="/Checkbox" element={<Checkbox />}></Route>
           <Route path="/Newbie" element={<Newbie />}></Route>

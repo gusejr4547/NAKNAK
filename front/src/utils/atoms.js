@@ -50,6 +50,11 @@ export const mapModal_recoil = atom({
   default: false,
   // effects_UNSTABLE: [persistAtom],
 });
+export const weatherInfo_recoil = atom({
+  key: "weatherInfo_recoil",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
 export const fishingInfo_recoil = atom({
   key: "fishingInfo_recoil",
   default: {},
