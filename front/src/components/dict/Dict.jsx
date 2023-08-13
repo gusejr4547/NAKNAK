@@ -281,8 +281,8 @@ function Dict(props) {
           <p>Longitude: {position.longitude}</p>
         </div>
       )}
-      <button onClick={handleButtonClick}>버튼</button>
-      {meme && meme.map((item, index) => <p key={{ index }}>{item}</p>)}
+      <button onClick={handleButtonClick}>버튼123</button>
+      {meme && meme.map((item, index) => <p key={{ index }}>{item.message}</p>)}
       {/* <p>{meme.message}11</p> */}
       {/* <p>{message}</p>
       <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
