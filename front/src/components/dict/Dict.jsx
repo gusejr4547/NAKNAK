@@ -34,6 +34,7 @@ function Dict(props) {
       window.flutter_inappwebview
         .callHandler("flutterFunction", 123)
         .then(function (result) {
+          console.log(123);
           console.log("Result from Flutter:", result);
           setMeme(result);
         });
@@ -282,7 +283,7 @@ function Dict(props) {
         </div>
       )}
       <button onClick={handleButtonClick}>버튼123</button>
-      {meme && meme.map((item, index) => <p key={{ index }}>{item.message}</p>)}
+      {meme && <p>{meme.message}</p>}
       {/* <p>{meme.message}11</p> */}
       {/* <p>{message}</p>
       <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
