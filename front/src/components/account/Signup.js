@@ -171,8 +171,8 @@ function Signup(props) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
-        padding: "0px 0px 70% 0px",
+        height: "95%",
+        padding: "0px 0px 80% 0px",
       }}
     >
       <img
@@ -237,26 +237,30 @@ function Signup(props) {
           $errorText="필수 입력값입니다"
           onKeyPress={signupHandleKey}
         />
-        {/* // 업로드 된 이미지 미리보기 */}
-        <img
-          src={showImgFile ? showImgFile : "assets/cats/cat.png"}
-          alt="프로필 이미지"
-          style={{ width: "100px", height: "100px" }}
-        />
-        {/* // 이미지 업로드 input */}
-        <form>
-          <label className="signup-profileImg-label" htmlFor="profileImg">
-            프로필 이미지 추가
-          </label>
-          <input
-            className="signup-profileImg-input"
-            type="file"
-            accept=".gif, .jpg, .png, .jpeg"
-            onChange={saveImgFile}
-            id="profileImg"
-            ref={imgRef}
+        <div>
+          {/* // 업로드 된 이미지 미리보기 */}
+          <img
+            src={showImgFile ? showImgFile : "assets/cats/cat.png"}
+            alt="프로필 이미지"
+            style={{ width: "100px", height: "100px" }}
           />
-        </form>
+          {/* // 이미지 업로드 input */}
+          <form>
+            <label className="signup-profileImg-label" htmlFor="profileImg">
+              프로필 이미지 추가
+            </label>
+            <input
+              className="signup-profileImg-input"
+              type="file"
+              accept=".gif, .jpg, .png, .jpeg"
+              onChange={saveImgFile}
+              id="profileImg"
+              ref={imgRef}
+              style={{ margin: "0px", padding: "0px" }}
+            />
+          </form>
+        </div>
+
         {/* <input
           type="file"
           accept=".gif, .jpg, .png, .jpeg"
@@ -271,7 +275,6 @@ function Signup(props) {
           style={{ margin: "10px 0px 0px 0px" }}
           onClick={signupHandleClick}
         />
-        {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
     </div>
   );
