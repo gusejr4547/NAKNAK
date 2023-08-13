@@ -158,15 +158,17 @@ public class PostService {
         }
 
         // 이미지 삭제 할 것 있으면 삭제
-        for(long id : postPatchDto.getDeleteImageList()){
-            deleteImage(id);
-        }
-    }
+        if(postPatchDto.getDeleteImageList() != null){
+            for(long id : postPatchDto.getDeleteImageList()){
+                PostImage postImage = postImageRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
 
-    @Transactional
-    public void deleteImage(long fileId) {
-        PostImage postImage = postImageRepository.findById(fileId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
-        postImageRepository.delete(postImage);
+                if(postImage.getPost() != post){
+                    throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
+                }
+
+                postImageRepository.delete(postImage);
+            }
+        }
     }
 
     @Transactional

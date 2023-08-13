@@ -21,7 +21,7 @@ public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member Not Found"),
     FAILED_TO_UPDATE_MEMBER(500, "Failed Update Member"),
     FAILED_TO_DELETE_MEMBER(500, "Failed Delete Member"),
-    FAILED_TO_UPDATE_FILE(500, "Failed Update Member"),
+    FAILED_TO_UPDATE_FILE(500, "Failed Update File"),
     WRONG_PASSWORD(400,"Wrong Password"),
     NOT_ALLOWED_FILES(405,"Cannot upload Multi Image File"),
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
