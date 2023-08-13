@@ -283,7 +283,11 @@ function Dict(props) {
         </div>
       )}
       <button onClick={handleButtonClick}>버튼123</button>
-      {meme && <p>{meme.message}</p>}
+      {meme && (
+        <p>
+          {meme.latitude} {meme.longitude}
+        </p>
+      )}
       {/* <p>{meme.message}11</p> */}
       {/* <p>{message}</p>
       <button onClick={fetchDataFromFlutter}>Fetch Data from Flutter</button>
