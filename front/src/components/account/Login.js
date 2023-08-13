@@ -323,7 +323,7 @@ function Login(props) {
           // href={KAKAO_AUTH_URL}
           href="api1/oauth2/authorization/google"
         >
-          <p>133</p>
+          <p>132323</p>
         </a>
       </div>
     </div>
