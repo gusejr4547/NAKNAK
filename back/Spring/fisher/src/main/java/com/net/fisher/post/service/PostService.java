@@ -128,15 +128,17 @@ public class PostService {
         // 기존 태그와 비교해서 새로운 태그는 추가
         Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
         Set<Tag> newTags = new HashSet<>();
-        for (Tag tag : postPatchDto.getTags()) {
-            System.out.println("#############");
-            System.out.println(tag);
-            if (!tagRepository.existsTagByTagName(tag.getTagName())) {
-                tag = tagRepository.save(tag);
-                newTags.add(tag);
-            } else {
-                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
-                newTags.add(tag);
+        if(postPatchDto.getTags() != null){
+            for (Tag tag : postPatchDto.getTags()) {
+//                System.out.println("#############");
+//                System.out.println(tag);
+                if (!tagRepository.existsTagByTagName(tag.getTagName())) {
+                    tag = tagRepository.save(tag);
+                    newTags.add(tag);
+                } else {
+                    tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+                    newTags.add(tag);
+                }
             }
         }
 
