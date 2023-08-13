@@ -4,6 +4,7 @@ import com.example.fisherlogserver.kafka.dto.LogDto;
 import com.example.fisherlogserver.kafka.dto.LogDto2;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.IOException;
 public class KafkaConsumer {
 
     @KafkaListener(topics = "${message.topic.name}", groupId = ConsumerConfig.GROUP_ID_CONFIG, containerFactory = "logDtoListener")
+    @Async
     public void consume(LogDto message) throws IOException{
         System.out.println("Consumed msg : "+message.toString());
     }
