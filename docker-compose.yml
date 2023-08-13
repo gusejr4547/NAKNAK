@@ -36,7 +36,16 @@ services:
     container_name: nginx
     #dns_search: s09p12e105_spring-redis
 
-  
+  react:
+    build:
+      context: ./front
+      dockerfile: dockerfile_test
+    ports:
+      - "3000:3000"
+    networks:
+      - spring-redis
+    container_name: react
+
 networks:
   spring-redis:
     external: true
