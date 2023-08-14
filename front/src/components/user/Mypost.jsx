@@ -101,7 +101,11 @@ function Mypost(props) {
               <div className="postimgbox">
                 <img
                   className="postimg"
-                  src={item.image ? item.image.fileUrl : "/assets/cats/cat.png"}
+                  src={
+                    item.image
+                      ? `${process.env.REACT_APP_BACKEND_URL}/${item.image.fileUrl}`
+                      : "/assets/cats/cat.png"
+                  }
                   alt=""
                 />
               </div>
