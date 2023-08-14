@@ -78,10 +78,14 @@
 }
 
 .quest-img {
+  filter: blur(5px) grayscale(100%);
 }
 .quest-title {
+  /* filter: blur(5px) grayscale(100%); */
 }
 .quest-content {
+  filter: blur(5px) grayscale(100%);
 }
 .quest-task {
+  filter: blur(5px) grayscale(100%);
 }

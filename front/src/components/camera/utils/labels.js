@@ -1,4 +1,4 @@
-[
+export const labelitem = [
   "bangeo",
   "bengedom",
   "bolak",
@@ -12,5 +12,5 @@
   "hakkkongchi",
   "noraemi",
   "soongeo",
-  "uruk"
-]
+  "uruk",
+];

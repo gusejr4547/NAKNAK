@@ -5,7 +5,7 @@ const { persistAtom } = recoilPersist();
 
 export const loginuser = atom({
   key: "loginuser",
-  default: {},
+  default: undefined,
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -55,11 +55,11 @@ export const weatherInfo_recoil = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
-export const fishingInfo_recoil = atom({
-  key: "fishingInfo_recoil",
-  default: {},
-  effects_UNSTABLE: [persistAtom],
-});
+// export const fishingInfo_recoil = atom({
+//   key: "fishingInfo_recoil",
+//   default: {},
+//   effects_UNSTABLE: [persistAtom],
+// });
 export const myLocation_recoil = atom({
   key: "myLocation_recoil",
   default: {},

@@ -8,11 +8,11 @@ import {
   action,
   limit_date,
 } from "../../utils/data/point";
-import { challenge } from "../../utils/data/challenge";
 import Dictlist from "./Dictlist";
 import "./Dict.css";
 import { useRecoilState } from "recoil";
 import { location_recoil } from "../../utils/atoms";
+import { GetLocation, callFlutter } from "../../utils/location";
 
 function Dict(props) {
   const [activeView, setActiveView] = useState("");
@@ -20,61 +20,108 @@ function Dict(props) {
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [lodata, setlodata] = useState("");
-  console.log(challenge);
   const [message, setMessage] = useState("");
 
-  const fetchDataFromFlutter = () => {
-    // Call the JavaScript function defined in the WebView.
-    window.requestFlutterData();
-  };
+  // const fetchDataFromFlutter = () => {
+  //   // Call the JavaScript function defined in the WebView.
+  //   window.requestFlutterData();
+  // };
 
-  const [meme, setMeme] = useState("");
+  // function callFlutterFunction() {
+  //   if (window.flutter_inappwebview) {
+  //     window.flutter_inappwebview
+  //       .callHandler("flutterFunction", 123)
+  //       .then(function (result) {
+  //         console.log(123);
+  //         console.log("Result from Flutter:", result);
+  //         setMeme(result);
+  //       });
+  //   }
+  // }
 
-  function callFlutterFunction() {
+  const handlebutton = () => {
     if (window.flutter_inappwebview) {
-      window.flutter_inappwebview
-        .callHandler("flutterFunction", 123)
-        .then(function (result) {
-          console.log(123);
-          console.log("Result from Flutter:", result);
-          setMeme(result);
-        });
+      handleButtonClick();
+    } else {
+      handleClick();
     }
-  }
-
-  // 버튼을 누를 때 호출되는 함수
-  function handleButtonClick() {
-    callFlutterFunction();
-  }
-
-  // 버튼을 누를 때 호출되는 함수
-  function handleClick() {}
-
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0,
   };
 
-  const [position, setPosition] = useState(null);
-
-  function success(pos) {
-    const crd = pos.coords;
-
-    setPosition({
-      latitude: crd.latitude,
-      longitude: crd.longitude,
-      accuracy: crd.accuracy,
-    });
+  async function handleButtonClick() {
+    const data = await callFlutter();
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
   }
 
-  function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {
+    (async () => {
+      try {
+        const locationData = await GetLocation();
+        // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
+      } catch (error) {
+        // 오류 처리
+      }
+    })();
   }
 
-  function handleGetLocation() {
-    navigator.geolocation.getCurrentPosition(success, error, options);
-  }
+  // const options = {
+  //   enableHighAccuracy: true,
+  //   timeout: 5000,
+  //   maximumAge: 0,
+  // };
+
+  // const [position, setPosition] = useState(null);
+
+  // function success(pos) {
+  //   const crd = pos.coords;
+
+  //   setPosition({
+  //     latitude: crd.latitude,
+  //     longitude: crd.longitude,
+  //     accuracy: crd.accuracy,
+  //   });
+  // }
+
+  // function error(err) {
+  //   console.warn(`ERROR(${err.code}): ${err.message}`);
+  // }
+
+  // function handleGetLocation() {
+  //   navigator.geolocation.getCurrentPosition(success, error, options);
+  // }
+
+  // function getLocation() {
+  //   return new Promise((resolve, reject) => {
+  //     if (navigator.geolocation) {
+  //       const now = new Date();
+  //       navigator.geolocation.getCurrentPosition(
+  //         (position) => {
+  //           setlodata(position.coords.latitude, position.coords.longitude);
+  //           resolve({
+  //             err: 0,
+  //             time: now.toLocaleTimeString(),
+  //             latitude: position.coords.latitude,
+  //             longitude: position.coords.longitude,
+  //           });
+  //         },
+  //         (err) => {
+  //           resolve({
+  //             err: -1,
+  //             latitude: -1,
+  //             longitude: -1,
+  //           });
+  //         },
+  //         { enableHighAccuracy: true, maximumAge: 2000, timeout: 5000 }
+  //       );
+  //     } else {
+  //       reject({ error: -2, latitude: -1, longitude: -1 });
+  //     }
+  //   });
+  // }
 
   const handleToggle = (view) => {
     if (activeView === view) {
@@ -139,35 +186,6 @@ function Dict(props) {
     }
   };
 
-  function getLocation() {
-    return new Promise((resolve, reject) => {
-      if (navigator.geolocation) {
-        const now = new Date();
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setlodata(position.coords.latitude, position.coords.longitude);
-            resolve({
-              err: 0,
-              time: now.toLocaleTimeString(),
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
-          },
-          (err) => {
-            resolve({
-              err: -1,
-              latitude: -1,
-              longitude: -1,
-            });
-          },
-          { enableHighAccuracy: true, maximumAge: 2000, timeout: 5000 }
-        );
-      } else {
-        reject({ error: -2, latitude: -1, longitude: -1 });
-      }
-    });
-  }
-
   return (
     <div className="dict-box">
       <input
@@ -183,7 +201,7 @@ function Dict(props) {
           </p>
         ))}
       </div>
-      <div className="dictBottom">
+      <div className="dictBottom ">
         <div className="dicttoggleBar" style={{ display: "flex" }}>
           <button
             onClick={() => handleToggle("point")}
@@ -270,7 +288,7 @@ function Dict(props) {
           </div>
         )}
       </div>
-      {/* <button onClick={handleClick}>123</button> */}
+      <button onClick={handlebutton}>123</button>
       {/* <button onClick={handleGetLocation}>Get Current Location</button>
       {position && (
         <div>
@@ -278,13 +296,13 @@ function Dict(props) {
           <p>Latitude: {position.latitude}</p>
           <p>Longitude: {position.longitude}</p>
         </div>
-      )}
-      <button onClick={handleButtonClick}>버튼123</button>
-      {meme && (
-        <p>
-          {meme.latitude} {meme.longitude}
-        </p>
       )} */}
+      {/* <button onClick={handleButtonClick}>버튼123</button> */}
+      {location && (
+        <p>
+          {location.latitude} {location.longitude}
+        </p>
+      )}
     </div>
   );
 }

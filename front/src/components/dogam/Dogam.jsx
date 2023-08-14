@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
-import axios from "axios";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import "./Dogam.css";
 import FishDetailModal from "./FishDetailModal";
 
 const Dogam = (props) => {
-  console.log(process.env.REACT_APP_BACKEND_URL);
   const catched = true;
 
   const [selectedFish, setSelectedFish] = useState(null);
@@ -27,9 +26,14 @@ const Dogam = (props) => {
     const getDogam = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api1/api/books/1");
+        const response = await authorizedRequest({
+          method: "get",
+          url: `/api1/api/books/1`,
+        });
+
         console.log("response success", response.data);
         setDogamData(response.data);
+        console.log(dogamData.list);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching dogam:", error);
@@ -41,7 +45,11 @@ const Dogam = (props) => {
   }, []);
 
   const openFishDetailModal = (fish) => {
-    setSelectedFish(fish);
+    if (dogamData.fishCheck.chk.includes(fish.fishId)) {
+      setSelectedFish(fish);
+    } else {
+      setSelectedFish(null);
+    }
   };
 
   const closeFishDetailModal = () => {
@@ -62,7 +70,10 @@ const Dogam = (props) => {
             <div
               key={fish.fishId}
               className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+                "dogam-slide" +
+                (dogamData.fishCheck.chk.includes(fish.fishId)
+                  ? ""
+                  : " dogam-slide-inactive")
               }
               onClick={() => openFishDetailModal(fish)}
             >
@@ -73,89 +84,16 @@ const Dogam = (props) => {
               <h6>{fish.name}</h6>
             </div>
           ))}
-          {/* dummy start */}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}
-          {/* dummy end */}
         </div>
       </div>
       {/* 모달 컴포넌트 */}
       {selectedFish && (
         <FishDetailModal
           fishData={selectedFish}
+          userFishData={
+            dogamData.list &&
+            dogamData.list.find((userData) => userData.fishId === selectedFish)
+          }
           onClose={closeFishDetailModal}
         />
       )}

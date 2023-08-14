@@ -81,7 +81,7 @@ function Footer(props) {
         </Link>{" "}
       </div>
 
-      <div>
+      {/* <div>
         <Link
           to="/Login"
           className="nav-link"
@@ -95,7 +95,7 @@ function Footer(props) {
             className={activeNav === 3 ? "nav-item nav-active" : "nav-item"}
           />
         </Link>{" "}
-      </div>
+      </div> */}
     </nav>
   );
 }
