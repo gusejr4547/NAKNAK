@@ -24,6 +24,7 @@ import Talk2 from "../freshman/Talk2";
 import TTS from "../freshman/TTS";
 import { useLocation } from "react-router-dom";
 import { GetXY } from "./GetXY";
+import { getLocation } from "./getLocation";
 
 function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
