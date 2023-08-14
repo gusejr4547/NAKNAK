@@ -12,6 +12,7 @@ import {
   mooltae_recoil,
   tts_recoil,
   weatherInfo_recoil,
+  location_recoil,
 } from "../../utils/atoms";
 // import axios from "../../api/SeaAPI";
 // import bada_axios from "../../api/BadanuriAPI";
@@ -24,7 +25,7 @@ import Talk2 from "../freshman/Talk2";
 import TTS from "../freshman/TTS";
 import { useLocation } from "react-router-dom";
 import { GetXY } from "./GetXY";
-import { getLocation } from "./getLocation";
+import { GetLocation, callFlutter } from "../../utils/location";
 
 function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
@@ -38,10 +39,44 @@ function Map2() {
   const [tts, setTts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
   const [weatherInfo, setWeatherInfo] = useRecoilState(weatherInfo_recoil);
+  const [location, setLocation] = useRecoilState(location_recoil);
 
   const { state } = useLocation();
   const now = new Date();
   const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
+
+  useEffect(() => {
+    handlebutton();
+  }, []);
+
+  const handlebutton = () => {
+    if (window.flutter_inappwebview) {
+      handleButtonClick();
+    } else {
+      handleClick();
+    }
+  };
+
+  async function handleButtonClick() {
+    const data = await callFlutter();
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {
+    (async () => {
+      try {
+        const locationData = await GetLocation();
+        // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
+      } catch (error) {
+        // 오류 처리
+      }
+    })();
+  }
 
   function getClosestPreviousTime(hours) {
     const currentHour = now.getHours();
