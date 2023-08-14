@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mysql:
-    image: "mysql:latest"
+    image: mysql:latest
     container_name: mysql
     environment:
         MYSQL_ROOT_PASSWORD: 7818
@@ -12,6 +12,25 @@ services:
       - "3306:3306"
     networks:
       - spring-redis
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d # MySQL 설정 파일 위치
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    prots:
+      - "27017:27017"
+    networks:
+      - spring-redis
+    environment:
+      MONGO_INITDB_DATABASE: fisher-log
+    volumes:
+      - mongo_data:/data/db
+
   spring:
     build:
       context: ./back/Spring/fisher
@@ -24,6 +43,19 @@ services:
       - redis
       - mysql
     container_name: spring
+
+  logServer:
+    build:
+      context: ./back/fisher-log-server
+      dockerfile: dockerfile
+    ports: 
+      - "8081:8081"
+    networks:
+      - spring-redis
+    depends_on:
+      - redis
+      - mysql
+    container_name: logServer
 
   redis:
     image: "redis:latest"
