@@ -44,7 +44,7 @@ services:
       - mysql
     container_name: spring
 
-  logServer:
+  logserver:
     build:
       context: ./back/fisher-log-server
       dockerfile: dockerfile
@@ -55,7 +55,7 @@ services:
     depends_on:
       - redis
       - mysql
-    container_name: logServer
+    container_name: logserver
 
   redis:
     image: "redis:latest"
