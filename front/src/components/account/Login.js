@@ -82,6 +82,7 @@ function Login(props) {
         method: "get",
         url: "/api1/api/fishingholes/favorites",
       });
+      console.log(response);
       setFavoritePoint(response.data);
       // console.log(response.data);
     } catch (err) {
