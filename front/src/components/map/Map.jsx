@@ -236,10 +236,16 @@ function Map2() {
           mouseEvent.latLng,
           function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
+              // var detailAddr = !!result[0].road_address
+              //   ? "<div>도로명주소 : " +
+              //     result[0].road_address.address_name +
+              //     "</div>"
+              //   : "";
+              // console.log("주소", result[0].address);
               var content =
-                result[0].road_address.region_1depth_name +
+                result[0].address.region_1depth_name +
                 " " +
-                result[0].road_address.region_2depth_name;
+                result[0].address.region_2depth_name;
 
               // 마커를 클릭한 위치에 표시합니다
               marker.setPosition(mouseEvent.latLng);
