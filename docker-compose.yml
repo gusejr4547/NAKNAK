@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql
+    image: "mysql:latest"
     container_name: mysql
     environment:
         MYSQL_ROOT_PASSWORD: 7818
@@ -22,6 +22,7 @@ services:
       - spring-redis
     depends_on:
       - redis
+      - mysql
     container_name: spring
 
   redis:
