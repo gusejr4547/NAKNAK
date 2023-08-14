@@ -22,12 +22,10 @@ function Dict(props) {
   const [lodata, setlodata] = useState("");
   const [message, setMessage] = useState("");
 
-  const fetchDataFromFlutter = () => {
-    // Call the JavaScript function defined in the WebView.
-    window.requestFlutterData();
-  };
-
-  const [meme, setMeme] = useState("");
+  // const fetchDataFromFlutter = () => {
+  //   // Call the JavaScript function defined in the WebView.
+  //   window.requestFlutterData();
+  // };
 
   // function callFlutterFunction() {
   //   if (window.flutter_inappwebview) {
@@ -41,9 +39,18 @@ function Dict(props) {
   //   }
   // }
 
+  const handlebutton = () => {
+    if (window.flutter_inappwebview) {
+      handleButtonClick();
+    } else {
+      handleClick();
+    }
+  };
+
   async function handleButtonClick() {
     const data = await callFlutter();
-    setMeme(data);
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
   }
 
   // 버튼을 누를 때 호출되는 함수
@@ -53,6 +60,8 @@ function Dict(props) {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
         console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
         // 오류 처리
       }
@@ -192,7 +201,7 @@ function Dict(props) {
           </p>
         ))}
       </div>
-      <div className="dictBottom">
+      <div className="dictBottom ">
         <div className="dicttoggleBar" style={{ display: "flex" }}>
           <button
             onClick={() => handleToggle("point")}
@@ -279,7 +288,7 @@ function Dict(props) {
           </div>
         )}
       </div>
-      <button onClick={handleClick}>123</button>
+      <button onClick={handlebutton}>123</button>
       {/* <button onClick={handleGetLocation}>Get Current Location</button>
       {position && (
         <div>
@@ -288,10 +297,10 @@ function Dict(props) {
           <p>Longitude: {position.longitude}</p>
         </div>
       )} */}
-      <button onClick={handleButtonClick}>버튼123</button>
-      {meme && (
+      {/* <button onClick={handleButtonClick}>버튼123</button> */}
+      {location && (
         <p>
-          {meme.latitude} {meme.longitude}
+          {location.latitude} {location.longitude}
         </p>
       )}
     </div>

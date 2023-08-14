@@ -1,6 +1,7 @@
 import cv from "@techstark/opencv-js";
 import { Tensor } from "onnxruntime-web";
 import { renderBoxes } from "./renderBox";
+import { labelitem } from "./labels";
 
 /**
  * Detect Image
@@ -51,7 +52,7 @@ export const detectImage = async (
   ); // nms config tensor
   // 모델 실행 및 결과 획득
   const { output0 } = await session.net.run({ images: tensor }); // run session and get output layer
-  // console.log(output0);
+  console.log(output0);
   // NMS를 사용하여 박스 필터링
   const { selected } = await session.nms.run({
     detection: output0,
@@ -63,7 +64,7 @@ export const detectImage = async (
     return;
   }
   const boxes = [];
-
+  const outputdata = [];
   // looping through output
   for (let idx = 0; idx < selected.dims[1]; idx++) {
     const data = selected.data.slice(
@@ -79,7 +80,7 @@ export const detectImage = async (
       return;
     }
     const label = scores.indexOf(score); // class id of maximum probability scores
-    console.log(box[0], box[1], box[2], box[3]);
+    // console.log(box[0], box[1], box[2], box[3]);
 
     const [x, y, w, h] = [
       (box[0] - 0.5 * box[2]) * xRatio, // upscale left
@@ -87,9 +88,16 @@ export const detectImage = async (
       box[2] * xRatio, // upscale width
       box[3] * yRatio, // upscale height
     ]; // keep boxes in maxSize range
-    console.log(x, y, w, h);
+    // console.log(x, y, w, h);
+    // console.log(labelitem[label]);
     boxes.push({
       label: label,
+      probability: score,
+      bounding: [x, y, w, h], // upscale box
+    }); // update boxes to draw later
+
+    outputdata.push({
+      label: labelitem[label],
       probability: score,
       bounding: [x, y, w, h], // upscale box
     }); // update boxes to draw later
@@ -97,7 +105,7 @@ export const detectImage = async (
 
   renderBoxes(canvas, boxes); // Draw boxes
   input.delete(); // delete unused Mat
-  return boxes;
+  return outputdata;
 };
 
 /**
