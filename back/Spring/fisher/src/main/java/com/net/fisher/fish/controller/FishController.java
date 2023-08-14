@@ -48,9 +48,9 @@ public class FishController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        String fishCode = requestBody.getFishCode();
+        String fishName = requestBody.getName();
 
-        Inventory inventory = fishService.catchFish(tokenId,fishCode, fishMapper.toInventory(requestBody));
+        Inventory inventory = fishService.catchFish(tokenId,fishName, fishMapper.toInventory(requestBody));
 
         return new ResponseEntity<>(fishMapper.toInventorySingleResponse(inventory), HttpStatus.CREATED);
     }
