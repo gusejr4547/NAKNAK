@@ -24,3 +24,14 @@
   margin: 0;
   padding: 5px;
 }
+
+.dict-detail-content {
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  background-color: aliceblue;
+  padding: 5px;
+}
+
+.dict-detail-p {
+  margin: 0;
+}

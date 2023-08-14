@@ -8,7 +8,6 @@ import {
   action,
   limit_date,
 } from "../../utils/data/point";
-import { challenge } from "../../utils/data/challenge";
 import Dictlist from "./Dictlist";
 import "./Dict.css";
 import { useRecoilState } from "recoil";
@@ -21,7 +20,6 @@ function Dict(props) {
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [lodata, setlodata] = useState("");
-  console.log(challenge);
   const [message, setMessage] = useState("");
 
   const fetchDataFromFlutter = () => {
