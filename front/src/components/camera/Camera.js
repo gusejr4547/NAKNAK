@@ -8,13 +8,19 @@ import { download } from "./utils/download";
 import "./style/App.css";
 // import { initializeCV } from "./utils/initializeCV";
 import { useRecoilState } from "recoil";
-import { yolo_recoil, newbie_recoil, tts_recoil } from "../../utils/atoms";
+import {
+  yolo_recoil,
+  newbie_recoil,
+  tts_recoil,
+  location_recoil,
+} from "../../utils/atoms";
 import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import Talk2 from "../freshman/Talk2";
 import "./Camera.css";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import TTS from "../freshman/TTS";
+import { GetLocation, callFlutter } from "../../utils/location";
 
 const Camera = () => {
   // useEffect(() => {
@@ -43,6 +49,7 @@ const Camera = () => {
   const navigate = useNavigate();
   const [tts, setTts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
+  const [firstbox, setfirstbox] = useState([]);
 
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState({
@@ -60,6 +67,7 @@ const Camera = () => {
   const [webcamActive, setWebcamActive] = useState(true);
   const [errData, setErrData] = useState(false);
   const [yoloRecoil, setyoloRecoil] = useRecoilState(yolo_recoil);
+  const [location, setLocation] = useRecoilState(location_recoil);
   // Configs
   const modelName = "best.onnx";
   const modelInputShape = [1, 3, 640, 640];
@@ -71,6 +79,64 @@ const Camera = () => {
   useEffect(() => {
     setTimeout(() => setShow(true), tts);
   }, [tts]);
+
+  useEffect(() => {
+    handlebutton();
+  }, []);
+
+  const handlebutton = () => {
+    if (window.flutter_inappwebview) {
+      handleButtonClick();
+    } else {
+      handleClick();
+    }
+  };
+
+  async function handleButtonClick() {
+    const data = await callFlutter();
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {
+    (async () => {
+      try {
+        const locationData = await GetLocation();
+        // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
+      } catch (error) {
+        // 오류 처리
+      }
+    })();
+  }
+  const dataUpload = async () => {
+    const data = {
+      label: firstbox.label,
+      bounding: firstbox.bounding,
+      probability: firstbox.probability,
+      location: location,
+    };
+    console.log(data);
+
+    try {
+      const response = await authorizedRequest({
+        method: "post",
+        url: "/api1/api/fishes/catch",
+        data: {
+          label: firstbox.label,
+          bounding: firstbox.bounding,
+          probability: firstbox.probability,
+          location: location,
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
+  };
 
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
@@ -175,7 +241,7 @@ const Camera = () => {
   // Function to start automatic detection
   const startDetection = () => {
     setDetecting(true);
-    // setWebcamActive(true);
+    setWebcamActive(true);
     // setLastCapturedImage(undefined)
   };
 
@@ -212,54 +278,6 @@ const Camera = () => {
   };
   // console.log(session);
 
-  const uploadImage = async () => {
-    const canvas = image;
-    const context = canvas.getContext("2d");
-    context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-    // 캡처한 이미지를 Blob으로 변환
-    const imageBlob = await new Promise((resolve) => {
-      image.toBlob((blob) => {
-        resolve(blob);
-      }, "image/jpg");
-    });
-
-    // 이미지 파일 생성
-    const imageFile = new File([imageBlob], "fish.jpg", {
-      type: "image/jpg",
-    });
-
-    // 이미지 파일을 FormData에 추가
-    const formData = new FormData();
-    formData.append("image", imageFile);
-    console.log(formData.get("image"));
-
-    const header = {
-      "Content-Type": "multipart/form-data",
-    };
-
-    try {
-      // 이미지 데이터를 서버로 전송
-      const response = await authorizedRequest({
-        method: "post",
-        url: "/api1/api/fishes/upload",
-        data: formData,
-        headers: header,
-      });
-      // 서버로부터 응답을 받고 처리할 로직 추가 가능
-      console.log("서버 응답:", response.data);
-      // if (fishingMode !== "selectMode") {
-      //   setGetFish(getFish + 1);
-      // }
-
-      // setfishImg(response.data);
-      // 서버로부터 응답받은 이미지 URL을 저장
-      // stopCamera();
-    } catch (error) {
-      console.error("이미지 업로드 오류:", error);
-    }
-  };
-
   return (
     <div className="camera">
       {/* 뉴비모드 시작 */}
@@ -288,12 +306,14 @@ const Camera = () => {
 
       <div className="cameracontent">
         {lastCapturedImage ? (
-          <div className="last-captured-image">
+          <div
+            className="last-captured-image"
+            style={{ height: "100%", width: "100%", maxWidth: "800px" }}
+          >
             <img
               src={lastCapturedImage}
               alt="Last Captured"
               style={{
-                maxWidth: "100%",
                 display: "block",
                 // transform: "rotate(90deg)",
                 height: "100%",
@@ -372,10 +392,10 @@ const Camera = () => {
                     return;
                   }
                   // boxes 배열 내부의 데이터에 접근하여 활용
-                  const firstBox = boxes[0];
-                  console.log(firstBox);
-                  const pro = firstBox.probability * 100; // 검출된 첫 번째 상자의 정보
-                  if (pro >= 50) {
+                  setfirstbox(boxes[0]);
+                  console.log(firstbox);
+                  const pro = firstbox.probability * 100; // 검출된 첫 번째 상자의 정보
+                  if (pro >= 60) {
                     console.log(123);
                     stopDetection();
                     setLastCapturedImage(image); // 마지막 캡처 이미지 저장
@@ -390,34 +410,47 @@ const Camera = () => {
           }}
         />
       )}
-      {image ? (
+      {/* {lastCapturedImage ? (
         <div className="btn-container">
           <button
             className="camerabutton"
             onClick={() => {
-              setImage(null);
+              setLastCapturedImage(null) &&
+                detectImage(
+                  imageRef.current,
+                  canvasRef.current,
+                  { net: yoloRecoil.net, nms: yoloRecoil.nms },
+                  topk,
+                  iouThreshold,
+                  scoreThreshold,
+                  modelInputShape
+                );
             }}
           >
             Close image
           </button>
         </div>
-      ) : (
-        <div className="btn-container">
-          {webcamActive ? (
-            <button className="camerabutton" onClick={() => stopDetection()}>
-              Stop Detection
-            </button>
-          ) : (
-            <button
-              className="camerabutton"
-              onClick={() => startDetection() && setWebcamActive(true)}
-            >
-              Start Detection
-            </button>
-          )}
-        </div>
-      )}
-      <button onClick={() => uploadImage()}>123</button>
+      ) : ( */}
+      <div className="btn-container">
+        {webcamActive ? (
+          <button className="camerabutton" onClick={() => stopDetection()}>
+            Stop Detection
+          </button>
+        ) : (
+          <button
+            className="camerabutton"
+            onClick={() =>
+              startDetection() &
+              setWebcamActive(true) &
+              setLastCapturedImage(null)
+            }
+          >
+            Start Detection
+          </button>
+        )}
+      </div>
+      {/* )} */}
+      <button onClick={() => dataUpload()}>등록</button>
     </div>
   );
 };

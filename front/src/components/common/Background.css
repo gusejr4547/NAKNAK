@@ -60,6 +60,7 @@ body {
   height: 20rem;
   width: 20rem;
   scale: 0.55;
+  z-index: -1;
   background: url("../../../public/assets/cats/cat3.png") center no-repeat;
 }
 .fishing_cat {
@@ -69,5 +70,6 @@ body {
   bottom: 2rem;
   left: 3rem;
   scale: 0.5;
+  z-index: -1;
   background: url("../../../public/assets/cats/cat11.gif") center no-repeat;
 }
