@@ -1,13 +1,33 @@
+// function callFlutter() {
+//   if (window.flutter_inappwebview) {
+//     window.flutter_inappwebview
+//       .callHandler("flutterFunction", 123)
+//       .then(function (result) {
+//         console.log(123);
+//         console.log("Result from Flutter:", result);
+//         return result;
+//       });
+//   }
+// }
+
 function callFlutter() {
-  if (window.flutter_inappwebview) {
-    window.flutter_inappwebview
-      .callHandler("flutterFunction", 123)
-      .then(function (result) {
-        console.log(123);
-        console.log("Result from Flutter:", result);
-        return result;
-      });
-  }
+  return new Promise(function (resolve, reject) {
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview
+        .callHandler("flutterFunction", 123)
+        .then(function (result) {
+          console.log(123);
+          console.log("Result from Flutter:", result);
+          resolve(result); // Promise가 완료될 때 값을 resolve
+        })
+        .catch(function (error) {
+          console.error("Error from Flutter:", error);
+          reject(error); // Promise가 실패할 때 값을 reject
+        });
+    } else {
+      reject("Flutter InAppWebView is not available");
+    }
+  });
 }
 
 const options = {

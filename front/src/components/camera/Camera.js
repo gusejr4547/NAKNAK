@@ -175,7 +175,7 @@ const Camera = () => {
   // Function to start automatic detection
   const startDetection = () => {
     setDetecting(true);
-    // setWebcamActive(true);
+    setWebcamActive(true);
     // setLastCapturedImage(undefined)
   };
 
@@ -288,12 +288,14 @@ const Camera = () => {
 
       <div className="cameracontent">
         {lastCapturedImage ? (
-          <div className="last-captured-image">
+          <div
+            className="last-captured-image"
+            style={{ height: "100%", width: "100%", maxWidth: "800px" }}
+          >
             <img
               src={lastCapturedImage}
               alt="Last Captured"
               style={{
-                maxWidth: "100%",
                 display: "block",
                 // transform: "rotate(90deg)",
                 height: "100%",
@@ -390,33 +392,46 @@ const Camera = () => {
           }}
         />
       )}
-      {image ? (
+      {/* {lastCapturedImage ? (
         <div className="btn-container">
           <button
             className="camerabutton"
             onClick={() => {
-              setImage(null);
+              setLastCapturedImage(null) &&
+                detectImage(
+                  imageRef.current,
+                  canvasRef.current,
+                  { net: yoloRecoil.net, nms: yoloRecoil.nms },
+                  topk,
+                  iouThreshold,
+                  scoreThreshold,
+                  modelInputShape
+                );
             }}
           >
             Close image
           </button>
         </div>
-      ) : (
-        <div className="btn-container">
-          {webcamActive ? (
-            <button className="camerabutton" onClick={() => stopDetection()}>
-              Stop Detection
-            </button>
-          ) : (
-            <button
-              className="camerabutton"
-              onClick={() => startDetection() && setWebcamActive(true)}
-            >
-              Start Detection
-            </button>
-          )}
-        </div>
-      )}
+      ) : ( */}
+      <div className="btn-container">
+        {webcamActive ? (
+          <button className="camerabutton" onClick={() => stopDetection()}>
+            Stop Detection
+          </button>
+        ) : (
+          <button
+            className="camerabutton"
+            onClick={() =>
+              startDetection() &
+              setWebcamActive(true) &
+              setLastCapturedImage(null)
+            }
+          >
+            Start Detection
+          </button>
+        )}
+      </div>
+      {/* )} */}
       <button onClick={() => uploadImage()}>123</button>
     </div>
   );

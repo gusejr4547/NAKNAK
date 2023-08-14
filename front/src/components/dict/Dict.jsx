@@ -8,7 +8,6 @@ import {
   action,
   limit_date,
 } from "../../utils/data/point";
-import { challenge } from "../../utils/data/challenge";
 import Dictlist from "./Dictlist";
 import "./Dict.css";
 import { useRecoilState } from "recoil";
@@ -21,7 +20,6 @@ function Dict(props) {
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [lodata, setlodata] = useState("");
-  console.log(challenge);
   const [message, setMessage] = useState("");
 
   const fetchDataFromFlutter = () => {
@@ -31,24 +29,21 @@ function Dict(props) {
 
   const [meme, setMeme] = useState("");
 
-  function callFlutterFunction() {
-    if (window.flutter_inappwebview) {
-      window.flutter_inappwebview
-        .callHandler("flutterFunction", 123)
-        .then(function (result) {
-          console.log(123);
-          console.log("Result from Flutter:", result);
-          setMeme(result);
-        });
-    }
-  }
+  // function callFlutterFunction() {
+  //   if (window.flutter_inappwebview) {
+  //     window.flutter_inappwebview
+  //       .callHandler("flutterFunction", 123)
+  //       .then(function (result) {
+  //         console.log(123);
+  //         console.log("Result from Flutter:", result);
+  //         setMeme(result);
+  //       });
+  //   }
+  // }
 
-  // 버튼을 누를 때 호출되는 함수
-  function handleButtonClick() {
-    // callFlutterFunction();
-    const data = callFlutter();
+  async function handleButtonClick() {
+    const data = await callFlutter();
     setMeme(data);
-    // handleGetLocation();
   }
 
   // 버튼을 누를 때 호출되는 함수
