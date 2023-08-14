@@ -8,18 +8,18 @@ spring:
     port: 6379
     host: redis
     password: 1747
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
   datasource:
-    url: jdbc:h2:~/test
-    password:
-    #driver-class-name: com.mysql.cj.jdbc.Driver
-    #username: root
-    #url: jdbc:mysql://localhost:3306/finaldemo?serverTimezone=Asia/Seoul
-    #password: 1234
-    driver-class-name: org.h2.Driver
+    #    url: jdbc:h2:~/test
+    #    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://i9e105.p.ssafy.io:3306/naknak?serverTimezone=Asia/Seoul
+    password: 7818
+    #driver-class-name: org.h2.Driver
   servlet:
     multipart:
       enabled: true
@@ -71,6 +71,34 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+  kafka:
+    bootstrap-servers:
+      localhost:9092
+    consumer:
+      # consumer bootstrap servers가 따로 존재하면 설정
+      # bootstrap-servers: 192.168.0.4:9092
+
+      # 식별 가능한 Consumer Group Id
+      group-id: loggroup,loggroup2
+      # Kafka 서버에 초기 offset이 없거나, 서버에 현재 offset이 더 이상 존재하지 않을 경우 수행할 작업을 설정
+      # latest: 가장 최근에 생산된 메시지로 offeset reset
+      # earliest: 가장 오래된 메시지로 offeset reset
+      # none: offset 정보가 없으면 Exception 발생
+      auto-offset-reset: earliest
+      # 데이터를 받아올 때, key/value를 역직렬화
+      # JSON 데이터를 받아올 것이라면 JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: =*
+      #producer:
+      # producer bootstrap servers가 따로 존재하면 설정
+      # bootstrap-servers: 3.34.97.97:9092
+
+      # 데이터를 보낼 때, key/value를 직렬화
+      # JSON 데이터를 보낼 것이라면 JsonDeserializer
+
 logging:
   level:
     root: info
@@ -94,3 +122,8 @@ mail:
     admin: ssafy@ssafy.com
 server:
   port: 8080
+
+message:
+  topic:
+    name: name
+    name2: name2
