@@ -29,24 +29,21 @@ function Dict(props) {
 
   const [meme, setMeme] = useState("");
 
-  function callFlutterFunction() {
-    if (window.flutter_inappwebview) {
-      window.flutter_inappwebview
-        .callHandler("flutterFunction", 123)
-        .then(function (result) {
-          console.log(123);
-          console.log("Result from Flutter:", result);
-          setMeme(result);
-        });
-    }
-  }
+  // function callFlutterFunction() {
+  //   if (window.flutter_inappwebview) {
+  //     window.flutter_inappwebview
+  //       .callHandler("flutterFunction", 123)
+  //       .then(function (result) {
+  //         console.log(123);
+  //         console.log("Result from Flutter:", result);
+  //         setMeme(result);
+  //       });
+  //   }
+  // }
 
-  // 버튼을 누를 때 호출되는 함수
-  function handleButtonClick() {
-    // callFlutterFunction();
-    const data = callFlutter();
+  async function handleButtonClick() {
+    const data = await callFlutter();
     setMeme(data);
-    // handleGetLocation();
   }
 
   // 버튼을 누를 때 호출되는 함수
