@@ -14,9 +14,6 @@ import "./Dict.css";
 import { useRecoilState } from "recoil";
 import { location_recoil } from "../../utils/atoms";
 
-import Papa from "papaparse";
-import fs from "fs";
-
 function Dict(props) {
   const [activeView, setActiveView] = useState("");
   const [location, setLocation] = useRecoilState(location_recoil);
