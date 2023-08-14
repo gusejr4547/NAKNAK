@@ -22,8 +22,8 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
-    prots:
-      - "7017:7017"
+    ports:
+      - "27017:27017"
     networks:
       - spring-redis
     environment:
