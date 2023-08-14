@@ -23,7 +23,7 @@ services:
     image: mongo
     container_name: mongodb
     prots:
-      - "27017:27017"
+      - "7017:7017"
     networks:
       - spring-redis
     environment:
