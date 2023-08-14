@@ -4,17 +4,30 @@ import "../../utils/FontAwesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { fishingMode_recoil, newbie_recoil } from "../../utils/atoms";
+import {
+  fishingMode_recoil,
+  newbie_recoil,
+  mapModal_recoil,
+} from "../../utils/atoms";
 
 function Footer(props) {
   const [activeNav, setActiveNav] = useState(1);
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
+
   return (
     <nav className="nav-wrapper">
       <div>
         {!newbie ? (
-          <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
+          <Link
+            to="/"
+            className="nav-link"
+            onClick={() => {
+              setActiveNav(1);
+              setModalOpen(false);
+            }}
+          >
             <FontAwesomeIcon
               icon="home"
               className={activeNav === 1 ? "nav-item nav-active" : "nav-item"}
@@ -34,7 +47,10 @@ function Footer(props) {
           <Link
             to="/fishing"
             className="nav-link"
-            onClick={() => setActiveNav(2)}
+            onClick={() => {
+              setActiveNav(2);
+              setModalOpen(false);
+            }}
           >
             <FontAwesomeIcon
               icon="fish"
@@ -52,14 +68,28 @@ function Footer(props) {
       <div
         className={fishingMode === "selectMode" ? "nav-hidden" : "nav-basic"}
       >
-        <Link to="/Camera" className="nav-link" onClick={() => setActiveNav(2)}>
+        <Link
+          to="/Camera"
+          className="nav-link"
+          onClick={() => {
+            setActiveNav(2);
+            setModalOpen(false);
+          }}
+        >
           카메라
           {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
         </Link>{" "}
       </div>
 
       <div>
-        <Link to="/Login" className="nav-link" onClick={() => setActiveNav(3)}>
+        <Link
+          to="/Login"
+          className="nav-link"
+          onClick={() => {
+            setActiveNav(3);
+            setModalOpen(false);
+          }}
+        >
           <FontAwesomeIcon
             icon="user"
             className={activeNav === 3 ? "nav-item nav-active" : "nav-item"}

@@ -4,16 +4,19 @@
   height: 100%;
 }
 .newbie-talk-box {
+  white-space: pre-wrap;
   display: flex;
   width: 90%;
   height: 12%;
   border-radius: 35px;
   background-color: #ffe48e;
   border: dashed #ffffff 0.2rem;
-  position: absolute;
+  position: fixed;
   bottom: 5rem;
   left: 5%;
   align-items: center;
+  justify-content: center;
+  padding: 5%;
 }
 .newbie-talk {
   padding: 5%;

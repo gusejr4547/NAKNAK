@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Map.css";
+import axios from "../../api/KMAAPI";
 
 import MapModal from "./MapModal";
 
@@ -9,20 +10,23 @@ import {
   fishingInfo_recoil,
   newbie_recoil,
   mooltae_recoil,
+  tts_recoil,
+  weatherInfo_recoil,
 } from "../../utils/atoms";
-
-import axios from "../../api/SeaAPI";
-
-import bada_axios from "../../api/BadanuriAPI";
+// import axios from "../../api/SeaAPI";
+// import bada_axios from "../../api/BadanuriAPI";
 import badanuriPositions from "./badanuriPositions";
 import fishingSpots from "./fishingSpots";
 import markerPositions from "./markerPositions";
-import Talk2 from "../freshman/Talk2";
 
-function Map() {
-  const [data, setData] = useRecoilState(fishingInfo_recoil);
+// import { Weather } from "./Weather";
+import Talk2 from "../freshman/Talk2";
+import TTS from "../freshman/TTS";
+import { useLocation } from "react-router-dom";
+import { GetXY } from "./GetXY";
+
+function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
-  const [mapInfomation, setMapInfomation] = useState({});
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [myLocation, setMyLocation] = useState(null);
@@ -30,11 +34,67 @@ function Map() {
   const [step, setStep] = useState(1);
   const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
   const lunar = require("cky-lunar-calendar");
+  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [show, setShow] = useState(false);
+  const [weatherInfo, setWeatherInfo] = useRecoilState(weatherInfo_recoil);
+
+  const { state } = useLocation();
+  const now = new Date();
+  const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
+
+  function getClosestPreviousTime(hours) {
+    const currentHour = now.getHours();
+    let currentDate = now.getDate();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
+
+    if (currentHour < hours[0]) {
+      // 현재 시간이 제일 작은 시간보다 작으면 전날의 제일 큰 시간으로 설정
+      currentDate -= 1;
+    }
+
+    let closestTime = new Date(
+      currentYear,
+      currentMonth - 1,
+      currentDate,
+      hours[hours.length - 1],
+      0,
+      0
+    );
+
+    for (const hour of hours) {
+      if (hour <= currentHour) {
+        closestTime.setHours(hour);
+      } else {
+        break;
+      }
+    }
+
+    const formattedDate = `${closestTime.getFullYear()}${
+      (closestTime.getMonth() < 9 ? "0" : "") + (closestTime.getMonth() + 1)
+    }${(closestTime.getDate() < 10 ? "0" : "") + closestTime.getDate()}`;
+    const formattedHour = `${
+      (closestTime.getHours() < 10 ? "0" : "") + closestTime.getHours()
+    }00`; // 시간을 2000, 2200 등의 형태로 표시
+
+    return {
+      date: formattedDate,
+      time: formattedHour,
+    };
+  }
+
+  const closestPreviousTime = getClosestPreviousTime(targetHours);
+
+  // 기상청 api임
+
+  useEffect(() => {
+    if (step === 1) {
+      setTimeout(() => setShow(true), tts);
+    }
+  }, [tts]);
 
   // 음력 날짜구하기
   function lunarDate() {
-    let now = new Date();
-
     let dateLunar = lunar.solar2Lunar(
       now.getDate(),
       now.getMonth() + 1,
@@ -77,6 +137,7 @@ function Map() {
   // 뉴비버젼
   const next = () => {
     setStep(step + 1);
+    setShow(false);
   };
 
   const Search = (event) => {
@@ -107,6 +168,8 @@ function Map() {
       setinputData(Data);
     }
   };
+
+  // 카카오 지도
   const kakao = window["kakao"];
   useEffect(() => {
     kakao.maps.load(() => {
@@ -134,6 +197,11 @@ function Map() {
       }
       if (myLocation) {
         panTo(myLocation.lat, myLocation.lng);
+      }
+
+      // 즐겨찾기에서 온 경우
+      if (state) {
+        panTo(state.favLat, state.favLng);
       }
 
       // 낚시스팟 마커 생성
@@ -175,7 +243,8 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("badanuri", fishingSpots[i], i + 114)
+          //   makeOverListener("badanuri", fishingSpots[i], i + 114)
+          makeOverListener(fishingSpots[i], i + 114)
         );
       }
 
@@ -218,7 +287,8 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("badanuri", badanuriPositions[i], i + 76)
+          makeOverListener(badanuriPositions[i], i + 76)
+          //   makeOverListener("badanuri", badanuriPositions[i], i + 76)
         );
       }
 
@@ -261,89 +331,53 @@ function Map() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          makeOverListener("sea", markerPositions[i], i + 1)
+          // makeOverListener("sea", markerPositions[i], i + 1)
+          makeOverListener(markerPositions[i], i + 1)
         );
       }
 
-      function makeOverListener(api, markerPosition, pk) {
-        return function () {
-          // infowindow.open(map, marker);
-
-          // 해양정보 불러오기 (seaAPI)
-          if (api === "sea") {
-            fetchData({
-              api: api,
-              pk: pk,
-              mmaf: markerPosition.mmaf,
-              mmsi: markerPosition.mmsi,
-              title: markerPosition.title,
-              lat: markerPosition.lat,
-              lng: markerPosition.lng,
-            });
-          } else if (api === "badanuri") {
-            // console.log(markerPosition);
-            fetchData({
-              api: api,
-              pk: pk,
-              ObsCode: markerPosition.obsCode,
-              title: markerPosition.title,
-              lat: markerPosition.lat,
-              lng: markerPosition.lng,
-            });
-          }
-          // 모달을 만들어보자
-          // setModalOpen(true);
-          // console.log(markerPosition);
-          setMapInfomation(markerPosition);
-        };
-      }
-      // 해양 정보 받아오는 api
-      const fetchData = async (props) => {
+      const Weather = async (base_date, base_time, nx, ny, pk, title) => {
         try {
-          if (props.api === "sea") {
-            const response = await axios.get(
-              `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
-            );
-            const id = { ID: props.pk };
-            const new_data = [...response.data.result.recordset, id];
-            // setData(response.data.result.recordset);
-            setData(new_data);
-          } else if (props.api === "badanuri") {
-            const response = await bada_axios.get(
-              `buObsRecent/search.do?ObsCode=${props.ObsCode}`
-            );
+          const response = await axios.get(
+            `getVilageFcst?base_date=${base_date}&base_time=${base_time}&nx=${nx}&ny=${ny}`
+          );
+          const result = response.data.response.body.items.item;
+          //   setWeatherInfo(response.data.response.body.items.item); // 리코일 상태 업데이트
+          const new_data = {};
 
-            const new_data = [
-              {
-                TITLE: props.title,
-                MMSI_NM: response.data.result.meta.obs_post_name,
-                AIR_TEMPERATURE: response.data.result.data.air_temp,
-                LATITUDE: props.lat,
-                LONGITUDE: props.lng,
-                WIND_DIRECT: response.data.result.data.wind_dir,
-                AIR_PRESSURE: response.data.result.data.air_pres,
-                WIND_SPEED: response.data.result.data.wind_speed,
-                WAVE_HEIGHT: response.data.result.data.wave_height,
-                SALINITY: response.data.result.data.Salinity,
-                WATER_TEMPER: response.data.result.data.water_temp,
-              },
-              {
-                ID: props.pk,
-              },
-            ];
-            setData(new_data);
-            // console.log(response.data.result.data);
-          }
-          mool(luna, props.lng);
+          new_data["pk"] = pk;
+          new_data["title"] = title;
+
+          result.forEach((item) => {
+            new_data[item.category] = item.fcstValue;
+          });
+          setWeatherInfo(new_data);
           // 모달열기
           setModalOpen(true);
         } catch (e) {
           console.log(e);
         }
       };
-      // 마커 클러스터 생성
 
-      //
+      function makeOverListener(markerPosition, pk) {
+        return function () {
+          console.log("정보들어감");
+          //   console.log(markerPosition);
+          const rs = GetXY("toXY", markerPosition.lat, markerPosition.lng);
+          // infowindow.open(map, marker);
+
+          Weather(
+            closestPreviousTime.date,
+            closestPreviousTime.time,
+            rs.x,
+            rs.y,
+            pk,
+            markerPosition.title
+          );
+          // 모달을 만들어보자
+          mool(luna, markerPosition.lng);
+        };
+      }
     });
   }, [myLocation]);
 
@@ -351,22 +385,25 @@ function Map() {
     <div>
       {!modalOpen && newbie ? (
         <div className="map-newbie-talk-box">
-          {Talk2[step].content}{" "}
-          <div
-            className="next"
-            onClick={() => {
-              if (step === 1) {
-                setMyLocation({
-                  lat: Talk2[1]?.spot_lat,
-                  lng: Talk2[1]?.spot_lng,
-                });
-                next();
-              } else {
-              }
-            }}
-          >
-            다음 &gt;
-          </div>
+          {Talk2[step].content}
+          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {show && (
+            <div
+              className="next"
+              onClick={() => {
+                if (step === 1) {
+                  setMyLocation({
+                    lat: Talk2[1]?.spot_lat,
+                    lng: Talk2[1]?.spot_lng,
+                  });
+                  next();
+                } else {
+                }
+              }}
+            >
+              다음 &gt;
+            </div>
+          )}
         </div>
       ) : (
         ""
@@ -403,4 +440,4 @@ function Map() {
   );
 }
 
-export default Map;
+export default Map2;

@@ -76,14 +76,14 @@ function Login(props) {
   };
 
   // 즐겨찾기 목록
-  const getFavoritePoint = async (status) => {
+  const getFavoritePoint = async () => {
     try {
       const response = await authorizedRequest({
         method: "get",
         url: "/api1/api/fishingholes/favorites",
       });
       setFavoritePoint(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (err) {
       throw err;
     }

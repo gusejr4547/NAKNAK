@@ -5,14 +5,27 @@ import Lure from "./Lure";
 import Onetwo from "./Onetwo";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { token } from "../../utils/atoms";
-import upgradeProgress from "../freshman/upgradeProgress";
+import { token, tts_recoil } from "../../utils/atoms";
+import upgradeProgress from "./upgradeProgress";
+import TTS from "./TTS";
 
 function Secondpage({ show }) {
   const [fishingType, setFishingType] = useState("Lure");
   const [step, setStep] = useState(0);
   const [accesstoken, setAccesstoken] = useRecoilState(token);
   const navigate = useNavigate();
+  const [showNext, setShowNext] = useState(false);
+  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [setting, setSetting] = useState(false);
+
+  // const [voice, setVoice] = useState();
+
+  useEffect(() => {
+    setSetting(true);
+    console.log("길이", fishingType, tts);
+    // setShowNext(false);
+    setTimeout(() => setShowNext(true), tts);
+  }, [tts]);
 
   useEffect(() => {
     if (show === "Lure") {
@@ -33,6 +46,7 @@ function Secondpage({ show }) {
   };
 
   const nextTalk = () => {
+    setShowNext(false);
     if (step > (fishingType === "Lure" ? Lure : Onetwo).length - 2) {
       // 메인으로 라우터 이동
       navigate("/Newbie");
@@ -49,24 +63,33 @@ function Secondpage({ show }) {
     <div className="second_wrapper">
       <div className="second_talk">
         {/* <span className="second_img"></span> */}
-        {fishingType === "Lure" && (
-          <span className="second_title">
-            <img src={Lure[step]?.image} alt="" />
-            {Lure[step].content}
-          </span>
-        )}
-        {fishingType === "OneTwo" && (
-          <span className="second_title">
-            <img src={Onetwo[step]?.image} alt="" />
-            {Onetwo[step].content}
-          </span>
-        )}
-        {step > 0 && (
+        <span className="second_title">
+          {fishingType === "Lure" ? (
+            <>
+              <img src={Lure[step]?.image} alt="" />
+              {Lure[step].content}
+              {Lure[step].content && setting && (
+                <TTS message={Lure[step].content} />
+              )}
+            </>
+          ) : (
+            <>
+              {/* <span className="second_title"> */}
+              <img src={Onetwo[step]?.image} alt="" />
+              {Onetwo[step].content}
+              {Onetwo[step].content && setting && (
+                <TTS message={Onetwo[step].content} />
+              )}
+              {/* </span> */}
+            </>
+          )}
+        </span>
+        {/* {step > 0 && (
           <span className="btn1" onClick={() => beforeTalk()}>
             &lt; 이전
           </span>
-        )}
-        {(fishingType === "Lure" ? Lure : Onetwo) && (
+        )} */}
+        {showNext && (fishingType === "Lure" ? Lure : Onetwo) && (
           <span className="btn2" onClick={() => nextTalk()}>
             다음 &gt;
           </span>

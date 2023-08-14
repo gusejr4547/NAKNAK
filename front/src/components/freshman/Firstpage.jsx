@@ -2,24 +2,35 @@ import React, { useEffect, useState } from "react";
 import Wave from "react-wavify";
 import "./Firstpage.css";
 import talk from "./Talk";
-import upgradeProgress from "../freshman/upgradeProgress";
+import upgradeProgress from "./upgradeProgress";
 import { useNavigate } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { useRecoilState } from "recoil";
-import { profileData_recoil, newbie_recoil } from "../../utils/atoms";
+import {
+  profileData_recoil,
+  newbie_recoil,
+  tts_recoil,
+} from "../../utils/atoms";
+import TTS from "./TTS";
 
 function Firstpage({ handleChangeParentState }) {
   const [step, setStep] = useState(0);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
-
   //뉴비버젼 유무
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-  // 리코일이 변경됐는지 확인
-  // useEffect(() => {
-  //   console.log("유저리코일", profileData);
-  // }, [profileData]);
+  const [tts, setTts] = useRecoilState(tts_recoil);
+
+  const [setting, setSetting] = useState(false);
+
+  useEffect(() => {
+    setSetting(true);
+    if (step !== 8) {
+      setTimeout(() => setShow(true), tts);
+    }
+    // setVoice(TTS({ message: talk[step].content }));
+  }, [tts]);
 
   // 뉴비 상태 변경
   // 0 : 뉴비 아님 1 : 원투  2: 루어
@@ -62,6 +73,7 @@ function Firstpage({ handleChangeParentState }) {
 
   // 낚시 설문조사 함수
   const btn1 = () => {
+    setShow(false);
     if (step === 0) {
       setStep(1);
     } else if (step === 1) {
@@ -73,26 +85,20 @@ function Firstpage({ handleChangeParentState }) {
     } else if (step === 4) {
       // 원투낚시
       setStep(7);
-      setShow(false);
       newbieStauts(1);
       handleUpgradeProgress(20);
-      setTimeout(() => {
-        handleChangeParentState("Onetwo");
-        //   navigate("/Secondpage", { state: "Onetwo" });
-      }, 3000);
+      setTimeout(() => handleChangeParentState("Onetwo"), tts);
     } else if (step === 5) {
-      setShow(false);
       // 뉴비아님
       newbieStauts(0);
       setStep(8);
       setNewbie(false);
       handleUpgradeProgress(100);
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      setTimeout(() => navigate("/"), tts);
     }
   };
   const btn2 = () => {
+    setShow(false);
     if (step === 0) {
       setStep(1);
     } else if (step === 1) {
@@ -101,23 +107,15 @@ function Firstpage({ handleChangeParentState }) {
       setStep(4);
     } else if (step === 3) {
       setStep(6);
-      setShow(false);
       newbieStauts(2);
       handleUpgradeProgress(20);
-      setTimeout(() => {
-        handleChangeParentState("Lure");
-        // navigate("/Secondpage", { state: "Lure" });
-      }, 3000);
+      setTimeout(() => handleChangeParentState("Lure"), tts);
     } else if (step === 4) {
       // 루어낚시
       setStep(6);
-      setShow(false);
       newbieStauts(2);
       handleUpgradeProgress(20);
-      setTimeout(() => {
-        handleChangeParentState("Lure");
-        // navigate("/Secondpage", { state: "Lure" });
-      }, 3000);
+      setTimeout(() => handleChangeParentState("Lure"), tts);
     } else if (step === 5) {
       setStep(3);
     }
@@ -129,6 +127,7 @@ function Firstpage({ handleChangeParentState }) {
       <div className="first_cat_img"></div>
       <div className="first_talk">
         <span className="first_title">{talk[step].content}</span>
+        {talk[step].content && setting && <TTS message={talk[step].content} />}
       </div>
 
       {/* 가장 가까운 파도 */}
