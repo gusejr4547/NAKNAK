@@ -17,8 +17,8 @@ function FavoriteSpots() {
             index={index}
             fishingHoleId={point.fishingHoleId}
             title={point.title}
-            latitude={point.latitude}
-            longitude={point.longitude}
+            latitude={point.lat}
+            longitude={point.lng}
           />
         ))}
       </div>

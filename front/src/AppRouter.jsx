@@ -9,7 +9,7 @@ import Login from "./components/account/Login";
 import Dogam from "./components/dogam/Dogam";
 import Signup from "./components/account/Signup";
 import Fishpic from "./components/fishing/Fishpic";
-import FavoriteSpots from "./components/fishing/FavoriteSpots";
+import FavoriteSpots from "./components/map/FavoriteSpots";
 import Board from "./components/board/Board";
 import ModifyFeed from "./components/board/ModifyFeed";
 
@@ -22,7 +22,7 @@ import Profile from "./components/user/Profile";
 import SeaScene from "./components/fishbowl/SeaScene";
 import ImgTest from "./temp/Teacherable/ImgTest";
 import Map from "./components/map/Map";
-import Map2 from "./components/map/Map2";
+// import Map2 from "./components/map/Map2";
 import Inventory from "./components/fishbowl/Inventory";
 // import Bowl from "./components/fishbowl/Bowl";
 import Balls from "./components/fishbowl/Balls";
@@ -157,7 +157,7 @@ function AppRouter(props) {
           {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
           <Route path="/Map" element={<Map />}></Route>
-          <Route path="/Map2" element={<Map2 />}></Route>
+          {/* <Route path="/Map2" element={<Map2 />}></Route> */}
           <Route path="/FavoriteSpots" element={<FavoriteSpots />}></Route>
           <Route path="/Checkbox" element={<Checkbox />}></Route>
           <Route path="/Newbie" element={<Newbie />}></Route>

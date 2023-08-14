@@ -75,7 +75,7 @@ const SlideInnerMenu = ({
             : handleChange(fishInfo.fishBowlId);
         }}
       >
-        이동
+        {isFishBowl == "false" ? <span>인벤으로</span> : <span>어항으로</span>}
       </button>
     </div>
   );
