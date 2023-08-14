@@ -72,15 +72,15 @@ public class FishingHoleService {
                                 double latitude = spotNode.get("lat").asDouble();
                                 double longitude = spotNode.get("lng").asDouble();
                                 //String obsCode = spotNode.get("fields").get("obsCode").asText();
-
-                                FishingHole fishingHole = FishingHole.builder()
-                                        .fishingHoleId(pk)
-                                        .title(title)
-                                        .latitude(latitude)
-                                        .longitude(longitude)
-                                        .build();
-
-                                fishingHoleList.add(fishingHole);
+                                if(fishingHoleRepository.findById(pk).isEmpty()) {
+                                    FishingHole fishingHole = FishingHole.builder()
+                                            .fishingHoleId(pk)
+                                            .title(title)
+                                            .latitude(latitude)
+                                            .longitude(longitude)
+                                            .build();
+                                    fishingHoleList.add(fishingHole);
+                                }
                             }
                             fishingHoleRepository.saveAll(fishingHoleList);
                         }
