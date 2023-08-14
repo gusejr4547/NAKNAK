@@ -63,7 +63,7 @@ public class FishingHoleService {
                         long currentSize = fishingHoleRepository.countBy();
                         if(jsonNode.size() > currentSize) {
                             System.out.println("====json data 업데이트==== FROM :" + currentSize);
-                            fishingHoleRepository.deleteAll();
+                            //fishingHoleRepository.deleteAll();
 
                             List<FishingHole> fishingHoleList = new ArrayList<>();
                             for (JsonNode spotNode : jsonNode) {
