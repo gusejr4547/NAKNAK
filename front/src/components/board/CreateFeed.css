@@ -140,6 +140,7 @@
   margin: 0 1rem 0 1rem;
   display: flex;
   overflow-x: scroll;
+  justify-content: center;
 }
 
 .create-feed-disable-scrollbar {
@@ -149,4 +150,31 @@
 }
 .create-feed-disable-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.create-feed-add-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.create-feed-add-tag input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 1rem;
+  font-size: 14px;
+}
+
+.create-feed-add-tag-button {
+  margin-left: 1rem;
+  align-items: center;
+  background-color: #ffe48e;
+  border-radius: 200px;
+  font-weight: bold;
+  width: 3.7rem;
+  height: 1.7rem;
+  display: flex;
+  justify-content: center;
+  min-width: 5rem;
 }
