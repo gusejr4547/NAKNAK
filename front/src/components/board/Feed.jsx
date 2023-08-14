@@ -19,7 +19,6 @@ const Feed = ({
   onFollowChange,
   onLikeStateChange,
 }) => {
-  // props 를 여기 usestate로 받을 것인지
   const [feedLikeState, setFeedLikeState] = useState(
     likedFeedData
       ? likedFeedData.find((likedFeed) => likedFeed.postId === feedInfo.postId)
@@ -65,16 +64,17 @@ const Feed = ({
     const toggleLikeState = async () => {
       setLoading(true);
       try {
-        let urlString = feedLikeState ? "likes" : "unlikes";
-        console.log("feedlikestste id", feedLikeState);
         const response = await authorizedRequest({
           method: "post",
-          url: `/api1/api/posts/${urlString}?post=${feedInfo.postId}`,
+          url: feedLikeState
+            ? `/api1/api/posts/likes?post=${feedInfo.postId}`
+            : `/api1/api/posts/unlikes?post=${feedInfo.postId}`,
         });
         console.log(feedLikeState, response);
         setLoading(false);
       } catch (error) {
         console.error("fail toggle likedstate");
+      } finally {
         setLoading(false);
       }
     };
@@ -84,39 +84,18 @@ const Feed = ({
 
   return (
     <div className="feed-wrapper">
-      {/* data */}
-      {/* <div>
-        <h4>FeedInfo</h4>
-        "postId": {feedInfo.postId}, <br />
-        "content": {feedInfo.content}, <br />
-        "views":{feedInfo.views}, <br />
-        "likecnt":{feedInfo.likeCount}, <br />
-        "registeredAt":{feedInfo.registeredAt}, <br />
-        "memberId":{feedInfo.memberId}, <br />
-        "memberImageUrl": {feedInfo.memberImageUrl}, <br />
-        "memberNickname": {feedInfo.memberNickname}, <br />
-        "images":
-        {feedInfo.images.map((image, index) => {
-          return (
-            <p key={index} style={{ margin: 0 }}>
-              {image.fileUrl}
-            </p>
-          );
-        })}
-        "tags":
-        {feedInfo.tags.map((tag, index) => {
-          return <p key={index}>{tag.name}</p>;
-        })}
-      </div> */}
-      {/* data */}
-
       <div className="feed-board">
         <div className="feed-header">
           <img
             className="feed-profile-img"
             // null 값에 feedInfo.post.memberImageUrl가 들어가야함
-            src={null || `/assets/images/jge.png`}
-            alt="progile"
+            src={
+              feedInfo.memberImageUrl
+                ? `${process.env.REACT_APP_BACKEND_URL}/` +
+                  `${feedInfo.memberImageUrl}`
+                : "/assets/cats/cat.png"
+            }
+            alt="profileImg"
           />
           <Link to={`/Profile/:${feedInfo.memberId}`} className="feed-username">
             {feedInfo.memberNickname}
@@ -150,7 +129,7 @@ const Feed = ({
                 <img
                   key={index}
                   className="feed-image"
-                  src={"/assets/images/jge.png"}
+                  src={`${process.env.REACT_APP_BACKEND_URL}/${image.fileUrl}`}
                   alt="post images"
                 />
               </div>
@@ -210,7 +189,11 @@ const Feed = ({
           <div className="feed-tags">
             {feedInfo.tags.map((tag, index) => {
               return (
-                <FeedTag key={index} tagInfo={tag} onClick={tagClickHandler} />
+                <FeedTag
+                  key={index}
+                  tagInfo={tag}
+                  onClick={() => tagClickHandler()}
+                />
               );
             })}
           </div>

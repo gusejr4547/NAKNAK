@@ -4,6 +4,7 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import "./ModifyFeed.css";
 import FeedTag from "./FeedTag";
+import DeleteFeed from "./DeleteFeed";
 
 const ModifyFeed = () => {
   const navigate = useNavigate();
@@ -36,6 +37,9 @@ const ModifyFeed = () => {
 
         setFeedInfo(response.data);
         setSelectedFiles(response.data.images);
+
+        console.log(response.data.images);
+
         setContent(response.data.content);
 
         //tagsname 을 보내야함
@@ -73,13 +77,13 @@ const ModifyFeed = () => {
     setContent(e.target.value);
   };
 
-  const removeSelectedFile = (indexToRemove) => {
+  const removeSelectedFile = (indexToRemove, fileIndex) => {
     if (selectedFiles.length === 1) {
       alert("이미지는 최소 하나 이상이어야합니다.");
       return;
     }
 
-    setDeleteImageList((prevFiles) => [...prevFiles, indexToRemove]);
+    setDeleteImageList((prevFiles) => [...prevFiles, fileIndex]);
     setSelectedFiles((prevFiles) =>
       prevFiles.filter((_, index) => index !== indexToRemove)
     );
@@ -87,25 +91,33 @@ const ModifyFeed = () => {
 
   const tagClickHandler = (tag) => {
     console.log("tagClicked");
-    if (selectedTags.includes(tag.tagName)) {
+    if (
+      selectedTags.some((selectedTag) => selectedTag.tagName === tag.tagName)
+    ) {
       // 이미 선택된 태그를 클릭하여 취소하는 경우
-      setSelectedTags((prevTags) => prevTags.filter((t) => t !== tag.tagName));
+      setSelectedTags((prevTags) =>
+        prevTags.filter((selectedTag) => selectedTag.tagName !== tag.tagName)
+      );
     } else {
       // 선택되지 않은 태그를 클릭하여 선택하는 경우
-      setSelectedTags((prevTags) => [...prevTags, tag.tagName]);
+      setSelectedTags((prevTags) => [...prevTags, tag]);
     }
   };
+
   const ModifyFeed = async () => {
     if (selectedFiles.length === 0 || selectedTags.length === 0) {
       alert("이미지와 태그를 선택해주세요.");
       return;
     }
-    console.log(selectedTags);
-    const formData = new FormData();
-    formData.append("content", content);
-    formData.append("tags", selectedTags);
-    formData.append("deleteImageList", deleteImageList);
-    console.log("formData", formData);
+    // const formData = new FormData();
+    // formData.append("postId", postId);
+    // formData.append("content", content);
+
+    // formData.append("tags", selectedTags);
+    // // selectedTags.forEach((tag) => {
+    // //   formData.append("tags", tag);
+    // // });
+    // formData.append("deleteImageList", 1);
 
     try {
       setLoading(true);
@@ -113,7 +125,12 @@ const ModifyFeed = () => {
       const response = await authorizedRequest({
         method: "patch",
         url: `/api1/api/posts/${postId}`,
-        data: formData,
+        data: {
+          postId: postId,
+          content: content,
+          tags: selectedTags,
+          deleteImageList: deleteImageList,
+        },
       });
       console.log("feed modify success", response.data);
 
@@ -125,6 +142,23 @@ const ModifyFeed = () => {
     }
   };
 
+  const deleteHandler = async () => {
+    try {
+      setLoading(true);
+
+      const response = await authorizedRequest({
+        method: "delete",
+        url: `/api1/api/posts/${postId}`,
+      });
+      console.log("feed delete success", response.data);
+
+      navigate("/Board");
+    } catch (error) {
+      console.error("feed delete error");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="modify-feed-wrapper">
       <div className="modify-feed-header">
@@ -155,7 +189,7 @@ const ModifyFeed = () => {
                 src={`${process.env.REACT_APP_BACKEND_URL}/${selectedFiles[index].fileUrl}`}
                 alt={`Image ${index}`}
                 className="create-feed-selected-file"
-                onClick={() => removeSelectedFile(index)}
+                onClick={() => removeSelectedFile(index, file.fileId)}
               />
               <img
                 src="/assets/icons/x.pn" // 마이너스 아이콘 이미지 경로
@@ -200,6 +234,7 @@ const ModifyFeed = () => {
           </div>
         </div>
       </div>
+      <DeleteFeed onDelete={deleteHandler}>삭제..</DeleteFeed>
     </div>
   );
 };
