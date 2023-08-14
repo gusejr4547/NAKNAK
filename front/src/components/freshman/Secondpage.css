@@ -28,25 +28,26 @@
 }
 .second_cat_img {
   position: absolute;
-  bottom: -5rem;
+  bottom: -3rem;
   width: 10rem;
   height: 20rem;
-  right: 1rem;
+  left: 1rem;
   z-index: 5;
   opacity: 0.7;
-  background: url("../../../public/assets/cats/cat.png") center center no-repeat;
-  background-size: 9rem;
+  background: url("../../../public/assets/cats/cat2.png") center center
+    no-repeat;
+  background-size: 12rem;
 }
 .second_talk {
   display: flex;
   position: absolute;
   top: 3rem;
-  left: 1rem;
+  /* left: 1rem; */
   width: 20rem;
   height: 30rem;
   z-index: 5;
   opacity: 0.9;
-  background: url("../../../public/assets/images/mallpoong2.png") center center
+  background: url("../../../public/assets/images/mallpoong4.png") center center
     no-repeat;
   background-size: 20rem;
   align-items: center;

@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-// import { div } from "@tensorflow/tfjs";
+import { Link, useNavigate } from "react-router-dom";
 import "./profile.css";
-import { div } from "@tensorflow/tfjs";
 
 function Mypost(props) {
   const [MypostData, setMypostData] = useState([]);
   const [loading, setLoading] = useState(true); // 데이터 로딩 상태
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const [totalPage, setTotalPage] = useState(1); // 총 페이지 수 상태
+  const [pageNation, setPageNation] = useState([1]);
+  const navigate = useNavigate();
 
   const getMyPost = async (page) => {
     console.log(123);
@@ -40,6 +38,11 @@ function Mypost(props) {
     }
   };
 
+  function handleProfileLinkClick(memberId) {
+    navigate(`/Profile/:${memberId}`);
+    window.location.reload();
+  }
+
   useEffect(() => {
     getMyPost(currentPage);
   }, [currentPage]);
@@ -47,10 +50,21 @@ function Mypost(props) {
   useEffect(() => {
     if (MypostData && MypostData.count) {
       setTotalPage(Math.ceil(MypostData.count / 4)); // 총 페이지 수 설정
+      const temp = [];
+      for (let index = 0; index <= MypostData.count / 4; ++index) {
+        temp.push(index + 1);
+      }
+      setPageNation(temp);
+      console.log(pageNation);
     }
   }, [MypostData]); // MypostData가 변경될 때마다 호출
 
   const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPage) {
+      setCurrentPage(newPage); // 페이지 변경 처리
+    }
+  };
+  const btnclick = (newPage) => {
     if (newPage >= 1 && newPage <= totalPage) {
       setCurrentPage(newPage); // 페이지 변경 처리
     }
@@ -83,19 +97,21 @@ function Mypost(props) {
       ) : (
         <div className="mypost">
           {MypostData?.data?.map((item, idx) => (
-            <div className="postcard">
+            <div key={item.postId} className="postcard">
               <div className="postimgbox">
                 <img
                   className="postimg"
-                  src={item.image ? item.image : "/assets/cats/cat.png"}
+                  src={item.image ? item.image.fileUrl : "/assets/cats/cat.png"}
                   alt=""
                 />
               </div>
               <div className="postbody">
                 <p>{item.content}</p>
-                <p>{item.memberNickname}</p>
               </div>
               <div className="postfotter">
+                <span onClick={() => handleProfileLinkClick(item.memberId)}>
+                  {item.memberNickname}
+                </span>{" "}
                 {item.registeredAt.substr(0, 11)}
               </div>
             </div>
@@ -104,21 +120,32 @@ function Mypost(props) {
       )}
 
       <div className="pagination">
-        <span
+        <button
           className="mypost-page-btn"
           onClick={() => handlePageChange(currentPage - 1)}
         >
           {"<<"}
-        </span>
-        <span>
+        </button>
+        {/* <span>
           {currentPage} / {totalPage}
-        </span>
-        <span
+        </span> */}
+        {pageNation.map((item) => (
+          <button
+            key={item}
+            onClick={() => btnclick(item)}
+            className={
+              currentPage === item ? "page-btn-active" : "page-btn-default"
+            }
+          >
+            {item}
+          </button>
+        ))}
+        <button
           className="mypost-page-btn"
           onClick={() => handlePageChange(currentPage + 1)}
         >
           {">>"}
-        </span>
+        </button>
       </div>
     </div>
   );

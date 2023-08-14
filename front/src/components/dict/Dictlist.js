@@ -6,7 +6,7 @@ function dictlist(props) {
   return (
     <div
       className="dict-disable-scrollbar"
-      style={{ overflowY: "scroll", maxHeight: "500px" }}
+      style={{ overflowY: "scroll", maxHeight: "300px" }}
     >
       {props.data &&
         props.data.map((item) => <Dictdetail key={item.pk} data={item} />)}

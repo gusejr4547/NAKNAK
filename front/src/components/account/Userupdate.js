@@ -51,12 +51,12 @@ function UserUpdate(props) {
   } = useInput(isNotEmpty);
 
   const {
-    $value: usernameValue,
-    $isValid: usernameValueIsValid,
-    $hasError: usernameHasError,
-    $valueChangeHandler: usernameChangeHandler,
-    $inputBlurHandler: usernameBlurHandler,
-    // $reset: resetusername,
+    $value: userPasswordconValue,
+    $isValid: userPasswordconValueIsValid,
+    $hasError: userPasswordconHasError,
+    $valueChangeHandler: userPasswordconChangeHandler,
+    $inputBlurHandler: userPasswordconBlurHandler,
+    // $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
   const {
@@ -198,17 +198,16 @@ function UserUpdate(props) {
           onKeyPress={updateHandleKey}
         />
         <AuthInput
-          label="이름"
-          type="name"
-          id="username"
-          placeholder={userData.name}
-          $value={userData.name}
-          onChange={usernameChangeHandler}
-          onBlur={usernameBlurHandler}
-          $hasError={usernameHasError}
+          label="비밀번호 확인"
+          type="passwordcon"
+          id="userPasswordcon"
+          placeholder="비밀번호 확인"
+          $value={userPasswordconValue}
+          onChange={userPasswordconChangeHandler}
+          onBlur={userPasswordconBlurHandler}
+          $hasError={userPasswordconHasError}
           $errorText="필수 입력값입니다"
           onKeyPress={updateHandleKey}
-          disabled
         />
         <AuthInput
           label="닉네임"
@@ -240,6 +239,7 @@ function UserUpdate(props) {
             onChange={saveImgFile}
             id="profileImg"
             ref={imgRef}
+            style={{ width: "200px" }}
           />
         </form>
 

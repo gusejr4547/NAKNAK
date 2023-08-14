@@ -128,15 +128,17 @@ public class PostService {
         // 기존 태그와 비교해서 새로운 태그는 추가
         Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
         Set<Tag> newTags = new HashSet<>();
-        for (Tag tag : postPatchDto.getTags()) {
-            System.out.println("#############");
-            System.out.println(tag);
-            if (!tagRepository.existsTagByTagName(tag.getTagName())) {
-                tag = tagRepository.save(tag);
-                newTags.add(tag);
-            } else {
-                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
-                newTags.add(tag);
+        if(postPatchDto.getTags() != null){
+            for (Tag tag : postPatchDto.getTags()) {
+//                System.out.println("#############");
+//                System.out.println(tag);
+                if (!tagRepository.existsTagByTagName(tag.getTagName())) {
+                    tag = tagRepository.save(tag);
+                    newTags.add(tag);
+                } else {
+                    tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+                    newTags.add(tag);
+                }
             }
         }
 
@@ -158,15 +160,17 @@ public class PostService {
         }
 
         // 이미지 삭제 할 것 있으면 삭제
-        for(long id : postPatchDto.getDeleteImageList()){
-            deleteImage(id);
-        }
-    }
+        if(postPatchDto.getDeleteImageList() != null){
+            for(long id : postPatchDto.getDeleteImageList()){
+                PostImage postImage = postImageRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
 
-    @Transactional
-    public void deleteImage(long fileId) {
-        PostImage postImage = postImageRepository.findById(fileId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
-        postImageRepository.delete(postImage);
+                if(postImage.getPost() != post){
+                    throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
+                }
+
+                postImageRepository.delete(postImage);
+            }
+        }
     }
 
     @Transactional

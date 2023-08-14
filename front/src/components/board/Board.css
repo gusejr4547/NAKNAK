@@ -95,6 +95,7 @@
 }
 
 .board-create-feed {
+  z-index: 3;
   background-color: #ffe48e;
   overflow: hidden;
   width: 3.5rem;

@@ -58,7 +58,7 @@ function Home({ newbieVersion }) {
           {/* <div className="home-slide"> */}
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Dogam" className="nav-link">
-              <img src="/assets/icons/do.PNG" alt="icon" />
+              <img src="/assets/icons/do2.png" alt="icon" />
               <h6>도감</h6>
             </Link>
           </div>
@@ -73,7 +73,7 @@ function Home({ newbieVersion }) {
           >
             {/* <Link to="/Fishpic" className="nav-link"> */}
             <img
-              src="/assets/icons/camera.PNG"
+              src="/assets/icons/camera2.png"
               alt="icon"
               onClick={() => cameraClick()}
             />
@@ -86,7 +86,7 @@ function Home({ newbieVersion }) {
           {/* <div className="home-slide"> */}
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Inventory" className="nav-link">
-              <img src="/assets/icons/on.PNG" alt="icon" />
+              <img src="/assets/icons/on.png" alt="icon" />
               <h6>인벤토리</h6>
             </Link>
           </div>
@@ -99,13 +99,13 @@ function Home({ newbieVersion }) {
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
               <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
-                <img src="/assets/icons/pro.PNG" alt="icon" />
+                <img src="/assets/icons/pro2.png" alt="icon" />
                 <h6>프로필</h6>
               </Link>
             </div>
           ) : (
             <div className="home-slide">
-              <img src="/assets/icons/pro.PNG" alt="icon" />
+              <img src="/assets/icons/pro2.png" alt="icon" />
               <h6>프로필</h6>
             </div>
           )}
@@ -125,8 +125,8 @@ function Home({ newbieVersion }) {
               state={{ newbieVersionProp: newbieVersion }}
               className="nav-link"
             > */}
-              <img src="/assets/icons/ji.PNG" alt="icon" />
-              <h6>지도</h6>
+              <img src="/assets/icons/ji.png" alt="icon" />
+              <h6>낚시터</h6>
             </Link>
           </div>
           {/* slide unit end*/}
@@ -135,7 +135,7 @@ function Home({ newbieVersion }) {
           {/* <div className="home-slide"> */}
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Board" className="nav-link">
-              <img src="/assets/icons/ge.PNG" alt="icon" />
+              <img src="/assets/icons/ge.png" alt="icon" />
               <h6>SNS</h6>
             </Link>
           </div>
@@ -144,14 +144,14 @@ function Home({ newbieVersion }) {
           {/* dummy data start*/}
           {/* <div className="home-slide">
             <Link to="/Map" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/google.png" alt="icon" />
               <h6>Map</h6>
             </Link>
           </div> */}
           {/* <div className="home-slide"> */}
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Balls" className="nav-link">
-              <img src="/assets/icons/tank.PNG" alt="icon" />
+              <img src="/assets/icons/tank.png" alt="icon" />
               <h6>수조</h6>
             </Link>
           </div>
@@ -162,14 +162,20 @@ function Home({ newbieVersion }) {
 
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Dict" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/dict.png" alt="icon" />
               <h6>사전</h6>
             </Link>
           </div>
           <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
             <Link to="/Achievements" className="nav-link">
-              <img src="/assets/icons/google.PNG" alt="icon" />
+              <img src="/assets/icons/ac.png" alt="icon" />
               <h6>업적</h6>
+            </Link>
+          </div>
+          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
+            <Link to="/FavoriteSpots" className="nav-link">
+              <img src="/assets/icons/favspot.png" alt="icon" />
+              <h6>즐겨찾기</h6>
             </Link>
           </div>
           {/* dummy data end*/}

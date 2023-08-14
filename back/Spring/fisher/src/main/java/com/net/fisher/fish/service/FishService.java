@@ -15,6 +15,8 @@ import com.net.fisher.fish.repository.BooksRepository;
 import com.net.fisher.fish.repository.FishBowlsRepository;
 import com.net.fisher.fish.repository.FishRepository;
 import com.net.fisher.fish.repository.InventoryRepository;
+import com.net.fisher.kafka.dto.LogDto;
+import com.net.fisher.kafka.service.KafkaProducer;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.member.service.MemberService;
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -46,6 +49,7 @@ public class FishService {
     private final FishBowlsRepository fishBowlsRepository;
     private final BooksRepository booksRepository;
     private final MemberService memberService;
+    private final KafkaProducer kafkaProducer;
 
 
     @PostConstruct
@@ -143,6 +147,7 @@ public class FishService {
         /*====도감에 등록하는 알고리즘====*/
 
         booksUpdate(fish,member,inventory);
+        sendFishingLog(fish, member, inventory);
 
         return inventory;
     }
@@ -205,6 +210,18 @@ public class FishService {
             System.out.println(fish.getFishId());
         }*/
         return booksRepository.findBooksByMemberId(memberId);
+    }
+
+    @Async
+    public void sendFishingLog(Fish fish, Member member, Inventory inventory){
+            StringBuilder sb = new StringBuilder();
+            sb.append("Fish : ").append(fish).append("\nMember : ").append(member.toString()).append("\nInven : ").append(inventory.toString());
+            String message = sb.toString();
+
+            LogDto logDto = LogDto.builder().sender("main").content(message).build();
+
+            kafkaProducer.sendLogDto(logDto);
+
     }
 
     @Async

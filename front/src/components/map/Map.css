@@ -31,11 +31,12 @@
   border-radius: 35px;
   background-color: #ffe48e;
   border: dashed #ffffff 0.2rem;
-  position: absolute;
+  position: fixed;
   bottom: 5rem;
   left: 5%;
   align-items: center;
   justify-content: center;
+  padding: 5%;
 }
 .map-newbie-talk {
   padding: 4%;

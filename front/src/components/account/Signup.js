@@ -71,6 +71,7 @@ function Signup(props) {
   };
 
   const saveImgFile = () => {
+    // eve.preventDefault();
     const file = imgRef.current.files[0];
     console.log(file);
     const allowedExtensions = ALLOW_FILE_EXTENSION.split(",");
@@ -256,7 +257,7 @@ function Signup(props) {
               onChange={saveImgFile}
               id="profileImg"
               ref={imgRef}
-              style={{ margin: "0px", padding: "0px" }}
+              style={{ width: "200px" }}
             />
           </form>
         </div>

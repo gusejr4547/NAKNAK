@@ -12,7 +12,7 @@ export class ImageObject {
     this.image.src = imageUrl;
     this.size = 100; // 필요에 따라 이미지 크기를 조정하세요
     this.angle = Math.random() * (Math.PI * 2);
-    this.power = 1;
+    this.power = 0.5;
     this.directionX = this.power * Math.cos(this.angle);
     this.weight = this.power * Math.sin(this.angle);
     this.isDragging = false;
@@ -66,9 +66,24 @@ export class ImageObject {
 
   draw(ctx) {
     ctx.imageSmoothingEnabled = true; // 안티앨리어싱 비활성화
-    const rotation = Math.atan2(-this.weight, -this.directionX);
+    var rotation = Math.atan2(-this.weight, -this.directionX);
     ctx.save();
     ctx.translate(this.x, this.y);
+    if (this.directionX > 0) {
+      // 이미지가 오른쪽 방향을 향할 때
+      ctx.scale(1, -1); // 이미지를 좌우로 반전
+      rotation = Math.atan2(this.weight, -this.directionX);
+    }
+
+    // if (this.directionY > 0) {
+    //   // 이미지가 위쪽 방향을 향할 때
+    //   ctx.scale(-1, 1); // 이미지를 좌우로 반전
+    // }
+    // if (this.directionY < 0) {
+    //   // 이미지가 위쪽 방향을 향할 때
+    //   ctx.scale(-1, 1); // 이미지를 좌우로 반전
+    // }
+
     ctx.rotate(rotation);
     ctx.drawImage(
       this.image,
@@ -199,22 +214,22 @@ const Balls = () => {
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const imageUrls = [];
-    console.log(fishBowlData);
-    if (fishBowlData) {
-      fishBowlData.forEach((fish) => {
-        console.log(fish);
-        imageUrls.push(
-          `${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fish.fishCode}.png`
-        );
-      });
-    }
+    // const imageUrls = [];
+    // console.log(fishBowlData);
+    // if (fishBowlData) {
+    //   fishBowlData.forEach((fish) => {
+    //     console.log(fish);
+    //     imageUrls.push(
+    //       `${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fish.fishCode}.png`
+    //     );
+    //   });
+    // }
     let images = []; // 배열 이름을 'images'로 변경
-    // const imageUrls = [
-    //   "./assets/dom1.png",
-    //   "./assets/dom1.png",
-    //   "./assets/dom1.png",
-    // ]; // 표시할 이미지 URL을 추가합니다.
+    const imageUrls = [
+      "./assets/dom1.png",
+      "./assets/dom1.png",
+      "./assets/dom1.png",
+    ]; // 표시할 이미지 URL을 추가합니다.
 
     const init = () => {
       for (let i = 0; i < imageUrls.length; i++) {
@@ -325,7 +340,7 @@ const Balls = () => {
       id="canvas"
       style={{
         width: "90%",
-        height: "85vh",
+        height: "85%",
         position: "absolute",
         top: "5%",
         left: "5%",
