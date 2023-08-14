@@ -218,7 +218,14 @@ public class FishService {
             sb.append("Fish : ").append(fish).append("\nMember : ").append(member.toString()).append("\nInven : ").append(inventory.toString());
             String message = sb.toString();
 
-            LogDto logDto = LogDto.builder().sender("main").content(message).build();
+            LogDto logDto = LogDto.builder()
+                    .userId(member.getMemberId())
+                    .fishId(fish.getFishId())
+                    .latitude(27.22)
+                    .longitude(128.02)
+                    .size(inventory.getSize())
+                    .logTime(LocalDateTime.now())
+                    .build();
 
             kafkaProducer.sendLogDto(logDto);
 
