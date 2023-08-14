@@ -56,6 +56,10 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.1.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
+
 }
 
 tasks.named('test') {

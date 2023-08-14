@@ -63,7 +63,7 @@ public class FishingHoleService {
                         long currentSize = fishingHoleRepository.countBy();
                         if(jsonNode.size() > currentSize) {
                             System.out.println("====json data 업데이트==== FROM :" + currentSize);
-                            fishingHoleRepository.deleteAll();
+                            //fishingHoleRepository.deleteAll();
 
                             List<FishingHole> fishingHoleList = new ArrayList<>();
                             for (JsonNode spotNode : jsonNode) {
@@ -72,15 +72,15 @@ public class FishingHoleService {
                                 double latitude = spotNode.get("lat").asDouble();
                                 double longitude = spotNode.get("lng").asDouble();
                                 //String obsCode = spotNode.get("fields").get("obsCode").asText();
-
-                                FishingHole fishingHole = FishingHole.builder()
-                                        .fishingHoleId(pk)
-                                        .title(title)
-                                        .latitude(latitude)
-                                        .longitude(longitude)
-                                        .build();
-
-                                fishingHoleList.add(fishingHole);
+                                if(fishingHoleRepository.findById(pk).isEmpty()) {
+                                    FishingHole fishingHole = FishingHole.builder()
+                                            .fishingHoleId(pk)
+                                            .title(title)
+                                            .latitude(latitude)
+                                            .longitude(longitude)
+                                            .build();
+                                    fishingHoleList.add(fishingHole);
+                                }
                             }
                             fishingHoleRepository.saveAll(fishingHoleList);
                         }
