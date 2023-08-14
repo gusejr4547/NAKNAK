@@ -42,28 +42,6 @@ function Map2() {
   const now = new Date();
   const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
 
-  // fetch("../../utils/data/fishingspot.json")
-  //   .then((res) => {
-  //     console.log(res);
-  //     return res.json();
-  //   })
-  //   .then((obj) => {
-  //     console.log("요기욤갸ㅐㅣㄴ요뢰ㅏ모암");
-
-  //     console.log("여기여기여기여기", obj);
-  //     setData(obj);
-  //   });
-
-  // async function load() {
-  //   // 파일 읽어 오기
-  //   const data = await fetch("../../utils/data/fishingspot.json");
-  //   // JSON으로 해석
-  //   const obj = await data.json();
-  //   console.log(obj); // 결과: {name: "A학교", classes: Array(2)}
-  //   // 텍스트 출력
-  //   document.querySelector("#log").innerHTML = JSON.stringify(obj, null, " ");
-  // }
-
   useEffect(() => {
     handlebutton();
     // console.log(fishingspot);
@@ -90,7 +68,6 @@ function Map2() {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -244,6 +221,49 @@ function Map2() {
       if (state) {
         panTo(state.favLat, state.favLng);
       }
+      // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new kakao.maps.services.Geocoder();
+      var marker = new kakao.maps.Marker();
+      // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+        var latlng = mouseEvent.latLng;
+        const rs = GetXY("toXY", latlng.getLat(), latlng.getLng());
+
+        // 모달을 만들어보자
+        mool(luna, latlng.getLng());
+
+        searchDetailAddrFromCoords(
+          mouseEvent.latLng,
+          function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              var content =
+                result[0].road_address.region_1depth_name +
+                " " +
+                result[0].road_address.region_2depth_name;
+
+              // 마커를 클릭한 위치에 표시합니다
+              marker.setPosition(mouseEvent.latLng);
+              marker.setMap(map);
+
+              Weather(
+                closestPreviousTime.date,
+                closestPreviousTime.time,
+                rs.x,
+                rs.y,
+                null,
+                content,
+                latlng.getLat(),
+                latlng.getLng()
+              );
+            }
+          }
+        );
+      });
+
+      function searchDetailAddrFromCoords(coords, callback) {
+        // 좌표로 법정동 상세 주소 정보를 요청합니다
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+      }
 
       // 낚시스팟 마커 생성
       for (let i = 0; i < fishingspot.length; i++) {
@@ -267,8 +287,6 @@ function Map2() {
         overlay.setMap(map);
 
         kakao.maps.event.addListener(map, "zoom_changed", function () {
-          // 지도의 현재 레벨을 얻어옵니다
-
           function closeOverlay() {
             overlay.setMap(null);
           }
@@ -304,7 +322,6 @@ function Map2() {
           const result = response.data.response.body.items.item;
           //   setWeatherInfo(response.data.response.body.items.item); // 리코일 상태 업데이트
           const new_data = {};
-
           new_data["pk"] = pk;
           new_data["title"] = title;
           new_data["lat"] = lat;
@@ -323,7 +340,6 @@ function Map2() {
 
       function makeOverListener(markerPosition) {
         return function () {
-          console.log("정보들어감");
           //   console.log(markerPosition);
           const rs = GetXY("toXY", markerPosition.lat, markerPosition.lng);
           // infowindow.open(map, marker);
