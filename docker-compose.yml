@@ -7,7 +7,6 @@ services:
     environment:
         MYSQL_ROOT_PASSWORD: 7818
         MYSQL_DATABASE: naknak
-        MYSQL_USER: root
     ports:
       - "3306:3306"
     networks:
