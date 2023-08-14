@@ -22,6 +22,7 @@ const ModifyFeed = () => {
 
   const [tagListData, setTagListData] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [newTag, setNewTag] = useState(""); // 새로 추가할 태그
 
   useEffect(() => {
     const getTargetFeed = async () => {
@@ -159,6 +160,28 @@ const ModifyFeed = () => {
       setLoading(false);
     }
   };
+
+  const addNewTag = () => {
+    if (newTag.trim() === "") return;
+
+    if (Object.values(tagListData).some((tag) => tag.tagName === newTag)) {
+      alert("이미 존재하는 태그입니다.");
+      return;
+    }
+
+    if (newTag.length > 4) {
+      alert("태그는 4글자 이하로 입력해주세요.");
+      return;
+    }
+    // 태그 추가 로직 구현
+    const newTagId = Object.keys(tagListData).length + 1; // 임의의 ID 생성
+    const newTagObject = { tagId: newTagId, tagName: newTag };
+
+    setTagListData({ ...tagListData, [newTagId]: newTagObject });
+    setSelectedTags([...selectedTags, { tagName: newTag }]);
+    setNewTag("");
+  };
+
   return (
     <div className="modify-feed-wrapper">
       <div className="modify-feed-header">
@@ -217,6 +240,20 @@ const ModifyFeed = () => {
         <div className="create-feed-contents-inner">
           <h2>Modify Tag</h2>
           <hr />
+          {/* 태그 임의 추가 */}
+          <div className="create-feed-add-tag">
+            <input
+              type="text"
+              placeholder="새로운 태그 추가"
+              value={newTag}
+              maxLength={4}
+              onChange={(e) => setNewTag(e.target.value)}
+            />
+            <div className="create-feed-add-tag-button " onClick={addNewTag}>
+              add
+            </div>
+          </div>
+
           <div className="create-feed-tag-container create-feed-disable-scrollbar">
             {Object.keys(tagListData).map((key) => {
               const tag = tagListData[key];
