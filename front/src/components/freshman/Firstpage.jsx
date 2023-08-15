@@ -26,7 +26,7 @@ function Firstpage({ handleChangeParentState }) {
 
   useEffect(() => {
     setSetting(true);
-    if (step !== 8) {
+    if (step !== 8 && step !== 6 && step !== 7) {
       setTimeout(() => setShow(true), tts);
     }
     // setVoice(TTS({ message: talk[step].content }));

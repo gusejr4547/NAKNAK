@@ -18,21 +18,23 @@ function Footer(props) {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [userData, setUserData] = useRecoilState(loginuser);
 
+  const handleHomeClick = () => {
+    setActiveNav(1);
+    setModalOpen(false);
+  };
+
+  const handleFishingClick = () => {
+    setActiveNav(2);
+    setModalOpen(false);
+  };
+
   return (
     <div>
-      {" "}
       {userData && (
         <nav className="nav-wrapper">
           <div>
             {!newbie ? (
-              <Link
-                to="/"
-                className="nav-link"
-                onClick={() => {
-                  setActiveNav(1);
-                  setModalOpen(false);
-                }}
-              >
+              <Link to="/" className="nav-link" onClick={handleHomeClick}>
                 <FontAwesomeIcon
                   icon="home"
                   className={
@@ -57,10 +59,7 @@ function Footer(props) {
               <Link
                 to="/fishing"
                 className="nav-link"
-                onClick={() => {
-                  setActiveNav(2);
-                  setModalOpen(false);
-                }}
+                onClick={handleFishingClick}
               >
                 <FontAwesomeIcon
                   icon="fish"
@@ -85,10 +84,7 @@ function Footer(props) {
             <Link
               to="/Camera"
               className="nav-link"
-              onClick={() => {
-                setActiveNav(2);
-                setModalOpen(false);
-              }}
+              onClick={handleFishingClick}
             >
               카메라
               {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
