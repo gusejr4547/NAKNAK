@@ -32,9 +32,11 @@ function Home({ newbieVersion }) {
     dots: true, // 페이지 번호를 나타냄
     infinite: true, // 무한 루프
     speed: 300, // 애니메이션 속도 (밀리초 단위)
-    slidesToShow: 3, // 한 번에 보여질 슬라이드 수
-    slidesToScroll: 3, // 스크롤할 슬라이드 수
+    slidesToShow: 1, // 한 번에 보여질 슬라이드 수
+    slidesToScroll: 1, // 스크롤할 슬라이드 수
     rows: 2,
+    slidesPerRow: 3,
+
     // swipe: true,
     prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
