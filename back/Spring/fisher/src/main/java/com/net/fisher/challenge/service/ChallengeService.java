@@ -3,8 +3,11 @@ package com.net.fisher.challenge.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.net.fisher.challenge.entity.Challenge;
+import com.net.fisher.challenge.entity.ChallengeCheck;
+import com.net.fisher.challenge.repository.ChallengeCheckRepository;
 import com.net.fisher.challenge.repository.ChallengeRepository;
 import com.net.fisher.fishinghole.entity.FishingHole;
+import com.net.fisher.response.FishCheckResponse;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ import java.util.List;
 public class ChallengeService {
 
     private final ChallengeRepository challengeRepository;
+    private final ChallengeCheckRepository challengeCheckRepository;
 
     @PostConstruct
     @Transactional
@@ -83,7 +87,7 @@ public class ChallengeService {
                     e.printStackTrace();
                 }
 
-                System.out.println(jsonContent);
+                //System.out.println(jsonContent);
 
             } else {
                 System.err.println("API call failed with status code: " + response.getStatusCode());
@@ -91,6 +95,13 @@ public class ChallengeService {
         } catch (RestClientException e) {
             e.printStackTrace();
         }
+    }
+    public List<Challenge> readChallengeAllNotYet(){
+        return challengeRepository.findAll();
+    }
+
+    public List<ChallengeCheck> readChallengesOfMember(long memberId){
+        return challengeCheckRepository.findChallengeChecksByMemberId(memberId);
     }
 
 }

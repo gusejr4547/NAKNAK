@@ -90,7 +90,7 @@ public class FishingHoleService {
                     e.printStackTrace();
                 }
 
-                System.out.println(jsonContent);
+                //System.out.println(jsonContent);
 
             } else {
                 System.err.println("API call failed with status code: " + response.getStatusCode());
