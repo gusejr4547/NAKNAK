@@ -36,6 +36,7 @@ const MapModal = () => {
   const [tts, setTts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
   const [weatherIcon, setWeatherIcon] = useState(null);
+  const talkContents = Talk2();
 
   useEffect(() => {
     let skyImg = null;
@@ -137,8 +138,10 @@ const MapModal = () => {
     <div className="presentation" role="presentation">
       {newbie && (
         <div className="map-modal-newbie-talk-box">
-          {Talk2[step].content}
-          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {talkContents[step].content}
+          {talkContents[step].content && (
+            <TTS message={talkContents[step].content} />
+          )}
           {show && (
             <div
               className="next"

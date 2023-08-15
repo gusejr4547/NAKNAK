@@ -41,11 +41,11 @@ function Map2() {
   const { state } = useLocation();
   const now = new Date();
   const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
+  const talkContents = Talk2(); // Talk2Component를 호출하여 반환된 배열을 저장
 
+  // 현재위치 받아오기 렌더링 순서 달라서 재정비해야함
   useEffect(() => {
     handlebutton();
-    // console.log(fishingspot);
-    // load();
   }, []);
 
   const handlebutton = () => {
@@ -68,6 +68,7 @@ function Map2() {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -371,16 +372,18 @@ function Map2() {
     <div>
       {!modalOpen && newbie ? (
         <div className="map-newbie-talk-box">
-          {Talk2[step].content}
-          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {talkContents[step].content}
+          {talkContents[step].content && (
+            <TTS message={talkContents[step].content} />
+          )}
           {show && (
             <div
               className="next"
               onClick={() => {
                 if (step === 1) {
                   setMyLocation({
-                    lat: Talk2[1]?.spot_lat,
-                    lng: Talk2[1]?.spot_lng,
+                    lat: talkContents[1]?.spot_lat,
+                    lng: talkContents[1]?.spot_lng,
                   });
                   next();
                 } else {

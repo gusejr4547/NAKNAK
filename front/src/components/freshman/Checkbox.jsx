@@ -32,7 +32,7 @@ function Checkbox() {
           { id: 3, text: "장소찾기", completed: false },
         ];
   });
-
+  const talkContents = Talk2();
   useEffect(() => {
     setTimeout(() => setShowNext(true), tts);
   }, [tts]);
@@ -133,8 +133,10 @@ function Checkbox() {
         {/* 뉴비버전 */}
         {newbie && (
           <div className="checkbox-newbie-talk-box">
-            {Talk2[step].content}
-            {Talk2[step].content && <TTS message={Talk2[step].content} />}
+            {talkContents[step].content}
+            {talkContents[step].content && (
+              <TTS message={talkContents[step].content} />
+            )}
             {showNext && (
               <div
                 className="next"
