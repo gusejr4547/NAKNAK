@@ -282,8 +282,12 @@ const Board = () => {
         </div>
       </div>
 
-      <Link to={`/CreateFeed`} className="board-create-feed">
-        게시글 작성하기
+      <Link to={`/CreateFeed`}>
+        <img
+          src="/assets/icons/plus.png"
+          alt="create"
+          className="board-create-feed"
+        />
       </Link>
     </div>
   );
