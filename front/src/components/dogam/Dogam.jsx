@@ -81,7 +81,9 @@ const Dogam = (props) => {
                 src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
-              <h6>{fish.name}</h6>
+              <div className="dogam-slide-fishName">
+                <h6>{fish.name}</h6>
+              </div>
             </div>
           ))}
         </div>

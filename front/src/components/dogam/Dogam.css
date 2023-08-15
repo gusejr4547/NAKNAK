@@ -37,27 +37,39 @@
   border-radius: 0.6rem;
   display: flex;
   background-color: white;
-  height: 8rem;
+  height: 6rem;
   width: calc(32% - 0.625rem);
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   text-align: center;
   margin: 0.3125rem;
 }
 .dogam-slide img {
+  background-color: #71b6ff;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
   border-radius: 0.6rem 0.6rem 0 0;
-
   width: 100%;
   height: auto;
 }
+.dogam-slide-fishName {
+  border-top: 1px #d6d6d6;
+}
 .dogam-slide h6 {
+  margin-bottom: 0.25rem;
   color: black;
   font-weight: bold;
 }
 
 .dogam-slide-inactive {
   background-color: rgba(0, 0, 0, 0.8);
+}
+.dogam-slide-inactive img {
+  opacity: 0.3;
+  filter: grayscale(100%);
+}
+.dogam-slide-inactive h6 {
+  filter: grayscale(100%);
 }
 
 .dogam-back-button {
