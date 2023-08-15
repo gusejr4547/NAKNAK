@@ -4,7 +4,7 @@ spring:
     #    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    url: jdbc:mysql://mysql:3306/ssafy_user?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://i9e105.p.ssafy.io:3306/ssafy_user?serverTimezone=Asia/Seoul
     password: 7818
     #driver-class-name: org.h2.Driver
   servlet:
