@@ -23,25 +23,61 @@ public class FishingLogService {
     private final ChallengeCheckRepository challengeCheckRepository;
 
     @Async
-    public void createFishingLog(LogDto logDto){
+    public void createFishingLog(LogDto logDto) {
         /*FishingLog fishingLog = */
-        FishingLog  fishingLog =  fishingLogRepository.save(fishingLogMapper.toFishingLog(logDto));
+        FishingLog fishingLog = fishingLogRepository.save(fishingLogMapper.toFishingLog(logDto));
         long memberId = logDto.getUserId();
         long fishingCount = fishingLogRepository.countByUserId(memberId);
-        if(fishingCount == 50) {
+        if (fishingCount == 50) {
             findByChallengeIdAndMemberId(25, memberId);
         }
-        if(fishingCount == 100){
-            findByChallengeIdAndMemberId(26,memberId);
+        if (fishingCount == 100) {
+            findByChallengeIdAndMemberId(26, memberId);
         }
-        if(fishingCount == 333){
-            findByChallengeIdAndMemberId(27,memberId);
+        if (fishingCount == 333) {
+            findByChallengeIdAndMemberId(27, memberId);
         }
+
+        long fishId = logDto.getFishId();
+        long eachFishingCount = fishingLogRepository.countByUserIdAndFishId(memberId, fishId);
+        if (eachFishingCount == 10) {
+            if (fishId == 1) {
+                findByChallengeIdAndMemberId(17, memberId);
+            } else if (fishId == 2) {
+                findByChallengeIdAndMemberId(15, memberId);
+            } else if (fishId == 3) {
+                findByChallengeIdAndMemberId(16, memberId);
+            } else if (fishId == 4) {
+                findByChallengeIdAndMemberId(18, memberId);
+            } else if (fishId == 5) {
+                findByChallengeIdAndMemberId(14, memberId);
+            } else if (fishId == 6) {
+                findByChallengeIdAndMemberId(20, memberId);
+            } else if (fishId == 7) {
+                findByChallengeIdAndMemberId(13, memberId);
+            } else if (fishId == 8) {
+                findByChallengeIdAndMemberId(12, memberId);
+            } else if (fishId == 9) {
+                findByChallengeIdAndMemberId(10, memberId);
+            } else if (fishId == 10) {
+                findByChallengeIdAndMemberId(11, memberId);
+            } else if (fishId == 11) {
+                findByChallengeIdAndMemberId(22, memberId);
+            } else if (fishId == 12) {
+                findByChallengeIdAndMemberId(21, memberId);
+            } else if (fishId == 13) {
+                findByChallengeIdAndMemberId(19, memberId);
+            } else if (fishId == 14) {
+                findByChallengeIdAndMemberId(23, memberId);
+            }
+        }
+
+
     }
 
-    public void findByChallengeIdAndMemberId(long challengeId, long memberId){
+    public void findByChallengeIdAndMemberId(long challengeId, long memberId) {
         Optional<ChallengeCheck> challengeCheck =
-                challengeCheckRepository.findChallengeCheckByMemberIdAndChallengeId(challengeId,memberId);
-        if(challengeCheck.isEmpty()) challengeCheckRepository.insertChallengeCheck(memberId,challengeId);
+                challengeCheckRepository.findChallengeCheckByMemberIdAndChallengeId(challengeId, memberId);
+        if (challengeCheck.isEmpty()) challengeCheckRepository.insertChallengeCheck(memberId, challengeId);
     }
 }
