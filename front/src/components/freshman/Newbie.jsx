@@ -11,7 +11,7 @@ function Newbie() {
   let newbieVersion = 1;
   const { state } = useLocation();
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-
+  const talkContents = Talk2();
   // 뉴비버젼 홈화면 스테이트가 1 또는 5로 되어있음
   // 1=> 지도 이동 해주는 거
   // 5 => 카메라 이동 해주는 거
@@ -26,13 +26,13 @@ function Newbie() {
         <span className="newbie-talk">
           {state ? (
             <div>
-              {Talk2[state].content}
-              <TTS message={Talk2[state].content} />
+              {talkContents[state].content}
+              <TTS message={talkContents[state].content} />
             </div>
           ) : (
             <div>
-              {Talk2[0].content}
-              <TTS message={Talk2[0].content} />
+              {talkContents[0].content}
+              <TTS message={talkContents[0].content} />
             </div>
           )}
         </span>

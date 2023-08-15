@@ -57,3 +57,27 @@
 .home-slide.non-clickable {
   pointer-events: none;
 }
+.sleeping_cat {
+  position: fixed;
+  bottom: 6rem;
+  left: 9rem;
+  height: 20rem;
+  width: 20rem;
+  scale: 0.55;
+  background: url("../../public/assets/cats/cat3.png") center no-repeat;
+}
+.fishing_cat {
+  position: fixed;
+  height: 30rem;
+  width: 30rem;
+  bottom: 2rem;
+  left: 3rem;
+  scale: 0.5;
+  background: url("../../public/assets/cats/cat11.gif") center no-repeat;
+}
+.island {
+  position: fixed;
+  z-index: -4;
+  top: 75%;
+  left: 47.6%;
+}

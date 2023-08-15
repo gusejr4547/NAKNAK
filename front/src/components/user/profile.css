@@ -1,15 +1,46 @@
+.profileContainer {
+  height: 95%;
+  /* background-color: rgb(238, 240, 243); */
+}
+
+.profileTop {
+}
+
+.profileimgBox {
+  height: 35%;
+  width: 100%;
+  /* position: relative;
+  top: 20%; */
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .profileimgbox {
   border-radius: 70%;
   overflow: hidden;
-  height: 70%;
-  width: 80%;
-  border: 1px solid snow;
+  height: 100%;
+  width: 20%;
+  border: 1px solid rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
+  background-color: rgb(250, 245, 206);
+  position: relative;
+  top: 35%;
 }
 
 .profileImg {
   width: 100%;
   height: 100%;
   object-fit: fill;
+}
+.profilefollowContainer {
+  border: 1px solid rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
+  background-color: rgb(250, 245, 206);
+  border-radius: 10%;
+  width: 100%;
+  height: 65%;
 }
 
 .profileusernickname {
@@ -36,7 +67,10 @@
   background-color: transparent;
   border-radius: 10%;
 }
-
+.profileMiddle {
+  /* background-color: rgb(250, 245, 206);
+  width: 100%; */
+}
 .profilebottom {
   height: 95%;
 }
@@ -50,7 +84,7 @@
 }
 
 .postbox {
-  height: 100%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,24 +101,28 @@
 }
 
 .postcard {
-  height: 45%;
+  height: 43%;
   width: 45%;
   background-color: aliceblue;
-  margin: 2%;
+  margin: 1%;
   border: 1px double black;
   border-radius: 10%;
   background-color: rgb(250, 245, 206);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .postimgbox {
   height: 60%;
   width: 100%;
+  border-radius: 10%;
   margin-bottom: 5px;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .postimg {
+  /* border-radius: 10%; */
   height: 100%;
   width: 100%;
   /* object-fit: cover; */

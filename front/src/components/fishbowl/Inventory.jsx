@@ -92,7 +92,7 @@ const Inventory = () => {
     try {
       setLoading(true);
       const fish = {
-        fishCode: "A003",
+        name: "우럭",
         size: 41.3,
       };
 

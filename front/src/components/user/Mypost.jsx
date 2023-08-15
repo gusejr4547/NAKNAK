@@ -8,7 +8,7 @@ function Mypost(props) {
   const [loading, setLoading] = useState(true); // 데이터 로딩 상태
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const [totalPage, setTotalPage] = useState(1); // 총 페이지 수 상태
-  const [pageNation, setPageNation] = useState([1]);
+  const [pageNation, setPageNation] = useState([]);
   const navigate = useNavigate();
 
   const getMyPost = async (page) => {
@@ -48,11 +48,13 @@ function Mypost(props) {
   }, [currentPage]);
 
   useEffect(() => {
-    if (MypostData && MypostData.count) {
-      setTotalPage(Math.ceil(MypostData.count / 4)); // 총 페이지 수 설정
+    if (MypostData.count) {
+      setTotalPage(Math.ceil(MypostData.count / 4));
+      console.log(totalPage, 123);
+
       const temp = [];
-      for (let index = 0; index <= MypostData.count / 4; ++index) {
-        temp.push(index + 1);
+      for (let index = 1; index <= totalPage; index++) {
+        temp.push(index);
       }
       setPageNation(temp);
       console.log(pageNation);
@@ -83,7 +85,11 @@ function Mypost(props) {
               <div className="postimgbox">
                 <img
                   className="postimg"
-                  src={item.image ? item.image : "/assets/cats/cat.png"}
+                  src={
+                    item.image
+                      ? `${process.env.REACT_APP_BACKEND_URL}/${item.image.fileUrl}`
+                      : "/assets/cats/cat.png"
+                  }
                   alt=""
                 />
               </div>
@@ -101,7 +107,11 @@ function Mypost(props) {
               <div className="postimgbox">
                 <img
                   className="postimg"
-                  src={item.image ? item.image.fileUrl : "/assets/cats/cat.png"}
+                  src={
+                    item.image
+                      ? `${process.env.REACT_APP_BACKEND_URL}/${item.image.fileUrl}`
+                      : "/assets/cats/cat.png"
+                  }
                   alt=""
                 />
               </div>

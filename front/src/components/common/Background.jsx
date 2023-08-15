@@ -10,7 +10,6 @@ const Background = () => {
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
   // 고양이가 자고 있음 => 말풍선에 다양한 팁
   // 클릭하면 고양이가 일어나고 여러가지 기능 사용 가능
-  const [sleep, setSleep] = useState(true);
 
   return (
     <span>
@@ -49,18 +48,6 @@ const Background = () => {
           }}
         />
       </div>
-      <div className="cat" onClick={() => setSleep(!sleep)}>
-        {sleep ? (
-          <div className="sleeping_cat"></div>
-        ) : (
-          // <img src="../assets/cats/cat3.png" className="sleeping_cat" alt="" />
-          <div className="fishing_cat"></div>
-
-          // <img src="../assets/cats/cat11.gif" className="fishing_cat" alt="" />
-        )}
-      </div>
-
-      <img src="../assets/images/island.png" alt="" className="island" />
     </span>
   );
 };

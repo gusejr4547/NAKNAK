@@ -10,11 +10,14 @@ import {
   newbie_recoil,
   profileData_recoil,
   favoritePoint_recoil,
+  location_recoil,
 } from "../../utils/atoms";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import Wave from "react-wavify";
+import { GetLocation, callFlutter } from "../../utils/location";
 
 // import { getData, postData } from "../../utils/api";
 import "./Login.css";
@@ -40,6 +43,7 @@ function Login(props) {
   // 즐겨찾기 목록 조회
   const [favoritePoint, setFavoritePoint] =
     useRecoilState(favoritePoint_recoil);
+  const [location, setLocation] = useRecoilState(location_recoil);
 
   // useEffect(() => {
   //   if (accesstoken) {
@@ -66,10 +70,42 @@ function Login(props) {
   } = useInput(isNotEmpty);
 
   const loginHandleKey = (eve) => {
-    if (eve.key == "Enter") {
+    if (eve.key === "Enter") {
       loginHandleClick();
     }
   };
+  useEffect(() => {
+    handlebutton();
+  }, []);
+
+  const handlebutton = () => {
+    if (window.flutter_inappwebview) {
+      handleButtonClick();
+    } else {
+      handleClick();
+    }
+  };
+
+  async function handleButtonClick() {
+    const data = await callFlutter();
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {
+    (async () => {
+      try {
+        const locationData = await GetLocation();
+        // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
+      } catch (error) {
+        // 오류 처리
+      }
+    })();
+  }
 
   const register = () => {
     navigate("/Signup");
@@ -220,106 +256,79 @@ function Login(props) {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        padding: "0px 0px 50% 0px",
-      }}
-    >
-      <img
-        src="assets/cats/cat.png"
-        alt=""
-        style={{ width: "150px", height: "150px" }}
-      />
-
-      <div className="logininputbox">
-        <AuthInput
-          label="아이디"
-          type="text"
-          id="userId"
-          placeholder="아이디 입력"
-          $value={userIdValue}
-          onChange={userIdChangeHandler}
-          onBlur={userIdBlurHandler}
-          $hasError={userIdHasError}
-          $errorText={userIdHasError}
-          onKeyPress={loginHandleKey}
+    <div>
+      <div>
+        <Wave
+          className="login_wave1"
+          fill="#56A2E9"
+          paused={false}
+          options={{
+            height: 10,
+            amplitude: 20,
+            speed: 0.3,
+            points: 4,
+          }}
         />
-        <AuthInput
-          label="비밀번호"
-          type="password"
-          id="userPassword"
-          placeholder="비밀번호 입력"
-          $value={userPasswordValue}
-          onChange={userPasswordChangeHandler}
-          onBlur={userPasswordBlurHandler}
-          $hasError={userPasswordHasError}
-          $errorText="필수 입력값입니다"
-          onKeyPress={loginHandleKey}
+        <Wave
+          className="login_wave2"
+          fill="#408BD0"
+          paused={false}
+          options={{
+            height: 10,
+            amplitude: 20,
+            speed: 0.2,
+            points: 3,
+          }}
         />
-        <div className="loginbuttonbox">
-          <Button
-            as="input"
-            type="button"
-            value="로그인"
-            style={{ margin: "auto" }}
-            onClick={loginHandleClick}
+        <Wave
+          className="login_wave3"
+          fill="#408BD0"
+          paused={false}
+          options={{
+            height: 10,
+            amplitude: 20,
+            speed: 0.2,
+            points: 2,
+          }}
+        />
+        <div className="login-wrapper"></div>
+        <div className="login-inputbox">
+          <AuthInput
+            label="이메일"
+            type="text"
+            id="userId"
+            placeholder="이메일 입력"
+            $value={userIdValue}
+            onChange={userIdChangeHandler}
+            onBlur={userIdBlurHandler}
+            $hasError={userIdHasError}
+            $errorText={userIdHasError}
+            onKeyPress={loginHandleKey}
           />
+          <br />
+          <AuthInput
+            label="비밀번호"
+            type="password"
+            id="userPassword"
+            placeholder="비밀번호 입력"
+            $value={userPasswordValue}
+            onChange={userPasswordChangeHandler}
+            onBlur={userPasswordBlurHandler}
+            $hasError={userPasswordHasError}
+            $errorText="필수 입력값입니다"
+            onKeyPress={loginHandleKey}
+          />
+          <div className="login-buttonbox">
+            <button className="login-button" onClick={() => loginHandleClick()}>
+              로그인
+            </button>
+            <button className="login-button" onClick={() => register()}>
+              회원가입
+            </button>
+          </div>
         </div>
-      </div>
-      <div
-        className="border-top"
-        style={{ width: "250px", margin: "10px 0px 0px 0px" }}
-      >
-        <p style={{ fontSize: "13px" }}>
-          Don't have an account?{" "}
-          <span onClick={register} style={{ color: "blue" }}>
-            Register me
-          </span>
-        </p>
-
-        <div className="loginsocial"></div>
-        <Button
-          as="input"
-          onClick={() => socialLoginHandler("google")}
-          type="button"
-          value=""
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            width: "30%",
-            height: "30%",
-            backgroundImage: `url(/assets/icons/Google1.png)`,
-            backgroundSize: "cover",
-            backgroundPosition: "left center",
-          }}
-        ></Button>
-
-        <Button
-          as="input"
-          onClick={() => socialLoginHandler("kakao")}
-          type="button"
-          value=""
-          style={{
-            backgroundColor: "yellow",
-            color: "black",
-            width: "30%",
-            height: "30%",
-            backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></Button>
-        <a
-          // href={KAKAO_AUTH_URL}
-          href="api1/oauth2/authorization/google"
-        >
-          <p>123</p>
-        </a>
+        <div className="login-island" />
+        <div className="login-cat" />
       </div>
     </div>
   );

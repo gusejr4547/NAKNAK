@@ -36,6 +36,7 @@ const MapModal = () => {
   const [tts, setTts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
   const [weatherIcon, setWeatherIcon] = useState(null);
+  const talkContents = Talk2();
 
   useEffect(() => {
     let skyImg = null;
@@ -52,6 +53,17 @@ const MapModal = () => {
       skyImg = "cloud1";
     } else if (sky < 11) {
       skyImg = "cloud3";
+    }
+
+    const pty = weatherInfo?.PTY;
+    if (pty === 1) {
+      skyImg = "rain2";
+    } else if (pty === 2) {
+      skyImg = "snowandrain";
+    } else if (pty === 3) {
+      skyImg = "snow1";
+    } else if (pty === 4) {
+      skyImg = "rain1";
     }
     setWeatherIcon(skyImg);
   }, [weatherInfo]);
@@ -115,7 +127,6 @@ const MapModal = () => {
       );
       setFavoritePoint(new_data);
       setLike(false);
-      console.log(favoritePoint);
     } catch (err) {
       console.log(err);
     }
@@ -127,8 +138,10 @@ const MapModal = () => {
     <div className="presentation" role="presentation">
       {newbie && (
         <div className="map-modal-newbie-talk-box">
-          {Talk2[step].content}
-          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {talkContents[step].content}
+          {talkContents[step].content && (
+            <TTS message={talkContents[step].content} />
+          )}
           {show && (
             <div
               className="next"
@@ -150,19 +163,23 @@ const MapModal = () => {
         <div className="modal-title">
           {weatherInfo?.title}
           {/* 즐겨찾기 버튼 */}
-          {like === false ? (
-            <span onClick={() => likeLocation()} className="like-location" />
-          ) : (
+          {weatherInfo?.pk && (
             <span
-              onClick={() => unlikeLocation()}
-              className="unlike-location"
+              onClick={() => {
+                if (like === false) {
+                  likeLocation();
+                } else {
+                  unlikeLocation();
+                }
+              }}
+              className={like === false ? "like-location" : "unlike-location"}
             />
           )}
         </div>
         {/* <div className={`modal-information" && newbie ? "newbie-data" : ""}`}> */}
         <div className="modal-information">
           <span className="modal-info">
-            기온
+            <span className="modal-info-title">기온</span>
             <br />
             {weatherInfo?.TMP} ℃
           </span>
@@ -177,12 +194,12 @@ const MapModal = () => {
             />
           </span>
           <span className="modal-info">
-            파고
+            <span className="modal-info-title">파고</span>
             <br />
             {weatherInfo?.WAV} M
           </span>
           <span className="modal-info">
-            <span>풍향</span>
+            <span className="modal-info-title">풍향</span>
             <br />
             <span
               className="wind"
@@ -190,40 +207,42 @@ const MapModal = () => {
             ></span>
           </span>
           <span className="modal-info">
-            물때
+            <span className="modal-info-title">물때</span>
             <br />
             {mooltae}
           </span>
           <span className="modal-info">
-            풍속
+            <span className="modal-info-title">풍속</span>
             <br />
             {weatherInfo?.WSD} m/s
           </span>
           <span className="modal-info">
-            강수확률
+            <span className="modal-info-title">강수확률</span>
             <br />
             {weatherInfo?.POP} %
           </span>
+
+          {weatherInfo?.PCP !== "강수없음" && (
+            <span className="modal-info">
+              <span className="modal-info-title">강수량</span>
+              <br />
+              {weatherInfo?.PCP} mm
+            </span>
+          )}
+
           <span className="modal-info">
-            강수형태
-            <br />
-            {weatherInfo?.PTY}
-          </span>
-          <span className="modal-info">
-            1시간 강수량
-            <br />
-            {weatherInfo?.PCP} mm
-          </span>
-          <span className="modal-info">
-            습도
+            <span className="modal-info-title">습도</span>
             <br />
             {weatherInfo?.REH} %
           </span>
-          <span className="modal-info">
-            1시간 신적설
-            <br />
-            {weatherInfo?.SNO} cm
-          </span>
+
+          {weatherInfo?.SNO !== "적설없음" && (
+            <span className="modal-info">
+              <span className="modal-info-title">1시간 신적설</span>
+              <br />
+              {weatherInfo?.SNO} cm
+            </span>
+          )}
         </div>
       </div>
     </div>

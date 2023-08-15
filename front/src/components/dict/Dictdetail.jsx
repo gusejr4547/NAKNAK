@@ -6,12 +6,13 @@ function Dictdetail(props) {
   const [showModal, setShowModal] = useState(false);
   const [active, setactive] = useState(false);
 
-  const handleTitleClick = () => {
+  const handleTitleClick = (data) => {
     handleCloseModal();
-    if (showModal) {
-      setShowModal(false);
+    if (props.activedetail === data) {
+      props.handledetail("");
     } else {
-      setShowModal(true);
+      props.handledetail(data);
+      // console.log(data);
     }
   };
 
@@ -26,34 +27,25 @@ function Dictdetail(props) {
   return (
     <div className="title-box">
       <p
-        className={active ? "dict-detail-title-active" : "dict-detail-title"}
-        onClick={handleTitleClick}
+        className={
+          props.activedetail === props.data.title
+            ? "dict-detail-title-active"
+            : "dict-detail-title"
+        }
+        onClick={() => handleTitleClick(props.data.title)}
       >
         <span>{props.data.title}</span>
       </p>
-      {showModal && !props.data.start && (
+      {props.activedetail === props.data.title && !props.data.start && (
         <div className="dict-detail-content">
           <p className="dict-detail-p"> {props.data.content}</p>
         </div>
-        // <div className="dict-detail-modal">
-        //   <div className="dict-detail-modal-content">
-        //     <p>{props.data.content}</p>
-        //     <button onClick={handleCloseModal}>Close</button>
-        //   </div>
-        // </div>
       )}
-      {showModal && props.data.start && (
+      {props.activedetail === props.data.title && props.data.start && (
         <div className="dict-detail-content">
           <p className="dict-detail-p">금어기 시작일 : {props.data.start}</p>
           <p className="dict-detail-p">금어기 종료일 : {props.data.end}</p>
         </div>
-        // <div className="dict-detail-modal">
-        //   <div className="dict-detail-modal-content">
-        //     <p>{props.data.start}</p>
-        //     <p>{props.data.end}</p>
-        //     <button onClick={handleCloseModal}>Close</button>
-        //   </div>
-        // </div>
       )}
     </div>
   );

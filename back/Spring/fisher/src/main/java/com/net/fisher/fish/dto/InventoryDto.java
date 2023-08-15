@@ -11,7 +11,7 @@ public class InventoryDto {
     @AllArgsConstructor
     @Builder
     public static class Post{
-        private String fishCode;
+        private String name;
         private double size;
     }
 

@@ -10,6 +10,7 @@ import {
 } from "../../utils/data/point";
 import Dictlist from "./Dictlist";
 import "./Dict.css";
+import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { location_recoil } from "../../utils/atoms";
 import { GetLocation, callFlutter } from "../../utils/location";
@@ -21,6 +22,7 @@ function Dict(props) {
   const [searchData, setSearchData] = useState([]);
   const [lodata, setlodata] = useState("");
   const [message, setMessage] = useState("");
+  const [activedetail, setactivedetail] = useState("");
 
   // const fetchDataFromFlutter = () => {
   //   // Call the JavaScript function defined in the WebView.
@@ -59,7 +61,7 @@ function Dict(props) {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
+        // console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -126,9 +128,18 @@ function Dict(props) {
   const handleToggle = (view) => {
     if (activeView === view) {
       setActiveView("");
-      console.log(activeView);
+      // console.log(activeView);
     } else {
       setActiveView(view);
+    }
+  };
+  const handledetail = (data) => {
+    if (activedetail === data) {
+      setactivedetail("");
+      // console.log(activedetail);
+    } else {
+      setactivedetail(data);
+      // console.log(activedetail);
     }
   };
 
@@ -254,41 +265,74 @@ function Dict(props) {
         </div>
         {activeView === "point" && (
           <div className="dictMiddle">
-            <Dictlist data={point} />
+            <Dictlist
+              data={point}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
         {activeView === "equipment" && (
           <div className="dictMiddle">
-            <Dictlist data={equipment} />
+            <Dictlist
+              data={equipment}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
         {activeView === "Chaebi" && (
           <div className="dictMiddle">
-            <Dictlist data={Chaebi} />
+            <Dictlist
+              data={Chaebi}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
         {activeView === "limit_length" && (
           <div className="dictMiddle">
-            <Dictlist limit={limit_length} />
+            <Dictlist
+              limit={limit_length}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
         {activeView === "manner" && (
           <div className="dictMiddle">
-            <Dictlist data={manner} />
+            <Dictlist
+              data={manner}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
         {activeView === "action" && (
           <div className="dictMiddle">
-            <Dictlist data={action} />
+            <Dictlist
+              data={action}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
         {activeView === "limit_date" && (
           <div className="dictMiddle">
-            <Dictlist limit_d={limit_date} />
+            <Dictlist
+              limit_d={limit_date}
+              handledetail={handledetail}
+              activedetail={activedetail}
+            />
           </div>
         )}
       </div>
-      <button onClick={handlebutton}>123</button>
+      <button>
+        <Link to="/Freshman" className="nav-link">
+          뉴비
+        </Link>
+      </button>
+      {/* <button onClick={handlebutton}>123</button> */}
       {/* <button onClick={handleGetLocation}>Get Current Location</button>
       {position && (
         <div>
@@ -298,11 +342,11 @@ function Dict(props) {
         </div>
       )} */}
       {/* <button onClick={handleButtonClick}>버튼123</button> */}
-      {location && (
+      {/* {location && (
         <p>
           {location.latitude} {location.longitude}
         </p>
-      )}
+      )} */}
     </div>
   );
 }

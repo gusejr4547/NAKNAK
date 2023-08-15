@@ -57,6 +57,8 @@ const Camera = () => {
     progress: null,
     isStuck: false, // 새로고침 유도 상태 변수
   });
+  const talkContents = Talk2();
+
   const [image, setImage] = useState(null);
   const inputImage = useRef(null);
   const imageRef = useRef(null);
@@ -74,7 +76,9 @@ const Camera = () => {
   const topk = 100;
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
-  const detectionInterval = 1000;
+
+  // 뉴비 모드일때 시간 길게 수정하기
+  const detectionInterval = 10000;
 
   useEffect(() => {
     setTimeout(() => setShow(true), tts);
@@ -283,8 +287,10 @@ const Camera = () => {
       {/* 뉴비모드 시작 */}
       {newbie && (
         <div className="pic-newbie-talk-box">
-          {Talk2[step].content}
-          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {talkContents[step].content}
+          {talkContents[step].content && (
+            <TTS message={talkContents[step].content} />
+          )}
           <div
             className="next"
             onClick={() => {

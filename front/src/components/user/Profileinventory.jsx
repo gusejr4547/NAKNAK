@@ -31,9 +31,9 @@ function Profileinventory(props) {
       className="profileinventorybox"
       style={{ display: "flex", justifyContent: "space-evenly", width: "100%" }}
     >
-      <p className="profileinventoryp"> 포인트 : {props.point}</p>
-      <p className="profileinventoryp"> 어획량 : {invenData.count}</p>
-      <p className="profileinventoryp"> 최대어 : {invenData.maxSize}자</p>
+      <p className="profileinventoryp"> 💰 : {props.point}</p>
+      <p className="profileinventoryp"> 🐠 : {invenData.count}</p>
+      <p className="profileinventoryp"> 🐳 : {invenData.maxSize}자</p>
     </div>
   );
 }
