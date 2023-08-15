@@ -145,12 +145,13 @@ public class PostController {
     @GetMapping("/posts/my-post")
     public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyPosts(
             @RequestHeader(name = "Authorization") String token,
+            @RequestParam(value = "memberId") Long memberId,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
         // postId, content, image, tag 정도?
 
-        Page<Post> postPage = postService.getPostFromMember(tokenId, pageable);
+        Page<Post> postPage = postService.getPostFromMember(memberId, pageable);
         List<Post> postList = postPage.getContent();
 
         PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
@@ -161,11 +162,12 @@ public class PostController {
     @GetMapping("/posts/my-like")
     public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyLikes(
             @RequestHeader(name = "Authorization") String token,
+            @RequestParam(value = "memberId") Long memberId,
             @PageableDefault(size = 9, sort = "likeId", direction = Sort.Direction.DESC) Pageable pageable) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        Page<Post> postPage = postService.getPostFromMemberLike(tokenId, pageable);
+        Page<Post> postPage = postService.getPostFromMemberLike(memberId, pageable);
         List<Post> postList = postPage.getContent();
 
         PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
