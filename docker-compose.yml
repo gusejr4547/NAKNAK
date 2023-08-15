@@ -29,19 +29,19 @@ services:
     volumes:
       - ./data/mongodb:/data/db
 
-  spring:
-    build:
-      context: ./back/Spring/fisher
-      dockerfile: dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - spring-redis
-    depends_on:
-      - redis
-      - mysql
-      - mongodb
-    container_name: spring
+  # spring:
+  #   build:
+  #     context: ./back/Spring/fisher
+  #     dockerfile: dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - spring-redis
+  #   depends_on:
+  #     - redis
+  #     - mysql
+  #     - mongodb
+  #   container_name: spring
 
   logserver:
     build:
