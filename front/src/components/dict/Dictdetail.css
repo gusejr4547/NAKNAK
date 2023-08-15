@@ -28,7 +28,7 @@
 .dict-detail-title-active {
   border: 1px solid black;
   border-radius: 10px;
-  background-color: rgb(240, 243, 160);
+  background-color: #ffe48e;
   margin: 0;
   padding: 5px;
 }
@@ -36,7 +36,7 @@
 .dict-detail-content {
   /* border: 1px solid black; */
   border-radius: 10px;
-  background-color: rgb(240, 243, 160);
+  background-color: #ffe48e;
   padding: 5px;
 }
 

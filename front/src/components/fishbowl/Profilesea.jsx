@@ -147,7 +147,7 @@ const SeaScene = () => {
           bottom: "10%",
           left: "5%",
           width: "90%",
-          height: "60%",
+          height: "50%",
           overflow: "hidden", // 추가: 컨테이너 크기를 넘어가는 부분을 숨깁니다.
           zIndex: -1,
         }}

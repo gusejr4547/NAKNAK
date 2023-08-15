@@ -67,34 +67,18 @@ function Profile(props) {
   }
 
   return (
-    <div className="profileContainer" style={{ height: "95%" }}>
+    <div className="profileContainer">
       <div
         className="profileTop"
         style={{
-          height: "20%",
-          display: "flex",
+          height: "30%",
+          // display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          borderBottom: "1px solid #000",
+          // borderBottom: "1px solid #000",
         }}
       >
-        <div
-          className="profileimgBox"
-          style={{
-            height: "100%",
-            width: "35%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p className="profileusernickname">
-            <span className="profileuserLV">
-              LV {profileData.memberStatusResponse.level}{" "}
-            </span>
-            {profileData.memberResponse.nickname}
-          </p>
+        <div className="profileimgBox">
           <div className="profileimgbox">
             <img
               className="profileImg"
@@ -118,19 +102,63 @@ function Profile(props) {
         {modalOpen && (
           <ProfileModal closeModal={setModalOpen} data={profileData} />
         )}
-        <div
-          className="profilefollowContainer"
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            width: "65%",
-            height: " 80%",
-          }}
-        >
-          <p>게시글: {mypost}</p>
-          <Following user={profileData.memberResponse.memberId} />
-          <Follower user={profileData.memberResponse.memberId} />
+        <div className="profilefollowContainer">
+          <div
+            style={{
+              // display: "inline",
+              textAlign: "center",
+              width: "100%",
+              height: " 25%",
+              position: "relative",
+              top: "25%",
+            }}
+          >
+            <p className="profileusernickname">
+              {profileData.memberResponse.nickname}
+            </p>
+            <span
+              className="profileuserLV"
+              style={{ margin: "0px", fontSize: "12px", opacity: "0.7" }}
+            >
+              LV {profileData.memberStatusResponse.level}
+            </span>
+          </div>
+          <div
+            style={{
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "space-evenly",
+              // alignItems: "center",
+              marginTop: "13%",
+              width: "100%",
+              height: " 70%",
+            }}
+          >
+            <div
+              style={{
+                width: "33%",
+                height: "40%",
+                borderRight: "1px solid gray",
+              }}
+            >
+              <div style={{ display: "block" }}>
+                <div>{mypost}</div>
+                <div>게시글</div>
+              </div>
+            </div>
+            <div
+              style={{
+                width: "33%",
+                height: "40%",
+                borderRight: "1px solid gray",
+              }}
+            >
+              <Following user={profileData.memberResponse.memberId} />
+            </div>
+            <div style={{ width: "33%", height: "40%" }}>
+              <Follower user={profileData.memberResponse.memberId} />
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -140,6 +168,7 @@ function Profile(props) {
           display: "flex",
           justifyContent: "space-evenly",
           alignItems: "center",
+          // borderRadius: "10%",
           borderBottom: "1px solid #000",
         }}
       >

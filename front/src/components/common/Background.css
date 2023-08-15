@@ -52,24 +52,3 @@ body {
   opacity: 0.8;
   z-index: -3;
 }
-
-.sleeping_cat {
-  position: absolute;
-  bottom: 6rem;
-  left: 9rem;
-  height: 20rem;
-  width: 20rem;
-  scale: 0.55;
-  z-index: -1;
-  background: url("../../../public/assets/cats/cat3.png") center no-repeat;
-}
-.fishing_cat {
-  position: absolute;
-  height: 30rem;
-  width: 30rem;
-  bottom: 2rem;
-  left: 3rem;
-  scale: 0.5;
-  z-index: -1;
-  background: url("../../../public/assets/cats/cat11.gif") center no-repeat;
-}

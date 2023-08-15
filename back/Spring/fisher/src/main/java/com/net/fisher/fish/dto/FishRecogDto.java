@@ -8,6 +8,6 @@ import lombok.*;
 @Builder
 @Setter
 public class FishRecogDto {
-    private String code;
+    private String name;
     private double size;
 }

@@ -7,7 +7,6 @@ import MapModal from "./MapModal";
 import { useRecoilState } from "recoil";
 import {
   mapModal_recoil,
-  fishingInfo_recoil,
   newbie_recoil,
   mooltae_recoil,
   tts_recoil,
@@ -16,9 +15,6 @@ import {
 } from "../../utils/atoms";
 // import axios from "../../api/SeaAPI";
 // import bada_axios from "../../api/BadanuriAPI";
-import badanuriPositions from "./badanuriPositions";
-import fishingSpots from "./fishingSpots";
-import markerPositions from "./markerPositions";
 
 // import { Weather } from "./Weather";
 import Talk2 from "../freshman/Talk2";
@@ -26,6 +22,7 @@ import TTS from "../freshman/TTS";
 import { useLocation } from "react-router-dom";
 import { GetXY } from "./GetXY";
 import { GetLocation, callFlutter } from "../../utils/location";
+import fishingspot from "../../utils/data/fishingspot.json";
 
 function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
@@ -40,13 +37,15 @@ function Map2() {
   const [show, setShow] = useState(false);
   const [weatherInfo, setWeatherInfo] = useRecoilState(weatherInfo_recoil);
   const [location, setLocation] = useRecoilState(location_recoil);
-
+  // const [data, setData] = useState({});
   const { state } = useLocation();
   const now = new Date();
   const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
 
   useEffect(() => {
     handlebutton();
+    // console.log(fishingspot);
+    // load();
   }, []);
 
   const handlebutton = () => {
@@ -69,7 +68,6 @@ function Map2() {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -166,10 +164,6 @@ function Map2() {
     }
   }
 
-  // 현재 내 위치 받아오기 그리고 저장하기
-  let Lat = 35.181473;
-  let Lng = 129.211389;
-
   // 뉴비버젼
   const next = () => {
     setStep(step + 1);
@@ -180,19 +174,7 @@ function Map2() {
     if (event.key === "Enter") {
       setSearchData([]);
       const arr = [];
-      badanuriPositions.forEach((ele) => {
-        if (ele.title.includes(inputData)) {
-          arr.push(ele);
-          setSearchData(...searchData, arr);
-        }
-      });
-      markerPositions.forEach((ele) => {
-        if (ele.title.includes(inputData)) {
-          arr.push(ele);
-          setSearchData(...searchData, arr);
-        }
-      });
-      fishingSpots.forEach((ele) => {
+      fishingspot.forEach((ele) => {
         if (ele.title.includes(inputData)) {
           arr.push(ele);
           setSearchData(...searchData, arr);
@@ -215,7 +197,7 @@ function Map2() {
         //지도를 생성할 때 필요한 기본 옵션
 
         // 로드될때 어디서 로드되는지를 보여줌 => 현재위치 받아서 박기
-        center: new kakao.maps.LatLng(Lat, Lng), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(location.latitude, location.longitude), //지도의 중심좌표.
         // center: new kakao.maps.LatLng(35.095651, 128.854831), //지도의 중심좌표.
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
@@ -239,32 +221,78 @@ function Map2() {
       if (state) {
         panTo(state.favLat, state.favLng);
       }
+      // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new kakao.maps.services.Geocoder();
+      var marker = new kakao.maps.Marker();
+      // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+        var latlng = mouseEvent.latLng;
+        const rs = GetXY("toXY", latlng.getLat(), latlng.getLng());
+
+        // 모달을 만들어보자
+        mool(luna, latlng.getLng());
+
+        searchDetailAddrFromCoords(
+          mouseEvent.latLng,
+          function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+              // var detailAddr = !!result[0].road_address
+              //   ? "<div>도로명주소 : " +
+              //     result[0].road_address.address_name +
+              //     "</div>"
+              //   : "";
+              // console.log("주소", result[0].address);
+              var content =
+                result[0].address.region_1depth_name +
+                " " +
+                result[0].address.region_2depth_name;
+
+              // 마커를 클릭한 위치에 표시합니다
+              marker.setPosition(mouseEvent.latLng);
+              marker.setMap(map);
+
+              Weather(
+                closestPreviousTime.date,
+                closestPreviousTime.time,
+                rs.x,
+                rs.y,
+                null,
+                content,
+                latlng.getLat(),
+                latlng.getLng()
+              );
+            }
+          }
+        );
+      });
+
+      function searchDetailAddrFromCoords(coords, callback) {
+        // 좌표로 법정동 상세 주소 정보를 요청합니다
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+      }
 
       // 낚시스팟 마커 생성
-      for (let i = 0; i < fishingSpots.length; i++) {
+      for (let i = 0; i < fishingspot.length; i++) {
         // 마커 생성
         const marker = new kakao.maps.Marker({
           map: map, // 마커를 표시할 지도
-          title: fishingSpots[i].title,
-          obsCode: fishingSpots[i].obsCode,
+          title: fishingspot[i].title,
           position: new kakao.maps.LatLng(
-            fishingSpots[i].lat,
-            fishingSpots[i].lng
+            fishingspot[i].lat,
+            fishingspot[i].lng
           ), // 마커를 표시할 위치
         });
 
         clusterer.addMarker(marker);
 
         const overlay = new kakao.maps.CustomOverlay({
-          content: fishingSpots[i].content,
+          content: `<div id='title'>${fishingspot[i].title}</div>`,
           map: map,
           position: marker.getPosition(),
         });
         overlay.setMap(map);
 
         kakao.maps.event.addListener(map, "zoom_changed", function () {
-          // 지도의 현재 레벨을 얻어옵니다
-
           function closeOverlay() {
             overlay.setMap(null);
           }
@@ -279,96 +307,7 @@ function Map2() {
         kakao.maps.event.addListener(
           marker,
           "click",
-          //   makeOverListener("badanuri", fishingSpots[i], i + 114)
-          makeOverListener(fishingSpots[i], i + 114)
-        );
-      }
-
-      // 바다 누리 마커 생성
-      for (let i = 0; i < badanuriPositions.length; i++) {
-        // 마커 생성
-        const marker = new kakao.maps.Marker({
-          map: map, // 마커를 표시할 지도
-          title: badanuriPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          obsCode: badanuriPositions[i].obsCode,
-          position: new kakao.maps.LatLng(
-            badanuriPositions[i].lat,
-            badanuriPositions[i].lng
-          ), // 마커를 표시할 위치
-        });
-
-        clusterer.addMarker(marker);
-
-        const overlay = new kakao.maps.CustomOverlay({
-          content: badanuriPositions[i].content,
-          map: map,
-          position: marker.getPosition(),
-        });
-        overlay.setMap(map);
-
-        kakao.maps.event.addListener(map, "zoom_changed", function () {
-          // 지도의 현재 레벨을 얻어옵니다
-
-          function closeOverlay() {
-            overlay.setMap(null);
-          }
-          const level = map.getLevel();
-          if (level > 8) {
-            closeOverlay();
-          } else {
-            overlay.setMap(map);
-          }
-        });
-
-        kakao.maps.event.addListener(
-          marker,
-          "click",
-          makeOverListener(badanuriPositions[i], i + 76)
-          //   makeOverListener("badanuri", badanuriPositions[i], i + 76)
-        );
-      }
-
-      // // seaAPI 마커 생성
-      for (let i = 0; i < markerPositions.length; i++) {
-        // 마커 생성
-        const marker = new kakao.maps.Marker({
-          map: map, // 마커를 표시할 지도
-          title: markerPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          mmaf: markerPositions[i].mmaf,
-          mmsi: markerPositions[i].mmsi,
-          position: new kakao.maps.LatLng(
-            markerPositions[i].lat,
-            markerPositions[i].lng
-          ), // 마커를 표시할 위치
-        });
-        clusterer.addMarker(marker);
-
-        const overlay = new kakao.maps.CustomOverlay({
-          content: markerPositions[i].content,
-          title: markerPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          map: map,
-          position: marker.getPosition(),
-        });
-        overlay.setMap(map);
-
-        kakao.maps.event.addListener(map, "zoom_changed", function () {
-          // 지도의 현재 레벨을 얻어옵니다
-
-          function closeOverlay() {
-            overlay.setMap(null);
-          }
-          const level = map.getLevel();
-          if (level > 8) {
-            closeOverlay();
-          } else {
-            overlay.setMap(map);
-          }
-        });
-        kakao.maps.event.addListener(
-          marker,
-          "click",
-          // makeOverListener("sea", markerPositions[i], i + 1)
-          makeOverListener(markerPositions[i], i + 1)
+          makeOverListener(fishingspot[i])
         );
       }
 
@@ -389,7 +328,6 @@ function Map2() {
           const result = response.data.response.body.items.item;
           //   setWeatherInfo(response.data.response.body.items.item); // 리코일 상태 업데이트
           const new_data = {};
-
           new_data["pk"] = pk;
           new_data["title"] = title;
           new_data["lat"] = lat;
@@ -406,9 +344,8 @@ function Map2() {
         }
       };
 
-      function makeOverListener(markerPosition, pk) {
+      function makeOverListener(markerPosition) {
         return function () {
-          console.log("정보들어감");
           //   console.log(markerPosition);
           const rs = GetXY("toXY", markerPosition.lat, markerPosition.lng);
           // infowindow.open(map, marker);
@@ -418,7 +355,7 @@ function Map2() {
             closestPreviousTime.time,
             rs.x,
             rs.y,
-            pk,
+            markerPosition.pk,
             markerPosition.title,
             markerPosition.lat,
             markerPosition.lng

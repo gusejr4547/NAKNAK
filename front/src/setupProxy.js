@@ -34,7 +34,7 @@ module.exports = function (app) {
     "/api3",
     createProxyMiddleware({
       // target: "https://apihub.kma.go.kr/api/typ01/url",
-      target: process.env.REACT_APP_KMA_URL,
+      target: process.env.REACT_APP_KMAHUB_URL,
       changeOrigin: true,
       pathRewrite: {
         "^/api3": "",

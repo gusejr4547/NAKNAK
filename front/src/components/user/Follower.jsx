@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser, token } from "../../utils/atoms";
@@ -16,7 +16,9 @@ function Follower(props) {
 
   // 모달창 노출
   const showModal = () => {
-    setModalOpen(true);
+    if (props.user === userData.memberId) {
+      setModalOpen(true);
+    }
   };
 
   const getFllowing = async () => {
@@ -101,11 +103,14 @@ function Follower(props) {
 
   return (
     <div style={{ position: "relative" }}>
-      <p onClick={showModal}>팔로워: {followerData.count}</p>
+      <p onClick={showModal}>
+        {followerData.count}
+        <p>팔로워</p>
+      </p>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followerData.data} />
       )}
-      <div style={{ position: "absolute", top: "60%", left: "-10%" }}>
+      <div style={{ position: "absolute", top: "-100%", left: "25%" }}>
         {props.user !== userData.memberId && !isFollowing && (
           <Button
             as="input"

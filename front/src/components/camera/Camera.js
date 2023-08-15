@@ -74,7 +74,9 @@ const Camera = () => {
   const topk = 100;
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
-  const detectionInterval = 1000;
+
+  // 뉴비 모드일때 시간 길게 수정하기
+  const detectionInterval = 10000;
 
   useEffect(() => {
     setTimeout(() => setShow(true), tts);
