@@ -6,11 +6,17 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import { loginuser, newbie_recoil, yolo_recoil } from "../utils/atoms";
+import {
+  loginuser,
+  newbie_recoil,
+  yolo_recoil,
+  sleeping_recoil,
+} from "../utils/atoms";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [sleep, setSleep] = useRecoilState(sleeping_recoil);
 
   const navigate = useNavigate();
 
@@ -53,134 +59,122 @@ function Home({ newbieVersion }) {
         )}
       </div>
       <div className="home-board">
-        <Slider {...settings} className="home-carousel">
-          {/* slide unit start*/}
-          {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Dogam" className="nav-link">
-              <img src="/assets/icons/do2.png" alt="icon" />
-              <h6>도감</h6>
-            </Link>
-          </div>
-          {/* slide unit end */}
-
-          {/* slide unit start*/}
-          {/* <div className="home-slide"> */}
-          <div
-            className={`home-slide ${
-              newbieVersion === 1 ? "non-clickable" : ""
-            }`}
-          >
-            {/* <Link to="/Fishpic" className="nav-link"> */}
-            <img
-              src="/assets/icons/camera2.png"
-              alt="icon"
-              onClick={() => cameraClick()}
-            />
-            <h6>카메라</h6>
-            {/* </Link> */}
-          </div>
-          {/* slide unit end*/}
-
-          {/* slide unit start*/}
-          {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Inventory" className="nav-link">
-              <img src="/assets/icons/on.png" alt="icon" />
-              <h6>인벤토리</h6>
-            </Link>
-          </div>
-          {/* slide unit end*/}
-
-          {/* slide unit start*/}
-          {/* <div className="home-slide"> */}
-          {userData?.memberId !== undefined ? (
+        {sleep ? (
+          ""
+        ) : (
+          <Slider {...settings} className="home-carousel">
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to={`/Profile/:${userData.memberId}`} className="nav-link">
-                <img src="/assets/icons/pro2.png" alt="icon" />
-                <h6>프로필</h6>
+              <Link to="/Dogam" className="nav-link">
+                <img src="/assets/icons/do2.png" alt="icon" />
+                <h6>도감</h6>
               </Link>
             </div>
-          ) : (
-            <div className="home-slide">
-              <img src="/assets/icons/pro2.png" alt="icon" />
-              <h6>프로필</h6>
+
+            <div
+              className={`home-slide ${
+                newbieVersion === 1 ? "non-clickable" : ""
+              }`}
+            >
+              <img
+                src="/assets/icons/camera2.png"
+                alt="icon"
+                onClick={() => cameraClick()}
+              />
+              <h6>카메라</h6>
             </div>
-          )}
 
-          {/* slide unit end*/}
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Inventory" className="nav-link">
+                <img src="/assets/icons/on.png" alt="icon" />
+                <h6>인벤토리</h6>
+              </Link>
+            </div>
 
-          {/* slide unit start*/}
-          {/* <div className="home-slide"> */}
-          <div
-            className={`home-slide ${
-              newbieVersion === 5 ? "non-clickable" : ""
-            }`}
-          >
-            <Link to="/Map" className="nav-link">
-              {/* <Link
-              to="/Map"
-              state={{ newbieVersionProp: newbieVersion }}
-              className="nav-link"
-            > */}
-              <img src="/assets/icons/ji.png" alt="icon" />
-              <h6>낚시터</h6>
-            </Link>
-          </div>
-          {/* slide unit end*/}
+            {userData?.memberId !== undefined ? (
+              <div
+                className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+              >
+                <Link
+                  to={`/Profile/:${userData.memberId}`}
+                  className="nav-link"
+                >
+                  <img src="/assets/icons/pro2.png" alt="icon" />
+                  <h6>프로필</h6>
+                </Link>
+              </div>
+            ) : (
+              <div className="home-slide">
+                <img src="/assets/icons/pro2.png" alt="icon" />
+                <h6>프로필</h6>
+              </div>
+            )}
+            <div
+              className={`home-slide ${
+                newbieVersion === 5 ? "non-clickable" : ""
+              }`}
+            >
+              <Link to="/Map" className="nav-link">
+                <img src="/assets/icons/ji.png" alt="icon" />
+                <h6>낚시터</h6>
+              </Link>
+            </div>
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Board" className="nav-link">
+                <img src="/assets/icons/ge.png" alt="icon" />
+                <h6>SNS</h6>
+              </Link>
+            </div>
 
-          {/* slide unit start*/}
-          {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Board" className="nav-link">
-              <img src="/assets/icons/ge.png" alt="icon" />
-              <h6>SNS</h6>
-            </Link>
-          </div>
-          {/* slide unit end*/}
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Balls" className="nav-link">
+                <img src="/assets/icons/tank.png" alt="icon" />
+                <h6>수조</h6>
+              </Link>
+            </div>
 
-          {/* dummy data start*/}
-          {/* <div className="home-slide">
-            <Link to="/Map" className="nav-link">
-              <img src="/assets/icons/google.png" alt="icon" />
-              <h6>Map</h6>
-            </Link>
-          </div> */}
-          {/* <div className="home-slide"> */}
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Balls" className="nav-link">
-              <img src="/assets/icons/tank.png" alt="icon" />
-              <h6>수조</h6>
-            </Link>
-          </div>
-          {/* slide unit end*/}
-
-          {/* dummy data start*/}
-          {/* <div className="home-slide"> */}
-
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Dict" className="nav-link">
-              <img src="/assets/icons/dict.png" alt="icon" />
-              <h6>사전</h6>
-            </Link>
-          </div>
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/Achievements" className="nav-link">
-              <img src="/assets/icons/ac.png" alt="icon" />
-              <h6>업적</h6>
-            </Link>
-          </div>
-          <div className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}>
-            <Link to="/FavoriteSpots" className="nav-link">
-              <img src="/assets/icons/favspot.png" alt="icon" />
-              <h6>즐겨찾기</h6>
-            </Link>
-          </div>
-          {/* dummy data end*/}
-        </Slider>
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Dict" className="nav-link">
+                <img src="/assets/icons/dict.png" alt="icon" />
+                <h6>사전</h6>
+              </Link>
+            </div>
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Achievements" className="nav-link">
+                <img src="/assets/icons/ac.png" alt="icon" />
+                <h6>업적</h6>
+              </Link>
+            </div>
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/FavoriteSpots" className="nav-link">
+                <img src="/assets/icons/favspot.png" alt="icon" />
+                <h6>즐겨찾기</h6>
+              </Link>
+            </div>
+          </Slider>
+        )}
       </div>
+      <div className="cat" onClick={() => setSleep(!sleep)}>
+        {sleep ? (
+          <div className="sleeping_cat"></div>
+        ) : (
+          <div className="fishing_cat"></div>
+        )}
+      </div>
+      <img src="../assets/images/island.png" alt="" className="island" />
     </div>
   );
 }
