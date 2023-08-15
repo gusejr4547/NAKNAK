@@ -10,11 +10,13 @@ import {
   newbie_recoil,
   profileData_recoil,
   favoritePoint_recoil,
+  location_recoil,
 } from "../../utils/atoms";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import { GetLocation, callFlutter } from "../../utils/location";
 
 // import { getData, postData } from "../../utils/api";
 import "./Login.css";
@@ -40,13 +42,45 @@ function Login(props) {
   // 즐겨찾기 목록 조회
   const [favoritePoint, setFavoritePoint] =
     useRecoilState(favoritePoint_recoil);
-
+  const [location, setLocation] = useRecoilState(location_recoil);
   // useEffect(() => {
   //   if (accesstoken) {
   //     navigate('/');
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  useEffect(() => {
+    handlebutton();
+  }, []);
+
+  const handlebutton = () => {
+    if (window.flutter_inappwebview) {
+      handleButtonClick();
+    } else {
+      handleClick();
+    }
+  };
+
+  async function handleButtonClick() {
+    const data = await callFlutter();
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {
+    (async () => {
+      try {
+        const locationData = await GetLocation();
+        // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
+      } catch (error) {
+        // 오류 처리
+      }
+    })();
+  }
   const {
     $value: userIdValue,
     $isValid: userIdIsValid,

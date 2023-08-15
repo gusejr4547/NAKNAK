@@ -47,10 +47,10 @@ function Following(props) {
 
   return (
     <div>
-      <p onClick={showModal}>
+      <div onClick={showModal}>
         {followingData.count}
-        <p>팔로잉</p>
-      </p>
+        <div>팔로잉</div>
+      </div>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followingData.data} />
       )}

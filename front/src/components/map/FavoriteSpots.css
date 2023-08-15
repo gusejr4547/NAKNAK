@@ -11,8 +11,10 @@
   height: 85%;
   /* border: #fff dashed 0.5rem; */
   color: #000;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   overflow-y: scroll;
+  /* backdrop-filter: blur(10px); */
+  background-color: rgba(255, 228, 142, 0.9);
 }
 .FavoriteSpots-point {
 }
