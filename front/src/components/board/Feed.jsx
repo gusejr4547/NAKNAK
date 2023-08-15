@@ -179,7 +179,11 @@ const Feed = ({
             {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
             {feedInfo.memberId !== userId && (
               <img
-                src={feedLikeState ? "/assets/icons/heart.png" : ""}
+                src={
+                  feedLikeState
+                    ? "/assets/icons/likeHeart.png"
+                    : "/assets/icons/unlikeHeart.png"
+                }
                 alt="하트"
                 onClick={likeClickHandler}
               />

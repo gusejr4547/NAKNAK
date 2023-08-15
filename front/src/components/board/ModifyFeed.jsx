@@ -185,49 +185,57 @@ const ModifyFeed = () => {
   return (
     <div className="modify-feed-wrapper">
       <div className="modify-feed-header">
-        <Link to={`/Board`} className="modify-feed-cancel">
-          <img src="" alt="취소" />
+        <Link to={`/Board`}>
+          <img
+            src="/assets/icons/back.png"
+            alt="취소"
+            className="modify-feed-cancel"
+          />
         </Link>
         <div className="modify-feed-title">
-          <h1>대충 수정한다는 말</h1>
+          <h1>MODIFY</h1>
         </div>
-        <div className="modify-feed-submit" onClick={ModifyFeed}>
-          <img src="" alt="수정" />
+        <div onClick={ModifyFeed}>
+          <img
+            src="/assets/icons/check.png"
+            alt="수정"
+            className="modify-feed-submit"
+          />
         </div>
       </div>
       <div className="modify-feed-contents">
         {/* 여기서부터 하나씩 집어넣으면 됨 */}
 
         {/* 이미지첨부버튼 */}
-        <div className="create-feed-image-select-header">
-          <h2>Modify Images</h2>
+        <div className="modify-feed-image-select-header">
+          <h2 className="modify-feed-content-title">Modify Images</h2>
         </div>
 
         {/* 이미지출력 */}
-        <div className="create-feed-selected-files-carousel create-feed-disable-scrollbar">
+        <div className="modify-feed-selected-files-carousel modify-feed-disable-scrollbar">
           {selectedFiles.map((file, index) => (
-            <div className="create-feed-selected-file-container">
+            <div className="modify-feed-selected-file-container">
               <img
                 key={index}
                 src={`${process.env.REACT_APP_BACKEND_URL}/${selectedFiles[index].fileUrl}`}
                 alt={`Image ${index}`}
-                className="create-feed-selected-file"
+                className="modify-feed-selected-file"
                 onClick={() => removeSelectedFile(index, file.fileId)}
               />
               <img
-                src="/assets/icons/x.pn" // 마이너스 아이콘 이미지 경로
+                src="/assets/icons/minus.png" // 마이너스 아이콘 이미지 경로
                 alt="Delete"
-                className="create-feed-image-delete-button minus-icon"
+                className="modify-feed-image-delete-button minus-icon"
               />
             </div>
           ))}
         </div>
 
         {/* 게시글 작성부분 */}
-        <div className="create-feed-contents-inner">
-          <h2>Modify Contents</h2>
+        <div className="modify-feed-contents-inner">
+          <h2 className="modify-feed-content-title">Modify Contents</h2>
           <textarea
-            className="create-feed-textarea"
+            className="modify-feed-textarea"
             rows="5"
             cols="45"
             value={content}
@@ -237,11 +245,11 @@ const ModifyFeed = () => {
         </div>
 
         {/* 태그 선택부분 */}
-        <div className="create-feed-contents-inner">
-          <h2>Modify Tag</h2>
+        <div className="modify-feed-contents-inner">
+          <h2 className="modify-feed-content-title">Modify Tag</h2>
           <hr />
           {/* 태그 임의 추가 */}
-          <div className="create-feed-add-tag">
+          <div className="modify-feed-add-tag">
             <input
               type="text"
               placeholder="새로운 태그 추가"
@@ -249,12 +257,12 @@ const ModifyFeed = () => {
               maxLength={4}
               onChange={(e) => setNewTag(e.target.value)}
             />
-            <div className="create-feed-add-tag-button " onClick={addNewTag}>
+            <div className="modify-feed-add-tag-button " onClick={addNewTag}>
               add
             </div>
           </div>
 
-          <div className="create-feed-tag-container create-feed-disable-scrollbar">
+          <div className="modify-feed-tag-container modify-feed-disable-scrollbar">
             {Object.keys(tagListData).map((key) => {
               const tag = tagListData[key];
               return (
@@ -271,7 +279,7 @@ const ModifyFeed = () => {
           </div>
         </div>
       </div>
-      <DeleteFeed onDelete={deleteHandler}>삭제..</DeleteFeed>
+      <DeleteFeed onDelete={deleteHandler} />
     </div>
   );
 };

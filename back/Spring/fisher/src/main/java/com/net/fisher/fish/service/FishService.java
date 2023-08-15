@@ -60,7 +60,7 @@ public class FishService {
 
     @PostConstruct
     @Transactional
-    public void initChallengeList() {
+    public void initFishList() {
         try {
             String url = "https://lab.ssafy.com/api/v4/projects/366438/repository/files/data%2Ffish.json/raw?ref=develop";
 
@@ -123,7 +123,7 @@ public class FishService {
                     e.printStackTrace();
                 }
 
-                System.out.println(jsonContent);
+                //System.out.println(jsonContent);
 
             } else {
                 System.err.println("API call failed with status code: " + response.getStatusCode());
