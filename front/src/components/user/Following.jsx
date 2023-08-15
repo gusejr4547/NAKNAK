@@ -15,7 +15,9 @@ function Following(props) {
 
   // 모달창 노출
   const showModal = () => {
-    setModalOpen(true);
+    if (props.user === userData.memberId) {
+      setModalOpen(true);
+    }
   };
 
   const getFllowing = async () => {
@@ -45,7 +47,10 @@ function Following(props) {
 
   return (
     <div>
-      <p onClick={showModal}>팔로잉: {followingData.count}</p>
+      <p onClick={showModal}>
+        {followingData.count}
+        <p>팔로잉</p>
+      </p>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followingData.data} />
       )}

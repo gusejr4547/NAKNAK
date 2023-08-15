@@ -48,14 +48,12 @@ const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
       {isFishBowl == "true" ? (
         <img
           style={{ filter: "grayscale(100)" }}
-          // src={`${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fishInfo.fishCode}.png`}
-          src="assets/dom1.png"
+          src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
           alt={"fish img"}
         />
       ) : (
         <img
-          // src={`${process.env.REACT_APP_BACKEND_URL}/img/fishes/${fishInfo.fishCode}.png`}
-          src="assets/dom1.png"
+          src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
           alt={"fish img"}
         />
       )}

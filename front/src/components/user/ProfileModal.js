@@ -42,9 +42,11 @@ function ProfileModal(props) {
         <button id="followmodalCloseBtn" onClick={closeModal}>
           ✖
         </button>
-        <button onClick={logout}>로그아웃</button>
+        <p className="profilemodalbtn" onClick={logout}>
+          로그아웃
+        </p>
         <Link to="/UserUpdate" className="nav-link">
-          <button>회원정보변경</button>
+          <p className="profilemodalbtn">회원정보변경</p>
         </Link>
       </div>
     </div>
