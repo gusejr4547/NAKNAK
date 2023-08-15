@@ -7,7 +7,6 @@ import { location_recoil } from "../../utils/atoms";
 // 가까운 낚시터 찾는 함수
 const GetLocation = () => {
   const [location, setLocation] = useRecoilState(location_recoil);
-  console.log(location);
   // let Lat = 35.095651; // 이 부분은 추후 location 상태에서 가져오도록 변경할 수 있습니다.
   // let Lng = 128.854831;
 
@@ -39,12 +38,12 @@ const Talk2 = () => {
   const talkContent = [
     {
       id: 0,
-      content: "자, 이제 여기 지도 버튼을 클릭해보자냥.",
+      content: "자, 이제 여기 낚시터 버튼을 클릭해보자냥.",
     },
     {
       id: 1,
       content: `
-      현재 네가 있는 여기에서, 갈만한 낚시 장소를 찾아보겠다냥.. 냐냐아앙... 내가 보기엔 ${location.title}가 제일 좋을 것 같다냥!
+      현재 네가 있는 여기에서, 갈만한 낚시 장소를 찾아보겠다냥.. 냐냐아앙... 내가 보기엔 ${location.title}(이)가 제일 좋을 것 같다냥!
     `,
       spot_lng: `${location.lng}`,
       spot_lat: `${location.lat}`,

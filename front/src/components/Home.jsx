@@ -21,6 +21,10 @@ function Home({ newbieVersion }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (newbie) {
+      setSleep(false);
+    }
+
     setNewbie(newbieVersion);
   }, [newbieVersion]);
 
