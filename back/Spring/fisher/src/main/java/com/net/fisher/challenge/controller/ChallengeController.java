@@ -31,17 +31,22 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @GetMapping("/challenge/{member-id}")
-    public ResponseEntity<ChallengeResponse> getChallengeOfMember(@PathVariable(value = "member-id") long memberId){
+    public ResponseEntity<ChallengeResponse> getChallengeOfMember(@PathVariable(value = "member-id") long memberId) {
         List<ChallengeCheckDto.Response> challengeDtos = challengeMapper.toChallengeCheckResponseDtos(challengeService.readChallengesOfMember(memberId));
 
         List<ChallengeDto.Yet> yetList = challengeMapper.toYetDataResponseDtos(challengeService.readChallengeAllNotYet());
 
-        ChallengeCheckResponse challengeCheckResponse = new ChallengeCheckResponse(yetList,
-                challengeDtos.stream().map(ChallengeCheckDto.Response::getChallengeDto).map(ChallengeDto.Response::getChallengeId).collect(Collectors.toList()));
+        ChallengeCheckResponse challengeCheckResponse =
+                new ChallengeCheckResponse(yetList,
+                        challengeDtos.stream()
+                                .map(ChallengeCheckDto.Response::getChallengeDto)
+                                .map(ChallengeDto.Response::getChallengeId)
+                                .collect(Collectors.toList())
+                );
 
-        ChallengeResponse challengeResponse = new ChallengeResponse(challengeDtos,challengeCheckResponse);
+        ChallengeResponse challengeResponse = new ChallengeResponse(challengeDtos, challengeCheckResponse);
 
-        return new ResponseEntity<>(challengeResponse,HttpStatus.OK);
+        return new ResponseEntity<>(challengeResponse, HttpStatus.OK);
     }
 
 
