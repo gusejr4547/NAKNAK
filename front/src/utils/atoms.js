@@ -32,6 +32,11 @@ export const fishingMode_recoil = atom({
   default: "selectMode",
   effects_UNSTABLE: [persistAtom],
 });
+export const sleeping_recoil = atom({
+  key: "sleeping_recoil",
+  default: "true",
+  effects_UNSTABLE: [persistAtom],
+});
 
 export const getFish_recoil = atom({
   key: "getFish_recoil",

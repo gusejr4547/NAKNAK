@@ -3,7 +3,17 @@ import { useRecoilState } from "recoil";
 import { favoritePoint_recoil } from "../../utils/atoms";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { Link } from "react-router-dom";
-function FavoriteSpot({ index, title, latitude, longitude, fishingHoleId }) {
+
+// import "./FavoriteSpots.css";
+
+function FavoriteSpot({
+  index,
+  title,
+  latitude,
+  longitude,
+  fishingHoleId,
+  distance,
+}) {
   const [favoritePoint, setFavoritePoint] =
     useRecoilState(favoritePoint_recoil);
 
@@ -25,18 +35,24 @@ function FavoriteSpot({ index, title, latitude, longitude, fishingHoleId }) {
   };
   return (
     <div className="FavoriteSpot">
-      <h3>
-        {index + 1}
-        <Link to="/Map" state={{ favLat: latitude, favLng: longitude }}>
+      <span>
+        {index + 1}{" "}
+        <Link
+          to="/Map"
+          state={{
+            favLat: latitude,
+            favLng: longitude,
+          }}
+          className="FavoriteSpot-title"
+        >
           {title}
         </Link>
-      </h3>
-      <p>위도: {latitude}</p>
-      <p>경도: {longitude}</p>
-      {/* 추가 정보를 표시할 수 있음 */}
-      <span>
-        <button onClick={unlikeLocation}>삭제</button>
+        <br />
+        <span className="FavoriteSpot-distance">{distance} km</span>
       </span>
+      <button onClick={unlikeLocation} className="FavoriteSpot-btn">
+        삭제
+      </button>
     </div>
   );
 }
