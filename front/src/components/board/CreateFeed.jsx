@@ -143,14 +143,22 @@ const CreateFeed = () => {
   return (
     <div className="create-feed-wrapper">
       <div className="create-feed-header">
-        <Link to={`/Board`} className="create-feed-cancel">
-          <img src="" alt="취소" />
+        <Link to={`/Board`}>
+          <img
+            src="/assets/icons/back.png"
+            alt="취소"
+            className="create-feed-cancel"
+          />
         </Link>
         <div className="create-feed-title">
-          <h1>간지나는글쓰기라는문구가필요함</h1>
+          <h1>NEW FEED</h1>
         </div>
-        <div className="create-feed-submit" onClick={createFeed}>
-          <img src="" alt="작성" />
+        <div onClick={createFeed}>
+          <img
+            src="/assets/icons/upload.png"
+            className="create-feed-submit"
+            alt="작성"
+          />
         </div>
       </div>
       <div className="create-feed-contents">
@@ -158,7 +166,7 @@ const CreateFeed = () => {
 
         {/* 이미지첨부버튼 */}
         <div className="create-feed-image-select-header">
-          <h2>Images</h2>
+          <h2 className="create-feed-content-title">Images</h2>
           <label htmlFor="fileInput">
             <div className="create-feed-image-select-button"> select</div>
           </label>
@@ -183,7 +191,7 @@ const CreateFeed = () => {
                 onClick={() => removeSelectedFile(index)}
               />
               <img
-                src="/assets/icons/x.pn" // 마이너스 아이콘 이미지 경로
+                src="/assets/icons/minus.png" // 마이너스 아이콘 이미지 경로
                 alt="Delete"
                 className="create-feed-image-delete-button minus-icon"
               />
@@ -193,7 +201,7 @@ const CreateFeed = () => {
 
         {/* 게시글 작성부분 */}
         <div className="create-feed-contents-inner">
-          <h2>Contents</h2>
+          <h2 className="create-feed-content-title">Contents</h2>
           <textarea
             className="create-feed-textarea"
             rows="5"
@@ -206,7 +214,7 @@ const CreateFeed = () => {
 
         {/* 태그 선택부분 */}
         <div className="create-feed-contents-inner">
-          <h2>Tag</h2>
+          <h2 className="create-feed-content-title">Tag</h2>
           <hr />
           {/* 태그 임의 추가 */}
           <div className="create-feed-add-tag">
