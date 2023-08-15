@@ -21,7 +21,7 @@ export default function TTS({ message }) {
       .then((stream) => {
         const audioConfig = sdk.AudioConfig.fromDefaultSpeakerOutput();
         const speechConfig = sdk.SpeechConfig.fromSubscription(
-          "635f31a684ac4b7db7b8c2239cbc3773",
+          "b823a8aa889a41cb9f9349b10b626e9e",
           "koreacentral"
         );
         speechConfig.speechSynthesisVoiceName = "ko-KR-InJoonNeural";
