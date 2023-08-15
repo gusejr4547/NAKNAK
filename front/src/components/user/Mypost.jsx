@@ -12,8 +12,7 @@ function Mypost(props) {
   const navigate = useNavigate();
 
   const getMyPost = async (page) => {
-    console.log(123);
-    const param = { page: page, size: 4 };
+    const param = { page: page, size: 4, memberId: props.id };
     try {
       const response = await authorizedRequest({
         method: "get",
@@ -26,9 +25,7 @@ function Mypost(props) {
         props.postplus(response.data.count);
       }
       console.log(response.data);
-      if (response.data.count) {
-        setMypostData(response.data);
-      }
+      setMypostData(response.data);
       //   setMypostData(response.data.count);
       //   console.log(MypostData);
     } catch (error) {

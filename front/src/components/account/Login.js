@@ -51,6 +51,38 @@ function Login(props) {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  useEffect(() => {
+    handlebutton();
+  }, []);
+
+  const handlebutton = () => {
+    if (window.flutter_inappwebview) {
+      handleButtonClick();
+    } else {
+      handleClick();
+    }
+  };
+
+  async function handleButtonClick() {
+    const data = await callFlutter();
+    setLocation(data);
+    // {latitude: 35.1029935, longitude: 128.8519049}
+  }
+
+  // 버튼을 누를 때 호출되는 함수
+  function handleClick() {
+    (async () => {
+      try {
+        const locationData = await GetLocation();
+        // 위치 데이터를 이용한 추가 작업
+        console.log(locationData);
+        setLocation(locationData);
+        // {latitude: 35.1029935, longitude: 128.8519049}
+      } catch (error) {
+        // 오류 처리
+      }
+    })();
+  }
   const {
     $value: userIdValue,
     $isValid: userIdIsValid,

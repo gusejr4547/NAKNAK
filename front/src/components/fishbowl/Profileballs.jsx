@@ -210,6 +210,9 @@ const Balls = () => {
   }, []);
 
   const onStart = () => {
+    if (!fishBowlData) {
+      return; // 데이터가 아직 로드되지 않은 경우 일찍 반환
+    }
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -335,20 +338,24 @@ const Balls = () => {
   }, [fishBowlData]);
 
   return (
-    <canvas
-      className="h-full rounded-full"
-      id="canvas"
-      style={{
-        width: "90%",
-        height: "50%",
-        position: "absolute",
-        bottom: "10%",
-        left: "5%",
-        zIndex: 99,
-      }}
-    >
-      {/* <SeaScene></SeaScene> */}
-    </canvas>
+    <div>
+      {fishBowlData ? (
+        <canvas
+          className="h-full rounded-full"
+          id="canvas"
+          style={{
+            width: "90%",
+            height: "50%",
+            position: "absolute",
+            bottom: "10%",
+            left: "5%",
+            zIndex: 99,
+          }}
+        />
+      ) : (
+        <div>로딩 중...</div>
+      )}
+    </div>
   );
 };
 

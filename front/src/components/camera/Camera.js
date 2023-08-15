@@ -78,7 +78,7 @@ const Camera = () => {
   const scoreThreshold = 0.25;
 
   // 뉴비 모드일때 시간 길게 수정하기
-  const detectionInterval = 10000;
+  const detectionInterval = 1000;
 
   useEffect(() => {
     setTimeout(() => setShow(true), tts);

@@ -1,8 +1,50 @@
 .dict-box {
   margin: 5%;
+  margin-top: 10%;
+  height: 80%;
+  /* border: 1px solid #ffe48e; */
+  /* border-radius: 10%; */
+  /* background-color: #ffe48e; */
 }
 
-.search-wrapper {
+.search-box {
+  display: flex;
+  border: thick double #ffe48e;
+  border-radius: 20px;
+  background-color: #e3e3e3;
+  padding: 5%;
+  /* justify-content: center; */
+  align-items: center;
+  /* flex-direction: column; */
+  height: 20%;
+}
+.dict-search {
+  width: 40%;
+  margin-right: 5%;
+}
+
+.search-result {
+  width: 60%;
+  overflow: visible;
+  /* overflow-y: scroll; */
+  max-height: 100px;
+}
+.searchresult {
+  margin-bottom: 10px;
+  width: 80%;
+  border-bottom: 1px solid black;
+  padding: 1%;
+  text-align: center;
+  white-space: nowrap; /* 글자가 줄바꿈되지 않도록 설정 */
+  overflow: hidden; /* 넘치는 부분을 숨기도록 설정 */
+  text-overflow: ellipsis; /* 말줄임표 표시 설정 */
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+.dict-search {
+  margin-top: 5%;
+  border-radius: 10px;
 }
 
 .dictBottom {
@@ -22,4 +64,15 @@
 .dictdefault {
   border-radius: 20%;
   background-color: aliceblue;
+}
+
+/* 스크룰 바 숨기기 */
+.dict-disable-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dict-disable-scrollbar::-webkit-scrollbar {
+  display: none;
 }

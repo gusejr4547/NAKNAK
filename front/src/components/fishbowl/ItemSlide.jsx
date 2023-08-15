@@ -47,7 +47,7 @@ const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
       {/* 동적으로 받아온 슬라이드 내용 표시 */}
       {isFishBowl == "true" ? (
         <img
-          style={{ filter: "grayscale(100)" }}
+          style={{ filter: "grayscale(100)", backgroundColor: "gray" }}
           src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
           alt={"fish img"}
         />

@@ -103,10 +103,10 @@ function Follower(props) {
 
   return (
     <div style={{ position: "relative" }}>
-      <p onClick={showModal}>
+      <div onClick={showModal}>
         {followerData.count}
-        <p>팔로워</p>
-      </p>
+        <div>팔로워</div>
+      </div>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followerData.data} />
       )}

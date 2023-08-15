@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 // import * as S from "./profileStyle";
 import "./profile.css";
 // import axios from "axios";
-// import { useRecoilState } from "recoil";
-// import { loginuser, token } from "../../utils/atoms";
+import { useRecoilState } from "recoil";
+import { loginuser, token } from "../../utils/atoms";
 // import { Button } from "react-bootstrap";
 import Following from "./Following";
 import Follower from "./Follower";
@@ -17,8 +17,9 @@ import Profilesea from "../fishbowl/Profilesea";
 function Profile(props) {
   const userId = useParams().userId;
   const temp = userId.slice(1);
+  console.log(temp);
 
-  // const [userData] = useRecoilState(loginuser);
+  const [userData] = useRecoilState(loginuser);
   // const [accesstoken] = useRecoilState(token);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
@@ -93,12 +94,15 @@ function Profile(props) {
             />
           </div>
         </div>
-        <img
-          className="profilesetting"
-          src="/assets/icons/set.png"
-          alt=""
-          onClick={showModal}
-        />
+        {profileData.memberResponse.memberId === userData.memberId && (
+          <img
+            className="profilesetting"
+            src="/assets/icons/set.png"
+            alt=""
+            onClick={showModal}
+          />
+        )}
+
         {modalOpen && (
           <ProfileModal closeModal={setModalOpen} data={profileData} />
         )}
