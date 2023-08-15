@@ -12,6 +12,17 @@ spring:
       enabled: true
       max-file-size: 200MB
       max-request-size: 20MB
+  jpa:
+    hibernate:
+      ddl-Auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+
   kafka:
     bootstrap-servers:
       i9e105.p.ssafy.io:9092
