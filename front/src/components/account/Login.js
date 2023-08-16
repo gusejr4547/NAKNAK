@@ -17,7 +17,7 @@ import emailInput from "./email_input";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import Wave from "react-wavify";
 import { GetLocation, callFlutter } from "../../utils/location";
-
+import swal from "sweetalert";
 import "./Login.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
@@ -175,15 +175,18 @@ function Login(props) {
 
     if (!loginData.email) {
       console.log("이메일은 필수 입력값입니다.");
+      swal("이메일을 입력해주세요");
       return;
     }
     if (!isValidEmailFormat(loginData.email)) {
       console.log("이메일 형식이 올바르지 않습니다.");
+      swal("이메일 형식이 올바르지 않습니다");
       return;
     }
 
     if (!loginData.password) {
       console.log("비밀번호는 필수 입력값입니다.");
+      swal("비밀번호를 입력해주세요");
       return;
     }
 
@@ -195,18 +198,25 @@ function Login(props) {
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       localStorage.setItem("key", response.headers.authorization);
-      console.log(accesstoken, 789);
+      // console.log(accesstoken, 789);
       navigate("/");
       // console.log(postData, 123);
-      console.log(response, 456);
+      // console.log(response, 456);
       setLoading(false);
       getUser(response.data.memberId);
 
       //로그인 성공 시, 유저 정보 받아오기
     } catch (error) {
       console.log(loginData);
-      console.error("Error posting data:", error);
-      setError("데이터 전송에 실패했습니다.");
+      console.error("Error posting data:", error.response.data.message);
+      if (error.response.data.message === "Member Not Found") {
+        swal("존재하지 않는 회원입니다");
+      }
+      if (error.response.data.message === "Wrong Password") {
+        swal("비밀번호가 틀렸습니다");
+      }
+
+      // setError("데이터 전송에 실패했습니다.");
       setLoading(false);
     }
   };
@@ -232,14 +242,6 @@ function Login(props) {
   //     setLoading(false);
   //   }
   // };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <div>

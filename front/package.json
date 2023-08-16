@@ -42,6 +42,7 @@
     "recoil-persist": "^5.1.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.5",
+    "sweetalert": "^2.1.2",
     "three": "^0.155.0",
     "three-orbitcontrols": "^2.110.3",
     "web-vitals": "^2.1.4"
