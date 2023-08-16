@@ -43,7 +43,7 @@ function Map2() {
   const now = new Date();
   const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
   const talkContents = Talk2(); // Talk2Component를 호출하여 반환된 배열을 저장
-  const [currentsearchData, setCurrentSearchData] = useState([]);
+ 
 
   // 현재위치 받아오기 렌더링 순서 달라서 재정비해야함
   useEffect(() => {
