@@ -43,6 +43,7 @@ function Map2() {
   const now = new Date();
   const targetHours = [2, 5, 8, 11, 14, 17, 20, 23];
   const talkContents = Talk2(); // Talk2Component를 호출하여 반환된 배열을 저장
+  const [currentsearchData, setCurrentSearchData] = useState([]);
 
   // 현재위치 받아오기 렌더링 순서 달라서 재정비해야함
   useEffect(() => {
@@ -170,6 +171,18 @@ function Map2() {
   const next = () => {
     setStep(step + 1);
     setShow(false);
+  };
+
+  // 검색하기
+  const SearchLocation = () => {
+    setSearchData([]);
+    const arr = [];
+    fishingspot.forEach((ele) => {
+      if (ele.title.includes(inputData)) {
+        arr.push(ele);
+        setSearchData(...searchData, arr);
+      }
+    });
   };
 
   const Search = (event) => {
@@ -418,15 +431,20 @@ function Map2() {
       <div id="map" className="map"></div>
 
       <div className="search-location">
-        <input
-          className="search"
-          placeholder="장소를 검색해주세요."
-          onChange={Search}
-          onKeyPress={Search}
-        />
+        <span>
+          <input
+            className="search"
+            placeholder="장소를 검색해주세요."
+            onChange={Search}
+            onKeyPress={Search}
+          />
+          <button className="search-btn" onClick={() => SearchLocation()}>
+            검색
+          </button>
+        </span>
         <div className="search-wrapper">
           {searchData &&
-            searchData.map((data, index) => (
+            searchData.slice(0, 5).map((data, index) => (
               <p
                 className="mapsearchresult"
                 onClick={() =>
