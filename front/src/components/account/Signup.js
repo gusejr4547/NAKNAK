@@ -230,7 +230,9 @@ function Signup(props) {
               style={{ width: "100px", height: "100px" }}
               className="signup-image"
             />
-            <span className="custom-file-button">파일선택</span>
+            <span className="custom-file-button" htmlFor="profileImg">
+              파일선택
+            </span>
           </div>
           {/* // 이미지 업로드 input */}
           <form>
