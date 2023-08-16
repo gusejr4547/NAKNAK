@@ -16,7 +16,7 @@ import Talk2 from "../freshman/Talk2";
 import upgradeProgress from "../freshman/upgradeProgress";
 import TTS from "../freshman/TTS";
 const MapModal = () => {
-  const [setModalOpen] = useRecoilState(mapModal_recoil);
+  const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(3);
   const [mooltae] = useRecoilState(mooltae_recoil);
