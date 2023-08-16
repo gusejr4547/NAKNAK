@@ -9,7 +9,6 @@ import emailInput from "./email_input";
 import "./signup.css";
 
 function Signup(props) {
-  // const [signupData, setSignupData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [imgFile, setImgFile] = useState("");
@@ -21,7 +20,6 @@ function Signup(props) {
     "Content-Type": "multipart/form-data",
   };
 
-  // const [postData, setPostData] = useState({});
   const navigate = useNavigate();
 
   const isNotEmpty = (value) => value.trim() !== "";
@@ -164,35 +162,19 @@ function Signup(props) {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "95%",
-        padding: "0px 0px 80% 0px",
-      }}
-    >
+    <div className="signup-container">
       <img
-        src="./assets/cats/cat.png"
+        src="./assets/cats/cat10.gif"
         alt=""
-        style={{ width: "150px", height: "150px" }}
+        style={{ width: "10rem", height: "10rem" }}
       />
-
-      <div
-        style={{
-          display: "inline-block",
-          width: "200px",
-          height: "240px",
-          margin: "30px 0px 0px 0px",
-        }}
-      >
+      <div className="signup-input-wrapper">
         <AuthInput
-          label="아이디"
+          label="이메일"
           type="text"
           id="userId"
-          placeholder="아이디 입력"
+          s
+          placeholder="이메일 입력"
           $value={userIdValue}
           onChange={userIdChangeHandler}
           onBlur={userIdBlurHandler}
@@ -236,27 +218,42 @@ function Signup(props) {
           $errorText="필수 입력값입니다"
           onKeyPress={signupHandleKey}
         />
+
         <div>
-          {/* // 업로드 된 이미지 미리보기 */}
-          <img
-            src={showImgFile ? showImgFile : "assets/cats/cat.png"}
-            alt="프로필 이미지"
-            style={{ width: "100px", height: "100px" }}
-          />
+          <div className="signup">
+            {/* // 업로드 된 이미지 미리보기 */}
+            <img
+              src={showImgFile ? showImgFile : "assets/cats/cat.png"}
+              alt="프로필 이미지"
+              style={{ width: "100px", height: "100px" }}
+              className="signup-image"
+            />
+            <span className="custom-file-button">파일선택</span>
+          </div>
           {/* // 이미지 업로드 input */}
           <form>
+            <span className="signup-box">
+              <input
+                className="hidden-input"
+                type="file"
+                accept=".gif, .jpg, .png, .jpeg"
+                onChange={saveImgFile}
+                id="profileImg"
+                ref={imgRef}
+                // style={{ width: "200px" }}
+              />
+            </span>
             <label className="signup-profileImg-label" htmlFor="profileImg">
-              프로필 이미지 추가
-            </label>
-            <input
-              className="signup-profileImg-input"
-              type="file"
-              accept=".gif, .jpg, .png, .jpeg"
-              onChange={saveImgFile}
-              id="profileImg"
-              ref={imgRef}
-              style={{ width: "200px" }}
-            />
+              프로필 이미지가 없으면 냥냥이 사진으로 대체됩니다.
+            </label>{" "}
+            <span>
+              <span
+                className="login-button"
+                onClick={() => signupHandleClick()}
+              >
+                회원가입
+              </span>
+            </span>
           </form>
         </div>
 
@@ -267,13 +264,6 @@ function Signup(props) {
           onChange={saveImgFile}
           ref={imgRef}
         /> */}
-        <Button
-          as="input"
-          type="button"
-          value="회원가입"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={signupHandleClick}
-        />
       </div>
     </div>
   );

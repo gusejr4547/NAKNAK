@@ -20,13 +20,17 @@
 }
 
 .login-button {
+  background: #ffd13c;
+  font-weight: bold;
+  margin: 10px 20px 10px 0;
   width: 5rem;
   height: 2rem;
-  margin: 10px 20px 10px 0;
-  text-align: center;
+  display: inline-block;
   border-radius: 5px;
-  border-color: #ffd13c;
-  background: #ffd13c;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .login-cat {
