@@ -6,13 +6,12 @@ import FeedTag from "./FeedTag";
 import "../../utils/util";
 import axios from "axios";
 
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { loginuser } from "../../utils/atoms";
 
 import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
-import { getCurrentTime } from "../../utils/util";
 
 import { Link } from "react-router-dom";
 
@@ -69,7 +68,6 @@ const Board = () => {
           method: "get",
           url: `/api1/api/members/follow/${userInfo.memberId}`,
         });
-        // console.log("followList success");
         setFollowList(response.data);
       } catch (error) {
         console.error("can't get current users followers");
@@ -180,27 +178,10 @@ const Board = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedTag && feedListData.length > 0) {
-  //     const hasTaggedFeeds = feedListData.some((feed) =>
-  //       feed.tags.some((tag) => tag.tagId === selectedTag.tagId)
-  //     );
-
-  //     if (!hasTaggedFeeds) {
-  //       // 태그에 해당하는 게시글이 없으면 추가적으로 게시글 로드
-  //       getFeedList();
-  //     }
-  //   }
-  // }, [selectedTag, feedListData]);
-
   return (
     <div className="board-wrapper">
-      {/* <Test></Test> */}
-
       <div className="board-header">
-        <div className="board-title-container">
-          <h1>NAKNAK</h1>
-        </div>
+        <div className="board-title-container"></div>
         <img
           className="board-search-img-container"
           src="/assets/cats/cat.PNG"
@@ -229,18 +210,11 @@ const Board = () => {
             />
           );
         })}
-        {/* dummy data start */}
-
-        {/* dummy data end */}
       </div>
       <div ref={tagTargetDiv} className="board-board board-disable-scrollbar">
         <div className="board-carousel ">
-          {/* feedListData의 데이터를 HTML로 출력 */}
           {feedListData.length === 0 ? (
-            <div className="board-loading">
-              게시글이 없습니다.
-              {/* <img src="/assets/loading.gif" alt="" /> */}
-            </div>
+            <div className="board-loading">게시글이 없습니다.</div>
           ) : (
             Object.keys(feedListData).map((index) => {
               const feed = feedListData[index];
@@ -250,7 +224,6 @@ const Board = () => {
               ) {
                 return (
                   <div ref={ref}>
-                    {/* {inView.toString()} */}
                     <Feed
                       key={index}
                       //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
@@ -271,12 +244,8 @@ const Board = () => {
                   </div>
                 );
               } else {
-                // console.log("hellooooo", feedListData);
-
                 return null;
               }
-
-              return null;
             })
           )}
         </div>
