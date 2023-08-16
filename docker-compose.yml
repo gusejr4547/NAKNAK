@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  logserver:
-    build:
-      context: ./back/fisher-log-server
-      dockerfile: dockerfile
-    image: logserver-image/logserver:latest
-    ports: 
-      - "8081:8081"
-    networks:
-      - spring-redis
-    container_name: logserver
+  # logserver:
+  #   build:
+  #     context: ./back/fisher-log-server
+  #     dockerfile: dockerfile
+  #   image: logserver-image/logserver:latest
+  #   ports: 
+  #     - "8081:8081"
+  #   networks:
+  #     - spring-redis
+  #   container_name: logserver
   
   nginx:
     build:
