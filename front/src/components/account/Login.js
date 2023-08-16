@@ -307,12 +307,12 @@ function Login(props) {
             onKeyPress={loginHandleKey}
           />
           <div className="login-buttonbox">
-            <button className="login-button" onClick={() => loginHandleClick()}>
+            <span className="login-button" onClick={() => loginHandleClick()}>
               로그인
-            </button>
-            <button className="login-button" onClick={() => register()}>
+            </span>
+            <span className="login-button" onClick={() => register()}>
               회원가입
-            </button>
+            </span>
           </div>
         </div>
         <div className="login-island" />
