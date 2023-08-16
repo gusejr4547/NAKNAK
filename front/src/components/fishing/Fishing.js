@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { fishingMode_recoil, time_recoil } from "../../utils/atoms";
 import { getFish_recoil } from "../../utils/atoms";
+import Wave from "react-wavify";
 
 import Nowget from "./Nowget";
 
@@ -83,14 +84,31 @@ function Fishing(props) {
   };
 
   return (
-    <div
-      style={{
-        height: "95vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="fishing-wrapper">
+      {/* 앞 파도 */}
+      <Wave
+        className="fishing_wave1"
+        fill="#4D74D7"
+        paused={false}
+        options={{
+          height: 80,
+          amplitude: 20,
+          speed: 0.3,
+          points: 4,
+        }}
+      />
+      {/* 뒷 파도 */}
+      <Wave
+        className="fishing_wave2"
+        fill="#4D96D7"
+        paused={false}
+        options={{
+          height: 35,
+          amplitude: 20,
+          speed: 0.2,
+          points: 3,
+        }}
+      />
       <div className="fishing">
         <div className="box-header">
           <div

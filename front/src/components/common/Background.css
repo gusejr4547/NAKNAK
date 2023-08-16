@@ -18,13 +18,32 @@ body {
 .hidden {
   display: none;
 }
-.fishingMode {
+.fishingmode {
   position: absolute;
-  top: 5%;
-  background-color: yellow;
-  height: 25px;
-  width: 100%;
+  top: 2rem;
   z-index: 2;
+}
+.fishingmode-title {
+}
+.nowfishing {
+  top: 0;
+  position: absolute;
+  background-color: #ffe48e;
+  border-radius: 30px;
+  border: dashed 0.2rem #fff;
+  /* background: url("../../../public/assets/images/mallpoong5.png") center center
+    no-repeat; */
+  /* height: 25px; */
+  width: 20rem;
+  height: 4rem;
+  left: 4rem;
+  z-index: 2;
+  justify-content: center;
+  padding: 15%;
+
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-between; */
 }
 
 .background_wave2 {
