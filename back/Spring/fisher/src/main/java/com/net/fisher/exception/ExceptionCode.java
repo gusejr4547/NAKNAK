@@ -42,7 +42,8 @@ public enum ExceptionCode {
     NOT_OWNER_OF(409,"Not owner of item"),
     TAG_NOT_FOUND(404, "Tag Not Found"),
     PARENT_NOT_MATCH(404, "Parent Not Match"),
-    COMMENT_NOT_MATCH(400, "Comment Not Match");
+    COMMENT_NOT_MATCH(400, "Comment Not Match"),
+    RECOMMEND_ERROR(400, "Recommend error");
 
 
     @Getter
