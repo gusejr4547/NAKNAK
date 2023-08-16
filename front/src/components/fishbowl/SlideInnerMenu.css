@@ -1,5 +1,10 @@
 .slide-inner-menu {
   /* z-index: 999; */
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  /* position: relative; */
   position: absolute;
+  top: 30%;
   /* 추가 스타일 및 디자인 설정필요 */
 }

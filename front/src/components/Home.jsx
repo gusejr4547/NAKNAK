@@ -87,6 +87,18 @@ function Home({ newbieVersion }) {
             {/* slide start */}
             <div
               className={`home-slide ${
+                newbieVersion === 5 ? "non-clickable" : ""
+              }`}
+            >
+              <Link to="/Map" className="nav-link">
+                <img src="/assets/icons/ji.png" alt="icon" />
+                <h6>낚시터</h6>
+              </Link>
+            </div>
+            {/* slide end */}
+            {/* slide start */}
+            <div
+              className={`home-slide ${
                 newbieVersion === 1 ? "non-clickable" : ""
               }`}
             >
@@ -96,18 +108,6 @@ function Home({ newbieVersion }) {
                 onClick={() => cameraClick()}
               />
               <h6>카메라</h6>
-            </div>
-            {/* slide end */}
-            {/* slide start */}
-            <div
-              className={`home-slide ${
-                newbieVersion === 5 ? "non-clickable" : ""
-              }`}
-            >
-              <Link to="/Map" className="nav-link">
-                <img src="/assets/icons/ji.png" alt="icon" />
-                <h6>낚시터</h6>
-              </Link>
             </div>
             {/* slide end */}
             {/* slide start */}
