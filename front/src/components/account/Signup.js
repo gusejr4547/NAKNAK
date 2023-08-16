@@ -135,10 +135,12 @@ function Signup(props) {
         console.log(pair[0] + ", " + pair[1]);
       }
       const member = "/api/members/register";
+
       // const response = await axios.post("/api1/api/members/register", formData);
       const response = await axios.post("/api1" + member, formData, {
         headers: header,
       });
+
       // setPostData(response.data);
       navigate("/Login");
       // console.log(postData, 123);
@@ -228,7 +230,9 @@ function Signup(props) {
               style={{ width: "100px", height: "100px" }}
               className="signup-image"
             />
-            <span className="custom-file-button">파일선택</span>
+            <span className="custom-file-button" htmlFor="profileImg">
+              파일선택
+            </span>
           </div>
           {/* // 이미지 업로드 input */}
           <form>

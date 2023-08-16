@@ -21,7 +21,8 @@
   height: 20rem;
   left: 5rem;
   z-index: 3;
-  background: url("../../../public/assets/cats/cat.png") center center no-repeat;
+  background: url("../../../public/assets/cats/cat12.gif") center center
+    no-repeat;
   background-size: 9rem;
 }
 
