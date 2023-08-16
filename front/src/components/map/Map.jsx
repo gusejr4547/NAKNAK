@@ -28,7 +28,6 @@ function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [currentsearchData, setCurrentSearchData] = useState([]);
   const [myLocation, setMyLocation] = useState(null);
   const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(1);

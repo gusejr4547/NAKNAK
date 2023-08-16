@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Footer.css";
 import "../../utils/FontAwesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
   fishingMode_recoil,
@@ -12,6 +12,7 @@ import {
 } from "../../utils/atoms";
 
 function Footer(props) {
+  const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState(1);
   const [fishingMode] = useRecoilState(fishingMode_recoil);
   const [newbie] = useRecoilState(newbie_recoil);
@@ -28,15 +29,24 @@ function Footer(props) {
     setModalOpen(false);
   };
 
+  const onClickBtn = () => {
+    navigate(-1);
+  };
+
   return (
     <div>
       {userData && (
         <nav className="nav-wrapper">
-          <div>
+          <div className="nav-icon">
             {!newbie ? (
-              <Link to="/" className="nav-link" onClick={handleHomeClick}>
+              <Link
+                to="/"
+                className="nav-link nav-icon"
+                onClick={handleHomeClick}
+              >
                 <FontAwesomeIcon
                   icon="home"
+                  size="lg"
                   className={
                     activeNav === 1 ? "nav-item nav-active" : "nav-item"
                   }
@@ -52,17 +62,20 @@ function Footer(props) {
 
           <div
             className={
-              fishingMode === "selectMode" ? "nav-basic" : "nav-hidden"
+              fishingMode === "selectMode"
+                ? "nav-basic nav-icon"
+                : "nav-hidden nav-icon"
             }
           >
             {!newbie ? (
               <Link
                 to="/fishing"
-                className="nav-link"
+                className="nav-link nav-icon"
                 onClick={handleFishingClick}
               >
                 <FontAwesomeIcon
                   icon="fish"
+                  size="lg"
                   className={
                     activeNav === 2 ? "nav-item nav-active" : "nav-item"
                   }
@@ -78,17 +91,34 @@ function Footer(props) {
 
           <div
             className={
-              fishingMode === "selectMode" ? "nav-hidden" : "nav-basic"
+              fishingMode === "selectMode"
+                ? "nav-hidden nav-icon"
+                : "nav-basic nav-icon"
             }
           >
             <Link
               to="/Camera"
-              className="nav-link"
+              className="nav-link nav-icon"
               onClick={handleFishingClick}
             >
-              카메라
+              <FontAwesomeIcon icon="fa-solid fa-camera" size="lg" />
               {/* <img src="/assets/icons/camera1.PNG" alt="카메라" /> */}
             </Link>{" "}
+          </div>
+          <div className="nav-icon">
+            {!newbie ? (
+              <FontAwesomeIcon
+                icon="fa-solid fa-angles-left"
+                size="lg"
+                onClick={onClickBtn}
+                className={activeNav === 3 ? "nav-item nav-active" : "nav-item"}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon="AnglesLeft"
+                className={activeNav === 3 ? "nav-item nav-active" : "nav-item"}
+              />
+            )}
           </div>
         </nav>
       )}

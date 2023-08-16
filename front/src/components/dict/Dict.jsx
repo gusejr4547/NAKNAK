@@ -250,6 +250,10 @@ function Dict(props) {
           </div>
         )}
       </div>
+      <div className="dict-img-www">
+        <img src="assets/icons/www.png" alt="" />
+      </div>
+
       {/* <button>
         <Link to="/Freshman" className="nav-link">
           뉴비
