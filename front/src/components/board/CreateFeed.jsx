@@ -105,9 +105,7 @@ const CreateFeed = () => {
         url: `/api1/api/posts/upload`,
         data: formData,
       });
-      console.log("feed load success", response.data);
-
-      // 여기서 게시판 페이지에 있는 feedlist 에 접근해서 수정을 해줘야 함
+      console.log("feed load success", response);
 
       setContent("");
       setSelectedFiles([]);

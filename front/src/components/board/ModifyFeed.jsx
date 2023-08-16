@@ -110,15 +110,6 @@ const ModifyFeed = () => {
       alert("이미지와 태그를 선택해주세요.");
       return;
     }
-    // const formData = new FormData();
-    // formData.append("postId", postId);
-    // formData.append("content", content);
-
-    // formData.append("tags", selectedTags);
-    // // selectedTags.forEach((tag) => {
-    // //   formData.append("tags", tag);
-    // // });
-    // formData.append("deleteImageList", 1);
 
     try {
       setLoading(true);

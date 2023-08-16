@@ -4,6 +4,7 @@ import Feed from "./Feed";
 import FeedTag from "./FeedTag";
 
 import "../../utils/util";
+import axios from "axios";
 
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
@@ -103,23 +104,20 @@ const Board = () => {
 
   //보여줄 피드의 개수를 정합니다
   const showFeedCount = 5;
+
   const getFeedList = useCallback(async () => {
     try {
       setLoading(true);
 
-      console.log(getCurrentTime(Date.now()));
+      const responseCurrentTime = await axios.get(`/api1/api/time/server`);
 
       const response = await authorizedRequest({
         method: "get",
-        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
-          Date.now()
-        )}`,
+        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${responseCurrentTime.data.serverTime}`,
       });
       if (response.data.data.length === 0) {
         return;
       }
-      // console.log("feed load success", response);
-      // console.log("feed load data", response.data.data);
       setFeedListData((prevData) => prevData.concat(response.data.data));
 
       console.log(feedListData);
