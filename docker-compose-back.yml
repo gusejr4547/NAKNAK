@@ -1,17 +1,33 @@
 version: '3'
 
 services:
-  spring:
-    build:
-      context: ./back/Spring/fisher
-      dockerfile: dockerfile
+  mysql:
+  image: mysql:8.0.33
+  container_name: mysql
+  environment:
+      MYSQL_ROOT_PASSWORD: 7818
+      MYSQL_DATABASE: naknak
+  ports:
+    - "3306:3306"
+  networks:
+    - spring-redis
+  volumes:
+    - ./mysql/conf.d:/etc/mysql/conf.d # MySQL 설정 파일 위치
+  command:
+    - "--character-set-server=utf8mb4"
+    - "--collation-server=utf8mb4_unicode_ci"
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
     ports:
-      - "8080:8080"
+      - "27017:27017"
     networks:
       - spring-redis
-    depends_on:
-      - redis
-    container_name: spring
+    environment:
+      MONGO_INITDB_DATABASE: fisher-log
+    volumes:
+      - ./data/mongodb:/data/db
 
   redis:
     image: "redis:alpine"
@@ -22,22 +38,11 @@ services:
       - spring-redis
     container_name: redis
 
-  react:
-    build:
-      context: ./front
-      dockerfile: dockerfile
-    ports:
-      - "443:443"
-      - "80:80"
-    networks:
-      - spring-redis
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-    container_name: nginx
+
 
 networks:
   spring-redis:
-    driver: bridge
+    external: true
 
 volumes:
   vol:
