@@ -75,7 +75,7 @@ export const detectImage = async (
     const scores = data.slice(4); // classes probability scores
     const score = Math.max(...scores); // maximum probability scores
     console.log(score * 100);
-    if (score * 100 <= 60) {
+    if (score * 100 <= 40) {
       renderBoxes(canvas, 0);
       return;
     }

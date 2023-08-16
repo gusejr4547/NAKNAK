@@ -29,11 +29,11 @@ function Map2() {
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [myLocation, setMyLocation] = useState(null);
-  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(1);
   const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
   const lunar = require("cky-lunar-calendar");
-  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [tts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
   const [weatherInfo, setWeatherInfo] = useRecoilState(weatherInfo_recoil);
   const [location, setLocation] = useRecoilState(location_recoil);

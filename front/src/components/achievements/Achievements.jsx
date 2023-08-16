@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { challenge } from "../../utils/data/challenge";
+// import { challenge } from "../../utils/data/challenge";
 import "./quest.css";
 import Questlist from "./Questlist";
 import { authorizedRequest } from "../account/AxiosInterceptor";

@@ -3,15 +3,12 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
 import FollowerModal from "./FollowerModal";
-import { useNavigate } from "react-router-dom";
 
 function Following(props) {
   const [userData] = useRecoilState(loginuser);
   const [followingData, setFollowingData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-
-  const navigate = useNavigate();
 
   // 모달창 노출
   const showModal = () => {

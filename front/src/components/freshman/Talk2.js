@@ -1,12 +1,11 @@
 // import { getLocation } from "../map/getLocation";
-import React from "react";
 import fishingSpots from "../map/fishingSpots";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { location_recoil } from "../../utils/atoms";
 
 // 가까운 낚시터 찾는 함수
 const GetLocation = () => {
-  const [location, setLocation] = useRecoilState(location_recoil);
+  const [location] = useRecoilState(location_recoil);
   // let Lat = 35.095651; // 이 부분은 추후 location 상태에서 가져오도록 변경할 수 있습니다.
   // let Lng = 128.854831;
 

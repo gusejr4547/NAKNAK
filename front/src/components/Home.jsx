@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
@@ -6,12 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
-import {
-  loginuser,
-  newbie_recoil,
-  yolo_recoil,
-  sleeping_recoil,
-} from "../utils/atoms";
+import { loginuser, newbie_recoil, sleeping_recoil } from "../utils/atoms";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);

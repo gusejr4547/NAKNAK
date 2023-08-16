@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
-import cv from "@techstark/opencv-js";
-import { Tensor, InferenceSession } from "onnxruntime-web";
+// import cv from "@techstark/opencv-js";
+// import { Tensor, InferenceSession } from "onnxruntime-web";
 import Loader from "./components/loader";
 import { detectImage } from "./utils/detect";
-import { download } from "./utils/download";
 import "./style/App.css";
 // import { initializeCV } from "./utils/initializeCV";
 import { useRecoilState } from "recoil";
@@ -44,14 +43,15 @@ const Camera = () => {
 
   // window.location.replace("/Camera");
   // 뉴비모드
-  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(6);
   const navigate = useNavigate();
-  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [tts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
-  const [firstbox, setfirstbox] = useState([]);
+  const [fishbox, setfishbox] = useState([]);
+  const [rulerbox, setrulerbox] = useState({ bounding: [1, 1, 1, 1] });
 
-  const [session, setSession] = useState(null);
+  // const [session, setSession] = useState(null);
   const [loading, setLoading] = useState({
     text: "Loading OpenCV.js",
     progress: null,
@@ -60,18 +60,18 @@ const Camera = () => {
   const talkContents = Talk2();
 
   const [image, setImage] = useState(null);
-  const inputImage = useRef(null);
+  // const inputImage = useRef(null);
   const imageRef = useRef(null);
   const canvasRef = useRef(null);
   const webcamRef = useRef(null); // Reference to the webcam component
   const [detecting, setDetecting] = useState(false); // State to control automatic detection
   const [lastCapturedImage, setLastCapturedImage] = useState(null);
   const [webcamActive, setWebcamActive] = useState(true);
-  const [errData, setErrData] = useState(false);
-  const [yoloRecoil, setyoloRecoil] = useRecoilState(yolo_recoil);
+  // const [errData, setErrData] = useState(false);
+  const [yoloRecoil] = useRecoilState(yolo_recoil);
   const [location, setLocation] = useRecoilState(location_recoil);
   // Configs
-  const modelName = "best.onnx";
+
   const modelInputShape = [1, 3, 640, 640];
   const topk = 100;
   const iouThreshold = 0.45;
@@ -118,9 +118,12 @@ const Camera = () => {
   }
   const dataUpload = async () => {
     const data = {
-      label: firstbox.label,
-      bounding: firstbox.bounding,
-      probability: firstbox.probability,
+      label: fishbox.label,
+      size:
+        rulerbox.bounding[2] === 1
+          ? 0
+          : fishbox.bounding[2] / rulerbox.bounding[2],
+      probability: fishbox.probability,
       location: location,
     };
     console.log(data);
@@ -130,9 +133,12 @@ const Camera = () => {
         method: "post",
         url: "/api1/api/fishes/catch",
         data: {
-          label: firstbox.label,
-          bounding: firstbox.bounding,
-          probability: firstbox.probability,
+          label: fishbox.label,
+          size:
+            rulerbox.bounding[2] === 1
+              ? 0
+              : fishbox.bounding[2] / rulerbox.bounding[2],
+          probability: fishbox.probability,
           location: location,
         },
       });
@@ -398,10 +404,27 @@ const Camera = () => {
                     return;
                   }
                   // boxes 배열 내부의 데이터에 접근하여 활용
-                  setfirstbox(boxes[0]);
-                  console.log(firstbox);
-                  const pro = firstbox.probability * 100; // 검출된 첫 번째 상자의 정보
-                  if (pro >= 60) {
+                  // 라벨이 라이터인 박스는 라이터 박스
+                  if (boxes.length === 2 && boxes[0].label === "라이터") {
+                    setrulerbox(boxes[0]);
+                    setfishbox(boxes[1]);
+                  } else if (
+                    boxes.length === 2 &&
+                    boxes[1].label === "라이터"
+                  ) {
+                    setrulerbox(boxes[1]);
+                    setfishbox(boxes[0]);
+                  } else if (boxes.length === 1) {
+                    setfishbox(boxes[0]);
+                    setrulerbox({ bounding: [1, 1, 1, 1] });
+                  }
+
+                  // 라벨이 라이터가 아니면 피쉬 박스
+                  console.log(fishbox);
+                  console.log(rulerbox);
+
+                  const pro = fishbox.probability * 100; // 검출된 첫 번째 상자의 정보
+                  if (pro >= 40) {
                     console.log(123);
                     stopDetection();
                     setLastCapturedImage(image); // 마지막 캡처 이미지 저장

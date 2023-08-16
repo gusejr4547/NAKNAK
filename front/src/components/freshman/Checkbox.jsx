@@ -19,7 +19,7 @@ function Checkbox() {
   const [step, setStep] = useState(9);
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [tts] = useRecoilState(tts_recoil);
   const [showNext, setShowNext] = useState(false);
   const [item, setItem] = useState("");
   const [items, setItems] = useState(() => {

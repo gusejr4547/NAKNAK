@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./profile.css";
 
 function Mypost(props) {

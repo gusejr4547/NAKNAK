@@ -13,10 +13,10 @@ import {
 
 function Footer(props) {
   const [activeNav, setActiveNav] = useState(1);
-  const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
-  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [fishingMode] = useRecoilState(fishingMode_recoil);
+  const [newbie] = useRecoilState(newbie_recoil);
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
-  const [userData, setUserData] = useRecoilState(loginuser);
+  const [userData] = useRecoilState(loginuser);
 
   const handleHomeClick = () => {
     setActiveNav(1);

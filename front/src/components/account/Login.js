@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
   loginuser,
@@ -19,24 +18,22 @@ import { authorizedRequest } from "../account/AxiosInterceptor";
 import Wave from "react-wavify";
 import { GetLocation, callFlutter } from "../../utils/location";
 
-// import { getData, postData } from "../../utils/api";
 import "./Login.css";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 function Login(props) {
-  // const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [userData, setUserData] = useRecoilState(loginuser);
   const [accesstoken, setAccessToken] = useRecoilState(token);
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
   const navigate = useNavigate();
-  const CLIENT_ID = "6a4bb2fa60ad461ae820953255846ebf";
-  const REDIRECT_URI =
-    "http://passportlkm.iptime.org:20101/login/oauth2/code/kakao";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  // const CLIENT_ID = "6a4bb2fa60ad461ae820953255846ebf";
+  // const REDIRECT_URI =
+  //   "http://passportlkm.iptime.org:20101/login/oauth2/code/kakao";
+  // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   //뉴비버젼 유무
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
@@ -45,43 +42,22 @@ function Login(props) {
     useRecoilState(favoritePoint_recoil);
   const [location, setLocation] = useRecoilState(location_recoil);
 
-  // useEffect(() => {
-  //   if (accesstoken) {
-  //     navigate('/');
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // 버튼을 누를 때 호출되는 함수
-  function handleClick() {
-    (async () => {
-      try {
-        const locationData = await GetLocation();
-        // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
-        setLocation(locationData);
-        // {latitude: 35.1029935, longitude: 128.8519049}
-      } catch (error) {
-        // 오류 처리
-      }
-    })();
-  }
   const {
     $value: userIdValue,
-    $isValid: userIdIsValid,
+    // $isValid: userIdIsValid,
     $hasError: userIdHasError,
     $valueChangeHandler: userIdChangeHandler,
     $inputBlurHandler: userIdBlurHandler,
-    $reset: resetuserId,
+    // $reset: resetuserId,
   } = emailInput(isNotEmpty);
 
   const {
     $value: userPasswordValue,
-    $isValid: userPasswordValueIsValid,
+    // $isValid: userPasswordValueIsValid,
     $hasError: userPasswordHasError,
     $valueChangeHandler: userPasswordChangeHandler,
     $inputBlurHandler: userPasswordBlurHandler,
-    $reset: resetuserPassword,
+    // $reset: resetuserPassword,
   } = useInput(isNotEmpty);
 
   const loginHandleKey = (eve) => {
@@ -235,31 +211,26 @@ function Login(props) {
     }
   };
 
-  const socialLoginHandler = async (provider) => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `/api1/oauth2/authorization/${provider}`
-        // "/api1/oauth2/authorization/google"
-      );
-      setUserData(response.data);
-      console.log(response.headers.authorization);
-      setAccessToken(response.headers.authorization);
-      localStorage.setItem("key", response.headers.authorization);
-      navigate("/");
-      // console.log(postData, 123);
-      console.log(response, 456);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error posting data:", error);
-      setError("데이터 전송에 실패했습니다.");
-      setLoading(false);
-    }
-  };
-
-  // const loginHandleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setLoginData({ ...loginData, [name]: value });
+  // const socialLoginHandler = async (provider) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.get(
+  //       `/api1/oauth2/authorization/${provider}`
+  //       // "/api1/oauth2/authorization/google"
+  //     );
+  //     setUserData(response.data);
+  //     console.log(response.headers.authorization);
+  //     setAccessToken(response.headers.authorization);
+  //     localStorage.setItem("key", response.headers.authorization);
+  //     navigate("/");
+  //     // console.log(postData, 123);
+  //     console.log(response, 456);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Error posting data:", error);
+  //     setError("데이터 전송에 실패했습니다.");
+  //     setLoading(false);
+  //   }
   // };
 
   if (loading) {

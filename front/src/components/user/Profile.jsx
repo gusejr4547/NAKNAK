@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./profile.css";
 // import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginuser, token } from "../../utils/atoms";
+import { loginuser } from "../../utils/atoms";
 // import { Button } from "react-bootstrap";
 import Following from "./Following";
 import Follower from "./Follower";

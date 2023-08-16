@@ -1,20 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useRecoilState } from "recoil";
-import { loginuser } from "../../utils/atoms";
+import React, { useState, useEffect } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import "./Dogam.css";
 import FishDetailModal from "./FishDetailModal";
 
 const Dogam = (props) => {
-  const catched = true;
+  // const catched = true;
 
   const [selectedFish, setSelectedFish] = useState(null);
 
   const [dogamData, setDogamData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [loginUser, setloginuser] = useRecoilState(loginuser);
+  // const [loginUser, setloginuser] = useRecoilState(loginuser);
 
   const goBack = () => {
     if (window && window.history && typeof window.history.back === "function") {

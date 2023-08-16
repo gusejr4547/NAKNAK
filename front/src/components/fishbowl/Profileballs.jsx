@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import { each } from "jquery";
-import SeaScene from "./SeaScene";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
@@ -185,8 +183,6 @@ const loadBackgroundImage = (url, canvas, ctx) => {
 };
 const image = new Image();
 image.src = "./assets/dom1.png";
-
-const ballSize = 50;
 
 const Balls = () => {
   const [fishBowlData, setFishBowlData] = useState(undefined);
