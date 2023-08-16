@@ -179,7 +179,7 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity getPosts(
             @RequestHeader(name = "Authorization") String token,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime time,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") LocalDateTime time,
             @PageableDefault(size = 6, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
 
         System.out.println(time.toString());
