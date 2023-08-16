@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import axios from "axios";
 import Feed from "./Feed";
 import FeedTag from "./FeedTag";
+
 import "../../utils/util";
 
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -85,11 +85,13 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `/api1/api/posts/my-like?page=1&size=`,
+          url: `/api1/api/posts/my-like?page=1&size=&memberId=${userInfo.memberId}`,
         });
         console.log("success get likedFeedList", response.data);
 
-        setLikedFeedData((prevData) => prevData.concat(response.data.data));
+        if (response.data.data.length > 0) {
+          setLikedFeedData((prevData) => prevData.concat(response.data.data));
+        }
       } catch (error) {
         console.error("failed get likedFeedList");
       } finally {
@@ -105,7 +107,7 @@ const Board = () => {
     try {
       setLoading(true);
 
-      console.log();
+      console.log(getCurrentTime(Date.now()));
 
       const response = await authorizedRequest({
         method: "get",
@@ -116,8 +118,8 @@ const Board = () => {
       if (response.data.data.length === 0) {
         return;
       }
-      console.log("feed load success", response);
-      console.log("feed load data", response.data.data);
+      // console.log("feed load success", response);
+      // console.log("feed load data", response.data.data);
       setFeedListData((prevData) => prevData.concat(response.data.data));
 
       console.log(feedListData);
