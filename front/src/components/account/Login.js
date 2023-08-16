@@ -279,40 +279,42 @@ function Login(props) {
             points: 2,
           }}
         />
-        <div className="login-wrapper"></div>
         <div className="login-inputbox">
-          <AuthInput
-            label="이메일"
-            type="text"
-            id="userId"
-            placeholder="이메일 입력"
-            $value={userIdValue}
-            onChange={userIdChangeHandler}
-            onBlur={userIdBlurHandler}
-            $hasError={userIdHasError}
-            $errorText={userIdHasError}
-            onKeyPress={loginHandleKey}
-          />
-          <br />
-          <AuthInput
-            label="비밀번호"
-            type="password"
-            id="userPassword"
-            placeholder="비밀번호 입력"
-            $value={userPasswordValue}
-            onChange={userPasswordChangeHandler}
-            onBlur={userPasswordBlurHandler}
-            $hasError={userPasswordHasError}
-            $errorText="필수 입력값입니다"
-            onKeyPress={loginHandleKey}
-          />
-          <div className="login-buttonbox">
-            <span className="login-button" onClick={() => loginHandleClick()}>
-              로그인
-            </span>
-            <span className="login-button" onClick={() => register()}>
-              회원가입
-            </span>
+          <div className="login-input">
+            <AuthInput
+              className="login"
+              label="이메일"
+              type="text"
+              id="userId"
+              placeholder="이메일 입력"
+              $value={userIdValue}
+              onChange={userIdChangeHandler}
+              onBlur={userIdBlurHandler}
+              $hasError={userIdHasError}
+              $errorText={userIdHasError}
+              onKeyPress={loginHandleKey}
+            />
+            <AuthInput
+              label="비밀번호"
+              type="password"
+              id="userPassword"
+              placeholder="비밀번호 입력"
+              $value={userPasswordValue}
+              onChange={userPasswordChangeHandler}
+              onBlur={userPasswordBlurHandler}
+              $hasError={userPasswordHasError}
+              $errorText="필수 입력값입니다"
+              onKeyPress={loginHandleKey}
+            />
+
+            <div className="login-buttonbox">
+              <span className="login-button" onClick={() => loginHandleClick()}>
+                로그인
+              </span>
+              <span className="login-button" onClick={() => register()}>
+                회원가입
+              </span>
+            </div>
           </div>
         </div>
         <div className="login-island" />
