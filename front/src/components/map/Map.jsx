@@ -28,6 +28,7 @@ function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
+  const [currentsearchData, setCurrentSearchData] = useState([]);
   const [myLocation, setMyLocation] = useState(null);
   const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(1);
@@ -172,15 +173,30 @@ function Map2() {
   };
 
   const Search = (event) => {
+    console.log(inputData, 11);
+    console.log(event.target.value, 22);
+    if (currentsearchData === event.target.value) {
+      setinputData([]);
+      return;
+    }
+    if (!inputData) {
+      setCurrentSearchData([]);
+    }
+    setSearchData([]);
     if (event.key === "Enter") {
-      setSearchData([]);
+      if (!inputData) {
+        return;
+      }
       const arr = [];
       fishingspot.forEach((ele) => {
         if (ele.title.includes(inputData)) {
           arr.push(ele);
           setSearchData(...searchData, arr);
         }
+        setCurrentSearchData(inputData);
       });
+      console.log(searchData);
+      setinputData([]);
     } else {
       setSearchData([]);
       const Data = event.target.value;
@@ -409,20 +425,21 @@ function Map2() {
           onKeyPress={Search}
         />
         <div className="search-wrapper">
-          {searchData.map((data, index) => (
-            <p
-              className="mapsearchresult"
-              onClick={() =>
-                setMyLocation({
-                  lat: data.lat,
-                  lng: data.lng,
-                })
-              }
-              key={index}
-            >
-              {data.title}
-            </p>
-          ))}
+          {searchData &&
+            searchData.map((data, index) => (
+              <p
+                className="mapsearchresult"
+                onClick={() =>
+                  setMyLocation({
+                    lat: data.lat,
+                    lng: data.lng,
+                  })
+                }
+                key={index}
+              >
+                {data.title}
+              </p>
+            ))}
         </div>
       </div>
     </div>
