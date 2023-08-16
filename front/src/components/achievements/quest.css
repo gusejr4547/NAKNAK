@@ -1,0 +1,100 @@
+.quest-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 95vh;
+  width: 100vw;
+}
+
+.quest-box {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid yellow;
+  border-radius: 20px;
+  width: 80%;
+  height: 80%;
+  background-color: khaki;
+  overflow-y: scroll;
+  justify-content: center;
+  align-items: center;
+}
+
+.quest-list-box {
+  width: 30%;
+  height: 20%;
+  text-align: center;
+}
+
+.quest-list-img {
+  width: 80%;
+  height: 80%;
+  /* opacity: 0.6; */
+  filter: blur(5px) grayscale(100%);
+}
+
+.quest-list-img-active {
+  width: 80%;
+  height: 80%;
+}
+
+/* 스크룰 바 숨기기 */
+.quest-disable-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.quest-disable-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.quest-list-p {
+  margin: 0;
+  white-space: nowrap;
+  /* overflow: scroll; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  filter: blur(5px) grayscale(100%);
+}
+
+.quest-list-p-active {
+  margin: 0;
+  white-space: nowrap;
+  /* overflow: scroll; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quest-back-button {
+  border-radius: 1rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+  background-color: rgb(255, 195, 122);
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 3rem;
+  right: 2.5rem;
+  z-index: 1;
+}
+
+.quest-img {
+  filter: blur(5px) grayscale(100%);
+}
+.quest-img-active {
+  /* filter: blur(5px) grayscale(100%); */
+}
+.quest-title {
+  /* filter: blur(5px) grayscale(100%); */
+}
+.quest-content {
+  filter: blur(5px) grayscale(100%);
+}
+.quest-content-active {
+  /* filter: blur(5px) grayscale(100%); */
+}
+.quest-task {
+  filter: blur(5px) grayscale(100%);
+}
+.quest-task-active {
+  /* filter: blur(5px) grayscale(100%); */
+}

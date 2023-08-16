@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
@@ -5,11 +6,41 @@ import { token } from "../../utils/atoms";
 import { getFish_recoil, fishingMode_recoil } from "../../utils/atoms";
 
 function CameraApp() {
+=======
+import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { token } from "../../utils/atoms";
+import {
+  getFish_recoil,
+  fishingMode_recoil,
+  newbie_recoil,
+} from "../../utils/atoms";
+import "./Fishpic.css";
+import Picresult from "./Picresult";
+import Talk2 from "../freshman/Talk2";
+import upgradeProgress from "../freshman/upgradeProgress";
+
+function CameraApp() {
+  // 뉴비모드
+  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [step, setStep] = useState(6);
+  const navigate = useNavigate();
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [accesstoken] = useRecoilState(token);
   const [getFish, setGetFish] = useRecoilState(getFish_recoil);
+<<<<<<< HEAD
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
+=======
+  const [fishingMode] = useRecoilState(fishingMode_recoil);
+  const [shapePosition, setShapePosition] = useState({ x: 0, y: 0 });
+  const [shapeSize, setShapeSize] = useState({ width: 50, height: 50 });
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const header = {
     "Content-Type": "multipart/form-data",
     Authorization: accesstoken,
@@ -18,10 +49,44 @@ function CameraApp() {
   const [fishImg, setfishImg] = useState("");
   const [isCameraOn, setIsCameraOn] = useState(false); // 카메라가 활성화되었는지 여부 상태 변수
 
+<<<<<<< HEAD
   const getCameraStream = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
+=======
+  // 뉴비 튜토리얼 업그레이드
+  const handleUpgradeProgress = async (status) => {
+    try {
+      const response = await upgradeProgress(status, accesstoken);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // 뉴비버젼
+  const next = () => {
+    if (step < 8) {
+      setStep(step + 1);
+    } else {
+      navigate("/Checkbox");
+      handleUpgradeProgress(80);
+    }
+  };
+
+  useEffect(() => {
+    getCameraStream();
+  }, []);
+
+  const getCameraStream = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: "environment",
+          width: { ideal: 1800 },
+          height: { ideal: 900 },
+        },
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         audio: false,
       });
       if (videoRef.current) {
@@ -68,13 +133,20 @@ function CameraApp() {
       const imageFile = new File([imageBlob], "fish.jpg", {
         type: "image/jpg",
       });
+<<<<<<< HEAD
       if (fishingMode !== "selectMode") {
         setGetFish(getFish + 1);
       }
+=======
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
       // 이미지 파일을 FormData에 추가
       const formData = new FormData();
       setCapturedImageFile(imageFile);
+<<<<<<< HEAD
+=======
+      // setImgUrl(URL.createObjectURL(capturedImageFile));
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       formData.append("image", imageFile);
       console.log(formData.get("image"));
       // 이미지 데이터를 서버로 전송
@@ -85,21 +157,36 @@ function CameraApp() {
   const uploadImage = async (formData) => {
     try {
       // 이미지 데이터를 서버로 전송
+<<<<<<< HEAD
       const response = await axios.post("/api/fishes/upload", formData, {
+=======
+      const response = await axios.post("/api1/api/fishes/upload", formData, {
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         headers: header,
       });
 
       // 서버로부터 응답을 받고 처리할 로직 추가 가능
       console.log("서버 응답:", response.data);
+<<<<<<< HEAD
 
       setfishImg(response.data);
       // 서버로부터 응답받은 이미지 URL을 저장
+=======
+      if (fishingMode !== "selectMode") {
+        setGetFish(getFish + 1);
+      }
+
+      setfishImg(response.data);
+      // 서버로부터 응답받은 이미지 URL을 저장
+      stopCamera();
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     } catch (error) {
       console.error("이미지 업로드 오류:", error);
     }
   };
 
   return (
+<<<<<<< HEAD
     <div>
       <video
         ref={videoRef}
@@ -139,6 +226,42 @@ function CameraApp() {
           {/* <img src={fishImg.fish.imgUrl} alt={fishImg.fish.name} style={{ maxWidth: '200px' }} /> */}
         </div>
       )}
+=======
+    <div className="fishcamerabox">
+      {/* 뉴비모드 시작 */}
+      {newbie && (
+        <div className="pic-newbie-talk-box">
+          {Talk2[step].content}
+          <div
+            className="next"
+            onClick={() => {
+              next();
+            }}
+          >
+            다음 &gt;
+          </div>
+        </div>
+      )}
+      {/* 뉴비모드 끝 */}
+      <video className="fishcamera" ref={videoRef} autoPlay playsInline />
+      {isCameraOn && (
+        <img src="./assets/icons/fishpic.png" className="shape-overlay" />
+      )}
+      {/* <button onClick={getCameraStream}>카메라 on</button> */}
+      {isCameraOn && (
+        <div className="Fishpicbtn" onClick={handleCapturePhoto}>
+          <div className="fishbtnbtn"></div>
+        </div>
+      )}
+      {/* <button onClick={stopCamera}>카메라 off</button> */}
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+      <Picresult
+        imgurl={
+          capturedImageFile ? URL.createObjectURL(capturedImageFile) : null
+        }
+        data={fishImg ? fishImg : null}
+      />
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     </div>
   );
 }

@@ -17,7 +17,11 @@ public class MemberStatusDto {
         private int point;
         private long exp;
         private int level;
+<<<<<<< HEAD
         private int isNewBee;
+=======
+        private int isNewBie;
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         private int tutorialProgress;
     }
 
@@ -32,4 +36,25 @@ public class MemberStatusDto {
         private int tutorialProgress;
     }
 
+<<<<<<< HEAD
+=======
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SetProgress{
+        private int tutorialProgress;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SetNewbie{
+        private int isNewbie;
+    }
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }

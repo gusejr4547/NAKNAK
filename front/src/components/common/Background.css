@@ -1,10 +1,17 @@
 body {
+<<<<<<< HEAD
   background: url("../../../public/assets/images/background1.png") center
     no-repeat;
+=======
+  /* background: url("../../../public/assets/images/background1.png") center
+    no-repeat; */
+  background-color: #c5e2eb;
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   height: 100vh;
   overflow: hidden;
 }
 
+<<<<<<< HEAD
 .island {
   /* width: 100%; */
   /* height: 100%; */
@@ -20,6 +27,14 @@ body {
   left: 15%;
   z-index: -1;
   scale: 0.3;
+=======
+.cat {
+  /* position: absolute; */
+  /* bottom: 7rem; */
+  /* left: 8rem; */
+  /* z-index: -1; */
+  /* scale: 0.5; */
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 /* 피싱모드일 때 띠 보이게 하기 */
@@ -34,3 +49,23 @@ body {
   width: 100%;
   z-index: 2;
 }
+<<<<<<< HEAD
+=======
+
+.background_wave2 {
+  height: 32%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -4;
+  opacity: 0.8;
+}
+.background_wave1 {
+  height: 21%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0.8;
+  z-index: -3;
+}
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

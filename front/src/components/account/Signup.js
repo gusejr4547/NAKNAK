@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React, { useState, useRef } from "react";
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import axios from "axios";
@@ -6,12 +10,29 @@ import { useNavigate } from "react-router-dom";
 import AuthInput from "./Authinput";
 import useInput from "./use_input";
 import emailInput from "./email_input";
+<<<<<<< HEAD
 
 function Signup(props) {
   // const [signupData, setSignupData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   // const [postData, setPostData] = useState({});
+=======
+import "./signup.css";
+
+function Signup(props) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [imgFile, setImgFile] = useState("");
+  const [showImgFile, setShowImgFile] = useState("");
+  const imgRef = useRef();
+  const ALLOW_FILE_EXTENSION = "jpg,jpeg,png";
+  const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024; // 5MB
+  const header = {
+    "Content-Type": "multipart/form-data",
+  };
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const navigate = useNavigate();
 
   const isNotEmpty = (value) => value.trim() !== "";
@@ -60,6 +81,30 @@ function Signup(props) {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const saveImgFile = () => {
+    // eve.preventDefault();
+    const file = imgRef.current.files[0];
+    console.log(file);
+    const allowedExtensions = ALLOW_FILE_EXTENSION.split(",");
+    const fileExtension = file.name.split(".").pop().toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+      console.log("올바른 이미지 파일 형식이 아닙니다.");
+      imgRef.current.value = null;
+      setImgFile(null);
+      return;
+    }
+    setImgFile(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log(reader);
+    reader.onloadend = () => {
+      setShowImgFile(reader.result);
+    };
+  };
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const signupHandleClick = async () => {
     const signupData = {
       email: userIdValue,
@@ -99,9 +144,25 @@ function Signup(props) {
       formData.append("password", signupData.password);
       formData.append("name", signupData.name);
       formData.append("nickname", signupData.nickname);
+<<<<<<< HEAD
       const member = "/api/members/register";
       // const response = await axios.post("/api1/api/members/register", formData);
       const response = await axios.post("/api1" + member, formData);
+=======
+      if (imgFile) {
+        formData.append("file", imgFile);
+      }
+      for (const pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+      const member = "/api/members/register";
+
+      // const response = await axios.post("/api1/api/members/register", formData);
+      const response = await axios.post("/api1" + member, formData, {
+        headers: header,
+      });
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       // setPostData(response.data);
       navigate("/Login");
       // console.log(postData, 123);
@@ -125,6 +186,7 @@ function Signup(props) {
   }
 
   return (
+<<<<<<< HEAD
     <div
       style={{
         display: "flex",
@@ -154,6 +216,21 @@ function Signup(props) {
           type="text"
           id="userId"
           placeholder="아이디 입력"
+=======
+    <div className="signup-container">
+      <img
+        src="./assets/cats/cat10.gif"
+        alt=""
+        style={{ width: "10rem", height: "10rem" }}
+      />
+      <div className="signup-input-wrapper">
+        <AuthInput
+          label="이메일"
+          type="text"
+          id="userId"
+          s
+          placeholder="이메일 입력"
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
           $value={userIdValue}
           onChange={userIdChangeHandler}
           onBlur={userIdBlurHandler}
@@ -198,6 +275,7 @@ function Signup(props) {
           onKeyPress={signupHandleKey}
         />
 
+<<<<<<< HEAD
         <Button
           as="input"
           type="button"
@@ -206,6 +284,53 @@ function Signup(props) {
           onClick={signupHandleClick}
         />
         {error && <div style={{ color: "red" }}>{error}</div>}
+=======
+        <div>
+          <div className="signup">
+            {/* // 업로드 된 이미지 미리보기 */}
+            <img
+              src={showImgFile ? showImgFile : "assets/cats/cat.png"}
+              alt="프로필 이미지"
+              style={{ width: "100px", height: "100px" }}
+              className="signup-image"
+            />
+            <span className="custom-file-button">파일선택</span>
+          </div>
+          {/* // 이미지 업로드 input */}
+          <form>
+            <span className="signup-box">
+              <input
+                className="hidden-input"
+                type="file"
+                accept=".gif, .jpg, .png, .jpeg"
+                onChange={saveImgFile}
+                id="profileImg"
+                ref={imgRef}
+                // style={{ width: "200px" }}
+              />
+            </span>
+            <label className="signup-profileImg-label" htmlFor="profileImg">
+              프로필 이미지가 없으면 냥냥이 사진으로 대체됩니다.
+            </label>{" "}
+            <span>
+              <span
+                className="login-button"
+                onClick={() => signupHandleClick()}
+              >
+                회원가입
+              </span>
+            </span>
+          </form>
+        </div>
+
+        {/* <input
+          type="file"
+          accept=".gif, .jpg, .png, .jpeg"
+          id="profileImg"
+          onChange={saveImgFile}
+          ref={imgRef}
+        /> */}
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       </div>
     </div>
   );

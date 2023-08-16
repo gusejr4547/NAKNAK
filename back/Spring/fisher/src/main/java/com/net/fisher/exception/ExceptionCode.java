@@ -15,16 +15,31 @@ public enum ExceptionCode {
     FOLLOW_NOT_FOUND(404, "Follow Not Found in DB"),
     INVENTORY_NOT_FOUND(404, "Inventory Not Found in DB"),
     FISHBOWLS_NOT_FOUND(404, "Fishbowls Not Found in DB"),
+<<<<<<< HEAD
+=======
+    FISHINGHOLES_NOT_FOUND(404, "Fishing holes Not Found in DB"),
+    FAVORITEPOINTS_NOT_FOUND(404, "Favorite points Not Found in DB"),
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     ATTRACTION_NOT_FOUND(404, "Attraction Not Found"),
     MEMBER_NOT_FOUND(404, "Member Not Found"),
     FAILED_TO_UPDATE_MEMBER(500, "Failed Update Member"),
     FAILED_TO_DELETE_MEMBER(500, "Failed Delete Member"),
+<<<<<<< HEAD
     FAILED_TO_UPDATE_FILE(500, "Failed Update Member"),
     WRONG_PASSWORD(400,"Wrong Password"),
+=======
+    FAILED_TO_UPDATE_FILE(500, "Failed Update File"),
+    WRONG_PASSWORD(400,"Wrong Password"),
+    NOT_ALLOWED_FILES(405,"Cannot upload Multi Image File"),
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     NOT_AUTHORIZED_USER(403,"Not Authorized User"),
     UNACCEPTABLE_EXTENSION(403,"Unacceptable Extension"),
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
     FOLLOW_ALREADY_EXISTS(409, "Follow Already Exists"),
+<<<<<<< HEAD
+=======
+    FAVORITEPOINT_ALREADY_EXISTS(409, "Favorite Point Already Exists"),
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     FAILED_TO_WRITE_BOARD(500, "Failed Write Board"),
     FAILED_TO_DELETE_BOARD(500, "Failed Delete Board"),
 
@@ -36,7 +51,14 @@ public enum ExceptionCode {
     FILE_NOT_FOUND(404, "File Not Found"),
     LIKE_NOT_FOUND(404, "Like Not Found"),
     NOT_OWNER_OF(409,"Not owner of item"),
+<<<<<<< HEAD
     TAG_NOT_FOUNT(404, "Tag Not Found");
+=======
+    TAG_NOT_FOUND(404, "Tag Not Found"),
+    PARENT_NOT_MATCH(404, "Parent Not Match"),
+    COMMENT_NOT_MATCH(400, "Comment Not Match");
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
     @Getter
     private final int status;

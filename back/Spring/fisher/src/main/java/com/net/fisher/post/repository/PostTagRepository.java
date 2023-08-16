@@ -1,5 +1,9 @@
 package com.net.fisher.post.repository;
 
+<<<<<<< HEAD
+=======
+import com.net.fisher.post.dto.TagDto;
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostTag;
 import com.net.fisher.post.entity.Tag;
@@ -18,4 +22,8 @@ public interface PostTagRepository extends JpaRepository<PostTag, Long> {
     void deleteByTagAndPost(Tag tag, Post post);
 
     List<PostTag> findAllByPost_PostId(long postId);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }

@@ -31,7 +31,11 @@ const authorizedRequest = async (config) => {
     if (err.response.status === 401) {
       try {
         // 액세스 토큰 갱신 요청
+<<<<<<< HEAD
         const response = await instance.post("/api/reissue", {});
+=======
+        const response = await instance.post("/api1/api/reissue", {});
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
         // 액세스 토큰 업데이트
         console.log("재발급 완료");
@@ -54,6 +58,10 @@ const authorizedRequest = async (config) => {
         return retryResponse;
       } catch (err) {
         console.log("재발급 실패1", err);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         throw err;
       }
     } else {

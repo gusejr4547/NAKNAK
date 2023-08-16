@@ -1,0 +1,67 @@
+.fishcamerabox {
+  height: 65%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 auto;
+  border: 10px black double;
+}
+
+.fishcamera {
+  object-fit: cover;
+  /* transform: rotate(90deg); */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 20%;
+}
+
+.Fishpicbtn {
+  border: thick double rgb(163, 219, 251);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  position: absolute; /* 버튼을 절대 위치로 설정 */
+  left: 50%; /* 부모 요소를 기준으로 좌우 중간으로 이동 */
+  transform: translateX(-50%);
+}
+
+.fishbtnbtn {
+  border: thick double rgb(179, 246, 246);
+  background-color: rgb(249, 95, 95);
+  margin: auto;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+}
+
+.shape-overlay {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 80%;
+  height: 20%;
+  border-radius: 50%;
+  opacity: 0.5;
+  /* background-color: red; */
+  /* 도형에 대한 스타일 (예: 너비, 높이, 배경 등) */
+}
+
+.pic-newbie-talk-box {
+  display: flex;
+  width: 90%;
+  height: 12%;
+  border-radius: 35px;
+  background-color: #ffe48e;
+  border: dashed #ffffff 0.2rem;
+  position: fixed;
+  bottom: 5rem;
+  left: 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}

@@ -1,0 +1,10 @@
+/* 스크룰 바 숨기기 */
+.dict-disable-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dict-disable-scrollbar::-webkit-scrollbar {
+  display: none;
+}

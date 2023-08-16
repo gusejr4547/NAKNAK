@@ -13,7 +13,11 @@ def get_fish_name(file_path):
     np.set_printoptions(suppress=True)
 
     # Load the model
+<<<<<<< HEAD
     model_path = os.path.join("fish-recognition", "keras_Model.h5")
+=======
+    model_path = os.path.join("fish-recognition", "keras_model.h5")
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     # print(os.path.join("fish-recognition", "keras_Model.h5"))
     # model_path = finders.find(os.path.join("fish-recognition", "keras_Model.h5"))
     # print("path", model_path)
@@ -29,6 +33,13 @@ def get_fish_name(file_path):
     # label_path = finders.find(os.path.join("fish-recognition", "labels.txt"))
     class_names = open(label_path, "r", encoding='UTF8').readlines()
 
+<<<<<<< HEAD
+=======
+    print('-------------------------------------------------------------------------')
+    print(class_names)
+    print('-------------------------------------------------------------------------')
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     # Create the array of the right shape to feed into the keras model
     # The 'length' or number of images you can put into the array is
     # determined by the first position in the shape tuple, in this case 1
@@ -52,8 +63,22 @@ def get_fish_name(file_path):
 
     # Predicts the model
     prediction = model.predict(data)
+<<<<<<< HEAD
     index = np.argmax(prediction)
     class_name = class_names[index]
+=======
+
+    print(prediction)
+
+    index = np.argmax(prediction)
+
+    print(index)
+
+    class_name = class_names[index]
+
+    print(class_name)
+    
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     confidence_score = prediction[0][index]
 
     # Print prediction and confidence score

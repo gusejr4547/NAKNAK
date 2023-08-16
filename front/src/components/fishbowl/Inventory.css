@@ -18,12 +18,16 @@
   width: 24rem;
   height: 40.625rem;
   border-radius: 2.8125rem;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   padding-top: 3.25rem;
   padding-bottom: 3.25rem;
 }
 
 .inven-carousel {
+<<<<<<< HEAD
   position: relative;
   width: 100%;
   height: 100%;
@@ -31,6 +35,18 @@
   justify-content: center;
   overflow-y: scroll;
   flex-wrap: wrap;
+=======
+  padding: 0 1rem 0 1rem;
+  position: relative;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  overflow-y: scroll;
+  align-items: start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 .inven-slide {

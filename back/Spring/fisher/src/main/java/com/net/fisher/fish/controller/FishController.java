@@ -32,13 +32,21 @@ public class FishController {
     private final FishMapper fishMapper;
     private final FishService fishService;
 
+<<<<<<< HEAD
     @PostMapping("/fishes/upload")
+=======
+    /*@PostMapping("/fishes/upload")
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     public ResponseEntity<InventoryDto.SingleResponse> postFishImage(
             @RequestHeader(name = "Authorization") String token,
             @RequestParam("image") MultipartFile image){
         FishRecogDto recogDto = fishService.recognizeFish(token,image);
         return postInventory(token,new InventoryDto.Post(recogDto.getCode(), recogDto.getSize()));
+<<<<<<< HEAD
     }
+=======
+    }*/
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
     // 물고기 인식 모듈에서 인벤토리에 추가하는 로직
     @PostMapping("/fishes/catch")
@@ -48,9 +56,15 @@ public class FishController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
+<<<<<<< HEAD
         String fishCode = requestBody.getFishCode();
 
         Inventory inventory = fishService.catchFish(tokenId,fishCode, fishMapper.toInventory(requestBody));
+=======
+        String fishName = requestBody.getName();
+
+        Inventory inventory = fishService.catchFish(tokenId,fishName, fishMapper.toInventory(requestBody));
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
         return new ResponseEntity<>(fishMapper.toInventorySingleResponse(inventory), HttpStatus.CREATED);
     }
@@ -93,6 +107,19 @@ public class FishController {
         return new ResponseEntity<>(responses,HttpStatus.OK);
     }
 
+<<<<<<< HEAD
+=======
+    @GetMapping("/fishes/fishbowl/view")
+    public ResponseEntity<List<FishBowlsDto.MultiResponse>>
+    getFishBowlsListOfMember(
+            @RequestHeader(name = "Authorization") String token){
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        List<FishBowls> fishBowls= fishService.getFishBowlsListFromMemberId(tokenId);
+        return new ResponseEntity<>(fishMapper.toFishBowlMultiResponseDtos(fishBowls),HttpStatus.OK);
+    }
+
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     @GetMapping("/fishes/inventory/view")
     public ResponseEntity<PageResponse<InventoryDto.MultiResponse>>
     getInventoryListOfMember(
@@ -103,8 +130,11 @@ public class FishController {
 
         Page<Inventory> inventoryPage = fishService.getInventoryListFromMemberId(tokenId,pageable);
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         PageResponse<InventoryDto.MultiResponse> response = new PageResponse<>
                 (inventoryPage.getTotalElements(),
                         fishMapper.toInventoryMultiResponseDtos(inventoryPage.getContent()));

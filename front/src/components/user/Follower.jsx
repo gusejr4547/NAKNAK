@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser, token } from "../../utils/atoms";
+=======
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { loginuser } from "../../utils/atoms";
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import { Button } from "react-bootstrap";
 import FollowerModal from "./FollowerModal";
 import { authorizedRequest } from "../account/AxiosInterceptor";
@@ -10,13 +17,22 @@ function Follower(props) {
   const [userData] = useRecoilState(loginuser);
   const [followerData, setFollowerData] = useState(null);
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   // const [accesstoken] = useRecoilState(token);
+=======
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const [isFollowing, setIsFollowing] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   // 모달창 노출
   const showModal = () => {
+<<<<<<< HEAD
     setModalOpen(true);
+=======
+    if (props.user === userData.memberId) {
+      setModalOpen(true);
+    }
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   };
 
   const getFllowing = async () => {
@@ -38,10 +54,13 @@ function Follower(props) {
     getFllowing();
   }, [props.user]);
 
+<<<<<<< HEAD
   // const header = useMemo(() => ({
   //     Authorization: accesstoken,
   //   }),[accesstoken]);
 
+=======
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const followUser = async () => {
     if (props.user === userData.memberId) {
       console.log("동일");
@@ -49,6 +68,7 @@ function Follower(props) {
     }
 
     const param = { follow: props.user };
+<<<<<<< HEAD
     // const config = { params: param, headers: header };
     try {
       // const response = await axios.post(
@@ -56,6 +76,9 @@ function Follower(props) {
       //   null,
       //   config
       // );
+=======
+    try {
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       const response = await authorizedRequest({
         method: "post",
         url: "/api1/api/follow/register",
@@ -69,6 +92,7 @@ function Follower(props) {
   };
   const unFollowUser = async () => {
     if (props.user === userData.memberId) {
+<<<<<<< HEAD
       // console.log("동일");
       return;
     }
@@ -80,6 +104,12 @@ function Follower(props) {
       //   null,
       //   config
       // );
+=======
+      return;
+    }
+    const param = { follow: props.user };
+    try {
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       const response = await authorizedRequest({
         method: "post",
         url: "/api1/api/follow/cancel",
@@ -101,11 +131,22 @@ function Follower(props) {
 
   return (
     <div style={{ position: "relative" }}>
+<<<<<<< HEAD
       <p onClick={showModal}>팔로워: {followerData.count}</p>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followerData.data} />
       )}
       <div style={{ position: "absolute", top: "60%", left: "-10%" }}>
+=======
+      <div onClick={showModal}>
+        {followerData.count}
+        <div>팔로워</div>
+      </div>
+      {modalOpen && (
+        <FollowerModal closeModal={setModalOpen} data={followerData.data} />
+      )}
+      <div style={{ position: "absolute", top: "-100%", left: "25%" }}>
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         {props.user !== userData.memberId && !isFollowing && (
           <Button
             as="input"

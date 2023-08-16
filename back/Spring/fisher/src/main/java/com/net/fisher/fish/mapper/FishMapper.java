@@ -25,6 +25,21 @@ public interface FishMapper {
 
     List<BooksDto.Response> toBooksResponseDtos(List<Books> booksList);
 
+<<<<<<< HEAD
+=======
+    default List<FishBowlsDto.MultiResponse> toFishBowlMultiResponseDtos(List<FishBowls> fishBowlsList){
+        List<FishBowlsDto.MultiResponse> multiResponses = new ArrayList<>();
+        for(FishBowls fishBowls:fishBowlsList){
+            multiResponses.add(FishBowlsDto.MultiResponse.builder()
+                    .fishBowlId(fishBowls.getFishBowlId())
+                    .fishCode(fishBowls.getFish().getCode())
+                    .fishName(fishBowls.getFish().getName())
+                    .fishSize(fishBowls.getSize())
+                    .build());
+        }
+        return multiResponses;
+    }
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
     default List<InventoryDto.MultiResponse> toInventoryMultiResponseDtos(List<Inventory> inventories){
         List<InventoryDto.MultiResponse> multiResponses = new ArrayList<>();

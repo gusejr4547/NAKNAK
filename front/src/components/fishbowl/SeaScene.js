@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import fish from "./fishbowl.png";
 import "./SeaScene.css";
+<<<<<<< HEAD
+=======
+import Balls from "./Balls";
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 const SeaScene = () => {
   const containerRef = useRef();
@@ -140,6 +144,7 @@ const SeaScene = () => {
       <div
         ref={containerRef}
         id="bowlcontainer"
+<<<<<<< HEAD
         style={{
           position: "absolute",
           top: "9%",
@@ -149,11 +154,37 @@ const SeaScene = () => {
           overflow: "hidden", // 추가: 컨테이너 크기를 넘어가는 부분을 숨깁니다.
         }}
       ></div>
+=======
+        className="Sea"
+        style={{
+          position: "absolute",
+          top: "5%",
+          left: "5%",
+          width: "90%",
+          height: "85%",
+          overflow: "hidden", // 추가: 컨테이너 크기를 넘어가는 부분을 숨깁니다.
+          zIndex: -1,
+        }}
+      >
+        {/* <Balls /> */}
+      </div>
+      <Balls
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 100,
+        }}
+      />
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     </div>
   );
 };
 
 export default SeaScene;
+<<<<<<< HEAD
 
 {
   /* <div id="info">
@@ -346,3 +377,5 @@ export default SeaScene;
 // };
 
 // export default SeaScene;
+=======
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
