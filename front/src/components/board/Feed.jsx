@@ -20,17 +20,22 @@ const Feed = ({
   onLikeStateChange,
 }) => {
   const [feedLikeState, setFeedLikeState] = useState(
-    likedFeedData
+    likedFeedData.length > 0
       ? likedFeedData.find((likedFeed) => likedFeed.postId === feedInfo.postId)
         ? true
         : false
       : false
   );
+
   const [loading, setLoading] = useState(false);
 
   const followStateClass = currentFollowState
     ? "feed-following"
     : "feed-not-follow";
+
+  // useEffect(() => {
+  //   setFeedLikeState();
+  // }, [feedLikeState]);
 
   const settings = {
     dots: true,
@@ -48,39 +53,48 @@ const Feed = ({
     console.log("follow btn clicked", feedInfo.memberId);
   };
 
+  const changeLikeState = () => {
+    setFeedLikeState(!feedLikeState);
+  };
+
   const likeClickHandler = () => {
     console.log("like btn clicked", feedLikeState);
     feedInfo.likeCount += !feedLikeState ? 1 : -1;
+    toggleLikeState();
+
     setFeedLikeState(!feedLikeState);
 
-    onLikeStateChange(feedInfo, feedLikeState);
+    onLikeStateChange(feedInfo, !feedLikeState);
+
+    console.log(feedInfo.postId, feedLikeState, feedInfo);
   };
 
   const tagClickHandler = () => {
     console.log("tagClicked", userId, feedInfo);
   };
 
-  useEffect(() => {
-    const toggleLikeState = async () => {
-      setLoading(true);
-      try {
-        const response = await authorizedRequest({
-          method: "post",
-          url: feedLikeState
-            ? `/api1/api/posts/likes?post=${feedInfo.postId}`
-            : `/api1/api/posts/unlikes?post=${feedInfo.postId}`,
-        });
-        console.log(feedLikeState, response);
-        setLoading(false);
-      } catch (error) {
-        console.error("fail toggle likedstate");
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  const toggleLikeState = async () => {
+    setLoading(true);
+    try {
+      console.log(feedLikeState);
+      const response = await authorizedRequest({
+        method: "post",
+        url: !feedLikeState
+          ? `/api1/api/posts/likes?post=${feedInfo.postId}`
+          : `/api1/api/posts/unlikes?post=${feedInfo.postId}`,
+      });
+      console.log(feedLikeState, response);
+      setLoading(false);
+    } catch (error) {
+      console.error("fail toggle likedstate");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    toggleLikeState();
-  }, [feedLikeState]);
+  //   toggleLikeState();
+  // }, []);
 
   return (
     <div className="feed-wrapper">
@@ -143,33 +157,6 @@ const Feed = ({
               />
             </div>
           )}
-          {/* dummy image */}
-          {/* <div className="feed-image-container">
-            <img
-              // key={index}
-              className="feed-image"
-              src={"/assets/images/background.png"}
-              alt="post images"
-            />
-          </div>
-          <div className="feed-image-container">
-            <img
-              // key={index}
-              className="feed-image"
-              src={"/assets/123123123.png"}
-              alt="post images"
-            />
-          </div>
-          <div className="feed-image-container">
-            <img
-              // key={index}
-              className="feed-image"
-              src={"/assets/images/jge.png"}
-              alt="post images"
-            />
-          </div> */}
-
-          {/* dummy image end*/}
         </Slider>
         {/* carousel end */}
 

@@ -1,6 +1,7 @@
 package com.net.fisher.post.controller;
 
 import com.net.fisher.auth.jwt.JwtTokenizer;
+import com.net.fisher.post.dto.DateDto;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.PostImageDto;
@@ -178,9 +179,10 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity getPosts(
             @RequestHeader(name = "Authorization") String token,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime time,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") LocalDateTime time,
             @PageableDefault(size = 6, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
 
+        System.out.println(time.toString());
         long tokenId = jwtTokenizer.getMemberId(token);
         Page<Post> postPage = null;
 
@@ -211,4 +213,8 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/time/server")
+    public ResponseEntity<DateDto.Response> getServerTime(){
+        return new ResponseEntity<>(DateDto.Response.builder().serverTime(LocalDateTime.now()).build(),HttpStatus.OK);
+    }
 }

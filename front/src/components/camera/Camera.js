@@ -356,6 +356,12 @@ const Camera = () => {
             }}
           />
         )}
+        {webcamActive && (
+          <img
+            src="./assets/icons/fishpic.png"
+            className="camera-shape-overlay"
+          />
+        )}
         <canvas
           id="canvas"
           width={modelInputShape[2]}

@@ -97,7 +97,6 @@ public class PostService {
 
                 postImageRepository.save(postImage);
             }
-
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(e.getExceptionCode());
         } catch (IOException e) {

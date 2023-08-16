@@ -65,10 +65,21 @@ const SlideInnerMenu = ({
   }, [onClose]);
 
   return (
-    <div className="slide-inner-menu">
-      {isFishBowl === "false" && <button onClick={handleDelete}>삭제</button>}
+    <div
+      className={
+        isFishBowl === "false"
+          ? "slide-inner-menu-inven"
+          : "slide-inner-menu-fishbowl"
+      }
+    >
+      {isFishBowl === "false" && (
+        <button onClick={handleDelete} className="invenbtn">
+          삭제
+        </button>
+      )}
       {/* <button onClick={handleMenuClose}>Close</button> */}
       <button
+        className="invenbtn"
         onClick={() => {
           isFishBowl === "false"
             ? handleChange(fishInfo.inventoryId)

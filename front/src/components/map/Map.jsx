@@ -28,6 +28,7 @@ function Map2() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
+  const [currentsearchData, setCurrentSearchData] = useState([]);
   const [myLocation, setMyLocation] = useState(null);
   const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(1);
@@ -196,6 +197,9 @@ function Map2() {
     }
     setSearchData([]);
     if (event.key === "Enter") {
+      if (!inputData) {
+        return;
+      }
       const arr = [];
       fishingspot.forEach((ele) => {
         if (ele.title.includes(inputData)) {
