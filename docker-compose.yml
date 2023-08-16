@@ -1,75 +1,22 @@
 version: '3.8'
 
 services:
-  # mysql:
-  #   image: mysql:8.0.33
-  #   container_name: mysql
-  #   environment:
-  #       MYSQL_ROOT_PASSWORD: 7818
-  #       MYSQL_DATABASE: naknak
-  #   ports:
-  #     - "3306:3306"
-  #   networks:
-  #     - spring-redis
-  #   volumes:
-  #     - ./mysql/conf.d:/etc/mysql/conf.d # MySQL 설정 파일 위치
-  #   command:
-  #     - "--character-set-server=utf8mb4"
-  #     - "--collation-server=utf8mb4_unicode_ci"
-
-  # mongodb:
-  #   image: mongo
-  #   container_name: mongodb
-  #   ports:
-  #     - "27017:27017"
-  #   networks:
-  #     - spring-redis
-  #   environment:
-  #     MONGO_INITDB_DATABASE: fisher-log
-  #   volumes:
-  #     - ./data/mongodb:/data/db
-
-  # spring:
-  #   build:
-  #     context: ./back/Spring/fisher
-  #     dockerfile: dockerfile
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - spring-redis
-  #   depends_on:
-  #     - redis
-  #     - mysql
-  #     - mongodb
-  #   container_name: spring
-
   logserver:
     build:
       context: ./back/fisher-log-server
       dockerfile: dockerfile
+    image: logserver-image/logserver:latest
     ports: 
       - "8081:8081"
     networks:
       - spring-redis
-    # depends_on:
-    #   - redis
-    #   - mysql
-    #   - mongodb
     container_name: logserver
-
-  # redis:
-  #   image: "redis:latest"
-  #   command: ["redis-server", "--requirepass", "1747"]
-  #   ports:
-  #     - "6379:6379"
-  #   networks:
-  #     - spring-redis
-  #   container_name: redis
-
+  
   nginx:
     build:
       context: ./front
       dockerfile: dockerfile
+    image: nginx-image/nginx:latest
     ports:
       - "443:443"
       - "80:80"
@@ -84,6 +31,7 @@ services:
     build:
       context: ./front
       dockerfile: dockerfile_test
+    image: react-image/react:latest
     ports:
       - "3000:3000"
     networks:
@@ -94,6 +42,5 @@ networks:
   spring-redis:
     external: true
       
-
 volumes:
   vol:
