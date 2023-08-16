@@ -1,6 +1,7 @@
 package com.net.fisher.post.controller;
 
 import com.net.fisher.auth.jwt.JwtTokenizer;
+import com.net.fisher.post.dto.DateDto;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.PostImageDto;
@@ -211,4 +212,8 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/time/server")
+    public ResponseEntity<DateDto.Response> getServerTime(){
+        return new ResponseEntity<>(DateDto.Response.builder().serverTime(LocalDateTime.now()).build(),HttpStatus.OK);
+    }
 }
