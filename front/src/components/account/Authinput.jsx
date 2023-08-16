@@ -25,17 +25,17 @@ export default AuthInput;
 
 const WrapperStyle = styled.div`
   width: 100%;
-  height: 50px;
+  height: 4rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${(props) => props.marginBottom || "21px"};
+  margin-bottom: ${(props) => props.marginBottom || "2rem"};
 `;
 
 const LabelStyle = styled.label`
-  font-size: 11px;
-  margin-bottom: 4px;
-  font-family: korail_bold;
-  color: ${(props) => props.color || "#292D32"};
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  // margin-left: 0.5rem;
+  color: ${(props) => props.color || "white"};
 `;
 
 const InputStyle = styled.input`
@@ -45,8 +45,7 @@ const InputStyle = styled.input`
   border-radius: 8px;
   padding: 10px;
   border-style: solid;
-  font-family: korail_light;
-  font-size: 13px;
+  font-size: 15px;
   &:focus {
     outline: none;
   }
@@ -54,8 +53,8 @@ const InputStyle = styled.input`
 
 const ErrorText = styled.p`
   color: red;
-  margin-top: 3px;
-  font-size: 5px;
-  font-family: korail_light;
+  margin-top: 0.3rem;
+  margin-left: 0.75rem;
+  font-size: 1rem;
   letter-spacing: 0.5px;
 `;
