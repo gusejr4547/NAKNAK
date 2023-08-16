@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./quest.css";
 import "./QuestDetailModal.css";
 
-const QuestDetailModal = ({ id, questData, onClose }) => {
+const QuestDetailModal = ({ idid, id, questData, onClose }) => {
   const [questdetail, setquestdetail] = useState({
     title: "",
     content: "",
@@ -25,7 +25,7 @@ const QuestDetailModal = ({ id, questData, onClose }) => {
       <div className="quest-modal-content">
         <img
           className={questdetail.title ? "quest-img-active" : "quest-img"}
-          src="assets/cats/cat.png"
+          src={`assets/icons/quest${idid % 8}.png`}
           alt=""
         />
         <h3

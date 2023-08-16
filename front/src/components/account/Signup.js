@@ -72,11 +72,20 @@ function Signup(props) {
   const saveImgFile = () => {
     // eve.preventDefault();
     const file = imgRef.current.files[0];
+    if (!file) {
+      return; // 파일이 선택되지 않았으면 아무 작업도 수행하지 않음
+    }
     console.log(file);
     const allowedExtensions = ALLOW_FILE_EXTENSION.split(",");
     const fileExtension = file.name.split(".").pop().toLowerCase();
     if (!allowedExtensions.includes(fileExtension)) {
-      console.log("올바른 이미지 파일 형식이 아닙니다.");
+      swal("올바른 이미지 파일 형식이 아닙니다.");
+      imgRef.current.value = null;
+      setImgFile(null);
+      return;
+    }
+    if (file.size > FILE_SIZE_MAX_LIMIT) {
+      swal("이미지 파일 크기가 너무 큽니다. 5MB 이하로 선택해주세요.");
       imgRef.current.value = null;
       setImgFile(null);
       return;
@@ -134,9 +143,19 @@ function Signup(props) {
       formData.append("password", signupData.password);
       formData.append("name", signupData.name);
       formData.append("nickname", signupData.nickname);
-      if (imgFile) {
+
+      if (!imgFile) {
+        try {
+          const response = await fetch("assets/cats/cat.png");
+          const blob = await response.blob();
+          formData.append("file", blob, "cat.png");
+        } catch (error) {
+          console.error("Error fetching default image:", error);
+        }
+      } else {
         formData.append("file", imgFile);
       }
+
       for (const pair of formData.entries()) {
         console.log(pair[0] + ", " + pair[1]);
       }

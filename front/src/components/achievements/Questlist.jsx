@@ -34,7 +34,7 @@ function Questlist(props) {
             ? "quest-list-img-active"
             : "quest-list-img"
         }
-        src="assets/cats/cat.png"
+        src={`assets/icons/quest${props.data.challengeId % 8}.png`}
         alt=""
         onClick={() => openQuestDetailModal(props.detail)}
       />
@@ -51,6 +51,7 @@ function Questlist(props) {
       {/* 모달 컴포넌트 */}
       {selectedQuest && (
         <QuestDetailModal
+          idid={props.data.challengeId}
           id={props.data.content}
           questData={selectedQuest}
           onClose={closeQuestDetailModal}

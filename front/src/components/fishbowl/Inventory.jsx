@@ -121,7 +121,7 @@ const Inventory = () => {
       <img
         src="/assets/icons/x.png"
         alt="exit"
-        className="dogam-back-button"
+        className="inven-back-button"
         onClick={goBack}
       />
       {/* // add dummy data code */}
@@ -132,7 +132,9 @@ const Inventory = () => {
         onClick={addItem}
       />
       <div className="inven-board">
+        <div style={{ textAlign: "center", color: "blue" }}>인벤</div>
         <div className="inven-carousel inven-disable-scrollbar">
+          {/* <div class="inventitle">인벤토리</div> */}
           {Object.keys(inventoryData).map((key) => {
             const fish = inventoryData[key];
             return (
@@ -145,6 +147,9 @@ const Inventory = () => {
               />
             );
           })}
+        </div>
+        <div style={{ textAlign: "center", color: "blue", marginTop: "3%" }}>
+          어항
         </div>
         <div className="inven-carousel inven-disable-scrollbar">
           {Object.keys(fishBowlData).map((key) => {
