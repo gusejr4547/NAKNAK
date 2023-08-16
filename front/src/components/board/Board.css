@@ -1,10 +1,6 @@
 .board-wrapper {
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
-<<<<<<< HEAD
-  background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
-=======
   background-color: rgb(255, 255, 255);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   position: relative;
   height: 100%;
   /* display: flex; */
@@ -25,20 +21,12 @@
   overflow-y: auto;
 }
 .board-carousel {
-<<<<<<< HEAD
-  position: relative;
-=======
   /* position: relative;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   width: 24rem;
   height: 40.625rem;
   display: flex;
   justify-content: center;
-<<<<<<< HEAD
-  flex-wrap: wrap;
-=======
   flex-wrap: wrap; */
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 /* 스크룰 바 숨기기 */
@@ -53,25 +41,6 @@
 }
 
 .board-header {
-<<<<<<< HEAD
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  background-color: aqua;
-}
-
-.board-title-container {
-}
-.board-title-container h3 {
-  width: 100%;
-}
-
-.board-search-img-container {
-}
-.board-search-img-container img {
-  width: 4rem;
-  height: 4rem;
-=======
   height: 4rem;
   display: flex;
   align-items: center;
@@ -95,7 +64,6 @@
   align-items: center;
 }
 .board-search-img-container img {
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 .board-tag-wrapper {
@@ -115,8 +83,6 @@
   margin-top: 1rem;
   margin-left: 1rem;
 }
-<<<<<<< HEAD
-=======
 
 .board-loading {
   text-align: center;
@@ -137,4 +103,3 @@
   right: 0.8rem;
   bottom: 3.5rem;
 }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

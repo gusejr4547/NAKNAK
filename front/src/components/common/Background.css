@@ -1,56 +1,50 @@
 body {
-<<<<<<< HEAD
-  background: url("../../../public/assets/images/background1.png") center
-    no-repeat;
-=======
   /* background: url("../../../public/assets/images/background1.png") center
     no-repeat; */
   background-color: #c5e2eb;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   height: 100vh;
   overflow: hidden;
 }
 
-<<<<<<< HEAD
-.island {
-  /* width: 100%; */
-  /* height: 100%; */
-  position: absolute;
-  z-index: -1;
-  top: 75%;
-  left: 47.6%;
-}
-
-.cat {
-  position: absolute;
-  top: 40%;
-  left: 15%;
-  z-index: -1;
-  scale: 0.3;
-=======
 .cat {
   /* position: absolute; */
   /* bottom: 7rem; */
   /* left: 8rem; */
   /* z-index: -1; */
   /* scale: 0.5; */
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 /* 피싱모드일 때 띠 보이게 하기 */
 .hidden {
   display: none;
 }
-.fishingMode {
+.fishingmode {
   position: absolute;
-  top: 5%;
-  background-color: yellow;
-  height: 25px;
-  width: 100%;
+  top: 2rem;
   z-index: 2;
 }
-<<<<<<< HEAD
-=======
+.fishingmode-title {
+}
+.nowfishing {
+  top: 0;
+  position: absolute;
+  background-color: #ffe48e;
+  border-radius: 30px;
+  border: dashed 0.2rem #fff;
+  /* background: url("../../../public/assets/images/mallpoong5.png") center center
+    no-repeat; */
+  /* height: 25px; */
+  width: 20rem;
+  height: 4rem;
+  left: 4rem;
+  z-index: 2;
+  justify-content: center;
+  padding: 15%;
+
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-between; */
+}
 
 .background_wave2 {
   height: 32%;
@@ -68,4 +62,3 @@ body {
   opacity: 0.8;
   z-index: -3;
 }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

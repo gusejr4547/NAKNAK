@@ -10,32 +10,6 @@ const Inventory = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [inventoryData, setInventoryData] = useState({});
-<<<<<<< HEAD
-
-  useEffect(() => {
-    const getInventory = async () => {
-      try {
-        setLoading(true);
-
-        const response = await authorizedRequest({
-          method: "get",
-          url: `/api/fishes/inventory/view`,
-        });
-
-        console.log("response success", response.data.data);
-        setInventoryData(response.data.data);
-        // console.log("inven data =", inventoryData[0]);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching inventory");
-        setError("데이터 로드에 실패했습니다.");
-        setLoading(false);
-      }
-    };
-    getInventory();
-  }, []);
-
-=======
   const [fishBowlData, setFishBowlData] = useState({});
   const [itemData, setItemData] = useState(0);
 
@@ -84,7 +58,6 @@ const Inventory = () => {
     }
   };
 
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const goBack = () => {
     if (window && window.history && typeof window.history.back === "function") {
       window.history.back();
@@ -96,11 +69,7 @@ const Inventory = () => {
     try {
       const response = await authorizedRequest({
         method: "post",
-<<<<<<< HEAD
-        url: `/api/fishes/inventory/delete`,
-=======
         url: `api1/api/fishes/inventory/delete`,
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         data: {
           inventoryId: deletedFishInfo.inventoryId,
         },
@@ -123,21 +92,13 @@ const Inventory = () => {
     try {
       setLoading(true);
       const fish = {
-<<<<<<< HEAD
-        fishCode: "A003",
-=======
         name: "벵에돔",
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         size: 41.3,
       };
 
       const response = await authorizedRequest({
         method: "post",
-<<<<<<< HEAD
-        url: `/api/fishes/catch`,
-=======
         url: `api1/api/fishes/catch`,
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         data: fish,
       });
 
@@ -160,7 +121,7 @@ const Inventory = () => {
       <img
         src="/assets/icons/x.png"
         alt="exit"
-        className="dogam-back-button"
+        className="inven-back-button"
         onClick={goBack}
       />
       {/* // add dummy data code */}
@@ -171,21 +132,13 @@ const Inventory = () => {
         onClick={addItem}
       />
       <div className="inven-board">
+        <div style={{ textAlign: "center", color: "blue" }}>인벤</div>
         <div className="inven-carousel inven-disable-scrollbar">
+          {/* <div class="inventitle">인벤토리</div> */}
           {Object.keys(inventoryData).map((key) => {
             const fish = inventoryData[key];
             return (
               <ItemSlide
-<<<<<<< HEAD
-                fishInfo={fish}
-                onDeleteSlide={() => handleDeleteSlide(inventoryData[key])}
-              />
-            );
-          })}
-          {/* dummy start */}
-
-          {/* dummy end */}
-=======
                 key={`inven${fish.inventoryId}`}
                 fishInfo={fish}
                 isFishBowl="false"
@@ -194,6 +147,9 @@ const Inventory = () => {
               />
             );
           })}
+        </div>
+        <div style={{ textAlign: "center", color: "blue", marginTop: "3%" }}>
+          어항
         </div>
         <div className="inven-carousel inven-disable-scrollbar">
           {Object.keys(fishBowlData).map((key) => {
@@ -208,7 +164,6 @@ const Inventory = () => {
               />
             );
           })}
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         </div>
       </div>
     </div>

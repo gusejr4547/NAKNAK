@@ -74,10 +74,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         //  JWT 의 Claims 에서 얻은 권한 정보를 기반으로 List<GrantedAuthority 를 생성합니다.
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities(
                 (List) claims.get("roles"));
-<<<<<<< HEAD
-
-=======
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         //  username 과 List<GrantedAuthority 를 포함한 Authentication 객체를 생성합니다.
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, null,
                 authorities);

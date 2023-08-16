@@ -1,18 +1,10 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-=======
 import React, { useState, useEffect, useCallback, useRef } from "react";
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import axios from "axios";
 import Feed from "./Feed";
 import FeedTag from "./FeedTag";
-<<<<<<< HEAD
 
-import "./Board.css";
-const Board = () => {
-=======
 import "../../utils/util";
+import axios from "axios";
 
 import { useRecoilValue, useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
@@ -27,32 +19,11 @@ import { Link } from "react-router-dom";
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
 
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const [tagListData, setTagListData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const [feedListData, setFeedListData] = useState([]);
-<<<<<<< HEAD
-
-  // #region
-  ////////////////add dummy feed/////////////////////
-  ///////////////////////////////////////////////////
-  const addFeed = async () => {
-    try {
-      const response = await axios.get("api/posts/1");
-      console.log("dummy load success", response.data);
-      console.log(typeof response.data);
-      setFeedListData((prev) => [...prev, response.data]);
-      console.log("add success", feedListData);
-    } catch (error) {
-      console.error("list append error");
-    }
-  };
-  ///////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
-  // #endregion
-=======
   // 팔로우 기능을 위한 현재 사용자 정보
   const [followerList, setFollowList] = useState([]);
 
@@ -67,7 +38,6 @@ const Board = () => {
   const [selectedTag, setSelectedTag] = useState(null);
   // 태그 버튼 눌렀을 때 스크룰을 최상단으로 올리는 변수
   const tagTargetDiv = useRef(null);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
   // 태그의 이름들을 가져옵니다
   useEffect(() => {
@@ -75,13 +45,6 @@ const Board = () => {
       try {
         setLoading(true);
 
-<<<<<<< HEAD
-        const response = await axios.get("api1/api/tags");
-        // console.log("tag load success", response.data);
-        setTagListData(response.data);
-      } catch (error) {
-        console.error("tag load error");
-=======
         const response = await authorizedRequest({
           method: "get",
           url: `/api1/api/tags`,
@@ -93,48 +56,11 @@ const Board = () => {
         console.error("tag load error");
       } finally {
         setLoading(false);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       }
     };
     getTagList();
   }, []);
 
-<<<<<<< HEAD
-  // 게시글들을 가져옵니다
-  useEffect(() => {
-    const getFeedList = async () => {
-      try {
-        setLoading(true);
-
-        const response = await axios.get("api1/api/posts/2");
-        console.log("feed load success", response.data);
-        setFeedListData([response.data]);
-        // console.log("feedListData", feedListData);
-      } catch (error) {
-        console.error("feed load error");
-      }
-    };
-
-    getFeedList();
-  }, []);
-
-  return (
-    <div className="board-wrapper">
-      <div className="board-header">
-        <div className="board-title-container">
-          <div>SNS </div>
-        </div>
-        <div className="board-search-img-container">
-          <img src="/assets/icons/kakao.PNG" alt="검색버튼" />
-        </div>
-      </div>
-      <div className="board-tag-wrapper">
-        {}
-        <FeedTag tagInfo={{ tagId: 0, tagName: "ALL" }} />
-        {Object.keys(tagListData).map((key) => {
-          const tag = tagListData[key];
-          return <FeedTag tagInfo={tag} />;
-=======
   //팔로우 여부를 확인하기 위해 사용자의 팔로잉 정보를 가져옵니다
   useEffect(() => {
     const getFollowers = async () => {
@@ -160,11 +86,13 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `/api1/api/posts/my-like?page=1&size=`,
+          url: `/api1/api/posts/my-like?page=1&size=&memberId=${userInfo.memberId}`,
         });
         console.log("success get likedFeedList", response.data);
 
-        setLikedFeedData((prevData) => prevData.concat(response.data.data));
+        if (response.data.data.length > 0) {
+          setLikedFeedData((prevData) => prevData.concat(response.data.data));
+        }
       } catch (error) {
         console.error("failed get likedFeedList");
       } finally {
@@ -176,23 +104,20 @@ const Board = () => {
 
   //보여줄 피드의 개수를 정합니다
   const showFeedCount = 5;
+
   const getFeedList = useCallback(async () => {
     try {
       setLoading(true);
 
-      console.log();
+      const responseCurrentTime = await axios.get(`/api1/api/time/server`);
 
       const response = await authorizedRequest({
         method: "get",
-        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
-          Date.now()
-        )}`,
+        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${responseCurrentTime.data.serverTime}`,
       });
       if (response.data.data.length === 0) {
         return;
       }
-      console.log("feed load success", response);
-      console.log("feed load data", response.data.data);
       setFeedListData((prevData) => prevData.concat(response.data.data));
 
       console.log(feedListData);
@@ -303,26 +228,11 @@ const Board = () => {
               onClick={tagClickHandler}
             />
           );
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         })}
         {/* dummy data start */}
 
         {/* dummy data end */}
       </div>
-<<<<<<< HEAD
-      <div className="board-board board-disable-scrollbar">
-        <div className="borad-carousel ">
-          <button onClick={addFeed}>create dummy</button>
-          {/* dummy feed data start */}
-          {/* feedListData의 데이터를 HTML로 출력 */}
-          {Object.keys(feedListData).map((key) => {
-            const feed = feedListData[key];
-            return <Feed feedInfo={feed} />;
-          })}
-          {/* dummy feed data end */}
-        </div>
-      </div>
-=======
       <div ref={tagTargetDiv} className="board-board board-disable-scrollbar">
         <div className="board-carousel ">
           {/* feedListData의 데이터를 HTML로 출력 */}
@@ -379,7 +289,6 @@ const Board = () => {
           className="board-create-feed"
         />
       </Link>
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     </div>
   );
 };

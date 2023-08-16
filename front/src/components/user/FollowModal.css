@@ -14,15 +14,9 @@
 /* modal창 */
 .followmodalBody {
   position: absolute;
-<<<<<<< HEAD
-  width: 300px;
-  height: 500px;
-  padding: 40px;
-=======
   width: 70%;
   height: 40%;
   padding: 10%;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   text-align: center;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
@@ -42,11 +36,8 @@
 #followmodalCloseBtn:hover {
   cursor: pointer;
 }
-<<<<<<< HEAD
-=======
 
 .profilemodalbtn {
   border-bottom: thick double;
   /* background-color: aliceblue; */
 }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

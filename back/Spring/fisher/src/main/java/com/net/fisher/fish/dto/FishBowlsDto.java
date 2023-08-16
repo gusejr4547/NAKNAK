@@ -24,8 +24,6 @@ public class FishBowlsDto {
         private Fish fish;
         private double size;
     }
-<<<<<<< HEAD
-=======
 
     @Getter
     @Setter
@@ -38,5 +36,4 @@ public class FishBowlsDto {
         private String fishName;
         private double fishSize;
     }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }

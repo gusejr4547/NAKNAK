@@ -105,7 +105,7 @@ const CreateFeed = () => {
         url: `/api1/api/posts/upload`,
         data: formData,
       });
-      console.log("feed load success", response.data);
+      console.log("feed load success", response);
 
       setContent("");
       setSelectedFiles([]);

@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 // import * as S from "./profileStyle";
-<<<<<<< HEAD
-
-// import axios from "axios";
-// import { useRecoilState } from "recoil";
-// import { loginuser, token } from "../../utils/atoms";
-=======
 import "./profile.css";
 // import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 // import { Button } from "react-bootstrap";
 import Following from "./Following";
 import Follower from "./Follower";
@@ -18,29 +11,19 @@ import Mypost from "./Mypost";
 import Profileinventory from "./Profileinventory";
 import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-<<<<<<< HEAD
-=======
 import ProfileModal from "./ProfileModal";
 import Profilesea from "../fishbowl/Profilesea";
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 function Profile(props) {
   const userId = useParams().userId;
   const temp = userId.slice(1);
-<<<<<<< HEAD
-
-  // const [userData] = useRecoilState(loginuser);
-=======
   console.log(temp);
 
   const [userData] = useRecoilState(loginuser);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   // const [accesstoken] = useRecoilState(token);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
   const [activeView, setActiveView] = useState("myPosts");
-<<<<<<< HEAD
-=======
   const [modalOpen, setModalOpen] = useState(false);
   const [mypost, setMypost] = useState(0);
 
@@ -53,7 +36,6 @@ function Profile(props) {
     setModalOpen(true);
   };
 
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const handleToggle = (view) => {
     setActiveView(view);
   };
@@ -65,10 +47,7 @@ function Profile(props) {
         url: `/api1/api/members/${temp}`,
       });
       setProfileData(response.data);
-<<<<<<< HEAD
-=======
       console.log(response.data);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       setLoading(false); // 데이터 로딩 완료
     } catch (error) {
       console.error("Error posting data:", error);
@@ -89,58 +68,6 @@ function Profile(props) {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="profileContainer" style={{ height: "95%" }}>
-      <div
-        className="profileTop"
-        style={{
-          height: "20%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          borderBottom: "1px solid #000",
-        }}
-      >
-        <div
-          className="profileimgBox"
-          style={{
-            height: "100%",
-            width: "35%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p className="profileusernickname">
-            <span className="profileuserLV">
-              LV {profileData.memberStatusResponse.level}{" "}
-            </span>
-            {profileData.memberResponse.nickname}
-          </p>
-          {profileData.memberResponse.memberImage?.fileUrl && (
-            <img
-              className="profileImg"
-              src={profileData.memberResponse.memberImage.fileUrl}
-              alt="profileimg"
-              style={{ width: "150px" }}
-            />
-          )}
-        </div>
-        <div
-          className="profilefollowContainer"
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            width: "65%",
-            height: " 80%",
-          }}
-        >
-          <p>게시글: 0</p>
-          <Following user={profileData.memberResponse.memberId} />
-          <Follower user={profileData.memberResponse.memberId} />
-=======
     <div className="profileContainer">
       <div
         className="profileTop"
@@ -236,23 +163,16 @@ function Profile(props) {
               <Follower user={profileData.memberResponse.memberId} />
             </div>
           </div>
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         </div>
       </div>
       <div
         className="profileMiddle"
         style={{
-<<<<<<< HEAD
-          display: "flex",
-          justifyContent: "space-evenly",
-          alignItems: "center",
-=======
           // height: "5%",
           display: "flex",
           justifyContent: "space-evenly",
           alignItems: "center",
           // borderRadius: "10%",
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
           borderBottom: "1px solid #000",
         }}
       >
@@ -261,33 +181,6 @@ function Profile(props) {
           point={profileData.memberStatusResponse.point}
         />
       </div>
-<<<<<<< HEAD
-      {/* <p className="usernewBee">
-        초보자 : {profileData.memberStatusResponse.newBee ? "Newbee" : "Expert"}
-      </p> */}
-      <div
-        className="profileBottom"
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          // borderBottom: "1px solid #000",
-        }}
-      >
-        <div className="profiletoggleBar" style={{ display: "flex" }}>
-          <button
-            onClick={() => handleToggle("myPosts")}
-            style={{
-              background: activeView === "myPosts" ? "#ccc" : "transparent",
-            }}
-          >
-            내가 쓴 게시글
-          </button>
-          <button
-            onClick={() => handleToggle("aquarium")}
-            style={{
-              background: activeView === "aquarium" ? "#ccc" : "transparent",
-            }}
-=======
       <div className="profileBottom">
         <div className="profiletoggleBar" style={{ display: "flex" }}>
           <button
@@ -311,21 +204,10 @@ function Profile(props) {
             className={
               activeView === "aquarium" ? "profileactive" : "profiledefault"
             }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
           >
             수조
           </button>
         </div>
-<<<<<<< HEAD
-        {activeView === "myPosts" ? (
-          <div className="profileMiddle">
-            <Mypost id={temp} ver="my-post" />
-            <Mypost id={temp} ver="my-like" />
-          </div>
-        ) : (
-          <div className="profileaquarium">
-            <p>아쿠아리움</p>
-=======
         {activeView === "myPosts" && (
           <div className="profilebottom">
             <Mypost id={temp} ver="my-post" postplus={postplus} data={mypost} />
@@ -339,7 +221,6 @@ function Profile(props) {
         {activeView === "aquarium" && (
           <div className="profilebottom">
             <Profilesea />
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
           </div>
         )}
       </div>

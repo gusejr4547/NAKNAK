@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-<<<<<<< HEAD
-import { Button } from "react-bootstrap";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { loginuser, token } from "../../utils/atoms";
-import AuthInput from "./Authinput";
-import useInput from "./use_input";
-import emailInput from "./email_input";
-// import { getData, postData } from "../../utils/api";
-=======
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -28,45 +17,23 @@ import emailInput from "./email_input";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import Wave from "react-wavify";
 import { GetLocation, callFlutter } from "../../utils/location";
-
+import swal from "sweetalert";
 import "./Login.css";
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isValidEmailFormat = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 function Login(props) {
-<<<<<<< HEAD
-  // const [loginData, setLoginData] = useState({});
-=======
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [userData, setUserData] = useRecoilState(loginuser);
   const [accesstoken, setAccessToken] = useRecoilState(token);
-<<<<<<< HEAD
-  const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (accesstoken) {
-  //     navigate('/');
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  const {
-    $value: userIdValue,
-    $isValid: userIdIsValid,
-    $hasError: userIdHasError,
-    $valueChangeHandler: userIdChangeHandler,
-    $inputBlurHandler: userIdBlurHandler,
-    $reset: resetuserId,
-=======
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
   const navigate = useNavigate();
   // const CLIENT_ID = "6a4bb2fa60ad461ae820953255846ebf";
   // const REDIRECT_URI =
   //   "http://passportlkm.iptime.org:20101/login/oauth2/code/kakao";
   // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
 
   //뉴비버젼 유무
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
@@ -82,34 +49,10 @@ function Login(props) {
     $valueChangeHandler: userIdChangeHandler,
     $inputBlurHandler: userIdBlurHandler,
     // $reset: resetuserId,
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   } = emailInput(isNotEmpty);
 
   const {
     $value: userPasswordValue,
-<<<<<<< HEAD
-    $isValid: userPasswordValueIsValid,
-    $hasError: userPasswordHasError,
-    $valueChangeHandler: userPasswordChangeHandler,
-    $inputBlurHandler: userPasswordBlurHandler,
-    $reset: resetuserPassword,
-  } = useInput(isNotEmpty);
-
-  const loginHandleKey = (eve) => {
-    if (eve.key == "Enter") {
-      loginHandleClick();
-    }
-  };
-  const logout = () => {
-    setUserData(null);
-    console.log(userData);
-    setAccessToken(null);
-    console.log(accesstoken);
-    localStorage.setItem("key", null);
-    const tt = localStorage.getItem("key");
-    console.log(tt);
-  };
-=======
     // $isValid: userPasswordValueIsValid,
     $hasError: userPasswordHasError,
     $valueChangeHandler: userPasswordChangeHandler,
@@ -227,21 +170,23 @@ function Login(props) {
   };
 
   // 로그인 함수
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   const loginHandleClick = async () => {
     const loginData = { email: userIdValue, password: userPasswordValue };
 
     if (!loginData.email) {
       console.log("이메일은 필수 입력값입니다.");
+      swal("이메일을 입력해주세요");
       return;
     }
     if (!isValidEmailFormat(loginData.email)) {
       console.log("이메일 형식이 올바르지 않습니다.");
+      swal("이메일 형식이 올바르지 않습니다");
       return;
     }
 
     if (!loginData.password) {
       console.log("비밀번호는 필수 입력값입니다.");
+      swal("비밀번호를 입력해주세요");
       return;
     }
 
@@ -253,53 +198,29 @@ function Login(props) {
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       localStorage.setItem("key", response.headers.authorization);
-      console.log(accesstoken, 789);
+      // console.log(accesstoken, 789);
       navigate("/");
       // console.log(postData, 123);
-      console.log(response, 456);
+      // console.log(response, 456);
       setLoading(false);
-<<<<<<< HEAD
-=======
       getUser(response.data.memberId);
 
       //로그인 성공 시, 유저 정보 받아오기
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     } catch (error) {
       console.log(loginData);
-      console.error("Error posting data:", error);
-      setError("데이터 전송에 실패했습니다.");
+      console.error("Error posting data:", error.response.data.message);
+      if (error.response.data.message === "Member Not Found") {
+        swal("존재하지 않는 회원입니다");
+      }
+      if (error.response.data.message === "Wrong Password") {
+        swal("비밀번호가 틀렸습니다");
+      }
+
+      // setError("데이터 전송에 실패했습니다.");
       setLoading(false);
     }
   };
 
-<<<<<<< HEAD
-  const socialLoginHandler = async (provider) => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `/api1/oauth2/authorization/${provider}`
-        // "/api1/oauth2/authorization/google"
-      );
-      setUserData(response.data);
-      console.log(response.headers.authorization);
-      setAccessToken(response.headers.authorization);
-      localStorage.setItem("key", response.headers.authorization);
-      navigate("/");
-      // console.log(postData, 123);
-      console.log(response, 456);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error posting data:", error);
-      setError("데이터 전송에 실패했습니다.");
-      setLoading(false);
-    }
-  };
-
-  // const loginHandleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setLoginData({ ...loginData, [name]: value });
-  // };
-=======
   // const socialLoginHandler = async (provider) => {
   //   try {
   //     setLoading(true);
@@ -321,128 +242,8 @@ function Login(props) {
   //     setLoading(false);
   //   }
   // };
-  
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
-<<<<<<< HEAD
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        padding: "0px 0px 50% 0px",
-      }}
-    >
-      <img
-        src="assets/cats/cat.png"
-        alt=""
-        style={{ width: "150px", height: "150px" }}
-      />
-
-      <div
-        style={{
-          display: "inline-block",
-          width: "200px",
-          height: "240px",
-          margin: "30px 0px 0px 0px",
-        }}
-      >
-        <AuthInput
-          label="아이디"
-          type="text"
-          id="userId"
-          placeholder="아이디 입력"
-          $value={userIdValue}
-          onChange={userIdChangeHandler}
-          onBlur={userIdBlurHandler}
-          $hasError={userIdHasError}
-          $errorText={userIdHasError}
-          onKeyPress={loginHandleKey}
-        />
-        <AuthInput
-          label="비밀번호"
-          type="password"
-          id="userPassword"
-          placeholder="비밀번호 입력"
-          $value={userPasswordValue}
-          onChange={userPasswordChangeHandler}
-          onBlur={userPasswordBlurHandler}
-          $hasError={userPasswordHasError}
-          $errorText="필수 입력값입니다"
-          onKeyPress={loginHandleKey}
-        />
-
-        <Button
-          as="input"
-          type="button"
-          value="로그인"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={loginHandleClick}
-        />
-        <Button
-          as="input"
-          type="button"
-          value="로그아웃"
-          style={{ margin: "10px 0px 0px 0px" }}
-          onClick={logout}
-        />
-      </div>
-      <div
-        className="border-top"
-        style={{ width: "200px", margin: "10px 0px 0px 0px" }}
-      >
-        <Button
-          as="input"
-          onClick={() => socialLoginHandler("google")}
-          type="button"
-          value=""
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            width: "50%",
-            height: "40%",
-            backgroundImage: `url(/assets/icons/Google1.png)`,
-            backgroundSize: "cover",
-            backgroundPosition: "left center",
-          }}
-        ></Button>
-
-        <Button
-          as="input"
-          onClick={() => socialLoginHandler("kakao")}
-          type="button"
-          value=""
-          style={{
-            backgroundColor: "yellow",
-            color: "black",
-            width: "50%",
-            height: "40%",
-            backgroundImage: `url(/assets/icons/kakao_login_large.png)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></Button>
-
-        <Link to="/Signup" className="nav-link">
-          <Button
-            as="input"
-            type="button"
-            value="회원가입"
-            style={{ margin: "10px 0px 0px 0px" }}
-          />
-        </Link>
-=======
     <div>
       <div>
         <Wave
@@ -478,45 +279,46 @@ function Login(props) {
             points: 2,
           }}
         />
-        <div className="login-wrapper"></div>
         <div className="login-inputbox">
-          <AuthInput
-            label="이메일"
-            type="text"
-            id="userId"
-            placeholder="이메일 입력"
-            $value={userIdValue}
-            onChange={userIdChangeHandler}
-            onBlur={userIdBlurHandler}
-            $hasError={userIdHasError}
-            $errorText={userIdHasError}
-            onKeyPress={loginHandleKey}
-          />
-          <br />
-          <AuthInput
-            label="비밀번호"
-            type="password"
-            id="userPassword"
-            placeholder="비밀번호 입력"
-            $value={userPasswordValue}
-            onChange={userPasswordChangeHandler}
-            onBlur={userPasswordBlurHandler}
-            $hasError={userPasswordHasError}
-            $errorText="필수 입력값입니다"
-            onKeyPress={loginHandleKey}
-          />
-          <div className="login-buttonbox">
-            <span className="login-button" onClick={() => loginHandleClick()}>
-              로그인
-            </span>
-            <span className="login-button" onClick={() => register()}>
-              회원가입
-            </span>
+          <div className="login-input">
+            <AuthInput
+              className="login"
+              label="이메일"
+              type="text"
+              id="userId"
+              placeholder="이메일 입력"
+              $value={userIdValue}
+              onChange={userIdChangeHandler}
+              onBlur={userIdBlurHandler}
+              $hasError={userIdHasError}
+              $errorText={userIdHasError}
+              onKeyPress={loginHandleKey}
+            />
+            <AuthInput
+              label="비밀번호"
+              type="password"
+              id="userPassword"
+              placeholder="비밀번호 입력"
+              $value={userPasswordValue}
+              onChange={userPasswordChangeHandler}
+              onBlur={userPasswordBlurHandler}
+              $hasError={userPasswordHasError}
+              $errorText="필수 입력값입니다"
+              onKeyPress={loginHandleKey}
+            />
+
+            <div className="login-buttonbox">
+              <span className="login-button" onClick={() => loginHandleClick()}>
+                로그인
+              </span>
+              <span className="login-button" onClick={() => register()}>
+                회원가입
+              </span>
+            </div>
           </div>
         </div>
         <div className="login-island" />
         <div className="login-cat" />
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       </div>
     </div>
   );

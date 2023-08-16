@@ -1,11 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-<<<<<<< HEAD
-const port = 3001; // 원하는 포트 번호로 변경 가능
-=======
 const port = 3000; // 원하는 포트 번호로 변경 가능
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 // JSON 형태의 데이터를 파싱하기 위해 bodyParser 사용
 app.use(bodyParser.json());

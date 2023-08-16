@@ -1,3 +1,10 @@
+.fishing-wrapper {
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .fishing {
   position: absolute;
   width: 100%;
@@ -55,4 +62,20 @@
   font-weight: bold;
   text-align: center;
   color: #fff;
+}
+
+.fishing_wave1 {
+  height: 90%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -3;
+  opacity: 0.9;
+}
+.fishing_wave2 {
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -3;
 }

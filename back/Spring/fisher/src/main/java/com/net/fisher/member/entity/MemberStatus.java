@@ -32,22 +32,13 @@ public class MemberStatus{
     @Column(name = "level")
     private int level;
 
-<<<<<<< HEAD
-    @Column(name = "is_newbee")
-    private int isNewBee;
-=======
     @Column(name = "is_newbie")
     private int isNewBie;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
     @Column(name = "tutorial_progress")
     private int tutorialProgress;
 
-<<<<<<< HEAD
-
-=======
     public int setIsNewBie(int isNewBie) {
         return this.isNewBie = isNewBie;
     }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }

@@ -1,18 +1,6 @@
 import React from "react";
 import "./FishDetailModal.css";
 
-<<<<<<< HEAD
-const FishDetailModal = ({ fishData, onClose }) => {
-  const { fishId, imgUrl, name, info } = fishData;
-
-  return (
-    <div className="fish-detail-modal container">
-      <div className="modal-content">
-        <img src={"http://passportlkm.iptime.org:20101" + imgUrl} alt={name} />
-        <h3>{name}</h3>
-        <p>{info}</p>
-        <button onClick={onClose}>닫기</button>
-=======
 const FishDetailModal = ({ fishData, userFishData, onClose }) => {
   const { fishId, imgUrl, name, info } = fishData;
 
@@ -48,7 +36,6 @@ const FishDetailModal = ({ fishData, userFishData, onClose }) => {
           onClick={onClose}
         />{" "}
         {/* <button onClick={onClose}>닫기</button> */}
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       </div>
     </div>
   );

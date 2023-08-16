@@ -1,15 +1,4 @@
 .modal_wrap {
-<<<<<<< HEAD
-  position: fixed;
-  inset: 4.5%;
-  background-color: rgba(62, 92, 203, 0.742);
-  border-radius: 20px;
-  /* display: flex; */
-  justify-content: center;
-  width: 90%;
-  height: 90%;
-  color: #fff;
-=======
   padding-top: 1.5rem;
   padding-left: 0.5rem;
   position: fixed;
@@ -33,7 +22,6 @@
   position: absolute;
   top: -1.6rem;
   left: -2rem;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 .presentation {
@@ -45,19 +33,6 @@
 
 .modal-close {
   position: absolute;
-<<<<<<< HEAD
-  right: 20px;
-  top: 20px;
-  cursor: pointer;
-  z-index: 1000;
-  color: #fff;
-  font-weight: bold;
-}
-
-.modal {
-  position: absolute;
-  padding-left: 10%;
-=======
   background: url("../../../public/assets/icons/close.png");
   width: 2rem;
   height: 2rem;
@@ -98,23 +73,18 @@
   background: url("../../../public/assets/icons/like2.png");
   width: 2rem;
   height: 2rem;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }
 
 .modal-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   text-align: center;
-<<<<<<< HEAD
-  padding: 5%;
-}
-
-.modal-information {
-  font-size: 1rem;
-  padding-left: 5%;
-=======
   margin-bottom: 1.3rem;
   margin-top: 1.3rem;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide any overflowed content */
+  text-overflow: ellipsis;
+  width: 50%;
 }
 .modal-information {
   display: grid;
@@ -155,6 +125,11 @@
 .modal-info-title {
   font-weight: bold;
 }
+.modal-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* .map-modal-newbie-cover {
   background: url("../../../public/assets/images/cover1.png") center center
     no-repeat;
@@ -185,5 +160,4 @@
   position: absolute;
   width: 6rem;
   height: 6rem;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 }

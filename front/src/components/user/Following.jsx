@@ -3,10 +3,6 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
 import FollowerModal from "./FollowerModal";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-=======
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 function Following(props) {
   const [userData] = useRecoilState(loginuser);
@@ -14,19 +10,11 @@ function Following(props) {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-<<<<<<< HEAD
-  const navigate = useNavigate();
-
-  // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-=======
   // 모달창 노출
   const showModal = () => {
     if (props.user === userData.memberId) {
       setModalOpen(true);
     }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   };
 
   const getFllowing = async () => {
@@ -56,14 +44,10 @@ function Following(props) {
 
   return (
     <div>
-<<<<<<< HEAD
-      <p onClick={showModal}>팔로잉: {followingData.count}</p>
-=======
       <div onClick={showModal}>
         {followingData.count}
         <div>팔로잉</div>
       </div>
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followingData.data} />
       )}

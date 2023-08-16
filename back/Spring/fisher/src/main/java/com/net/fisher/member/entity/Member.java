@@ -54,11 +54,7 @@ public class Member {
     @CreatedDate
     private LocalDateTime registeredAt;
 
-<<<<<<< HEAD
-    @OneToOne(cascade = CascadeType.REMOVE)
-=======
     @OneToOne(cascade = CascadeType.REMOVE/*,fetch = FetchType.EAGER*/)
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     private MemberImage memberImage;
 
 

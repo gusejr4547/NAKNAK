@@ -13,6 +13,19 @@
   padding: 5%;
 }
 
+.camera-shape-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 70%;
+  height: 50%;
+  border-radius: 50%;
+  opacity: 0.6;
+  /* background-color: red; */
+  /* 도형에 대한 스타일 (예: 너비, 높이, 배경 등) */
+}
+
 /* .cameracontent {
   height: 60%;
 } */

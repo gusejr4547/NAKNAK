@@ -160,21 +160,23 @@ const MapModal = () => {
         <span onClick={() => setModalOpen(false)} className="modal-close" />
 
         {/* <div className={`modal-title ${newbie && "newbie-data"}`}> */}
-        <div className="modal-title">
-          {weatherInfo?.title}
-          {/* 즐겨찾기 버튼 */}
-          {weatherInfo?.pk && (
-            <span
-              onClick={() => {
-                if (like === false) {
-                  likeLocation();
-                } else {
-                  unlikeLocation();
-                }
-              }}
-              className={like === false ? "like-location" : "unlike-location"}
-            />
-          )}
+        <div className="modal-title-container">
+          <span className="modal-title">
+            {weatherInfo?.title}
+            {/* 즐겨찾기 버튼 */}
+            {weatherInfo?.pk && (
+              <span
+                onClick={() => {
+                  if (like === false) {
+                    likeLocation();
+                  } else {
+                    unlikeLocation();
+                  }
+                }}
+                className={like === false ? "like-location" : "unlike-location"}
+              />
+            )}
+          </span>
         </div>
         {/* <div className={`modal-information" && newbie ? "newbie-data" : ""}`}> */}
         <div className="modal-information">
@@ -226,7 +228,7 @@ const MapModal = () => {
             <span className="modal-info">
               <span className="modal-info-title">강수량</span>
               <br />
-              {weatherInfo?.PCP} mm
+              {weatherInfo?.PCP}
             </span>
           )}
 
@@ -238,9 +240,9 @@ const MapModal = () => {
 
           {weatherInfo?.SNO !== "적설없음" && (
             <span className="modal-info">
-              <span className="modal-info-title">1시간 신적설</span>
+              <span className="modal-info-title">신적설</span>
               <br />
-              {weatherInfo?.SNO} cm
+              {weatherInfo?.SNO}
             </span>
           )}
         </div>

@@ -1,25 +1,16 @@
 package com.net.fisher.post.repository;
 
-<<<<<<< HEAD
-import com.net.fisher.post.entity.Post;
-import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-=======
 import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.Tag;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-<<<<<<< HEAD
-import org.springframework.stereotype.Repository;
-
-=======
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Modifying
@@ -39,8 +29,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT c FROM posts c WHERE c.member.memberId = :memberId")
     Page<Post> findPostByMemberIdFromPage(Pageable pageable, long memberId);
 
-<<<<<<< HEAD
-=======
 
     @Query(value = "select * from posts p where p.member_id in ( select f.follow_member_id from follows f where f.member_id = :memberId ) AND p.registered_at <= :time",
             countQuery = "select * from posts p where p.member_id in ( select f.follow_member_id from follows f where f.member_id = :memberId ) AND p.registered_at <= :time",
@@ -75,5 +63,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "where pt.tag = :tag")
     Page<Post> findByTag(Pageable pageable, Tag tag);
 
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
+
+    @EntityGraph(attributePaths = {"postTagList"})
+    @Query(value = "select p from posts p")
+    List<Post> findAllPost();
 }

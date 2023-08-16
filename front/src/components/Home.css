@@ -52,8 +52,6 @@
 .slick-slider {
   position: static !important;
 }
-<<<<<<< HEAD
-=======
 
 /* 뉴비 모드에서 클릭이벤트 막기 */
 .home-slide.non-clickable {
@@ -83,4 +81,3 @@
   bottom: 8.5rem;
   left: 12.5rem;
 }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

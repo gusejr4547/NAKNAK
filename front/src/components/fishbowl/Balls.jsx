@@ -1,41 +1,27 @@
-<<<<<<< HEAD
-import React, { useEffect } from "react";
-
-export class ImageObject {
-  constructor(x, y, imageUrl) {
-=======
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
     this.canvas = canvas;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     this.x = x;
     this.y = y;
     this.image = new Image();
     this.image.src = imageUrl;
     this.size = 100; // 필요에 따라 이미지 크기를 조정하세요
     this.angle = Math.random() * (Math.PI * 2);
-<<<<<<< HEAD
-    this.power = 1;
-=======
     this.power = 0.5;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     this.directionX = this.power * Math.cos(this.angle);
     this.weight = this.power * Math.sin(this.angle);
     this.isDragging = false;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
-<<<<<<< HEAD
-=======
     // 캔버스 내부에 이미지가 나타나도록 x, y 좌표를 제한합니다.
     this.x = Math.max(this.size / 2, Math.min(x, canvas.width - this.size / 2));
     this.y = Math.max(
       this.size / 2,
       Math.min(y, canvas.height - this.size / 2)
     );
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   }
 
   onTouchStart(event) {
@@ -77,15 +63,6 @@ export class ImageObject {
   }
 
   draw(ctx) {
-<<<<<<< HEAD
-    ctx.drawImage(
-      this.image,
-      this.x - this.size / 2,
-      this.y - this.size / 2,
-      this.size,
-      this.size
-    );
-=======
     ctx.imageSmoothingEnabled = true; // 안티앨리어싱 비활성화
     var rotation = Math.atan2(-this.weight, -this.directionX);
     ctx.save();
@@ -121,7 +98,6 @@ export class ImageObject {
     //   this.size,
     //   this.size
     // );
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   }
 }
 
@@ -208,12 +184,6 @@ const loadBackgroundImage = (url, canvas, ctx) => {
 const image = new Image();
 image.src = "./assets/dom1.png";
 
-<<<<<<< HEAD
-const ballSize = 50;
-
-const Balls = () => {
-  const onStart = () => {
-=======
 const Balls = () => {
   const [fishBowlData, setFishBowlData] = useState(undefined);
 
@@ -239,26 +209,10 @@ const Balls = () => {
     if (!fishBowlData) {
       return; // 데이터가 아직 로드되지 않은 경우 일찍 반환
     }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-<<<<<<< HEAD
-
-    let images = []; // 배열 이름을 'images'로 변경
-    const imageUrls = [
-      "./assets/dom1.png",
-      "./assets/dom1.png",
-      "./assets/dom1.png",
-    ]; // 표시할 이미지 URL을 추가합니다.
-
-    const init = () => {
-      for (let i = 0; i < imageUrls.length; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const image = new ImageObject(x, y, imageUrls[i]);
-=======
     const imageUrls = [];
     console.log(fishBowlData);
     if (fishBowlData) {
@@ -283,7 +237,6 @@ const Balls = () => {
         // const y = Math.random() * canvas.height;
         const y = 100 + Math.random() * (canvas.height - 200);
         const image = new ImageObject(canvas, x, y, imageUrls[i]);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         image.touchstart = image.onTouchStart.bind(image);
         image.touchmove = image.onTouchMove.bind(image);
         image.touchend = image.onTouchEnd.bind(image);
@@ -295,11 +248,6 @@ const Balls = () => {
     };
 
     function animate() {
-<<<<<<< HEAD
-      loadBackgroundImage("./assets/images/badabada.png", canvas, ctx);
-      ctx.fillStyle = "rgba(255,255,255,0.5)";
-      // ctx.fillRect(0, 0, canvas.width, canvas.height);
-=======
       // // 캔버스를 하나 더 생성합니다.
       // const offscreenCanvas = document.createElement("canvas");
       // offscreenCanvas.width = canvas.width;
@@ -333,7 +281,6 @@ const Balls = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height); // 화면 지우기
       // loadBackgroundImage("./assets/images/badabada.png", canvas, ctx); // 배경화면
       ctx.fillStyle = "rgba(255,255,255,0.5)";
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
       for (let i = 0; i < images.length; i++) {
         images[i].update(canvas);
         images[i].draw(ctx);
@@ -381,20 +328,6 @@ const Balls = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    onStart();
-  }, []);
-
-  return (
-    <canvas
-      className="h-full rounded-full"
-      id="canvas"
-      style={{
-        height: "95vh",
-        width: "100vw",
-      }}
-    ></canvas>
-=======
     if (fishBowlData) {
       onStart();
     }
@@ -418,7 +351,6 @@ const Balls = () => {
         <div>로딩 중...</div>
       )}
     </div>
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   );
 };
 

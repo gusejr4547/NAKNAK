@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -41,7 +45,6 @@ class _LoadingState extends State<Loading> {
         final myData = prefs.getDouble('latitude');
         print(myData);
         // sendLocationDataToServer(currentPosition!.latitude, currentPosition!.longitude);
-
         print("Current Position: $currentPosition");
       } catch (e) {
         print("Error getting location: $e");
@@ -51,12 +54,9 @@ class _LoadingState extends State<Loading> {
     }
   }
 
-
-
   void abc(latitude, longitude) {
 
   }
-
 
   // 위치 서비스가 꺼져있을 때 대화 상자를 표시하는 함수
   void showLocationServiceAlertDialog() {
@@ -117,7 +117,6 @@ class _LoadingState extends State<Loading> {
       ),
     );
   }
-
 }
 
 

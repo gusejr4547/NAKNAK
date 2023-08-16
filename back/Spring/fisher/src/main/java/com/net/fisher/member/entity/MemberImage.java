@@ -1,9 +1,6 @@
 package com.net.fisher.member.entity;
 
-<<<<<<< HEAD
-=======
 import com.fasterxml.jackson.annotation.JsonFormat;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,9 +33,6 @@ public class MemberImage {
 
     @Column(nullable = false)
     @CreatedDate
-<<<<<<< HEAD
-=======
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     private LocalDateTime modifiedAt;
 }

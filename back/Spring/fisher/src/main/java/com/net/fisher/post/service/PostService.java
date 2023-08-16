@@ -5,13 +5,6 @@ import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
 import com.net.fisher.file.service.FileService;
 import com.net.fisher.member.entity.Member;
-<<<<<<< HEAD
-import com.net.fisher.member.repository.MemberRepository;
-import com.net.fisher.post.dto.LikeDto;
-import com.net.fisher.post.dto.PostDto;
-import com.net.fisher.post.entity.*;
-import com.net.fisher.post.repository.*;
-=======
 import com.net.fisher.member.repository.FollowRepository;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.post.dto.LikeDto;
@@ -20,32 +13,28 @@ import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
 import com.net.fisher.response.PostResponse;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
+import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-<<<<<<< HEAD
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-=======
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-=======
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.*;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 @Service
 @RequiredArgsConstructor
@@ -58,11 +47,13 @@ public class PostService {
     private final LikeRepository likeRepository;
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
-<<<<<<< HEAD
-=======
     private final FollowRepository followRepository;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Value("${app.dataupload.uploadDir}")
+    String uploadFolder;
+    @Value("${app.dataupload.uploadPath}")
+    String uploadPath;
 
     @Transactional
     public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
@@ -75,11 +66,7 @@ public class PostService {
 
             // Tag 테이블에 등록, PostTag 에 등록
             PostTag postTag = null;
-<<<<<<< HEAD
-            if(tagList != null){
-=======
             if (tagList != null) {
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
                 for (Tag tagInfo : tagList) {
                     Tag tag = tagRepository.findByTagName(tagInfo.getTagName()).orElse(
                             Tag.builder().tagName(tagInfo.getTagName()).build());
@@ -110,7 +97,6 @@ public class PostService {
 
                 postImageRepository.save(postImage);
             }
-
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(e.getExceptionCode());
         } catch (IOException e) {
@@ -134,10 +120,6 @@ public class PostService {
         return postImages;
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     @Transactional
     public void increaseViews(long postId) {
         postRepository.upCountByPostId(postId);
@@ -159,18 +141,7 @@ public class PostService {
         // 기존 태그와 비교해서 새로운 태그는 추가
         Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
         Set<Tag> newTags = new HashSet<>();
-<<<<<<< HEAD
-        for (Tag tag : postPatchDto.getTags()) {
-            System.out.println("#############");
-            System.out.println(tag);
-            if (!tagRepository.existsTagByTagName(tag.getTagName())) {
-                tag = tagRepository.save(tag);
-                newTags.add(tag);
-            } else {
-                tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUNT));
-                newTags.add(tag);
-=======
-        if(postPatchDto.getTags() != null){
+        if (postPatchDto.getTags() != null) {
             for (Tag tag : postPatchDto.getTags()) {
 //                System.out.println("#############");
 //                System.out.println(tag);
@@ -181,7 +152,6 @@ public class PostService {
                     tag = tagRepository.findByTagName(tag.getTagName()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
                     newTags.add(tag);
                 }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
             }
         }
 
@@ -197,30 +167,23 @@ public class PostService {
         newTags.removeAll(copyTags);
         System.out.println(newTags);
         PostTag postTag = null;
-<<<<<<< HEAD
-        for(Tag tag : newTags){
-=======
         for (Tag tag : newTags) {
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
             postTag = PostTag.builder().tag(tag).post(post).build();
             postTagRepository.save(postTag);
         }
 
-<<<<<<< HEAD
-=======
         // 이미지 삭제 할 것 있으면 삭제
-        if(postPatchDto.getDeleteImageList() != null){
-            for(long id : postPatchDto.getDeleteImageList()){
+        if (postPatchDto.getDeleteImageList() != null) {
+            for (long id : postPatchDto.getDeleteImageList()) {
                 PostImage postImage = postImageRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
 
-                if(postImage.getPost() != post){
+                if (postImage.getPost() != post) {
                     throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
                 }
 
                 postImageRepository.delete(postImage);
             }
         }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     }
 
     @Transactional
@@ -260,32 +223,11 @@ public class PostService {
     }
 
     @Transactional
-<<<<<<< HEAD
-    public void likePost(long tokenId, LikeDto.Post likePostDto) {
-=======
     public long likePost(long tokenId, long postId) {
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
         Member member = memberRepository.findById(tokenId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-<<<<<<< HEAD
-        Post post = postRepository.findById(likePostDto.getPostId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
-
-        // 이미 좋아요를 눌린 사람이 접근 한 경우
-        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId())
-                .orElse(Like.builder().post(post).member(member).build());
-
-        likeRepository.save(like);
-    }
-
-    @Transactional
-    public void unlikePost(long tokenId, LikeDto.Post likePostDto) {
-        Like like = likeRepository.findByMemberIdAndPostId(tokenId, likePostDto.getPostId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKE_NOT_FOUND));
-
-        likeRepository.delete(like);
-=======
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
@@ -317,7 +259,6 @@ public class PostService {
         postRepository.save(post);
 
         return post.getLikes();
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     }
 
     public long getLikeCount(long postId) {
@@ -332,11 +273,7 @@ public class PostService {
         return tagRepository.findAll();
     }
 
-<<<<<<< HEAD
-    public List<Post> getMyAllPost(long tokenId){
-=======
     public List<Post> getMyAllPost(long tokenId) {
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 
         return null;
@@ -346,11 +283,7 @@ public class PostService {
         return postRepository.findPostByMemberIdFromPage(pageable, tokenId);
     }
 
-<<<<<<< HEAD
-    public PostImage getOnePostImageByPost(Post post){
-=======
     public PostImage getOnePostImageByPost(Post post) {
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         return postImageRepository.findFirstByPost(post);
     }
 
@@ -358,14 +291,6 @@ public class PostService {
         return likeRepository.findPostByMemberId(pageable, tokenId);
     }
 
-<<<<<<< HEAD
-    public Page<Post> getDefaultPost(Pageable pageable) {
-        return postRepository.findAll(pageable);
-    }
-
-    public Page<Post> getPostFromFollowing(Long memberId, Pageable pageable) {
-        return null;
-=======
     public Page<Post> getDefaultPost(Pageable pageable, LocalDateTime time) {
         return postRepository.findAll(pageable);
     }
@@ -387,7 +312,7 @@ public class PostService {
 //        System.out.println("############# 팔로잉");
 //        System.out.println(followingMemberList);
 
-        if(followingMemberList.isEmpty()){
+        if (followingMemberList.isEmpty()) {
             followingMemberList.add(-1l);
         }
 
@@ -399,8 +324,46 @@ public class PostService {
         // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 5개 선택
         List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 5), memberId);
 
+
+        // Mahout 을 이용한 연관 태그 추천
+        try {
+            String filePath = uploadPath + File.separator + uploadFolder + File.separator + "data.csv";
+            String copyFilePath = uploadPath + File.separator + uploadFolder + File.separator + "data_.csv";
+            File file = new File(filePath); // File객체 생성
+            File copyFile = new File(copyFilePath);
+            if (!copyFile.exists()) {
+                copyFile.createNewFile();
+                Files.copy(file.toPath(), copyFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            long fileMod = file.lastModified();
+            long copyMod = copyFile.lastModified();
+            System.out.println("fileMod : " + fileMod);
+            System.out.println("copyMod : " + copyMod);
+
+            if (fileMod > copyMod) {
+                // 원본파일 수정 일자 보다 오래 됬으면 원본파일 복사
+                Files.copy(file.toPath(), copyFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            FileDataModel dm = new FileDataModel(copyFile);
+            LogLikelihoodSimilarity sim = new LogLikelihoodSimilarity(dm);
+            GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(dm, sim);
+            List<RecommendedItem> recommend = recommender.recommend(memberId, 5);
+//            System.out.println("#################");
+            for(RecommendedItem item : recommend){
+//                System.out.println(item.getItemID());
+                myTagInfo.add(item.getItemID());
+            }
+        } catch (IOException e) {
+            throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+        } catch (TasteException e) {
+            throw new BusinessLogicException(ExceptionCode.RECOMMEND_ERROR);
+        }
+
+
         // 모든 이용자가 작성한 태그 중 인기 많은
-        myTagInfo.addAll(postRepository.countTag(PageRequest.of(0,3)));
+//        myTagInfo.addAll(postRepository.countTag(PageRequest.of(0, 3)));
 
 //        System.out.println("############# taginfo");
 //        System.out.println(myTagInfo);
@@ -437,10 +400,9 @@ public class PostService {
         return totalPost;
     }
 
-    public Page<Post> getPostByTag(Pageable pageable, long tagId){
-        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+    public Page<Post> getPostByTag(Pageable pageable, long tagId) {
+        Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
 
         return postRepository.findByTag(pageable, tag);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     }
 }

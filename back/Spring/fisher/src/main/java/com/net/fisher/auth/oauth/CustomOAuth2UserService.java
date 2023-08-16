@@ -95,11 +95,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .member(member)
                 .exp(0)
                 .level(0)
-<<<<<<< HEAD
-                .isNewBee(-1)
-=======
                 .isNewBie(-1)
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
                 .tutorialProgress(0)
                 .point(0)
                 .build();

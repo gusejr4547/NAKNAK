@@ -8,20 +8,6 @@ spring:
     port: 16385
     host: 127.0.0.1
     password: 1747
-<<<<<<< HEAD
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    url: jdbc:h2:~/test
-    password:
-    #driver-class-name: com.mysql.cj.jdbc.Driver
-    #username: root
-    #url: jdbc:mysql://localhost:3306/finaldemo?serverTimezone=Asia/Seoul
-    #password: 1234
-    driver-class-name: org.h2.Driver
-=======
 #  h2:
 #    console:
 #      enabled: true
@@ -34,7 +20,6 @@ spring:
     url: jdbc:mysql://localhost:3306/naknak?serverTimezone=Asia/Seoul
     password: 7818
     #driver-class-name: org.h2.Driver
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   servlet:
     multipart:
       enabled: true
@@ -42,11 +27,7 @@ spring:
       max-request-size: 20MB
   jpa:
     hibernate:
-<<<<<<< HEAD
-      ddl-Auto: create-drop
-=======
       ddl-Auto: update
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
     show-sql: true
     properties:
       hibernate:
@@ -70,11 +51,7 @@ spring:
           google:
             client-id: 541309009451-92mhcite978a3ortbm2c6ruce68hr0lj.apps.googleusercontent.com
             client-secret: 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
-<<<<<<< HEAD
-            redirect-uri: http://passportlkm.iptime.org:20101/login/oauth2/code/google
-=======
             redirect-uri: https://otakubot.store:20101/login/oauth2/code/google
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
             scope:
               - profile
               - email
@@ -84,11 +61,7 @@ spring:
               - account_email
               - profile_nickname
             authorization-grant-type: authorization_code
-<<<<<<< HEAD
-            redirect-uri: http://passportlkm.iptime.org:20101/login/oauth2/code/kakao
-=======
             redirect-uri: https://otakubot.store:20101/login/oauth2/code/kakao
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
             client-name: Kakao
             client-authentication-method: client_secret_post
         provider:
@@ -97,9 +70,6 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-<<<<<<< HEAD
-
-=======
   kafka:
     bootstrap-servers:
       localhost:9092
@@ -127,7 +97,6 @@ spring:
 
       # 데이터를 보낼 때, key/value를 직렬화
       # JSON 데이터를 보낼 것이라면 JsonDeserializer
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 logging:
   level:
     root: info
@@ -141,6 +110,9 @@ app:
   fileupload:
     uploadPath: /SSAFY/dummy/fisher
     uploadDir: upload
+  dataupload:
+    uploadPath: /SSAFY/dummy/fisher
+    uploadDir: data
 jwt:
   secret-key: ihatejavascriptihatevuefuckyoujavascriptfuckyouvuefreehongkong
   access-token-expiration-sec: 1800
@@ -150,9 +122,6 @@ mail:
   address:
     admin: ssafy@ssafy.com
 server:
-<<<<<<< HEAD
-  port: 7070
-=======
   port: 7070
   ssl:
     key-store: classpath:ssl/keystore.p12
@@ -163,4 +132,3 @@ message:
   topic:
     name: name
     name2: name2
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

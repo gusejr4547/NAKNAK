@@ -35,11 +35,7 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
         Gson gson = gsonBuilder.setPrettyPrinting().create();
         //Gson gson = new Gson();
         Member member = (Member) authentication.getPrincipal();
-<<<<<<< HEAD
-        System.out.println(member);
-=======
         //System.out.println(member);
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
         String profileImgUrl = null;
         MemberImage memberImage = member.getMemberImage();
         if (memberImage != null) {

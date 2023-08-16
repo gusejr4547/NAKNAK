@@ -1,9 +1,6 @@
 package com.net.fisher.post.entity;
 
-<<<<<<< HEAD
-=======
 import com.fasterxml.jackson.annotation.JsonBackReference;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,3 +32,4 @@ public class PostTag {
         this.tag = tag;
     }
 }
+

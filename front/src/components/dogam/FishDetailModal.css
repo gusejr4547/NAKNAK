@@ -32,17 +32,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
-  justify-content: center;
-  text-align: center;
-}
-
-.modal-content img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 4px;
-=======
   justify-content: flex-start;
   text-align: center;
 }
@@ -55,7 +44,6 @@
   width: 100%;
   max-height: 300px;
   object-fit: cover;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   margin-bottom: 10px;
 }
 
@@ -65,15 +53,6 @@
   margin-bottom: 10px;
 }
 
-<<<<<<< HEAD
-.modal-content p {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.modal-content button {
-=======
 .modal-content-myRecord {
   margin-bottom: 5px;
 }
@@ -86,14 +65,10 @@
 
 /* .modal-content button {
   height: 2rem;
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
-<<<<<<< HEAD
-  border-radius: 4px;
-=======
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
@@ -109,7 +84,6 @@
   border-radius: 1rem;
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
 
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
   cursor: pointer;
   font-size: 16px;
   position: absolute;
@@ -117,11 +91,6 @@
   right: 20px;
 }
 
-<<<<<<< HEAD
-.modal-content button:hover {
-  background-color: #0056b3;
-}
-=======
 .modal-content-explanation {
   background-color: #ffffff;
   padding: 0.3rem;
@@ -144,4 +113,3 @@
 .modal-disable-scrollbar::-webkit-scrollbar {
   display: none;
 }
->>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae

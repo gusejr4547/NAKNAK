@@ -2,20 +2,6 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   webpack: {
-
-    devServer: {
-      port: 3000,
-      liveReload: true,
-      host: "i9e105.p.ssafy.io",
-      allowedHosts: "all",
-      open: true,
-      client: {
-        overlay: true,
-        webSocketURL: "ws://i9e105.p.ssafy.io:443/ws",
-      },
-      compress: true,
-    },
-
     plugins: {
       add: [
         new CopyPlugin({
@@ -38,7 +24,5 @@ module.exports = {
       };
       return config;
     },
-
-
   },
 };
