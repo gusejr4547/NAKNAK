@@ -2,6 +2,13 @@ server:
   port: 8081
 
 spring:
+  datasource:
+    #    url: jdbc:h2:~/test
+    #    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/naknak?serverTimezone=Asia/Seoul
+    password: 7818
   kafka:
     bootstrap-servers:
       i9e105.p.ssafy.io:9092
