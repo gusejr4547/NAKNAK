@@ -182,6 +182,7 @@ public class PostController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime time,
             @PageableDefault(size = 6, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
 
+        System.out.println(time.toString());
         long tokenId = jwtTokenizer.getMemberId(token);
         Page<Post> postPage = null;
 
