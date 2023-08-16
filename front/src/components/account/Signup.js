@@ -135,10 +135,12 @@ function Signup(props) {
         console.log(pair[0] + ", " + pair[1]);
       }
       const member = "/api/members/register";
+
       // const response = await axios.post("/api1/api/members/register", formData);
       const response = await axios.post("/api1" + member, formData, {
         headers: header,
       });
+
       // setPostData(response.data);
       navigate("/Login");
       // console.log(postData, 123);

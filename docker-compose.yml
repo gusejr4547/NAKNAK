@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # logserver:
+  #   build:
+  #     context: ./back/fisher-log-server
+  #     dockerfile: dockerfile
+  #   image: logserver-image/logserver:latest
+  #   ports: 
+  #     - "8081:8081"
+  #   networks:
+  #     - spring-redis
+  #   container_name: logserver
+  
+  nginx:
+    build:
+      context: ./front
+      dockerfile: dockerfile
+    image: nginx-image/nginx:latest
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - spring-redis
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    container_name: nginx
+    #dns_search: s09p12e105_spring-redis
+
+  react:
+    build:
+      context: ./front
+      dockerfile: dockerfile_test
+    image: react-image/react:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - spring-redis
+    container_name: react
+
+networks:
+  spring-redis:
+    external: true
+      
+volumes:
+  vol:
