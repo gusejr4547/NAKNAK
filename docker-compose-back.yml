@@ -2,20 +2,20 @@ version: '3'
 
 services:
   mysql:
-  image: mysql:8.0.33
-  container_name: mysql
-  environment:
+    image: mysql:8.0.33
+    container_name: mysql
+    environment:
       MYSQL_ROOT_PASSWORD: 7818
       MYSQL_DATABASE: naknak
-  ports:
-    - "3306:3306"
-  networks:
-    - spring-redis
-  volumes:
-    - ./mysql/conf.d:/etc/mysql/conf.d # MySQL 설정 파일 위치
-  command:
-    - "--character-set-server=utf8mb4"
-    - "--collation-server=utf8mb4_unicode_ci"
+    ports:
+      - "3306:3306"
+    networks:
+      - spring-redis
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d # MySQL 설정 파일 위치
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
 
   mongodb:
     image: mongo
@@ -37,8 +37,6 @@ services:
     networks:
       - spring-redis
     container_name: redis
-
-
 
 networks:
   spring-redis:

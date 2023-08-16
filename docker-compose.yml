@@ -51,10 +51,10 @@ services:
       - "8081:8081"
     networks:
       - spring-redis
-    depends_on:
-      - redis
-      - mysql
-      - mongodb
+    # depends_on:
+    #   - redis
+    #   - mysql
+    #   - mongodb
     container_name: logserver
 
   # redis:
