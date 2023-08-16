@@ -15,7 +15,7 @@ function Follower(props) {
 
   // 모달창 노출
   const showModal = () => {
-    if (props.user === userData.memberId) {
+    if (props.user === userData.memberId && props.activeView !== "aquarium") {
       setModalOpen(true);
     }
   };

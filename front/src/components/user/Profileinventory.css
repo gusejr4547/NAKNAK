@@ -1,4 +1,6 @@
 .profileinventorybox {
+  width: 90%;
+
   justify-content: center;
   align-items: center;
   border: 1px solid rgb(255, 255, 255);
