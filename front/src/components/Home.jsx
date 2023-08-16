@@ -74,7 +74,16 @@ function Home({ newbieVersion }) {
               </Link>
             </div>
             {/* slide end */}
-
+            {/* slide start */}
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Inventory" className="nav-link">
+                <img src="/assets/homeicons/inventory.png" alt="icon" />
+                <h6>인벤토리</h6>
+              </Link>
+            </div>
+            {/* slide end */}
             {/* slide start */}
             <div
               className={`home-slide ${
@@ -89,18 +98,18 @@ function Home({ newbieVersion }) {
               <h6>카메라</h6>
             </div>
             {/* slide end */}
-
             {/* slide start */}
             <div
-              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+              className={`home-slide ${
+                newbieVersion === 5 ? "non-clickable" : ""
+              }`}
             >
-              <Link to="/Inventory" className="nav-link">
-                <img src="/assets/homeicons/inventory.png" alt="icon" />
-                <h6>인벤토리</h6>
+              <Link to="/Map" className="nav-link">
+                <img src="/assets/icons/ji.png" alt="icon" />
+                <h6>낚시터</h6>
               </Link>
             </div>
             {/* slide end */}
-
             {/* slide start */}
             {userData?.memberId !== undefined ? (
               <div
@@ -121,20 +130,6 @@ function Home({ newbieVersion }) {
               </div>
             )}
             {/* slide end */}
-
-            {/* slide start */}
-            <div
-              className={`home-slide ${
-                newbieVersion === 5 ? "non-clickable" : ""
-              }`}
-            >
-              <Link to="/Map" className="nav-link">
-                <img src="/assets/icons/ji.png" alt="icon" />
-                <h6>낚시터</h6>
-              </Link>
-            </div>
-            {/* slide end */}
-
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -145,7 +140,6 @@ function Home({ newbieVersion }) {
               </Link>
             </div>
             {/* slide end */}
-
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -156,7 +150,6 @@ function Home({ newbieVersion }) {
               </Link>
             </div>
             {/* slide end */}
-
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -167,7 +160,6 @@ function Home({ newbieVersion }) {
               </Link>
             </div>
             {/* slide end */}
-
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -178,7 +170,6 @@ function Home({ newbieVersion }) {
               </Link>
             </div>
             {/* slide end */}
-
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
