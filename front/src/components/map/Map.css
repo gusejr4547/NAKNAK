@@ -1,0 +1,54 @@
+#map {
+  position: absolute;
+  width: 90%;
+  height: 500px;
+  top: 3rem;
+  left: 4.5%;
+  border-radius: 20px;
+  border: 8px solid #ffffff;
+}
+#title {
+  display: absolute;
+  padding-top: 20%;
+}
+.search {
+  position: fixed;
+  bottom: 20rem;
+  left: 1rem;
+}
+
+.search-wrapper {
+  position: fixed;
+  height: 10rem;
+  left: 1.4rem;
+  bottom: 6.5rem;
+}
+
+.map-newbie-talk-box {
+  display: flex;
+  width: 90%;
+  height: 12%;
+  border-radius: 35px;
+  background-color: #ffe48e;
+  border: dashed #ffffff 0.2rem;
+  position: fixed;
+  bottom: 5rem;
+  left: 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}
+.map-newbie-talk {
+  padding: 4%;
+}
+.location {
+  color: rgb(0, 74, 211);
+}
+.next {
+  color: blueviolet;
+  font-weight: bold;
+  position: absolute;
+  right: 1rem;
+  padding-top: 4%;
+  bottom: 0.5rem;
+}

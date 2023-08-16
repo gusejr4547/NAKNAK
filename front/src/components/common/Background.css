@@ -1,0 +1,45 @@
+body {
+  /* background: url("../../../public/assets/images/background1.png") center
+    no-repeat; */
+  background-color: #c5e2eb;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.cat {
+  /* position: absolute; */
+  /* bottom: 7rem; */
+  /* left: 8rem; */
+  /* z-index: -1; */
+  /* scale: 0.5; */
+}
+
+/* 피싱모드일 때 띠 보이게 하기 */
+.hidden {
+  display: none;
+}
+.fishingMode {
+  position: absolute;
+  top: 5%;
+  background-color: yellow;
+  height: 25px;
+  width: 100%;
+  z-index: 2;
+}
+
+.background_wave2 {
+  height: 32%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -4;
+  opacity: 0.8;
+}
+.background_wave1 {
+  height: 21%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0.8;
+  z-index: -3;
+}

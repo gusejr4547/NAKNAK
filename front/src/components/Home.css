@@ -1,0 +1,83 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-image-container {
+  margin-top: 5rem;
+  position: relative;
+}
+
+.home-board {
+  height: 12rem;
+  width: 18rem;
+
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  z-index: 1; /* dogam-wrapper를 다른 요소보다 위에 오도록 z-index를 설정 */
+}
+
+.home-carousel {
+  width: 100%;
+  margin: 0 auto;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+.home-slide {
+  width: 6rem;
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-slide img {
+  width: auto;
+  height: 4.5rem;
+  margin: 0 auto;
+}
+
+.home-slide h6 {
+  color: black;
+  font-weight: bold;
+}
+
+.slick-slider {
+  position: static !important;
+}
+
+/* 뉴비 모드에서 클릭이벤트 막기 */
+.home-slide.non-clickable {
+  pointer-events: none;
+}
+.sleeping_cat {
+  position: fixed;
+  bottom: 6rem;
+  left: 9rem;
+  height: 20rem;
+  width: 20rem;
+  scale: 0.55;
+  background: url("../../public/assets/cats/cat3.png") center no-repeat;
+}
+.fishing_cat {
+  position: fixed;
+  height: 30rem;
+  width: 30rem;
+  bottom: 2rem;
+  left: 3rem;
+  scale: 0.5;
+  background: url("../../public/assets/cats/cat11.gif") center no-repeat;
+}
+.island {
+  position: fixed;
+  z-index: -4;
+  bottom: 8.5rem;
+  left: 12.5rem;
+}

@@ -1,0 +1,58 @@
+.fishing {
+  position: absolute;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50px;
+}
+.box-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-justify: center;
+  width: 100%;
+  height: 500px;
+}
+.box-header span {
+  display: flex;
+  font-size: 40px;
+  font-weight: bold;
+  align-content: center;
+  justify-content: center;
+  color: #fff;
+  align-items: center;
+}
+
+.fishing-box1 {
+  display: flex;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: #a2b2db;
+  justify-content: center;
+  align-content: center;
+}
+
+.mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background-color: #ff6b6b;
+}
+
+.hiddenMode {
+  display: none;
+}
+
+.time {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}

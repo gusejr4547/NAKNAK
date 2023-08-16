@@ -1,0 +1,131 @@
+spring:
+  redis:
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
+    port: 16385
+    host: 127.0.0.1
+    password: 1747
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+  datasource:
+    #    url: jdbc:h2:~/test
+    #    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/naknak?serverTimezone=Asia/Seoul
+    password: 7818
+    #driver-class-name: org.h2.Driver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 20MB
+  jpa:
+    hibernate:
+      ddl-Auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+  mvc:
+    converters:
+      preferred-json-mapper: jackson
+  thymeleaf:
+    prefix: classpath:/static/
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 541309009451-92mhcite978a3ortbm2c6ruce68hr0lj.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: https://otakubot.store:20101/login/oauth2/code/google
+            scope:
+              - profile
+              - email
+          kakao:
+            client-id: 6a4bb2fa60ad461ae820953255846ebf
+            scope:
+              - account_email
+              - profile_nickname
+            authorization-grant-type: authorization_code
+            redirect-uri: https://otakubot.store:20101/login/oauth2/code/kakao
+            client-name: Kakao
+            client-authentication-method: client_secret_post
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+  kafka:
+    bootstrap-servers:
+      localhost:9092
+    consumer:
+      # consumer bootstrap servers가 따로 존재하면 설정
+      # bootstrap-servers: 192.168.0.4:9092
+
+      # 식별 가능한 Consumer Group Id
+      group-id: loggroup,loggroup2
+      # Kafka 서버에 초기 offset이 없거나, 서버에 현재 offset이 더 이상 존재하지 않을 경우 수행할 작업을 설정
+      # latest: 가장 최근에 생산된 메시지로 offeset reset
+      # earliest: 가장 오래된 메시지로 offeset reset
+      # none: offset 정보가 없으면 Exception 발생
+      auto-offset-reset: earliest
+      # 데이터를 받아올 때, key/value를 역직렬화
+      # JSON 데이터를 받아올 것이라면 JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: =*
+      #producer:
+      # producer bootstrap servers가 따로 존재하면 설정
+      # bootstrap-servers: 3.34.97.97:9092
+
+      # 데이터를 보낼 때, key/value를 직렬화
+      # JSON 데이터를 보낼 것이라면 JsonDeserializer
+logging:
+  level:
+    root: info
+  file:
+    name: log/app.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}-%i.log
+      max-file-size: 1MB
+app:
+  fileupload:
+    uploadPath: /SSAFY/dummy/fisher
+    uploadDir: upload
+jwt:
+  secret-key: ihatejavascriptihatevuefuckyoujavascriptfuckyouvuefreehongkong
+  access-token-expiration-sec: 1800
+  refresh-token-expiration-sec: 1209600
+
+mail:
+  address:
+    admin: ssafy@ssafy.com
+server:
+  port: 7070
+  ssl:
+    key-store: classpath:ssl/keystore.p12
+    key-store-type: PKCS12
+    key-store-password: cjswo1!
+
+message:
+  topic:
+    name: name
+    name2: name2

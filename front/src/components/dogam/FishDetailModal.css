@@ -1,0 +1,115 @@
+.fish-detail-modal {
+  z-index: 1;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: auto;
+}
+
+.fish-detail-modal.open {
+  opacity: 1;
+}
+
+.modal-content {
+  width: 90%;
+  height: 600px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 35px;
+  max-width: 500px;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.modal-content-fishImg {
+  background-color: #71b6ff;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.modal-content h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal-content-myRecord {
+  margin-bottom: 5px;
+}
+
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* .modal-content button {
+  height: 2rem;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+} */
+.modal-close-button {
+  height: 2rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.modal-content-explanation {
+  background-color: #ffffff;
+  padding: 0.3rem;
+  border-radius: 10px;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.25);
+
+  height: 11rem;
+  overflow-y: scroll;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+/* 스크룰 바 숨기기 */
+.modal-disable-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal-disable-scrollbar::-webkit-scrollbar {
+  display: none;
+}

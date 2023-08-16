@@ -1,0 +1,19 @@
+.freshman_wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #fbeeac;
+}
+.freshman_wave_wrap {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  width: 90%;
+  top: 4rem;
+  height: 750px;
+  border: 15px solid #fff;
+  border-radius: 50px;
+  left: 5%;
+  overflow: hidden;
+}

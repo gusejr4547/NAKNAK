@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+
+
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.1'
+
+
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.15.1'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.15.1'
+
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.15.1'
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jdk8
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.15.1'
+
+
+    implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
