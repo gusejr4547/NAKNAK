@@ -67,4 +67,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @EntityGraph(attributePaths = {"postTagList"})
     @Query(value = "select p from posts p")
     List<Post> findAllPost();
+
+    @Query(value = "select p from posts p where p.member.memberId not in :followingMemberList and p.registeredAt <= :time")
+    Page<Post> findAllExceptFollowing(Pageable pageable, List<Long> followingMemberList, LocalDateTime time);
 }

@@ -115,7 +115,7 @@ function Footer(props) {
               />
             ) : (
               <FontAwesomeIcon
-                icon="AnglesLeft"
+                icon="fa-angles-left"
                 className={activeNav === 3 ? "nav-item nav-active" : "nav-item"}
               />
             )}

@@ -83,7 +83,7 @@
 }
 
 .profileactive {
-  background: #ffd13c;
+  background: rgb(250, 245, 206);
   font-weight: bold;
   width: 7rem;
   height: 2rem;
@@ -100,7 +100,7 @@
   margin-left: 2%;
   background-color: transparent;
   font-weight: bold;
-  border: #ffd13c solid;
+  border: rgb(250, 245, 206) solid 0.3rem;
   width: 7rem;
   height: 2rem;
   display: inline-block;
