@@ -377,7 +377,6 @@ function Map2() {
           //   console.log(markerPosition);
           const rs = GetXY("toXY", markerPosition.lat, markerPosition.lng);
           // infowindow.open(map, marker);
-          console.log("연결");
 
           Weather(
             closestPreviousTime.date,
