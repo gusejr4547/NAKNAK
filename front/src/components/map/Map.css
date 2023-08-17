@@ -54,9 +54,9 @@
 }
 
 .search-btn {
-  position: fixed;
+  position: absolute;
   right: 2rem;
-  top: 28rem;
+  top: 27rem;
   width: 3rem;
   height: 2rem;
   text-align: center;
