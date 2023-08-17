@@ -5,8 +5,8 @@ import { useRecoilState } from "recoil";
 import { fishingMode_recoil, time_recoil } from "../../utils/atoms";
 import { getFish_recoil } from "../../utils/atoms";
 import Wave from "react-wavify";
-
 import Nowget from "./Nowget";
+import StopWatch from "./StopWatch";
 
 function Fishing(props) {
   const [fishingMode, setFishingMode] = useRecoilState(fishingMode_recoil);
@@ -85,6 +85,8 @@ function Fishing(props) {
 
   return (
     <div className="fishing-wrapper">
+      <div className="fishing-cat"></div>
+      <div className="fishing-ship"></div>
       {/* 앞 파도 */}
       <Wave
         className="fishing_wave1"
@@ -109,34 +111,41 @@ function Fishing(props) {
           points: 3,
         }}
       />
-      <div className="fishing">
+      <div className="fishing-container">
         <div className="box-header">
           <div
             className={
               fishingMode === "selectMode" ? "fishing-box1" : "hiddenMode"
             }
-            onClick={() => start("바다")}
           >
-            <span>낚시 시작</span>
+            <span onClick={() => start("바다")}>낚시 모드 시작</span>
           </div>
           <div
-            className={fishingMode === "selectMode" ? "hiddenMode" : "mode"}
-            onClick={() =>
-              setFishingMode("selectMode") &
-              setTime({ s: 0, m: 0, h: 0, today: 0 }) &
-              getClose()
+            className={
+              fishingMode === "selectMode" ? "hiddenMode" : "fishing-box1"
             }
           >
-            <div>
-              <div className="time">
-                {" "}
-                <div>
-                  <span>종료하기</span>
-                </div>
-                {`${time.h.toString().padStart(2, "0")}:${time.m
-                  .toString()
-                  .padStart(2, "0")}:${time.s.toString().padStart(2, "0")}`}
-              </div>
+            <StopWatch
+              hours={time.h.toString().padStart(2, "0")}
+              minutes={time.m.toString().padStart(2, "0")}
+              seconds={time.s.toString().padStart(2, "0")}
+            />
+          </div>
+        </div>
+        <div className="box-header">
+          <div
+            className={
+              fishingMode === "selectMode" ? "hiddenMode" : "fishing-close"
+            }
+          >
+            <div
+              onClick={() =>
+                setFishingMode("selectMode") &
+                setTime({ s: 0, m: 0, h: 0, today: 0 }) &
+                getClose()
+              }
+            >
+              종료하기
             </div>
           </div>
         </div>

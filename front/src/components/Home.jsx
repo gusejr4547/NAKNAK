@@ -68,12 +68,13 @@ function Home({ newbieVersion }) {
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to="/Dogam" className="nav-link">
-                <img src="/assets/homeicons/dogam.png" alt="icon" />
-                <h6>도감</h6>
+              <Link to="/Balls" className="nav-link">
+                <img src="/assets/homeicons/fishbowl.png" alt="icon" />
+                <h6>수조</h6>
               </Link>
             </div>
             {/* slide end */}
+
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -91,7 +92,7 @@ function Home({ newbieVersion }) {
               }`}
             >
               <Link to="/Map" className="nav-link">
-                <img src="/assets/icons/ji.png" alt="icon" />
+                <img src="/assets/homeIcons/fishing.png" alt="icon" />
                 <h6>낚시터</h6>
               </Link>
             </div>
@@ -111,24 +112,14 @@ function Home({ newbieVersion }) {
             </div>
             {/* slide end */}
             {/* slide start */}
-            {userData?.memberId !== undefined ? (
-              <div
-                className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
-              >
-                <Link
-                  to={`/Profile/:${userData.memberId}`}
-                  className="nav-link"
-                >
-                  <img src="/assets/icons/pro2.png" alt="icon" />
-                  <h6>프로필</h6>
-                </Link>
-              </div>
-            ) : (
-              <div className="home-slide">
-                <img src="/assets/icons/pro2.png" alt="icon" />
-                <h6>프로필</h6>
-              </div>
-            )}
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/FavoriteSpots" className="nav-link">
+                <img src="/assets/homeicons/star.png" alt="icon" />
+                <h6>즐겨찾기</h6>
+              </Link>
+            </div>
             {/* slide end */}
             {/* slide start */}
             <div
@@ -141,12 +132,33 @@ function Home({ newbieVersion }) {
             </div>
             {/* slide end */}
             {/* slide start */}
+            {userData?.memberId !== undefined ? (
+              <div
+                className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+              >
+                <Link
+                  to={`/Profile/:${userData.memberId}`}
+                  className="nav-link"
+                >
+                  <img src="/assets/homeIcons/profile.png" alt="icon" />
+                  <h6>프로필</h6>
+                </Link>
+              </div>
+            ) : (
+              <div className="home-slide">
+                <img src="/assets/homeIcons/profile.png" alt="icon" />
+                <h6>프로필</h6>
+              </div>
+            )}
+            {/* slide end */}
+
+            {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to="/Balls" className="nav-link">
-                <img src="/assets/homeicons/fishbowl.png" alt="icon" />
-                <h6>수조</h6>
+              <Link to="/Dogam" className="nav-link">
+                <img src="/assets/homeicons/dogam.png" alt="icon" />
+                <h6>도감</h6>
               </Link>
             </div>
             {/* slide end */}
@@ -167,16 +179,6 @@ function Home({ newbieVersion }) {
               <Link to="/Achievements" className="nav-link">
                 <img src="/assets/homeicons/awards.png" alt="icon" />
                 <h6>업적</h6>
-              </Link>
-            </div>
-            {/* slide end */}
-            {/* slide start */}
-            <div
-              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
-            >
-              <Link to="/FavoriteSpots" className="nav-link">
-                <img src="/assets/homeicons/star.png" alt="icon" />
-                <h6>즐겨찾기</h6>
               </Link>
             </div>
             {/* slide end */}

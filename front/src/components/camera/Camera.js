@@ -48,7 +48,7 @@ const Camera = () => {
   const navigate = useNavigate();
   const [tts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
-  const [fishbox, setfishbox] = useState([]);
+  const [fishbox, setfishbox] = useState(0);
   const [rulerbox, setrulerbox] = useState({ bounding: [1, 1, 1, 1] });
 
   // const [session, setSession] = useState(null);
@@ -143,6 +143,8 @@ const Camera = () => {
         },
       });
       console.log(response);
+      setrulerbox({ bounding: [1, 1, 1, 1] });
+      setfishbox(0);
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -358,8 +360,14 @@ const Camera = () => {
         )}
         {webcamActive && (
           <img
-            src="./assets/icons/fishpic.png"
+            src="./assets/icons/border.png"
             className="camera-shape-overlay"
+          />
+        )}
+        {webcamActive && (
+          <img
+            src="./assets/icons/fire.png"
+            className="camera-shape-overlay-fire"
           />
         )}
         <canvas
@@ -484,8 +492,7 @@ const Camera = () => {
           </button>
         )}
       </div>
-      {/* )} */}
-      <button onClick={() => dataUpload()}>등록</button>
+      {fishbox !== 0 && <button onClick={() => dataUpload()}>어획 등록</button>}
     </div>
   );
 };

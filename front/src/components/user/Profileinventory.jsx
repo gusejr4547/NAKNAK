@@ -29,11 +29,14 @@ function Profileinventory(props) {
   return (
     <div
       className="profileinventorybox"
-      style={{ display: "flex", justifyContent: "space-evenly", width: "100%" }}
+      style={{ display: "flex", justifyContent: "space-evenly" }}
     >
       <p className="profileinventoryp"> 💰 : {props.point}</p>
       <p className="profileinventoryp"> 🐠 : {invenData.count}</p>
-      <p className="profileinventoryp"> 🐳 : {invenData.maxSize}자</p>
+      <p className="profileinventoryp">
+        {" "}
+        🐳 : {Math.floor(invenData.maxSize / 10)}자
+      </p>
     </div>
   );
 }

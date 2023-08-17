@@ -91,3 +91,23 @@
 .dict-disable-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes www {
+  0% {
+    left: 0%;
+    top: 10%;
+  }
+  100% {
+    left: 50%;
+    top: 10%;
+  }
+}
+
+.dict-img-www {
+  position: relative;
+  animation-name: www;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}

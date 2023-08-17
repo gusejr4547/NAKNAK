@@ -11,9 +11,7 @@ import { Link } from "react-router-dom";
 
 const Feed = ({
   feedInfo,
-  // followerList,
   currentFollowState,
-  // feedLikeState,
   likedFeedData,
   userId,
   onFollowChange,
@@ -33,10 +31,6 @@ const Feed = ({
     ? "feed-following"
     : "feed-not-follow";
 
-  // useEffect(() => {
-  //   setFeedLikeState();
-  // }, [feedLikeState]);
-
   const settings = {
     dots: true,
     infinite: false,
@@ -44,17 +38,13 @@ const Feed = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     swipe: true,
-    prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
-    nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    prevArrow: <></>,
+    nextArrow: <></>,
   };
 
   const followClickHandler = async () => {
     onFollowChange(currentFollowState, feedInfo.memberId);
     console.log("follow btn clicked", feedInfo.memberId);
-  };
-
-  const changeLikeState = () => {
-    setFeedLikeState(!feedLikeState);
   };
 
   const likeClickHandler = () => {
@@ -73,7 +63,6 @@ const Feed = ({
     console.log("tagClicked", userId, feedInfo);
   };
 
-  // useEffect(() => {
   const toggleLikeState = async () => {
     setLoading(true);
     try {
@@ -93,16 +82,12 @@ const Feed = ({
     }
   };
 
-  //   toggleLikeState();
-  // }, []);
-
   return (
     <div className="feed-wrapper">
       <div className="feed-board">
         <div className="feed-header">
           <img
             className="feed-profile-img"
-            // null 값에 feedInfo.post.memberImageUrl가 들어가야함
             src={
               feedInfo.memberImageUrl
                 ? `${process.env.REACT_APP_BACKEND_URL}/` +
@@ -115,7 +100,6 @@ const Feed = ({
             {feedInfo.memberNickname}
           </Link>
 
-          {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.memberId ? (
             <Link
               to={{
@@ -131,7 +115,6 @@ const Feed = ({
               {currentFollowState ? "팔로잉" : "팔로우"}
             </div>
           )}
-          {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
         </div>
 
         {/* carousel start */}
@@ -163,7 +146,6 @@ const Feed = ({
         <div className="feed-footer">
           <div className="feed-insight">
             <div className="feed-likes ">{feedInfo.likeCount} likes</div>
-            {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
             {feedInfo.memberId !== userId && (
               <img
                 src={
@@ -189,11 +171,6 @@ const Feed = ({
             })}
           </div>
         </div>
-        {/* 댓글 DB 아직 미완성 */}
-        {/* <div className="comments">
-            <div className="comment">Comment 1</div>
-            <div className="comment">Comment 2</div>
-          </div> */}
       </div>
     </div>
   );

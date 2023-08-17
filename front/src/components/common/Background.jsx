@@ -12,28 +12,30 @@ const Background = () => {
 
   const handleFishingClick = () => {
     setFishingOpen(!fishingOpen);
+    setActiveNav(2);
   };
-  // 고양이가 자고 있음 => 말풍선에 다양한 팁
-  // 클릭하면 고양이가 일어나고 여러가지 기능 사용 가능
-
   return (
     <span>
       <div
         className={fishingMode === "selectMode" ? "hidden" : "fishingmode"}
         onClick={handleFishingClick}
       >
-        <div className="fishingmode-title">피싱모드</div>
-        <div>
+        <div className="fishinigmode">
+          <span
+            className="fishingmode-title"
+            fishingOpen={fishingOpen}
+            style={{ left: fishingOpen ? "2rem" : "13rem" }}
+          ></span>
           {fishingOpen && (
-            <div className="nowfishing">
+            <span className="nowfishing">
               <Link
                 to="/fishing"
                 className="nav-link"
                 onClick={() => setActiveNav(2)}
               >
-                피싱모드가 진행 중입니다. 클릭하시면 피싱으로 갑니다.
+                피싱모드 진행 중~ 클릭하면 피싱모드로 이동
               </Link>
-            </div>
+            </span>
           )}
         </div>
       </div>

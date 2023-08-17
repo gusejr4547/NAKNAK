@@ -43,7 +43,6 @@ const ModifyFeed = () => {
 
         setContent(response.data.content);
 
-        //tagsname 을 보내야함
         setSelectedTags([...response.data.tags]);
       } catch (error) {
         console.error("feed load error");
@@ -163,8 +162,8 @@ const ModifyFeed = () => {
       alert("태그는 4글자 이하로 입력해주세요.");
       return;
     }
-    // 태그 추가 로직 구현
-    const newTagId = Object.keys(tagListData).length + 1; // 임의의 ID 생성
+    // 태그 추가 로직
+    const newTagId = Object.keys(tagListData).length + 1;
     const newTagObject = { tagId: newTagId, tagName: newTag };
 
     setTagListData({ ...tagListData, [newTagId]: newTagObject });
@@ -194,8 +193,6 @@ const ModifyFeed = () => {
         </div>
       </div>
       <div className="modify-feed-contents">
-        {/* 여기서부터 하나씩 집어넣으면 됨 */}
-
         {/* 이미지첨부버튼 */}
         <div className="modify-feed-image-select-header">
           <h2 className="modify-feed-content-title">Modify Images</h2>
@@ -213,7 +210,7 @@ const ModifyFeed = () => {
                 onClick={() => removeSelectedFile(index, file.fileId)}
               />
               <img
-                src="/assets/icons/minus.png" // 마이너스 아이콘 이미지 경로
+                src="/assets/icons/minus.png"
                 alt="Delete"
                 className="modify-feed-image-delete-button minus-icon"
               />
@@ -257,11 +254,11 @@ const ModifyFeed = () => {
               const tag = tagListData[key];
               return (
                 <FeedTag
-                  key={tag.tagId} // 고유한 키를 제공해야 합니다.
+                  key={tag.tagId}
                   tagInfo={tag}
                   active={selectedTags.some(
                     (selectedTag) => selectedTag.tagName === tag.tagName
-                  )} // 선택 여부를 배열 포함 여부로 판단
+                  )}
                   onClick={() => tagClickHandler(tag)}
                 />
               );

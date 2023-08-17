@@ -52,6 +52,7 @@ const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
         />
       ) : (
         <img
+          style={{ backgroundColor: "rgb(215, 234, 251)" }}
           src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
           alt={"fish img"}
         />

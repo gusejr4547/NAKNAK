@@ -17,7 +17,7 @@ import Profilesea from "../fishbowl/Profilesea";
 function Profile(props) {
   const userId = useParams().userId;
   const temp = userId.slice(1);
-  console.log(temp);
+  // console.log(temp);
 
   const [userData] = useRecoilState(loginuser);
   // const [accesstoken] = useRecoilState(token);
@@ -33,6 +33,9 @@ function Profile(props) {
 
   // 모달창 노출
   const showModal = () => {
+    if (activeView === "aquarium") {
+      return;
+    }
     setModalOpen(true);
   };
 
@@ -47,7 +50,7 @@ function Profile(props) {
         url: `/api1/api/members/${temp}`,
       });
       setProfileData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       setLoading(false); // 데이터 로딩 완료
     } catch (error) {
       console.error("Error posting data:", error);
@@ -157,10 +160,16 @@ function Profile(props) {
                 borderRight: "1px solid gray",
               }}
             >
-              <Following user={profileData.memberResponse.memberId} />
+              <Following
+                user={profileData.memberResponse.memberId}
+                activeView={activeView}
+              />
             </div>
             <div style={{ width: "33%", height: "40%" }}>
-              <Follower user={profileData.memberResponse.memberId} />
+              <Follower
+                user={profileData.memberResponse.memberId}
+                activeView={activeView}
+              />
             </div>
           </div>
         </div>
@@ -173,7 +182,7 @@ function Profile(props) {
           justifyContent: "space-evenly",
           alignItems: "center",
           // borderRadius: "10%",
-          borderBottom: "1px solid #000",
+          // borderBottom: "1px solid #000",
         }}
       >
         <Profileinventory
