@@ -38,7 +38,7 @@ spring:
       # JSON 데이터를 보낼 것이라면 JsonDeserializer
   data:
     mongodb:
-      host: mongodb
+      host: i9e105.p.ssafy.io
       port: 27017
       authentication-database: admin
       #username:
