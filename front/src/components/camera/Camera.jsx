@@ -395,6 +395,7 @@ const Camera = () => {
                     setrulerbox(boxes[1]);
                     setfishbox(boxes[0]);
                   } else if (boxes.length === 1) {
+                    // return;
                     setfishbox(boxes[0]);
                     setrulerbox({ bounding: [1, 1, 1, 1] });
                   }
@@ -447,7 +448,7 @@ const Camera = () => {
       <div className="camera-btn-container">
         {webcamActive ? (
           <button className="camerabutton" onClick={() => stopDetection()}>
-            Stop Detection
+            계측 종료
           </button>
         ) : (
           <button
@@ -458,13 +459,17 @@ const Camera = () => {
               setLastCapturedImage(null)
             }
           >
-            Start Detection
+            계측 시작
           </button>
         )}
       </div>
       {fishbox !== 0 && (
-        <div>
-          <button onClick={() => dataUpload()}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            className="camerabutton"
+            style={{ backgroundColor: "white", color: "black" }}
+            onClick={() => dataUpload()}
+          >
             {fishbox.label} 포획 성공!!!. 등록하시겠습니까?
           </button>
         </div>

@@ -61,8 +61,18 @@ function Home({ newbieVersion }) {
       </div>
       <div className="home-board">
         {sleep ? (
-          <div>"냑냑이를 깨워주세요"</div>
+          <div className="sleep-naknak">냑냑이를 깨워주세요</div>
         ) : (
+          //   <감성돔은 성전환을 하는 어종이다
+          //   수컷으로 태어나 자웅동체가 되고 이후 완전히 분리된다
+
+          // 한국에서 가장 비싼 생선을 아시나요
+          //   금태는 1마리 500g에 3만원 이랍니다
+
+          // 독일과 일본에서는 낚시세를 걷는다는 사실을 알고 계신가요
+          //   환경 보호를 위해서
+
+          // 로마에서는 둥근 어항에 금붕어로르 키우면 불법입니다>
           <Slider {...settings} className="home-carousel">
             {/* slide start */}
             <div

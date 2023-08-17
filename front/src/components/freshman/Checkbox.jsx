@@ -30,8 +30,11 @@ function Checkbox() {
           { id: 1, text: "낚시 채비 법 알아보기", completed: false },
           { id: 2, text: "미끼 챙기기", completed: false },
           { id: 3, text: "장소찾기", completed: false },
+          { id: 4, text: "릴 구매하는 방법 시청", completed: false },
+          { id: 5, text: "캐스팅 하는 방법 시청", completed: false },
         ];
   });
+
   const talkContents = Talk2();
   useEffect(() => {
     setTimeout(() => setShowNext(true), tts);
@@ -105,6 +108,9 @@ function Checkbox() {
 
   return (
     <div className="checkbox-wrapper">
+      {/* <video width="360" height="280" controls="controls">
+        <source src={require("../../utils/video/reel.mp4")} type="video/mp4" />
+      </video> */}
       <div>
         <div className="checklist">
           {items.map((item) => (
