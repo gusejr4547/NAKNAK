@@ -185,7 +185,7 @@ function Signup(props) {
   return (
     <div className="signup-container">
       <img
-        src="./assets/cats/cat10.gif"
+        src="/assets/cats/cat10.gif"
         alt=""
         style={{ width: "10rem", height: "10rem" }}
       />
