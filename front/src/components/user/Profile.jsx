@@ -202,9 +202,9 @@ function Profile(props) {
           </div>
         )}
         {activeView === "aquarium" && (
-          <div className="profilebottom">
-            <Profilesea />
-          </div>
+          // <div className="profilebottom">
+          <Profilesea />
+          // </div>
         )}
       </div>
     </div>

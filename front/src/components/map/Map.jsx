@@ -24,7 +24,7 @@ import { GetXY } from "./GetXY";
 import { GetLocation, callFlutter } from "../../utils/location";
 import fishingspot from "../../utils/data/fishingspot.json";
 
-function Map2() {
+function Map() {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
   const [inputData, setinputData] = useState("");
   const [searchData, setSearchData] = useState([]);
@@ -173,8 +173,6 @@ function Map2() {
 
   // 검색하기
   const SearchLocation = () => {
-    console.log(currentsearchData);
-    console.log(inputData);
     if (!inputData) {
       return;
     }
@@ -474,4 +472,4 @@ function Map2() {
   );
 }
 
-export default Map2;
+export default Map;
