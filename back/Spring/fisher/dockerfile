@@ -13,6 +13,8 @@ RUN ./gradlew bootjar
 
 
 FROM azul/zulu-openjdk:17
+
+RUN mkdir -p /SSAFY/dummy/fisher
 COPY --from=builder build/libs/*-SNAPSHOT.jar app.jar
 
 #EXPOSE 8080
