@@ -195,7 +195,6 @@ const Balls = () => {
         url: "/api1/api/fishes/fishbowl/view",
       });
       setFishBowlData(response.data);
-      console.log(response);
       onStart();
     } catch (error) {
       console.error("Error posting data:", error);
@@ -215,7 +214,6 @@ const Balls = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     const imageUrls = [];
-    console.log(fishBowlData);
     if (fishBowlData) {
       fishBowlData.forEach((fish) => {
         console.log(fish);

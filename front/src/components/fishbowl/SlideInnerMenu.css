@@ -23,13 +23,16 @@
   /* 추가 스타일 및 디자인 설정필요 */
 }
 .invenbtn-del {
-  border: thick double rgb(255, 255, 255);
+  /* border: solid 0.3rem #f4d160; */
   border-radius: 10px;
   background-color: red;
-  color: aliceblue;
+  color: #fff;
+  border: none;
 }
 .invenbtn {
-  border: thick double black;
+  /* border: thick double black; */
+  border: none;
   border-radius: 10px;
-  background-color: antiquewhite;
+  color: #fff;
+  background-color: #75c2f6;
 }

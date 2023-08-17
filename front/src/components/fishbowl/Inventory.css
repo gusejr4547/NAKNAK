@@ -19,7 +19,7 @@
   height: 47rem;
   border-radius: 2.8125rem;
   margin-top: 20%;
-  padding-top: 1rem;
+  padding-top: 0.2rem;
   padding-bottom: 2rem;
   /* justify-content: center; */
 }
@@ -36,7 +36,7 @@
   position: relative;
   width: 95%;
   height: 47%;
-  border: thick double aliceblue;
+  border: 0.4rem dashed aliceblue;
   border-radius: 3rem 1rem 3rem 1rem;
   /* margin-top: 5%; */
   /* margin-bottom: 3%; */

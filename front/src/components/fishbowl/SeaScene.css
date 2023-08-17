@@ -1,16 +1,24 @@
 .bowlcontainer {
-  border: solid 0.4rem rgb(250, 245, 206);
+  /* width: 90%; */
+  height: 28rem;
+  border: solid 0.5rem rgb(250, 245, 206);
   /* border: 0.5rem outset pink; */
-  /* outline: 1px solid #fff; */
+  outline: 1px solid #fff;
+  overflow: hidden;
   /* box-shadow: 0 0 0 2rem rgb(130, 216, 250); */
   border-radius: 50px;
   /* font: bold 1rem sans-serif; */
   /* margin: 2rem;
   padding: 1rem; */
   /* outline-offset: 0.5rem; */
-  /* position: absolute;
-  left: 5%;
-  width: 90%;
-  height: 55%;
-  overflow: hidden; */
+  /* /* position: absolute; */
+  /* left: 5%; */
+}
+.Sea {
+  border: solid 1rem #fff;
+  border-radius: 60px;
+}
+.seascene-wrapper {
+  width: 100%;
+  height: 100%;
 }
