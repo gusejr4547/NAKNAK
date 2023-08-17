@@ -7,20 +7,26 @@ import com.net.fisher.file.service.FileService;
 import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.FollowRepository;
 import com.net.fisher.member.repository.MemberRepository;
-import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
-import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.*;
 import com.net.fisher.post.repository.*;
-import com.net.fisher.response.PostResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
+import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLBooleanPrefJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.CachingItemSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.UncenteredCosineSimilarity;
+import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
+import org.apache.mahout.cf.taste.similarity.UserSimilarity;
+import org.apache.mahout.math.hadoop.similarity.cooccurrence.measures.CosineSimilarity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +35,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
+
+import javax.sql.DataSource;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -48,12 +54,15 @@ public class PostService {
     private final TagRepository tagRepository;
     private final PostTagRepository postTagRepository;
     private final FollowRepository followRepository;
+    private final PreferenceRepository preferenceRepository;
+    private final DataSource dataSource;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("${app.dataupload.uploadDir}")
     String uploadFolder;
     @Value("${app.dataupload.uploadPath}")
     String uploadPath;
+    private final int TRANSACTION_CHUNK_LIMIT = 10000;
 
     @Transactional
     public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
@@ -301,6 +310,7 @@ public class PostService {
         return postPage;
     }
 
+    @Transactional
     public Page<Post> getPostFromMyWay(long memberId, Pageable pageable, LocalDateTime time) {
         // 3, 3 조회
         Pageable slicePageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize() / 2, Sort.Direction.DESC, "postId");
@@ -325,6 +335,53 @@ public class PostService {
 
         // Mahout 을 이용한 연관 태그 추천
         try {
+//            MySQLBooleanPrefJDBCDataModel dm = new MySQLBooleanPrefJDBCDataModel(dataSource, "preferences", "member_id", "tag_id", null);
+            DataModel dm = new MySQLJDBCDataModel(dataSource, "preferences", "member_id", "tag_id", "rating", null);
+
+//            LogLikelihoodSimilarity sim = new LogLikelihoodSimilarity(dm);
+
+
+            ItemSimilarity itemSimilarity = new UncenteredCosineSimilarity(dm);
+            GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(dm, itemSimilarity);
+//            System.out.println("memberId : " + memberId);
+
+//            CachingRecommender cachingRecommender = new CachingRecommender(recommender);
+            List<RecommendedItem> recommend = recommender.recommend(memberId, 5);
+//            System.out.println("#################");
+//            System.out.println(recommend.size());
+            for (RecommendedItem item : recommend) {
+//                System.out.println(item.getItemID());
+                myTagInfo.add(item.getItemID());
+            }
+
+        } catch (BusinessLogicException e) {
+            // 추천 시스템에 문제 생기면 exception 발생
+            Page<Post> normalPostPage = postRepository.findAllExceptFollowing(slicePageable, followingMemberList, time);
+
+            List<Post> postFollowing = postPageFollowing.getContent();
+            List<Post> postNormal = normalPostPage.getContent();
+            List<Post> totalPostList = sorting(postFollowing, postNormal);
+
+            Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
+                    postPageFollowing.getTotalElements() + normalPostPage.getTotalElements());
+
+            return postPage;
+        } catch (TasteException e) {
+            Page<Post> normalPostPage = postRepository.findAllExceptFollowing(slicePageable, followingMemberList, time);
+
+            List<Post> postFollowing = postPageFollowing.getContent();
+            List<Post> postNormal = normalPostPage.getContent();
+            List<Post> totalPostList = sorting(postFollowing, postNormal);
+
+            Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
+                    postPageFollowing.getTotalElements() + normalPostPage.getTotalElements());
+
+            return postPage;
+        }
+
+
+
+        /*try {
             String filePath = uploadPath + File.separator + uploadFolder + File.separator + "data.csv";
             String copyFilePath = uploadPath + File.separator + uploadFolder + File.separator + "data_.csv";
             File file = new File(filePath); // File객체 생성
@@ -365,7 +422,7 @@ public class PostService {
                     postPageFollowing.getTotalElements() + normalPostPage.getTotalElements());
 
             return postPage;
-        }
+        }*/
 
         // 태그가 없는 경우는
         Page<Post> postPageTag = null;
