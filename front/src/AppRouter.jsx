@@ -54,6 +54,7 @@ function AppRouter(props) {
   });
   const [location, setLocation] = useRecoilState(location_recoil);
   const [user, setuser] = useRecoilState(loginuser);
+  const localloginuser = localStorage.getItem("loginuser");
   function updateLocation(latitude, longitude) {
     setLocation({ latitude, longitude });
     console.log("Received location:", latitude, longitude);
@@ -129,7 +130,7 @@ function AppRouter(props) {
         >
           <Route
             path="/"
-            element={user === undefined ? <Login /> : <Home />}
+            element={!localloginuser ? <Login /> : <Home />}
           ></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route path="/fishing" element={<Fishing />}></Route>

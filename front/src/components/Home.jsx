@@ -61,7 +61,7 @@ function Home({ newbieVersion }) {
       </div>
       <div className="home-board">
         {sleep ? (
-          ""
+          <div>"냑냑이를 깨워주세요"</div>
         ) : (
           <Slider {...settings} className="home-carousel">
             {/* slide start */}

@@ -99,3 +99,8 @@ export const tts_recoil = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+export const uploadfish_recoil = atom({
+  key: "uploadfish_recoil",
+  default: null,
+  // effects_UNSTABLE: [persistAtom],
+});

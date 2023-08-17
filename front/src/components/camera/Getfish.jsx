@@ -1,19 +1,19 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { uploadfish_recoil } from "../../utils/atoms";
 
 function Getfish(props) {
-  const location = useLocation();
-  const receivedData = location.state;
-
+  const [uploadfish, setUploadfish] = useRecoilState(uploadfish_recoil);
   return (
     <div>
-      {receivedData && receivedData.fish && (
+      {uploadfish && uploadfish.fish && (
         <div>
-          <p>{receivedData.fish.name}</p>
-          <p>{receivedData.fish.info}</p>
+          <p>{uploadfish.fish.name}</p>
+          <p>{uploadfish.fish.info}</p>
+          <p>{uploadfish.size}</p>
         </div>
       )}
-      <p>{receivedData.size}</p>
     </div>
   );
 }
