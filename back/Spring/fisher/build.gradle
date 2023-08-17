@@ -92,6 +92,11 @@ dependencies {
 
 }
 
+
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+configurations {
+    compile.exclude group: 'org.slf4j', module: 'reload4j'
 }
