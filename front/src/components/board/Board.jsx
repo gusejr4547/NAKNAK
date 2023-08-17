@@ -13,10 +13,12 @@ import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
+
+  const navigate = useNavigate();
 
   const [tagListData, setTagListData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -75,7 +77,7 @@ const Board = () => {
     };
     getFollowers();
     // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
-  }, [followerList]);
+  }, []);
 
   // 좋아요하는 게시글에 대한 정보를 가져옵니다
   useEffect(() => {
@@ -148,9 +150,42 @@ const Board = () => {
           state ? "cancel" : "register"
         }?follow=${postMemberId}`,
       });
+
+      console.log("followerList", followerList);
       console.log("success toggle follow state", response);
     } catch (error) {
       console.error("can't change follow state");
+      return;
+    }
+
+    try {
+      const response = await authorizedRequest({
+        method: "get",
+        url: `/api1/api/members/${postMemberId}`,
+      });
+      console.log(
+        "postMemberId" + "success get flowing member status",
+        response.data.memberResponse
+      );
+      console.log(response.data.memberResponse.memberId);
+
+      const existingMemberIndex = followerList.data.findIndex(
+        (follower) =>
+          follower.memberId === response.data.memberResponse.memberId
+      );
+
+      if (existingMemberIndex !== -1) {
+        followerList.count -= 1;
+        followerList.data.splice(existingMemberIndex, 1);
+      } else {
+        followerList.count += 1;
+        followerList.data.push(response.data.memberResponse);
+      }
+
+      console.log("here is followwerㅁ아ㅓㄹ후ㅜ마ㅓㅇㅀ", followerList);
+      navigate("/Board");
+    } catch (error) {
+      console.log("cant get flowing member status");
     }
   };
 

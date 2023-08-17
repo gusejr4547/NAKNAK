@@ -5,13 +5,12 @@ import "./Loading.css";
 function Loading() {
   return (
     <div className="loading_wrapper">
-      <div className="wave_wrap">
-        <div className="loading_title">낙낙</div>
-        <div className="wave">
-          <div className="island_img"></div>
-          <div className="cat_img"></div>
-          {/* 가장 가까운 파도 */}
-          <Wave
+      {/* <div className="wave_wrap"> */}
+      {/* <div className="wave"> */}
+      {/* <div className="island_img"></div> */}
+      <div className="cat_img"></div>
+      {/* 가장 가까운 파도 */}
+      {/* <Wave
             className="wave2"
             fill="#82E7ED"
             paused={false}
@@ -22,9 +21,9 @@ function Loading() {
               speed: 0.3,
               points: 3,
             }}
-          />
-          {/*중간 파도  */}
-          <Wave
+          /> */}
+      {/*중간 파도  */}
+      {/* <Wave
             className="wave1"
             fill="#408BD0"
             paused={false}
@@ -35,9 +34,9 @@ function Loading() {
               speed: 0.25,
               points: 4,
             }}
-          ></Wave>
-          {/* 마지막파도 */}
-          <Wave
+          ></Wave> */}
+      {/* 마지막파도 */}
+      {/* <Wave
             className="wave3"
             fill="#6ec1df"
             paused={false}
@@ -50,7 +49,7 @@ function Loading() {
             }}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

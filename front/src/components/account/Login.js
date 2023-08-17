@@ -281,6 +281,11 @@ function Login(props) {
         />
         <div className="login-inputbox">
           <div className="login-input">
+            <img
+              src="/assets/icons/fish3.png"
+              className="login-fish"
+              alt=""
+            ></img>
             <AuthInput
               className="login"
               label="이메일"

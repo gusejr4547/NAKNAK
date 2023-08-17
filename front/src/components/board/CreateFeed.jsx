@@ -149,7 +149,7 @@ const CreateFeed = () => {
           />
         </Link>
         <div className="create-feed-title">
-          <h1>NEW FEED</h1>
+          <h3>NEW FEED</h3>
         </div>
         <div onClick={createFeed}>
           <img

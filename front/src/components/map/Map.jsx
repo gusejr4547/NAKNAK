@@ -69,7 +69,6 @@ function Map2() {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -390,6 +389,7 @@ function Map2() {
           //   console.log(markerPosition);
           const rs = GetXY("toXY", markerPosition.lat, markerPosition.lng);
           // infowindow.open(map, marker);
+          console.log("연결");
 
           Weather(
             closestPreviousTime.date,
