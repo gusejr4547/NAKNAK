@@ -74,12 +74,14 @@
   border-radius: 20%;
   height: 70%;
   background-color: #ffe48e;
+  font-size: 1rem;
 }
 
 .dictdefault {
   border-radius: 20%;
   height: 70%;
   background-color: aliceblue;
+  font-size: 1rem;
 }
 
 /* 스크룰 바 숨기기 */

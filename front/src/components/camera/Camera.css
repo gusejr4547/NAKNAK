@@ -39,6 +39,12 @@
   /* background-color: red; */
   /* 도형에 대한 스타일 (예: 너비, 높이, 배경 등) */
 }
+.camera-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
 
 /* .cameracontent {
   height: 60%;
