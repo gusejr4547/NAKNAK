@@ -91,7 +91,7 @@ function Home({ newbieVersion }) {
               }`}
             >
               <Link to="/Map" className="nav-link">
-                <img src="/assets/icons/ji.png" alt="icon" />
+                <img src="/assets/homeIcons/fishing.png" alt="icon" />
                 <h6>낚시터</h6>
               </Link>
             </div>
@@ -119,13 +119,13 @@ function Home({ newbieVersion }) {
                   to={`/Profile/:${userData.memberId}`}
                   className="nav-link"
                 >
-                  <img src="/assets/icons/pro2.png" alt="icon" />
+                  <img src="/assets/homeIcons/profile.png" alt="icon" />
                   <h6>프로필</h6>
                 </Link>
               </div>
             ) : (
               <div className="home-slide">
-                <img src="/assets/icons/pro2.png" alt="icon" />
+                <img src="/assets/homeIcons/profile.png" alt="icon" />
                 <h6>프로필</h6>
               </div>
             )}

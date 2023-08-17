@@ -27,7 +27,7 @@ nav > div {
 /* 하단 네비바의 메뉴를 눌렀을 때 색상 변경*/
 .nav-item {
   /* color: rgb(220, 228, 157); */
-  color: #ffe48e;
+  color: #545454;
 }
 .nav-icon {
   display: flex;
@@ -52,5 +52,5 @@ nav > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #68fb1e;
+  color: #545454;
 }
