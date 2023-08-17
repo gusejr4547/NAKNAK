@@ -156,14 +156,10 @@ const Camera = () => {
         },
       });
       console.log(response.data);
-      await new Promise((resolve) => {
-        setUploadfish(response.data);
-        resolve(); // setUploadfish가 완료될 때까지 기다림
-      });
+      setUploadfish(response.data);
       console.log(uploadfish);
       setrulerbox({ bounding: [1, 1, 1, 1] });
       setfishbox(0);
-
       if (fishingMode !== "selectMode") {
         setGetFish(getFish + 1);
         console.log(getFish);
@@ -399,10 +395,15 @@ const Camera = () => {
                     setrulerbox(boxes[1]);
                     setfishbox(boxes[0]);
                   } else if (boxes.length === 1) {
+                    return;
                     setfishbox(boxes[0]);
                     setrulerbox({ bounding: [1, 1, 1, 1] });
                   }
-
+                  setTimeout(function () {
+                    startDetection();
+                    setWebcamActive(true);
+                    setLastCapturedImage(null);
+                  }, 300000); // 300000 밀리초 (5분) 후에 실행
                   // 라벨이 라이터가 아니면 피쉬 박스
                   console.log(fishbox);
                   console.log(rulerbox);
@@ -444,7 +445,7 @@ const Camera = () => {
           </button>
         </div>
       ) : ( */}
-      <div className="btn-container">
+      <div className="camera-btn-container">
         {webcamActive ? (
           <button className="camerabutton" onClick={() => stopDetection()}>
             Stop Detection
