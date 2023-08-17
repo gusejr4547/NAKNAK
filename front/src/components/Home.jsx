@@ -144,7 +144,7 @@ function Home({ newbieVersion }) {
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to="/Balls" className="nav-link">
+              <Link to="/SeaScene" className="nav-link">
                 <img src="/assets/homeicons/fishbowl.png" alt="icon" />
                 <h6>수조</h6>
               </Link>

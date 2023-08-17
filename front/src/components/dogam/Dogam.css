@@ -12,9 +12,9 @@
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
   width: 24rem;
-  height: 40.625rem;
+  height: 43rem;
   border-radius: 2.8125rem;
-
+  margin-top: 20%;
   padding-top: 3.25rem;
   padding-bottom: 3.25rem;
 }
@@ -26,9 +26,10 @@
   height: 100%;
   display: flex;
   overflow-y: scroll;
-  align-items: start;
-  justify-content: space-between;
-  align-content: flex-start;
+  align-items: center;
+  justify-content: start;
+  /* align-content: center; */
+  margin-left: 0.5rem;
   flex-wrap: wrap;
   flex-direction: row;
 }

@@ -12,6 +12,8 @@ import {
   newbie_recoil,
   tts_recoil,
   location_recoil,
+  getFish_recoil,
+  fishingMode_recoil,
 } from "../../utils/atoms";
 import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +22,8 @@ import "./Camera.css";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import TTS from "../freshman/TTS";
 import { GetLocation, callFlutter } from "../../utils/location";
+import { div } from "@tensorflow/tfjs";
+import Getfish from "./Getfish";
 
 const Camera = () => {
   // useEffect(() => {
@@ -71,14 +75,23 @@ const Camera = () => {
   const [yoloRecoil] = useRecoilState(yolo_recoil);
   const [location, setLocation] = useRecoilState(location_recoil);
   // Configs
+  const [getFish, setGetFish] = useRecoilState(getFish_recoil);
+  const [fishingMode] = useRecoilState(fishingMode_recoil);
+
+  const [uploadfish, setUploadfish] = useState({});
 
   const modelInputShape = [1, 3, 640, 640];
   const topk = 100;
   const iouThreshold = 0.45;
   const scoreThreshold = 0.25;
-
+  let detectionInterval = 1000;
   // 뉴비 모드일때 시간 길게 수정하기
-  const detectionInterval = 1000;
+
+  if (newbie) {
+    detectionInterval = 100000;
+  } else {
+    detectionInterval = 1000;
+  }
 
   useEffect(() => {
     setTimeout(() => setShow(true), tts);
@@ -128,6 +141,10 @@ const Camera = () => {
     };
     console.log(data);
 
+    if (fishingMode !== "selectMode") {
+      setGetFish(getFish + 1);
+      console.log(getFish);
+    }
     try {
       const response = await authorizedRequest({
         method: "post",
@@ -142,7 +159,9 @@ const Camera = () => {
           location: location,
         },
       });
-      console.log(response);
+      console.log(response.data);
+      setUploadfish(response.data);
+      console.log(uploadfish);
       setrulerbox({ bounding: [1, 1, 1, 1] });
       setfishbox(0);
     } catch (error) {
@@ -186,62 +205,7 @@ const Camera = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
-  // cv["onRuntimeInitialized"] = async () => {
-  //   console.log(errData, 111);
-  //   try {
-  //     console.log(123);
-  //     const baseModelURL = `${process.env.PUBLIC_URL}/model`;
-  //     const modelInputShape = [1, 3, 320, 320];
-  //     console.log(baseModelURL);
 
-  //     // create session
-  //     const arrBufNet = await download(
-  //       `${baseModelURL}/${modelName}`, // url
-  //       ["Loading YOLOv8 Segmentation model", setLoading] // logger
-  //     );
-  //     const yolov8 = await InferenceSession.create(arrBufNet);
-
-  //     const arrBufNMS = await download(
-  //       `${baseModelURL}/nms-yolov8.onnx`, // url
-  //       ["Loading NMS model", setLoading] // logger
-  //     );
-  //     const nms = await InferenceSession.create(arrBufNMS);
-
-  //     console.log(arrBufNet, yolov8, arrBufNMS, nms);
-
-  //     // warmup main model
-  //     setLoading({ text: "Warming up model...", progress: null });
-  //     const tensor = new Tensor(
-  //       "float32",
-  //       new Float32Array(modelInputShape.reduce((a, b) => a * b)),
-  //       modelInputShape
-  //     );
-  //     await yolov8.run({ images: tensor });
-
-  //     if (yolov8 && nms) {
-  //       setLoading(null);
-  //       setSession({ net: yolov8, nms: nms });
-  //     } else {
-  //       console.error("'yolov8' or 'nms' is null.");
-  //     }
-  //   } catch (error) {
-  //     console.error("An error occurred:", error);
-  //     // Handle the error as needed, e.g., show an error message to the user.
-  //   }
-  // };
-  // console.log(errData, 222);
-  // setTimeout(() => {
-  //   rere();
-  // }, 5000);
-
-  // const rere = () => {
-  //   if (!errData) {
-  //     window.location.reload();
-  //   }
-  // };
-
-  // console.log(cv);
-  // Function to handle webcam capture
   const captureWebcam = () => {
     if (webcamRef.current && webcamActive) {
       const webcamImage = webcamRef.current.getScreenshot();
@@ -254,6 +218,7 @@ const Camera = () => {
   const startDetection = () => {
     setDetecting(true);
     setWebcamActive(true);
+    setUploadfish({});
     // setLastCapturedImage(undefined)
   };
 
@@ -492,7 +457,15 @@ const Camera = () => {
           </button>
         )}
       </div>
-      {fishbox !== 0 && <button onClick={() => dataUpload()}>어획 등록</button>}
+      {fishbox !== 0 && (
+        <div>
+          <button onClick={() => dataUpload()}>
+            {fishbox.label} 포획 성공!!!. 등록하시겠습니까?
+          </button>
+        </div>
+      )}
+
+      {uploadfish && uploadfish.fish && <Getfish fishdata={uploadfish} />}
     </div>
   );
 };

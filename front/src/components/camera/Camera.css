@@ -18,7 +18,7 @@
   top: 50%;
   left: 60%;
   transform: translate(-50%, -50%) rotate(90deg);
-  width: 70%;
+  width: 95%;
   height: 50%;
   border-radius: 50%;
   opacity: 0.6;
@@ -31,7 +31,7 @@
   top: 50%;
   left: 30%;
   transform: translate(-50%, -50%) rotate(90deg);
-  width: 40%;
+  width: 50%;
   height: 30%;
   border-radius: 50%;
   opacity: 0.6;

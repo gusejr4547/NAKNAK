@@ -174,6 +174,19 @@ function Map2() {
 
   // 검색하기
   const SearchLocation = () => {
+    console.log(currentsearchData);
+    console.log(inputData);
+    if (!inputData) {
+      return;
+    }
+
+    if (currentsearchData === inputData) {
+      // setinputData([]);
+      return;
+    }
+    if (!inputData) {
+      setCurrentSearchData([]);
+    }
     setSearchData([]);
     const arr = [];
     fishingspot.forEach((ele) => {
@@ -181,24 +194,23 @@ function Map2() {
         arr.push(ele);
         setSearchData(...searchData, arr);
       }
+      setCurrentSearchData(inputData);
     });
   };
 
   const Search = (event) => {
-    console.log(inputData, 11);
-    console.log(event.target.value, 22);
-    if (currentsearchData === event.target.value) {
-      setinputData([]);
-      return;
-    }
     if (!inputData) {
       setCurrentSearchData([]);
     }
-    setSearchData([]);
     if (event.key === "Enter") {
       if (!inputData) {
         return;
       }
+      if (currentsearchData === event.target.value) {
+        // setinputData([]);
+        return;
+      }
+      setSearchData([]);
       const arr = [];
       fishingspot.forEach((ele) => {
         if (ele.title.includes(inputData)) {
@@ -207,8 +219,8 @@ function Map2() {
         }
         setCurrentSearchData(inputData);
       });
-      console.log(searchData);
-      setinputData([]);
+      // console.log(searchData);
+      // setinputData([]);
     } else {
       setSearchData([]);
       const Data = event.target.value;
