@@ -82,6 +82,7 @@ export const detectImage = async (
     const label = scores.indexOf(score); // class id of maximum probability scores
     // console.log(box[0], box[1], box[2], box[3]);
     console.log(label);
+
     const [x, y, w, h] = [
       (box[0] - 0.5 * box[2]) * xRatio, // upscale left
       (box[1] - 0.5 * box[3]) * yRatio, // upscale top

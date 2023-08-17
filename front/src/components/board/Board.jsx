@@ -62,6 +62,7 @@ const Board = () => {
     getTagList();
   }, []);
 
+  //
   //팔로우 여부를 확인하기 위해 사용자의 팔로잉 정보를 가져옵니다
   useEffect(() => {
     const getFollowers = async () => {

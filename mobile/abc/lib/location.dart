@@ -6,6 +6,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
 
@@ -32,6 +38,7 @@ class _LoadingState extends State<Loading> {
         setState(() {
           currentPosition = position;
         });
+
         final prefs = await SharedPreferences.getInstance();
         prefs.setDouble('latitude', currentPosition!.latitude);
         prefs.setDouble('longitude', currentPosition!.longitude);
@@ -46,7 +53,6 @@ class _LoadingState extends State<Loading> {
       // 위치 권한이 필요한 이유에 대해 사용자에게 대화 상자나 스낵바를 통해 설명합니다.
     }
   }
-
 
   void abc(latitude, longitude) {
 
@@ -132,3 +138,4 @@ class _LoadingState extends State<Loading> {
 //     print('Failed to send location data. Status code: ${response.statusCode}');
 //   }
 // }
+

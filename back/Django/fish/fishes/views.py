@@ -9,6 +9,17 @@ from .inference.inference import get_fish_name
 
 
 # Create your views here.
+<<<<<<< HEAD
+=======
+@api_view(['GET'])
+def test(request):
+    f = open('/staticfiles/test.txt')
+    line = f.readline()
+
+    print(line)
+
+    return Response(line)
+>>>>>>> 849874c40f88a8bfcf84d3c8ca41374d99d78fae
 
 @api_view(['GET'])
 def test(request):

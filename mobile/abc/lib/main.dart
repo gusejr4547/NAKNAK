@@ -10,16 +10,20 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 
+
 void main() async {
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // 상단바를 투명하게 만듭니다
   ));
 
   WidgetsFlutterBinding.ensureInitialized(); // Flutter 앱 초기화
+
   await Permission.camera.request();
   // requestCameraPermission(); // 권한 요청
   // _getStatuses();
+
   runApp(const MyApp());
 }
 
@@ -53,7 +57,6 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
 
 class _MyHomePageState extends State<MyHomePage> {
   late InAppWebViewController _webViewController;
@@ -103,14 +106,17 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Icon(Icons.camera),
           ),
           const SizedBox(height: 16),
+
           FloatingActionButton(
             onPressed: () {
               Navigator.push(
                 context,
+
                 MaterialPageRoute(builder: (context) => Loading()),
               );
             },
             child: Text('위치'),
+
           ),
         ],
       ),
@@ -250,4 +256,3 @@ class _MyHomePageState extends State<MyHomePage> {
 // //     );
 // //   }
 // // }
-

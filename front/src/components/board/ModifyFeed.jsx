@@ -109,7 +109,6 @@ const ModifyFeed = () => {
       alert("이미지와 태그를 선택해주세요.");
       return;
     }
-
     try {
       setLoading(true);
 

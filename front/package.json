@@ -48,7 +48,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+
+    "start": "HOST=0.0.0.0 DANGEROUSLY_DISABLE_HOST_CHECK=true craco start",
     "build": "craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
