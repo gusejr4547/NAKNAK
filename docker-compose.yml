@@ -39,8 +39,8 @@ services:
     networks:
       - spring-redis
     container_name: react
-    environment :
-      - WDS_SOCKET_PORT=0
+    # environment :
+    #   - WDS_SOCKET_PORT=0
     
 networks:
   spring-redis:
