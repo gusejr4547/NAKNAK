@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   /* position: relative; */
-  transform: translate(15%, -100%);
+  transform: translate(0%, -100%);
   position: absolute;
   /* margin: auto; */
   /* top: 30%; */
@@ -22,7 +22,14 @@
   /* top: 30%; */
   /* 추가 스타일 및 디자인 설정필요 */
 }
+.invenbtn-del {
+  border: thick double rgb(255, 255, 255);
+  border-radius: 10px;
+  background-color: red;
+  color: aliceblue;
+}
 .invenbtn {
   border: thick double black;
   border-radius: 10px;
+  background-color: antiquewhite;
 }

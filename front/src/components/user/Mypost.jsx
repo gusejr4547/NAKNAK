@@ -96,9 +96,7 @@ function Mypost(props) {
                 />
               </div>
               <div className="postbody">{item.content}</div>
-              <div className="postfotter">
-                {item.registeredAt.substr(0, 11)}
-              </div>
+              <div className="postfotter">{item.registeredAt.substr(2, 9)}</div>
             </div>
           ))}
         </div>

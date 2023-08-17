@@ -219,7 +219,7 @@ const Board = () => {
         <div className="board-title-container"></div>
         <img
           className="board-search-img-container"
-          src="/assets/cats/cat.PNG"
+          src="/assets/cats/cat.png"
           alt="검색버튼"
         />
       </div>

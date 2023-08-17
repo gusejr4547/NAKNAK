@@ -55,6 +55,7 @@
 
 .modal-content-myRecord {
   margin-bottom: 5px;
+  text-align: start;
 }
 
 .modal-content p {
@@ -83,7 +84,6 @@
   border: none;
   border-radius: 1rem;
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
-
   cursor: pointer;
   font-size: 16px;
   position: absolute;
@@ -91,25 +91,31 @@
   right: 20px;
 }
 
-.modal-content-explanation {
+.modal-content-dogam-explanation {
   background-color: #ffffff;
   padding: 0.3rem;
   border-radius: 10px;
   box-shadow: inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.25);
-
-  height: 11rem;
+  /* height: 11rem; */
+  max-height: 10rem;
   overflow-y: scroll;
+}
+
+.model-content-p {
+  max-height: 10rem; /* 원하는 높이로 조절 */
+  overflow-y: auto;
 }
 
 .modal-content button:hover {
   background-color: #0056b3;
 }
+
 /* 스크룰 바 숨기기 */
-.modal-disable-scrollbar {
+/* .modal-disable-scrollbar {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .modal-disable-scrollbar::-webkit-scrollbar {
   display: none;
-}
+} */

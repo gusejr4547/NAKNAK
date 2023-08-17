@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { loginuser } from "../../utils/atoms";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import "./Dogam.css";
@@ -8,10 +10,11 @@ const Dogam = (props) => {
   // const catched = true;
 
   const [selectedFish, setSelectedFish] = useState(null);
-
+  const [user, setUser] = useRecoilState(loginuser);
   const [dogamData, setDogamData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   // const [loginUser, setloginuser] = useRecoilState(loginuser);
 
   const goBack = () => {
@@ -26,7 +29,7 @@ const Dogam = (props) => {
         setLoading(true);
         const response = await authorizedRequest({
           method: "get",
-          url: `/api1/api/books/1`,
+          url: `/api1/api/books/${user.memberId}`,
         });
 
         console.log("response success", response.data);
@@ -45,6 +48,9 @@ const Dogam = (props) => {
   const openFishDetailModal = (fish) => {
     if (dogamData.fishCheck.chk.includes(fish.fishId)) {
       setSelectedFish(fish);
+
+      // console.log(fish);
+      // console.log(selectedFish);
     } else {
       setSelectedFish(null);
     }
@@ -56,12 +62,6 @@ const Dogam = (props) => {
 
   return (
     <div className="dogam-wrapper">
-      <img
-        src="/assets/icons/x.png"
-        alt="exit"
-        className="dogam-back-button"
-        onClick={goBack}
-      />
       <div className="dogam-board">
         <div className="dogam-carousel dogam-disable-scrollbar">
           {dogamData.fishCheck?.all.map((fish) => (
@@ -90,10 +90,8 @@ const Dogam = (props) => {
       {selectedFish && (
         <FishDetailModal
           fishData={selectedFish}
-          userFishData={
-            dogamData.list &&
-            dogamData.list.find((userData) => userData.fishId === selectedFish)
-          }
+          userFishData={dogamData.list && dogamData.list[selectedFish.fishId]}
+          // userfish={}
           onClose={closeFishDetailModal}
         />
       )}
