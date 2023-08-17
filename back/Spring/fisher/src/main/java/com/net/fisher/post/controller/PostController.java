@@ -28,7 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -146,19 +146,22 @@ public class PostController {
 
     @GetMapping("/posts/my-post")
     public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyPosts(
+            HttpServletRequest request
+            /*
             @RequestHeader(name = "Authorization") String token,
             @RequestParam(value = "memberId") Long memberId,
-            @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable*/) {
 
-        long tokenId = jwtTokenizer.getMemberId(token);
-        // postId, content, image, tag 정도?
+        System.out.println(request.getRequestURL() + " " + request.getQueryString());
+//        long tokenId = jwtTokenizer.getMemberId(token);
+//        // postId, content, image, tag 정도?
+//
+//        Page<Post> postPage = postService.getPostFromMember(memberId, pageable);
+//        List<Post> postList = postPage.getContent();
+//
+//        PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
 
-        Page<Post> postPage = postService.getPostFromMember(memberId, pageable);
-        List<Post> postList = postPage.getContent();
-
-        PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/posts/my-like")
