@@ -3,35 +3,31 @@
 ## 📝 목차
 
 [프로젝트 개요](#item-one)
-
-[팀원 정보 및 업무 분담 내역](#item-two)
-
+[역할 분담](#item-two)
 [기술 스택](#item-three)
 
 [데이터 베이스 모델링 (ERD)](#item-four)
-
 [서비스 구현 화면](#item-five)
-
-[기타사항](#item-six)
 
 [느낀 점](#item-end)
 
 <a id="item-one"></a>
 
 ## 프로젝트 개요
-
+![naknak.JPG](./naknak.JPG)
 
 <a id="item-two"></a>
 
-![naknak.JPG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bb06aaf4-9b84-4675-8da8-3b96f8aa9fd6/naknak.jpg)
+
 
 # 서비스 개요
 
 ---
 
 1. 낚시 초보들을 위한 A to Z 어플리케이션 
-    
-    ![naknak 쓰는 이유.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/56207880-db7d-40ab-a2cd-7c80efe2745b/naknak_%EC%93%B0%EB%8A%94_%EC%9D%B4%EC%9C%A0.png)
+
+![naknak 쓰는 이유.png](./naknak 쓰는 이유.png)
+
     
 
 <aside>
@@ -53,7 +49,7 @@
 
 
 
-## 😎 역할 분담
+## 역할 분담
 
 **Frontend**
 
