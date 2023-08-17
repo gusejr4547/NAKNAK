@@ -24,6 +24,7 @@ import com.net.fisher.member.entity.Member;
 import com.net.fisher.member.repository.MemberRepository;
 import com.net.fisher.member.service.MemberService;
 import com.net.fisher.response.FishCheckResponse;
+import com.net.fisher.response.LocationResponse;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -184,7 +185,7 @@ public class FishService {
 
     }*/
 
-    public Inventory catchFish(long tokenId, String name, Inventory inventory) {
+    public Inventory catchFish(long tokenId, String name, Inventory inventory, LocationResponse location) {
         Member member = memberRepository.findById(tokenId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Fish fish = fishRepository.findByName(name).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FISH_NOT_FOUND));
 
@@ -196,7 +197,7 @@ public class FishService {
         /*====도감에 등록하는 알고리즘====*/
 
         booksUpdate(fish, member, inventory);
-        sendFishingLog(fish, member, inventory);
+        sendFishingLog(fish, member, inventory,location);
 
         return inventory;
     }
@@ -262,7 +263,7 @@ public class FishService {
     }
 
     @Async
-    public void sendFishingLog(Fish fish, Member member, Inventory inventory) {
+    public void sendFishingLog(Fish fish, Member member, Inventory inventory,LocationResponse location) {
         StringBuilder sb = new StringBuilder();
         sb.append("Fish : ").append(fish).append("\nMember : ").append(member.toString()).append("\nInven : ").append(inventory.toString());
         String message = sb.toString();
@@ -270,8 +271,8 @@ public class FishService {
         LogDto logDto = LogDto.builder()
                 .userId(member.getMemberId())
                 .fishId(fish.getFishId())
-                .latitude(27.22)
-                .longitude(128.02)
+                .latitude(location.getLatitude())
+                .longitude(location.getLongitude())
                 .size(inventory.getSize())
                 .logTime(LocalDateTime.now())
                 .build();
