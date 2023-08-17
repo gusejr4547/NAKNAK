@@ -29,6 +29,7 @@ function ProfileModal(props) {
     setUserData(undefined);
     setAccessToken(undefined);
     localStorage.setItem("key", undefined);
+    localStorage.setItem("loginuser", undefined);
     navigate("/Login");
   };
   return (

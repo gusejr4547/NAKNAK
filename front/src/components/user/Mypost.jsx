@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
+import Loading from "../common/Loading";
 
 function Mypost(props) {
   const [MypostData, setMypostData] = useState([]);
@@ -49,13 +50,11 @@ function Mypost(props) {
       const num = Math.ceil(MypostData.count / 4);
       setTotalPage(num);
 
-      console.log(totalPage, 123);
       const temp = [];
       for (let index = 1; index <= totalPage; index++) {
         temp.push(index);
       }
       setPageNation(temp);
-      console.log(pageNation);
     }
   };
 
@@ -75,7 +74,7 @@ function Mypost(props) {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

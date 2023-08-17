@@ -165,7 +165,7 @@ public class PostService {
 
         // PostTag 에 추가 해줘야 할 것
         newTags.removeAll(copyTags);
-        System.out.println(newTags);
+
         PostTag postTag = null;
         for (Tag tag : newTags) {
             postTag = PostTag.builder().tag(tag).post(post).build();
@@ -298,8 +298,6 @@ public class PostService {
     public Page<Post> getPostFromFollowing(long memberId, Pageable pageable, LocalDateTime time) {
 
         Page<Post> postPage = postRepository.findPostByFollowing(pageable, memberId, time);
-        System.out.println(postPage.getTotalElements());
-        System.out.println(postPage.getContent().size());
         return postPage;
     }
 
@@ -309,8 +307,9 @@ public class PostService {
 
         // 팔로잉한 사람의 게시글을 조회
         List<Long> followingMemberList = followRepository.findFollowMemberIdByMember_MemberId(memberId).orElse(new ArrayList<>());
-//        System.out.println("############# 팔로잉");
-//        System.out.println(followingMemberList);
+
+        // 내 게시글 조회하기 위해서 추가
+        followingMemberList.add(memberId);
 
         if (followingMemberList.isEmpty()) {
             followingMemberList.add(-1l);
@@ -318,8 +317,7 @@ public class PostService {
 
         Page<Post> postPageFollowing = postRepository.findPostByFollowing(slicePageable, followingMemberList, time);
 
-//        System.out.println("########### 팔로잉한 사람의 게시글");
-//        System.out.println(postPageFollowing.getContent());
+        // ----------------------------------------
 
         // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 5개 선택
         List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 5), memberId);
@@ -338,8 +336,6 @@ public class PostService {
 
             long fileMod = file.lastModified();
             long copyMod = copyFile.lastModified();
-            System.out.println("fileMod : " + fileMod);
-            System.out.println("copyMod : " + copyMod);
 
             if (fileMod > copyMod) {
                 // 원본파일 수정 일자 보다 오래 됬으면 원본파일 복사
@@ -358,15 +354,18 @@ public class PostService {
         } catch (IOException e) {
             throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
         } catch (TasteException e) {
-            throw new BusinessLogicException(ExceptionCode.RECOMMEND_ERROR);
+            // 내가 작성한 태그가 없으면 exception 발생
+            Page<Post> normalPostPage = postRepository.findAllExceptFollowing(slicePageable, followingMemberList, time);
+
+            List<Post> postFollowing = postPageFollowing.getContent();
+            List<Post> postNormal = normalPostPage.getContent();
+            List<Post> totalPostList = sorting(postFollowing, postNormal);
+
+            Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
+                    postPageFollowing.getTotalElements() + normalPostPage.getTotalElements());
+
+            return postPage;
         }
-
-
-        // 모든 이용자가 작성한 태그 중 인기 많은
-//        myTagInfo.addAll(postRepository.countTag(PageRequest.of(0, 3)));
-
-//        System.out.println("############# taginfo");
-//        System.out.println(myTagInfo);
 
         // 태그가 없는 경우는
         Page<Post> postPageTag = null;
@@ -375,15 +374,11 @@ public class PostService {
         } else {
             System.out.println("tag 가 없네용");
         }
-//        System.out.println("######## 태그 기반 게시글");
-//        System.out.println(postPageTag.getContent());
 
         // 합치기
         List<Post> postFollowing = postPageFollowing.getContent();
         List<Post> postTag = postPageTag.getContent();
         List<Post> totalPostList = sorting(postFollowing, postTag);
-
-//        System.out.println(totalPostList);
 
 
         Page<Post> postPage = new PageImpl<>(totalPostList, pageable,

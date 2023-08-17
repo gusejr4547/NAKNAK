@@ -36,7 +36,8 @@
 .dict-detail-content {
   /* border: 1px solid black; */
   border-radius: 10px;
-  background-color: #ffe48e;
+  /* background-color: #ffe48e; */
+  color: red;
   padding: 5px;
 }
 

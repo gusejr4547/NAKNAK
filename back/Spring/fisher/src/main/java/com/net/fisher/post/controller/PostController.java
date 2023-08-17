@@ -80,8 +80,6 @@ public class PostController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        System.out.println(postPatchDto);
-
         postService.updatePost(tokenId, postId, postPatchDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -185,17 +183,10 @@ public class PostController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") LocalDateTime time,
             @PageableDefault(size = 6, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        System.out.println(time.toString());
+//        System.out.println(time.toString());
         long tokenId = jwtTokenizer.getMemberId(token);
-        Page<Post> postPage = null;
 
-        postPage = postService.getPostFromMyWay(tokenId, pageable, time);
-
-//        System.out.println("############ postPage myWay");
-//        System.out.println(postPage.getContent());
-
-        // 더미 데이터 -- 나중에 지워야함
-//        postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"), time);
+        Page<Post> postPage = postService.getPostFromMyWay(tokenId, pageable, time);
 
         List<Post> postList = postPage.getContent();
 

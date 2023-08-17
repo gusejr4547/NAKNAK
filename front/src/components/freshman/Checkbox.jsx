@@ -86,7 +86,6 @@ function Checkbox() {
   const handleUpgradeProgress = async (status) => {
     try {
       const response = await upgradeProgress(status);
-      console.log(response);
     } catch (err) {
       console.log(err);
     }

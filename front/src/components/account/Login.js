@@ -89,7 +89,6 @@ function Login(props) {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -109,7 +108,6 @@ function Login(props) {
         method: "get",
         url: "/api1/api/fishingholes/favorites",
       });
-      console.log(response);
       setFavoritePoint(response.data);
       // console.log(response.data);
     } catch (err) {
@@ -125,7 +123,6 @@ function Login(props) {
         url: `/api1/api/members/${memberId}`,
       });
       setProfileData(response.data);
-      console.log(response.data);
 
       // 뉴비 인지 아닌 지 저장
       // 찐 뉴비인 경우
@@ -192,12 +189,11 @@ function Login(props) {
 
     try {
       setLoading(true);
-      console.log(loginData);
       const response = await axios.post("/api1/api/login", loginData);
       setUserData(response.data);
-      console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       localStorage.setItem("key", response.headers.authorization);
+      localStorage.setItem("loginuser", response.data);
       // console.log(accesstoken, 789);
       navigate("/");
       // console.log(postData, 123);
@@ -207,7 +203,6 @@ function Login(props) {
 
       //로그인 성공 시, 유저 정보 받아오기
     } catch (error) {
-      console.log(loginData);
       console.error("Error posting data:", error.response.data.message);
       if (error.response.data.message === "Member Not Found") {
         swal("존재하지 않는 회원입니다");
