@@ -108,9 +108,6 @@ function Checkbox() {
 
   return (
     <div className="checkbox-wrapper">
-      {/* <video width="360" height="280" controls="controls">
-        <source src={require("../../utils/video/reel.mp4")} type="video/mp4" />
-      </video> */}
       <div>
         <div className="checklist">
           {items.map((item) => (
