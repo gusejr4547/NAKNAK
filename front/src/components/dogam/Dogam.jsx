@@ -48,8 +48,7 @@ const Dogam = (props) => {
   const openFishDetailModal = (fish) => {
     if (dogamData.fishCheck.chk.includes(fish.fishId)) {
       setSelectedFish(fish);
-
-      // console.log(fish);
+      console.log(fish);
       // console.log(selectedFish);
     } else {
       setSelectedFish(null);
@@ -90,8 +89,10 @@ const Dogam = (props) => {
       {selectedFish && (
         <FishDetailModal
           fishData={selectedFish}
-          userFishData={dogamData.list && dogamData.list[selectedFish.fishId]}
-          // userfish={}
+          userFishData={
+            dogamData.list &&
+            dogamData.list.find((fish) => fish.fishId === selectedFish.fishId)
+          }
           onClose={closeFishDetailModal}
         />
       )}
