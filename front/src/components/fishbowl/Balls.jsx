@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import { each } from "jquery";
-import SeaScene from "./SeaScene";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
@@ -186,8 +184,6 @@ const loadBackgroundImage = (url, canvas, ctx) => {
 const image = new Image();
 image.src = "./assets/dom1.png";
 
-const ballSize = 50;
-
 const Balls = () => {
   const [fishBowlData, setFishBowlData] = useState(undefined);
 
@@ -210,6 +206,9 @@ const Balls = () => {
   }, []);
 
   const onStart = () => {
+    if (!fishBowlData) {
+      return; // 데이터가 아직 로드되지 않은 경우 일찍 반환
+    }
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -335,19 +334,23 @@ const Balls = () => {
   }, [fishBowlData]);
 
   return (
-    <canvas
-      className="h-full rounded-full"
-      id="canvas"
-      style={{
-        width: "90%",
-        height: "85%",
-        position: "absolute",
-        top: "5%",
-        left: "5%",
-      }}
-    >
-      {/* <SeaScene></SeaScene> */}
-    </canvas>
+    <div>
+      {fishBowlData ? (
+        <canvas
+          className="h-full rounded-full"
+          id="canvas"
+          style={{
+            width: "90%",
+            height: "85%",
+            position: "absolute",
+            top: "5%",
+            left: "5%",
+          }}
+        />
+      ) : (
+        <div>로딩 중...</div>
+      )}
+    </div>
   );
 };
 

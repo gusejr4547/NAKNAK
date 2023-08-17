@@ -109,6 +109,9 @@ app:
   fileupload:
     uploadPath: C:\SSAFY\fisher
     uploadDir: upload
+  dataupload:
+    uploadPath: C:\SSAFY\fisher
+    uploadDir: data
 jwt:
   secret-key: ihatejavascriptihatevuefuckyoujavascriptfuckyouvuefreehongkong
   access-token-expiration-sec: 1800

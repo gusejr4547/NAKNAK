@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import SlideInnerMenu from "./SlideInnerMenu";
 
@@ -45,21 +44,22 @@ const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
   return (
     <div ref={slideRef} className="inven-slide" onClick={handleSlideClick}>
       {/* 동적으로 받아온 슬라이드 내용 표시 */}
-      {isFishBowl == "true" ? (
+      {isFishBowl === "true" ? (
         <img
-          style={{ filter: "grayscale(100)" }}
+          style={{ filter: "grayscale(100)", backgroundColor: "gray" }}
           src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
           alt={"fish img"}
         />
       ) : (
         <img
+          style={{ backgroundColor: "rgb(215, 234, 251)" }}
           src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
           alt={"fish img"}
         />
       )}
 
       <h6>
-        {fishInfo.fishName} <br />({fishInfo.fishSize}cm)
+        {fishInfo.fishName} <br />({fishInfo.fishSize.toFixed(2)}cm)
       </h6>
 
       {showSlideInnerMenu && (

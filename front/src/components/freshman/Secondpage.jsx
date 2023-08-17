@@ -22,7 +22,6 @@ function Secondpage({ show }) {
 
   useEffect(() => {
     setSetting(true);
-    console.log("길이", fishingType, tts);
     // setShowNext(false);
     setTimeout(() => setShowNext(true), tts);
   }, [tts]);
@@ -38,8 +37,7 @@ function Secondpage({ show }) {
   // 뉴비 튜토리얼 업그레이드
   const handleUpgradeProgress = async (status) => {
     try {
-      const response = await upgradeProgress(status, accesstoken);
-      console.log(response);
+      await upgradeProgress(status, accesstoken);
     } catch (err) {
       console.log(err);
     }

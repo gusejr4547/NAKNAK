@@ -16,7 +16,7 @@ function App(props) {
 
   return (
     <RecoilRoot>
-      <AppRouter />;
+      <AppRouter />
     </RecoilRoot>
   );
 }

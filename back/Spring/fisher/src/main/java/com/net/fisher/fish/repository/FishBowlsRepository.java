@@ -9,3 +9,4 @@ import java.util.List;
 public interface FishBowlsRepository extends JpaRepository<FishBowls,Long> {
     List<FishBowls> findByMember(Member member);
 }
+

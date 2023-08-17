@@ -22,8 +22,14 @@ const DeleteFeed = ({ onDelete }) => {
   };
 
   return (
-    <div className="modify-feed-delete">
-      <div onClick={handleDelete}>삭제</div>
+    <div>
+      <div onClick={handleDelete}>
+        <img
+          src="/assets/icons/delete.png"
+          alt="삭제"
+          className="modify-feed-delete"
+        />
+      </div>
       <DeleteFeedModal
         isOpen={isModalOpen}
         onConfirm={handleConfirm}

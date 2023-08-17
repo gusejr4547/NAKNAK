@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
@@ -12,6 +13,7 @@ const Inventory = () => {
   const [inventoryData, setInventoryData] = useState({});
   const [fishBowlData, setFishBowlData] = useState({});
   const [itemData, setItemData] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getInventory();
@@ -92,7 +94,7 @@ const Inventory = () => {
     try {
       setLoading(true);
       const fish = {
-        name: "우럭",
+        name: "벵에돔",
         size: 41.3,
       };
 
@@ -118,12 +120,6 @@ const Inventory = () => {
 
   return (
     <div className="inven-wrapper">
-      <img
-        src="/assets/icons/x.png"
-        alt="exit"
-        className="dogam-back-button"
-        onClick={goBack}
-      />
       {/* // add dummy data code */}
       <img
         src="/assets/icons/x.png"
@@ -132,7 +128,20 @@ const Inventory = () => {
         onClick={addItem}
       />
       <div className="inven-board">
+        <div
+          style={{
+            margin: "auto",
+            width: "30%",
+            textAlign: "center",
+            color: "blue",
+            // border: "1px solid black",
+            // borderRadius: "70%",
+          }}
+        >
+          나의 살림통
+        </div>
         <div className="inven-carousel inven-disable-scrollbar">
+          {/* <div class="inventitle">인벤토리</div> */}
           {Object.keys(inventoryData).map((key) => {
             const fish = inventoryData[key];
             return (
@@ -145,10 +154,18 @@ const Inventory = () => {
               />
             );
           })}
-          {/* dummy start */}
-
-          {/* dummy end */}
         </div>
+        <div style={{ textAlign: "center", color: "blue", marginTop: "3%" }}>
+          바다에서 헤엄치는
+          <span
+            onClick={() => navigate("/SeaScene")}
+            style={{ position: "absolute", right: "5%", color: "green" }}
+          >
+            {" "}
+            탐험하러 가기
+          </span>
+        </div>
+
         <div className="inven-carousel inven-disable-scrollbar">
           {Object.keys(fishBowlData).map((key) => {
             const fish = fishBowlData[key];
@@ -162,9 +179,6 @@ const Inventory = () => {
               />
             );
           })}
-          {/* dummy start */}
-          {/* <p>{itemData}</p> */}
-          {/* dummy end */}
         </div>
       </div>
     </div>

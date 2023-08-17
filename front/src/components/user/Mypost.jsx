@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./profile.css";
+import Loading from "../common/Loading";
 
 function Mypost(props) {
   const [MypostData, setMypostData] = useState([]);
   const [loading, setLoading] = useState(true); // 데이터 로딩 상태
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
   const [totalPage, setTotalPage] = useState(1); // 총 페이지 수 상태
-  const [pageNation, setPageNation] = useState([]);
+  const [pageNation, setPageNation] = useState([1]);
   const navigate = useNavigate();
 
   const getMyPost = async (page) => {
-    console.log(123);
-    const param = { page: page, size: 4 };
+    const param = { page: page, size: 4, memberId: props.id };
     try {
       const response = await authorizedRequest({
         method: "get",
@@ -25,10 +25,8 @@ function Mypost(props) {
       if (props.ver === "my-post") {
         props.postplus(response.data.count);
       }
-      console.log(response.data);
-      if (response.data.count) {
-        setMypostData(response.data);
-      }
+      // console.log(response.data);
+      setMypostData(response.data);
       //   setMypostData(response.data.count);
       //   console.log(MypostData);
     } catch (error) {
@@ -47,18 +45,21 @@ function Mypost(props) {
     getMyPost(currentPage);
   }, [currentPage]);
 
-  useEffect(() => {
-    if (MypostData.count) {
-      setTotalPage(Math.ceil(MypostData.count / 4));
-      console.log(totalPage, 123);
+  const pagena = () => {
+    if (MypostData.count >= 1) {
+      const num = Math.ceil(MypostData.count / 4);
+      setTotalPage(num);
 
       const temp = [];
       for (let index = 1; index <= totalPage; index++) {
         temp.push(index);
       }
       setPageNation(temp);
-      console.log(pageNation);
     }
+  };
+
+  useEffect(() => {
+    pagena();
   }, [MypostData]); // MypostData가 변경될 때마다 호출
 
   const handlePageChange = (newPage) => {
@@ -73,7 +74,7 @@ function Mypost(props) {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -94,9 +95,7 @@ function Mypost(props) {
                 />
               </div>
               <div className="postbody">{item.content}</div>
-              <div className="postfotter">
-                {item.registeredAt.substr(0, 11)}
-              </div>
+              <div className="postfotter">{item.registeredAt.substr(2, 9)}</div>
             </div>
           ))}
         </div>
@@ -120,42 +119,45 @@ function Mypost(props) {
               </div>
               <div className="postfotter">
                 <span onClick={() => handleProfileLinkClick(item.memberId)}>
-                  {item.memberNickname}
+                  {item.memberNickname} |
                 </span>{" "}
-                {item.registeredAt.substr(0, 11)}
+                {item.registeredAt.substr(2, 9)}
               </div>
             </div>
           ))}
         </div>
       )}
-
       <div className="pagination">
-        <button
-          className="mypost-page-btn"
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          {"<<"}
-        </button>
-        {/* <span>
-          {currentPage} / {totalPage}
-        </span> */}
-        {pageNation.map((item) => (
+        {currentPage > 1 && (
           <button
-            key={item}
-            onClick={() => btnclick(item)}
-            className={
-              currentPage === item ? "page-btn-active" : "page-btn-default"
-            }
+            className="mypost-page-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
           >
-            {item}
+            {"<<"}
           </button>
-        ))}
-        <button
-          className="mypost-page-btn"
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          {">>"}
-        </button>
+        )}
+
+        {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+          (item) => (
+            <button
+              key={item}
+              onClick={() => btnclick(item)}
+              className={
+                currentPage === item ? "page-btn-active" : "page-btn-default"
+              }
+            >
+              {item}
+            </button>
+          )
+        )}
+        {currentPage < totalPage && (
+          <button
+            className="mypost-page-btn"
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            {">>"}
+          </button>
+        )}
       </div>
     </div>
   );

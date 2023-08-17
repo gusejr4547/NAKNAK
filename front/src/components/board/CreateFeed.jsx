@@ -94,8 +94,6 @@ const CreateFeed = () => {
 
     formData.append("tags", selectedTags);
 
-    console.log(formData);
-
     try {
       setLoading(true);
 
@@ -105,7 +103,7 @@ const CreateFeed = () => {
         url: `/api1/api/posts/upload`,
         data: formData,
       });
-      console.log("feed load success", response.data);
+      console.log("feed load success", response);
 
       setContent("");
       setSelectedFiles([]);
@@ -132,7 +130,7 @@ const CreateFeed = () => {
       return;
     }
     // 태그 추가 로직 구현
-    const newTagId = Object.keys(tagListData).length + 1; // 임의의 ID 생성
+    const newTagId = Object.keys(tagListData).length + 1;
     const newTagObject = { tagId: newTagId, tagName: newTag };
 
     setTagListData({ ...tagListData, [newTagId]: newTagObject });
@@ -143,22 +141,28 @@ const CreateFeed = () => {
   return (
     <div className="create-feed-wrapper">
       <div className="create-feed-header">
-        <Link to={`/Board`} className="create-feed-cancel">
-          <img src="" alt="취소" />
+        <Link to={`/Board`}>
+          <img
+            src="/assets/icons/back.png"
+            alt="취소"
+            className="create-feed-cancel"
+          />
         </Link>
         <div className="create-feed-title">
-          <h1>간지나는글쓰기라는문구가필요함</h1>
+          <h3>NEW FEED</h3>
         </div>
-        <div className="create-feed-submit" onClick={createFeed}>
-          <img src="" alt="작성" />
+        <div onClick={createFeed}>
+          <img
+            src="/assets/icons/upload.png"
+            className="create-feed-submit"
+            alt="작성"
+          />
         </div>
       </div>
       <div className="create-feed-contents">
-        {/* 여기서부터 하나씩 집어넣으면 됨 */}
-
         {/* 이미지첨부버튼 */}
         <div className="create-feed-image-select-header">
-          <h2>Images</h2>
+          <h2 className="create-feed-content-title">Images</h2>
           <label htmlFor="fileInput">
             <div className="create-feed-image-select-button"> select</div>
           </label>
@@ -183,7 +187,7 @@ const CreateFeed = () => {
                 onClick={() => removeSelectedFile(index)}
               />
               <img
-                src="/assets/icons/x.pn" // 마이너스 아이콘 이미지 경로
+                src="/assets/icons/minus.png"
                 alt="Delete"
                 className="create-feed-image-delete-button minus-icon"
               />
@@ -193,7 +197,7 @@ const CreateFeed = () => {
 
         {/* 게시글 작성부분 */}
         <div className="create-feed-contents-inner">
-          <h2>Contents</h2>
+          <h2 className="create-feed-content-title">Contents</h2>
           <textarea
             className="create-feed-textarea"
             rows="5"
@@ -206,7 +210,7 @@ const CreateFeed = () => {
 
         {/* 태그 선택부분 */}
         <div className="create-feed-contents-inner">
-          <h2>Tag</h2>
+          <h2 className="create-feed-content-title">Tag</h2>
           <hr />
           {/* 태그 임의 추가 */}
           <div className="create-feed-add-tag">
@@ -227,9 +231,9 @@ const CreateFeed = () => {
               const tag = tagListData[key];
               return (
                 <FeedTag
-                  key={tag.tagId} // 고유한 키를 제공해야 합니다.
+                  key={tag.tagId}
                   tagInfo={tag}
-                  active={selectedTags.includes(tag.tagName)} // 선택 여부를 배열 포함 여부로 판단
+                  active={selectedTags.includes(tag.tagName)}
                   onClick={() => tagClickHandler(tag)}
                 />
               );

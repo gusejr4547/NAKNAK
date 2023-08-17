@@ -1,19 +1,44 @@
 .Nowgetdiv {
-  display: flex;
-  width: 55%;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 40%;
-  border: thick double rgb(7, 87, 178);
-  /* transform: translateX(-50%); */
-  /* position: absolute;
-  bottom: 20%;
-  left: 40%; */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-
+.Nowget-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 18rem;
+  position: absolute;
+  width: 100%;
+}
 .Nowgeth {
   text-align: center;
-  color: blue;
   margin: 0px;
+  font-size: 1.5rem;
+  position: absolute;
+  font-weight: bold;
+}
+.Aquarium {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 40%;
+}
+.FishEven {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: url("../../../public/assets/icons/fish4.png") center center
+    no-repeat;
+  width: 5rem;
+  height: 5rem;
+}
+.FishOdd {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: url("../../../public/assets/icons/fish5.png") center center
+    no-repeat;
+  width: 5rem;
+  height: 5rem;
 }

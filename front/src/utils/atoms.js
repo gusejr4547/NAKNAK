@@ -18,7 +18,7 @@ export const token = atom({
 export const profileData_recoil = atom({
   key: "profileData_recoil",
   default: {},
-  effects_UNSTABLE: [persistAtom],
+  // effects_UNSTABLE: [persistAtom],
 });
 
 export const favoritePoint_recoil = atom({
@@ -98,4 +98,9 @@ export const tts_recoil = atom({
   key: "tts_recoil",
   default: null,
   effects_UNSTABLE: [persistAtom],
+});
+export const uploadfish_recoil = atom({
+  key: "uploadfish_recoil",
+  default: null,
+  // effects_UNSTABLE: [persistAtom],
 });

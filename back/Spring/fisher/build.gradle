@@ -86,9 +86,17 @@ dependencies {
 
     implementation 'org.springframework.kafka:spring-kafka'
 
+    // https://mvnrepository.com/artifact/org.apache.mahout/mahout-integration
+    implementation group: 'org.apache.mahout', name: 'mahout-integration', version: '0.13.0'
+
 
 }
 
+
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+configurations {
+    compile.exclude group: 'org.slf4j', module: 'reload4j'
 }

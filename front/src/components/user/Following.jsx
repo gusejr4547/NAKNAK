@@ -3,7 +3,6 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
 import FollowerModal from "./FollowerModal";
-import { useNavigate } from "react-router-dom";
 
 function Following(props) {
   const [userData] = useRecoilState(loginuser);
@@ -11,11 +10,9 @@ function Following(props) {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const navigate = useNavigate();
-
   // 모달창 노출
   const showModal = () => {
-    if (props.user === userData.memberId) {
+    if (props.user === userData.memberId && props.activeView !== "aquarium") {
       setModalOpen(true);
     }
   };
@@ -47,12 +44,16 @@ function Following(props) {
 
   return (
     <div>
-      <p onClick={showModal}>
+      <div onClick={showModal}>
+        <div>팔로잉</div>
         {followingData.count}
-        <p>팔로잉</p>
-      </p>
+      </div>
       {modalOpen && (
-        <FollowerModal closeModal={setModalOpen} data={followingData.data} />
+        <FollowerModal
+          closeModal={setModalOpen}
+          data={followingData.data}
+          ver="following"
+        />
       )}
     </div>
   );

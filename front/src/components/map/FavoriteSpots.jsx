@@ -5,9 +5,8 @@ import FavoriteSpot from "./FavoriteSpot";
 import "./FavoriteSpots.css";
 
 function FavoriteSpots() {
-  const [favoritePoint, setFavoritePoint] =
-    useRecoilState(favoritePoint_recoil);
-  const [location, setLocation] = useRecoilState(location_recoil);
+  const [favoritePoint] = useRecoilState(favoritePoint_recoil);
+  const [location] = useRecoilState(location_recoil);
 
   // 위도 경도로 거리 구하기
   function haversineDistance(coords1, coords2) {

@@ -5,8 +5,8 @@ import com.net.fisher.exception.ExceptionCode;
 import com.net.fisher.file.FileInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +26,7 @@ public class FileService {
 
     private final Set<String> permittedExtensions;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    //private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public FileService(Set<String> permittedExtensions) {
         this.permittedExtensions = permittedExtensions;
@@ -42,11 +42,11 @@ public class FileService {
         try {
             List<FileInfo> infoList = new ArrayList<>();
             File uploadDir = new File(uploadPath + File.separator + uploadFolder);
-            logger.error(uploadDir.getAbsolutePath());
+            log.error(uploadDir.getAbsolutePath());
             if (!uploadDir.exists()) {
                 boolean e =  uploadDir.mkdirs();
                 String er = e?"OK":"NO";
-                logger.error(er);
+                log.error(er);
             }
 
             for (MultipartFile part : fileList) {
@@ -66,7 +66,7 @@ public class FileService {
             if (rollback != null && rollback.exists()) {
                 rollback.delete();
             }
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             throw new BusinessLogicException(e.getExceptionCode());
         }
         catch (IOException e) {
@@ -74,7 +74,7 @@ public class FileService {
             if (rollback != null && rollback.exists()) {
                 rollback.delete();
             }
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
         }
     }

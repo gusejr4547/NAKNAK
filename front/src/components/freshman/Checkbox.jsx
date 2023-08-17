@@ -19,7 +19,7 @@ function Checkbox() {
   const [step, setStep] = useState(9);
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [tts] = useRecoilState(tts_recoil);
   const [showNext, setShowNext] = useState(false);
   const [item, setItem] = useState("");
   const [items, setItems] = useState(() => {
@@ -32,7 +32,7 @@ function Checkbox() {
           { id: 3, text: "장소찾기", completed: false },
         ];
   });
-
+  const talkContents = Talk2();
   useEffect(() => {
     setTimeout(() => setShowNext(true), tts);
   }, [tts]);
@@ -86,7 +86,6 @@ function Checkbox() {
   const handleUpgradeProgress = async (status) => {
     try {
       const response = await upgradeProgress(status);
-      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -133,8 +132,10 @@ function Checkbox() {
         {/* 뉴비버전 */}
         {newbie && (
           <div className="checkbox-newbie-talk-box">
-            {Talk2[step].content}
-            {Talk2[step].content && <TTS message={Talk2[step].content} />}
+            {talkContents[step].content}
+            {talkContents[step].content && (
+              <TTS message={talkContents[step].content} />
+            )}
             {showNext && (
               <div
                 className="next"

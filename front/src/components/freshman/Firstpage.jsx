@@ -20,13 +20,13 @@ function Firstpage({ handleChangeParentState }) {
   const [profileData, setProfileData] = useRecoilState(profileData_recoil);
   //뉴비버젼 유무
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
-  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [tts] = useRecoilState(tts_recoil);
 
   const [setting, setSetting] = useState(false);
 
   useEffect(() => {
     setSetting(true);
-    if (step !== 8) {
+    if (step !== 8 && step !== 6 && step !== 7) {
       setTimeout(() => setShow(true), tts);
     }
     // setVoice(TTS({ message: talk[step].content }));

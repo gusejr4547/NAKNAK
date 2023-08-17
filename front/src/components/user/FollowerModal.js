@@ -10,7 +10,7 @@ function FollowerModal(props) {
   console.log(props.data);
 
   const [userData] = useRecoilState(loginuser);
-  console.log(userData);
+  // console.log(userData);
   const [followerData, setFollowerData] = useState(null);
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(false);
@@ -76,6 +76,7 @@ function FollowerModal(props) {
         <button id="followmodalCloseBtn" onClick={closeModal}>
           ✖
         </button>
+        <p> {props.ver !== "following" ? "나를 팔로우한" : "내가 팔로우한"}</p>
         {props.data.map((item) => (
           <p
             key={item.memberId}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginuser, token } from "../../utils/atoms";
+import { loginuser } from "../../utils/atoms";
 import { Button } from "react-bootstrap";
 import FollowerModal from "./FollowerModal";
 import { authorizedRequest } from "../account/AxiosInterceptor";
@@ -10,13 +10,12 @@ function Follower(props) {
   const [userData] = useRecoilState(loginuser);
   const [followerData, setFollowerData] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [accesstoken] = useRecoilState(token);
   const [isFollowing, setIsFollowing] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   // 모달창 노출
   const showModal = () => {
-    if (props.user === userData.memberId) {
+    if (props.user === userData.memberId && props.activeView !== "aquarium") {
       setModalOpen(true);
     }
   };
@@ -40,10 +39,6 @@ function Follower(props) {
     getFllowing();
   }, [props.user]);
 
-  // const header = useMemo(() => ({
-  //     Authorization: accesstoken,
-  //   }),[accesstoken]);
-
   const followUser = async () => {
     if (props.user === userData.memberId) {
       console.log("동일");
@@ -51,13 +46,7 @@ function Follower(props) {
     }
 
     const param = { follow: props.user };
-    // const config = { params: param, headers: header };
     try {
-      // const response = await axios.post(
-      //   "/api1/api/follow/register",
-      //   null,
-      //   config
-      // );
       const response = await authorizedRequest({
         method: "post",
         url: "/api1/api/follow/register",
@@ -71,17 +60,10 @@ function Follower(props) {
   };
   const unFollowUser = async () => {
     if (props.user === userData.memberId) {
-      // console.log("동일");
       return;
     }
     const param = { follow: props.user };
-    // const config = { params: param, headers: header };
     try {
-      // const response = await axios.post(
-      //   "/api1/api/follow/cancel",
-      //   null,
-      //   config
-      // );
       const response = await authorizedRequest({
         method: "post",
         url: "/api1/api/follow/cancel",
@@ -103,10 +85,10 @@ function Follower(props) {
 
   return (
     <div style={{ position: "relative" }}>
-      <p onClick={showModal}>
+      <div onClick={showModal}>
+        <div>팔로워</div>
         {followerData.count}
-        <p>팔로워</p>
-      </p>
+      </div>
       {modalOpen && (
         <FollowerModal closeModal={setModalOpen} data={followerData.data} />
       )}

@@ -1,7 +1,7 @@
 #map {
   position: absolute;
   width: 90%;
-  height: 500px;
+  height: 45%;
   top: 3rem;
   left: 4.5%;
   border-radius: 20px;
@@ -13,15 +13,15 @@
 }
 .search {
   position: fixed;
-  bottom: 20rem;
-  left: 1rem;
+  top: 28rem;
+  left: 1.5rem;
 }
 
 .search-wrapper {
-  position: fixed;
+  position: absolute;
   height: 10rem;
-  left: 1.4rem;
-  bottom: 6.5rem;
+  left: 2rem;
+  top: 31rem;
 }
 
 .map-newbie-talk-box {
@@ -51,4 +51,17 @@
   right: 1rem;
   padding-top: 4%;
   bottom: 0.5rem;
+}
+
+.search-btn {
+  position: fixed;
+  right: 5rem;
+  top: 28rem;
+  width: 3rem;
+  height: 2rem;
+  text-align: center;
+  color: #000000;
+  border-radius: 5px;
+  margin-left: 1rem;
+  background: #ffd13c;
 }

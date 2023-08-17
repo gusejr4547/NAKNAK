@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 // import * as S from "./profileStyle";
 import "./profile.css";
 // import axios from "axios";
-// import { useRecoilState } from "recoil";
-// import { loginuser, token } from "../../utils/atoms";
+import { useRecoilState } from "recoil";
+import { loginuser } from "../../utils/atoms";
 // import { Button } from "react-bootstrap";
 import Following from "./Following";
 import Follower from "./Follower";
@@ -13,12 +13,14 @@ import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import ProfileModal from "./ProfileModal";
 import Profilesea from "../fishbowl/Profilesea";
+import Loading from "../common/Loading";
 
 function Profile(props) {
   const userId = useParams().userId;
   const temp = userId.slice(1);
+  // console.log(temp);
 
-  // const [userData] = useRecoilState(loginuser);
+  const [userData] = useRecoilState(loginuser);
   // const [accesstoken] = useRecoilState(token);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 데이터 로딩 상태
@@ -32,6 +34,9 @@ function Profile(props) {
 
   // 모달창 노출
   const showModal = () => {
+    if (activeView === "aquarium") {
+      return;
+    }
     setModalOpen(true);
   };
 
@@ -46,7 +51,7 @@ function Profile(props) {
         url: `/api1/api/members/${temp}`,
       });
       setProfileData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       setLoading(false); // 데이터 로딩 완료
     } catch (error) {
       console.error("Error posting data:", error);
@@ -59,7 +64,11 @@ function Profile(props) {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   if (!profileData) {
@@ -68,16 +77,7 @@ function Profile(props) {
 
   return (
     <div className="profileContainer">
-      <div
-        className="profileTop"
-        style={{
-          height: "30%",
-          // display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          // borderBottom: "1px solid #000",
-        }}
-      >
+      <div className="profileTop">
         <div className="profileimgBox">
           <div className="profileimgbox">
             <img
@@ -93,33 +93,24 @@ function Profile(props) {
             />
           </div>
         </div>
-        <img
-          className="profilesetting"
-          src="/assets/icons/set.png"
-          alt=""
-          onClick={showModal}
-        />
+        {profileData.memberResponse.memberId === userData.memberId && (
+          <img
+            className="profilesetting"
+            src="/assets/icons/set.png"
+            alt=""
+            onClick={showModal}
+          />
+        )}
+
         {modalOpen && (
           <ProfileModal closeModal={setModalOpen} data={profileData} />
         )}
         <div className="profilefollowContainer">
-          <div
-            style={{
-              // display: "inline",
-              textAlign: "center",
-              width: "100%",
-              height: " 25%",
-              position: "relative",
-              top: "25%",
-            }}
-          >
-            <p className="profileusernickname">
+          <div className="profile-title">
+            <span className="profileusernickname">
               {profileData.memberResponse.nickname}
-            </p>
-            <span
-              className="profileuserLV"
-              style={{ margin: "0px", fontSize: "12px", opacity: "0.7" }}
-            >
+            </span>
+            <span className="profileuserLV">
               LV {profileData.memberStatusResponse.level}
             </span>
           </div>
@@ -142,8 +133,8 @@ function Profile(props) {
               }}
             >
               <div style={{ display: "block" }}>
-                <div>{mypost}</div>
                 <div>게시글</div>
+                <div>{mypost}</div>
               </div>
             </div>
             <div
@@ -153,56 +144,52 @@ function Profile(props) {
                 borderRight: "1px solid gray",
               }}
             >
-              <Following user={profileData.memberResponse.memberId} />
+              <Following
+                user={profileData.memberResponse.memberId}
+                activeView={activeView}
+              />
             </div>
             <div style={{ width: "33%", height: "40%" }}>
-              <Follower user={profileData.memberResponse.memberId} />
+              <Follower
+                user={profileData.memberResponse.memberId}
+                activeView={activeView}
+              />
             </div>
           </div>
         </div>
       </div>
-      <div
-        className="profileMiddle"
-        style={{
-          // height: "5%",
-          display: "flex",
-          justifyContent: "space-evenly",
-          alignItems: "center",
-          // borderRadius: "10%",
-          borderBottom: "1px solid #000",
-        }}
-      >
+      <div className="profileMiddle">
         <Profileinventory
           id={profileData.memberResponse.memberId}
           point={profileData.memberStatusResponse.point}
         />
       </div>
       <div className="profileBottom">
-        <div className="profiletoggleBar" style={{ display: "flex" }}>
-          <button
+        <div className="profiletoggleBar">
+          <span
             onClick={() => handleToggle("myPosts")}
             className={
               activeView === "myPosts" ? "profileactive" : "profiledefault"
             }
           >
             게시글
-          </button>
-          <button
+          </span>
+          <span
             onClick={() => handleToggle("likePosts")}
             className={
               activeView === "likePosts" ? "profileactive" : "profiledefault"
             }
           >
             좋아요한 게시글
-          </button>
-          <button
+          </span>
+          <span
             onClick={() => handleToggle("aquarium")}
             className={
               activeView === "aquarium" ? "profileactive" : "profiledefault"
             }
           >
             수조
-          </button>
+          </span>
         </div>
         {activeView === "myPosts" && (
           <div className="profilebottom">
@@ -215,9 +202,9 @@ function Profile(props) {
           </div>
         )}
         {activeView === "aquarium" && (
-          <div className="profilebottom">
-            <Profilesea />
-          </div>
+          // <div className="profilebottom">
+          <Profilesea />
+          // </div>
         )}
       </div>
     </div>

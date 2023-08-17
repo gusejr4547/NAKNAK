@@ -75,12 +75,13 @@ export const detectImage = async (
     const scores = data.slice(4); // classes probability scores
     const score = Math.max(...scores); // maximum probability scores
     console.log(score * 100);
-    if (score * 100 <= 60) {
+    if (score * 100 <= 40) {
       renderBoxes(canvas, 0);
       return;
     }
     const label = scores.indexOf(score); // class id of maximum probability scores
     // console.log(box[0], box[1], box[2], box[3]);
+    console.log(label);
 
     const [x, y, w, h] = [
       (box[0] - 0.5 * box[2]) * xRatio, // upscale left

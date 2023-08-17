@@ -20,7 +20,6 @@ function ProfileModal(props) {
         url: "/api1/api/members/update",
         // data:
       });
-      console.log(response.data);
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -28,12 +27,9 @@ function ProfileModal(props) {
 
   const logout = () => {
     setUserData(undefined);
-    console.log(userData);
     setAccessToken(undefined);
-    console.log(accesstoken);
     localStorage.setItem("key", undefined);
-    const tt = localStorage.getItem("key");
-    console.log(tt);
+    localStorage.setItem("loginuser", undefined);
     navigate("/Login");
   };
   return (

@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
-import axios from "axios";
 import Feed from "./Feed";
 import FeedTag from "./FeedTag";
-import "../../utils/util";
 
-import { useRecoilValue, useRecoilState } from "recoil";
+import "../../utils/util";
+import axios from "axios";
+
+import { useRecoilValue } from "recoil";
 import { loginuser } from "../../utils/atoms";
 
 import { useInView } from "react-intersection-observer";
 
 import "./Board.css";
-import { getCurrentTime } from "../../utils/util";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Board = () => {
   const userInfo = useRecoilValue(loginuser);
+
+  const navigate = useNavigate();
 
   const [tagListData, setTagListData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,6 +62,7 @@ const Board = () => {
     getTagList();
   }, []);
 
+  //
   //팔로우 여부를 확인하기 위해 사용자의 팔로잉 정보를 가져옵니다
   useEffect(() => {
     const getFollowers = async () => {
@@ -68,7 +71,6 @@ const Board = () => {
           method: "get",
           url: `/api1/api/members/follow/${userInfo.memberId}`,
         });
-        // console.log("followList success");
         setFollowList(response.data);
       } catch (error) {
         console.error("can't get current users followers");
@@ -76,7 +78,7 @@ const Board = () => {
     };
     getFollowers();
     // 팔로워 팔로잉 문제가 발생하면 여기서 발생 할 것으로 추정
-  }, [followerList]);
+  }, []);
 
   // 좋아요하는 게시글에 대한 정보를 가져옵니다
   useEffect(() => {
@@ -85,11 +87,13 @@ const Board = () => {
       try {
         const response = await authorizedRequest({
           method: "get",
-          url: `/api1/api/posts/my-like?page=1&size=`,
+          url: `/api1/api/posts/my-like?page=1&size=&memberId=${userInfo.memberId}`,
         });
         console.log("success get likedFeedList", response.data);
 
-        setLikedFeedData((prevData) => prevData.concat(response.data.data));
+        if (response.data.data.length > 0) {
+          setLikedFeedData((prevData) => prevData.concat(response.data.data));
+        }
       } catch (error) {
         console.error("failed get likedFeedList");
       } finally {
@@ -101,23 +105,20 @@ const Board = () => {
 
   //보여줄 피드의 개수를 정합니다
   const showFeedCount = 5;
+
   const getFeedList = useCallback(async () => {
     try {
       setLoading(true);
 
-      console.log();
+      const responseCurrentTime = await axios.get(`/api1/api/time/server`);
 
       const response = await authorizedRequest({
         method: "get",
-        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${getCurrentTime(
-          Date.now()
-        )}`,
+        url: `/api1/api/posts?page=${page}&size=${showFeedCount}&time=${responseCurrentTime.data.serverTime}`,
       });
       if (response.data.data.length === 0) {
         return;
       }
-      console.log("feed load success", response);
-      console.log("feed load data", response.data.data);
       setFeedListData((prevData) => prevData.concat(response.data.data));
 
       console.log(feedListData);
@@ -150,9 +151,42 @@ const Board = () => {
           state ? "cancel" : "register"
         }?follow=${postMemberId}`,
       });
+
+      console.log("followerList", followerList);
       console.log("success toggle follow state", response);
     } catch (error) {
       console.error("can't change follow state");
+      return;
+    }
+
+    try {
+      const response = await authorizedRequest({
+        method: "get",
+        url: `/api1/api/members/${postMemberId}`,
+      });
+      console.log(
+        "postMemberId" + "success get flowing member status",
+        response.data.memberResponse
+      );
+      console.log(response.data.memberResponse.memberId);
+
+      const existingMemberIndex = followerList.data.findIndex(
+        (follower) =>
+          follower.memberId === response.data.memberResponse.memberId
+      );
+
+      if (existingMemberIndex !== -1) {
+        followerList.count -= 1;
+        followerList.data.splice(existingMemberIndex, 1);
+      } else {
+        followerList.count += 1;
+        followerList.data.push(response.data.memberResponse);
+      }
+
+      console.log("here is followwerㅁ아ㅓㄹ후ㅜ마ㅓㅇㅀ", followerList);
+      navigate("/Board");
+    } catch (error) {
+      console.log("cant get flowing member status");
     }
   };
 
@@ -180,30 +214,13 @@ const Board = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedTag && feedListData.length > 0) {
-  //     const hasTaggedFeeds = feedListData.some((feed) =>
-  //       feed.tags.some((tag) => tag.tagId === selectedTag.tagId)
-  //     );
-
-  //     if (!hasTaggedFeeds) {
-  //       // 태그에 해당하는 게시글이 없으면 추가적으로 게시글 로드
-  //       getFeedList();
-  //     }
-  //   }
-  // }, [selectedTag, feedListData]);
-
   return (
     <div className="board-wrapper">
-      {/* <Test></Test> */}
-
       <div className="board-header">
-        <div className="board-title-container">
-          <h1>NAKNAK</h1>
-        </div>
+        <div className="board-title-container"></div>
         <img
           className="board-search-img-container"
-          src="/assets/cats/cat.PNG"
+          src="/assets/cats/cat.png"
           alt="검색버튼"
         />
       </div>
@@ -229,18 +246,11 @@ const Board = () => {
             />
           );
         })}
-        {/* dummy data start */}
-
-        {/* dummy data end */}
       </div>
       <div ref={tagTargetDiv} className="board-board board-disable-scrollbar">
         <div className="board-carousel ">
-          {/* feedListData의 데이터를 HTML로 출력 */}
           {feedListData.length === 0 ? (
-            <div className="board-loading">
-              게시글이 없습니다.
-              {/* <img src="/assets/loading.gif" alt="" /> */}
-            </div>
+            <div className="board-loading">게시글이 없습니다.</div>
           ) : (
             Object.keys(feedListData).map((index) => {
               const feed = feedListData[index];
@@ -250,7 +260,6 @@ const Board = () => {
               ) {
                 return (
                   <div ref={ref}>
-                    {/* {inView.toString()} */}
                     <Feed
                       key={index}
                       //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
@@ -271,19 +280,19 @@ const Board = () => {
                   </div>
                 );
               } else {
-                // console.log("hellooooo", feedListData);
-
                 return null;
               }
-
-              return null;
             })
           )}
         </div>
       </div>
 
-      <Link to={`/CreateFeed`} className="board-create-feed">
-        게시글 작성하기
+      <Link to={`/CreateFeed`}>
+        <img
+          src="/assets/icons/plus.png"
+          alt="create"
+          className="board-create-feed"
+        />
       </Link>
     </div>
   );

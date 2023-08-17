@@ -1,5 +1,35 @@
-.slide-inner-menu {
+.slide-inner-menu-inven {
   /* z-index: 999; */
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  /* position: relative; */
+  transform: translate(0%, -100%);
   position: absolute;
+  /* margin: auto; */
+  /* top: 30%; */
   /* 추가 스타일 및 디자인 설정필요 */
+}
+.slide-inner-menu-fishbowl {
+  /* z-index: 999; */
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  /* position: relative; */
+  transform: translate(50%, -100%);
+  position: absolute;
+  /* margin: auto; */
+  /* top: 30%; */
+  /* 추가 스타일 및 디자인 설정필요 */
+}
+.invenbtn-del {
+  border: thick double rgb(255, 255, 255);
+  border-radius: 10px;
+  background-color: red;
+  color: aliceblue;
+}
+.invenbtn {
+  border: thick double black;
+  border-radius: 10px;
+  background-color: antiquewhite;
 }

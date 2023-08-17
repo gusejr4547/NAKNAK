@@ -3,17 +3,11 @@
   background-color: rgb(255, 255, 255);
   position: relative;
   width: 100%;
-  height: 100%;
-  /* display: flex; */
+  height: 95%;
   flex-direction: column;
-  /* justify-content: center; */
-  /* 가로 가운데 정렬 */
   align-items: baseline;
-  /* 세로 가운데 정렬 */
-  /* max-height: 45rem; */
-  /* 카로셀 전체의 최대 높이를 설정합니다. */
   margin: 0 auto;
-  /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
+  overflow: hidden;
 }
 
 .create-feed-header {
@@ -26,26 +20,23 @@
 
 .create-feed-cancel {
   margin: 0 1rem 0 1rem;
-  height: 3.5rem;
+  height: 2.3rem;
   width: auto;
-  /* display: flex;
-  align-items: center; */
 }
 
 .create-feed-title {
   margin-right: auto;
 }
-.create-feed-title h1 {
+
+.create-feed-title h3 {
   margin: 0;
   font-weight: bold;
 }
 
 .create-feed-submit {
   margin: 0 1rem 0 1rem;
-  height: 3.5rem;
+  height: 2.3rem;
   width: auto;
-  /* display: flex;
-  align-items: center; */
 }
 
 .create-feed-contents {
@@ -86,14 +77,13 @@
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   width: 100%;
-  height: 8rem;
-  max-height: 20rem;
+  height: 6rem;
+  max-height: 6rem;
   display: flex;
   align-items: center;
   overflow-x: scroll;
 }
 .create-feed-selected-file-container {
-  /* width: 100%; */
   height: 7rem;
   position: relative;
   display: flex;
@@ -103,15 +93,14 @@
 
 .create-feed-image-delete-button {
   position: absolute;
-  top: 0;
+  top: 15px;
   right: 0;
-  background: black;
   border: none;
   padding: 0;
   cursor: pointer;
 }
 .create-feed-selected-file {
-  border: 1px solid;
+  border: 1px solid #afafaf;
   max-width: auto;
   max-height: 5rem;
   margin: 10px;
@@ -133,14 +122,12 @@
   border-left: none;
   border-radius: 5px;
   font-size: 14px;
-  /* resize: vertical;  */
 }
 
 .create-feed-tag-container {
   margin: 0 1rem 0 1rem;
   display: flex;
   overflow-x: scroll;
-  justify-content: center;
 }
 
 .create-feed-disable-scrollbar {
@@ -177,4 +164,8 @@
   display: flex;
   justify-content: center;
   min-width: 5rem;
+}
+
+.create-feed-content-title {
+  font-weight: bold;
 }

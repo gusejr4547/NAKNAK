@@ -110,6 +110,9 @@ app:
   fileupload:
     uploadPath: /SSAFY/dummy/fisher
     uploadDir: upload
+  dataupload:
+    uploadPath: /SSAFY/dummy/fisher
+    uploadDir: data
 jwt:
   secret-key: ihatejavascriptihatevuefuckyoujavascriptfuckyouvuefreehongkong
   access-token-expiration-sec: 1800

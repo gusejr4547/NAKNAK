@@ -12,10 +12,9 @@ import Fishpic from "./components/fishing/Fishpic";
 import FavoriteSpots from "./components/map/FavoriteSpots";
 import Board from "./components/board/Board";
 import ModifyFeed from "./components/board/ModifyFeed";
-
+import Getfish from "./components/camera/Getfish";
 import CreateFeed from "./components/board/CreateFeed";
 
-// import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
 import Profile from "./components/user/Profile";
@@ -55,6 +54,7 @@ function AppRouter(props) {
   });
   const [location, setLocation] = useRecoilState(location_recoil);
   const [user, setuser] = useRecoilState(loginuser);
+  const localloginuser = localStorage.getItem("loginuser");
   function updateLocation(latitude, longitude) {
     setLocation({ latitude, longitude });
     console.log("Received location:", latitude, longitude);
@@ -130,15 +130,13 @@ function AppRouter(props) {
         >
           <Route
             path="/"
-            element={user === undefined ? <Login /> : <Home />}
+            element={!localloginuser ? <Login /> : <Home />}
           ></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route path="/fishing" element={<Fishing />}></Route>
           <Route path="/Fishpic" element={<Fishpic />}></Route>
           <Route path="/Dict" element={<Dict />}></Route>
           <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
-
-          {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
 
           <Route path="/UserUpdate" element={<UserUpdate />}></Route>
           <Route path="/Balls" element={<Balls />}></Route>
@@ -157,6 +155,7 @@ function AppRouter(props) {
           {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
           <Route path="/Map" element={<Map />}></Route>
+          <Route path="/Getfish" element={<Getfish />}></Route>
           {/* <Route path="/Map2" element={<Map2 />}></Route> */}
           <Route path="/FavoriteSpots" element={<FavoriteSpots />}></Route>
           <Route path="/Checkbox" element={<Checkbox />}></Route>

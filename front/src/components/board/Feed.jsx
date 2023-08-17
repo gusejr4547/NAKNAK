@@ -11,21 +11,20 @@ import { Link } from "react-router-dom";
 
 const Feed = ({
   feedInfo,
-  // followerList,
   currentFollowState,
-  // feedLikeState,
   likedFeedData,
   userId,
   onFollowChange,
   onLikeStateChange,
 }) => {
   const [feedLikeState, setFeedLikeState] = useState(
-    likedFeedData
+    likedFeedData.length > 0
       ? likedFeedData.find((likedFeed) => likedFeed.postId === feedInfo.postId)
         ? true
         : false
       : false
   );
+
   const [loading, setLoading] = useState(false);
 
   const followStateClass = currentFollowState
@@ -39,8 +38,8 @@ const Feed = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     swipe: true,
-    prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
-    nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    prevArrow: <></>,
+    nextArrow: <></>,
   };
 
   const followClickHandler = async () => {
@@ -51,36 +50,37 @@ const Feed = ({
   const likeClickHandler = () => {
     console.log("like btn clicked", feedLikeState);
     feedInfo.likeCount += !feedLikeState ? 1 : -1;
+    toggleLikeState();
+
     setFeedLikeState(!feedLikeState);
 
-    onLikeStateChange(feedInfo, feedLikeState);
+    onLikeStateChange(feedInfo, !feedLikeState);
+
+    console.log(feedInfo.postId, feedLikeState, feedInfo);
   };
 
   const tagClickHandler = () => {
     console.log("tagClicked", userId, feedInfo);
   };
 
-  useEffect(() => {
-    const toggleLikeState = async () => {
-      setLoading(true);
-      try {
-        const response = await authorizedRequest({
-          method: "post",
-          url: feedLikeState
-            ? `/api1/api/posts/likes?post=${feedInfo.postId}`
-            : `/api1/api/posts/unlikes?post=${feedInfo.postId}`,
-        });
-        console.log(feedLikeState, response);
-        setLoading(false);
-      } catch (error) {
-        console.error("fail toggle likedstate");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    toggleLikeState();
-  }, [feedLikeState]);
+  const toggleLikeState = async () => {
+    setLoading(true);
+    try {
+      console.log(feedLikeState);
+      const response = await authorizedRequest({
+        method: "post",
+        url: !feedLikeState
+          ? `/api1/api/posts/likes?post=${feedInfo.postId}`
+          : `/api1/api/posts/unlikes?post=${feedInfo.postId}`,
+      });
+      console.log(feedLikeState, response);
+      setLoading(false);
+    } catch (error) {
+      console.error("fail toggle likedstate");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="feed-wrapper">
@@ -88,7 +88,6 @@ const Feed = ({
         <div className="feed-header">
           <img
             className="feed-profile-img"
-            // null 값에 feedInfo.post.memberImageUrl가 들어가야함
             src={
               feedInfo.memberImageUrl
                 ? `${process.env.REACT_APP_BACKEND_URL}/` +
@@ -101,7 +100,6 @@ const Feed = ({
             {feedInfo.memberNickname}
           </Link>
 
-          {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
           {userId === feedInfo.memberId ? (
             <Link
               to={{
@@ -117,7 +115,6 @@ const Feed = ({
               {currentFollowState ? "팔로잉" : "팔로우"}
             </div>
           )}
-          {/* 팔로우 여부, 본인 게시글 일때 출력이 달라야함 */}
         </div>
 
         {/* carousel start */}
@@ -143,43 +140,19 @@ const Feed = ({
               />
             </div>
           )}
-          {/* dummy image */}
-          {/* <div className="feed-image-container">
-            <img
-              // key={index}
-              className="feed-image"
-              src={"/assets/images/background.png"}
-              alt="post images"
-            />
-          </div>
-          <div className="feed-image-container">
-            <img
-              // key={index}
-              className="feed-image"
-              src={"/assets/123123123.png"}
-              alt="post images"
-            />
-          </div>
-          <div className="feed-image-container">
-            <img
-              // key={index}
-              className="feed-image"
-              src={"/assets/images/jge.png"}
-              alt="post images"
-            />
-          </div> */}
-
-          {/* dummy image end*/}
         </Slider>
         {/* carousel end */}
 
         <div className="feed-footer">
           <div className="feed-insight">
             <div className="feed-likes ">{feedInfo.likeCount} likes</div>
-            {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
             {feedInfo.memberId !== userId && (
               <img
-                src={feedLikeState ? "/assets/icons/heart.png" : ""}
+                src={
+                  feedLikeState
+                    ? "/assets/icons/likeHeart.png"
+                    : "/assets/icons/unlikeHeart.png"
+                }
                 alt="하트"
                 onClick={likeClickHandler}
               />
@@ -198,11 +171,6 @@ const Feed = ({
             })}
           </div>
         </div>
-        {/* 댓글 DB 아직 미완성 */}
-        {/* <div className="comments">
-            <div className="comment">Comment 1</div>
-            <div className="comment">Comment 2</div>
-          </div> */}
       </div>
     </div>
   );

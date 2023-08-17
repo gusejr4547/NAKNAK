@@ -16,14 +16,23 @@ import com.net.fisher.response.PostResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
+import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -40,6 +49,11 @@ public class PostService {
     private final PostTagRepository postTagRepository;
     private final FollowRepository followRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Value("${app.dataupload.uploadDir}")
+    String uploadFolder;
+    @Value("${app.dataupload.uploadPath}")
+    String uploadPath;
 
     @Transactional
     public void uploadPost(long tokenId, Post post, List<Tag> tagList, MultipartHttpServletRequest httpServletRequest) {
@@ -83,7 +97,6 @@ public class PostService {
 
                 postImageRepository.save(postImage);
             }
-
         } catch (BusinessLogicException e) {
             throw new BusinessLogicException(e.getExceptionCode());
         } catch (IOException e) {
@@ -128,7 +141,7 @@ public class PostService {
         // 기존 태그와 비교해서 새로운 태그는 추가
         Set<Tag> tags = new HashSet<>(postTagRepository.findAllTagByPostId(postId));
         Set<Tag> newTags = new HashSet<>();
-        if(postPatchDto.getTags() != null){
+        if (postPatchDto.getTags() != null) {
             for (Tag tag : postPatchDto.getTags()) {
 //                System.out.println("#############");
 //                System.out.println(tag);
@@ -152,7 +165,7 @@ public class PostService {
 
         // PostTag 에 추가 해줘야 할 것
         newTags.removeAll(copyTags);
-        System.out.println(newTags);
+
         PostTag postTag = null;
         for (Tag tag : newTags) {
             postTag = PostTag.builder().tag(tag).post(post).build();
@@ -160,11 +173,11 @@ public class PostService {
         }
 
         // 이미지 삭제 할 것 있으면 삭제
-        if(postPatchDto.getDeleteImageList() != null){
-            for(long id : postPatchDto.getDeleteImageList()){
+        if (postPatchDto.getDeleteImageList() != null) {
+            for (long id : postPatchDto.getDeleteImageList()) {
                 PostImage postImage = postImageRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND));
 
-                if(postImage.getPost() != post){
+                if (postImage.getPost() != post) {
                     throw new BusinessLogicException(ExceptionCode.FAILED_TO_UPDATE_FILE);
                 }
 
@@ -285,8 +298,6 @@ public class PostService {
     public Page<Post> getPostFromFollowing(long memberId, Pageable pageable, LocalDateTime time) {
 
         Page<Post> postPage = postRepository.findPostByFollowing(pageable, memberId, time);
-        System.out.println(postPage.getTotalElements());
-        System.out.println(postPage.getContent().size());
         return postPage;
     }
 
@@ -296,26 +307,65 @@ public class PostService {
 
         // 팔로잉한 사람의 게시글을 조회
         List<Long> followingMemberList = followRepository.findFollowMemberIdByMember_MemberId(memberId).orElse(new ArrayList<>());
-//        System.out.println("############# 팔로잉");
-//        System.out.println(followingMemberList);
 
-        if(followingMemberList.isEmpty()){
+        // 내 게시글 조회하기 위해서 추가
+        followingMemberList.add(memberId);
+
+        if (followingMemberList.isEmpty()) {
             followingMemberList.add(-1l);
         }
 
         Page<Post> postPageFollowing = postRepository.findPostByFollowing(slicePageable, followingMemberList, time);
 
-//        System.out.println("########### 팔로잉한 사람의 게시글");
-//        System.out.println(postPageFollowing.getContent());
+        // ----------------------------------------
 
         // 내가 작성한 태그 중 가장 많이 사용한 태그 상위 최대 5개 선택
         List<Long> myTagInfo = postRepository.countTagByMemberId(PageRequest.of(0, 5), memberId);
 
-        // 모든 이용자가 작성한 태그 중 인기 많은
-        myTagInfo.addAll(postRepository.countTag(PageRequest.of(0,3)));
 
-//        System.out.println("############# taginfo");
-//        System.out.println(myTagInfo);
+        // Mahout 을 이용한 연관 태그 추천
+        try {
+            String filePath = uploadPath + File.separator + uploadFolder + File.separator + "data.csv";
+            String copyFilePath = uploadPath + File.separator + uploadFolder + File.separator + "data_.csv";
+            File file = new File(filePath); // File객체 생성
+            File copyFile = new File(copyFilePath);
+            if (!copyFile.exists()) {
+                copyFile.createNewFile();
+                Files.copy(file.toPath(), copyFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            long fileMod = file.lastModified();
+            long copyMod = copyFile.lastModified();
+
+            if (fileMod > copyMod) {
+                // 원본파일 수정 일자 보다 오래 됬으면 원본파일 복사
+                Files.copy(file.toPath(), copyFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            FileDataModel dm = new FileDataModel(copyFile);
+            LogLikelihoodSimilarity sim = new LogLikelihoodSimilarity(dm);
+            GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(dm, sim);
+            List<RecommendedItem> recommend = recommender.recommend(memberId, 5);
+//            System.out.println("#################");
+            for(RecommendedItem item : recommend){
+//                System.out.println(item.getItemID());
+                myTagInfo.add(item.getItemID());
+            }
+        } catch (IOException e) {
+            throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+        } catch (TasteException e) {
+            // 내가 작성한 태그가 없으면 exception 발생
+            Page<Post> normalPostPage = postRepository.findAllExceptFollowing(slicePageable, followingMemberList, time);
+
+            List<Post> postFollowing = postPageFollowing.getContent();
+            List<Post> postNormal = normalPostPage.getContent();
+            List<Post> totalPostList = sorting(postFollowing, postNormal);
+
+            Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
+                    postPageFollowing.getTotalElements() + normalPostPage.getTotalElements());
+
+            return postPage;
+        }
 
         // 태그가 없는 경우는
         Page<Post> postPageTag = null;
@@ -324,15 +374,11 @@ public class PostService {
         } else {
             System.out.println("tag 가 없네용");
         }
-//        System.out.println("######## 태그 기반 게시글");
-//        System.out.println(postPageTag.getContent());
 
         // 합치기
         List<Post> postFollowing = postPageFollowing.getContent();
         List<Post> postTag = postPageTag.getContent();
         List<Post> totalPostList = sorting(postFollowing, postTag);
-
-//        System.out.println(totalPostList);
 
 
         Page<Post> postPage = new PageImpl<>(totalPostList, pageable,
@@ -349,8 +395,8 @@ public class PostService {
         return totalPost;
     }
 
-    public Page<Post> getPostByTag(Pageable pageable, long tagId){
-        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
+    public Page<Post> getPostByTag(Pageable pageable, long tagId) {
+        Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.TAG_NOT_FOUND));
 
         return postRepository.findByTag(pageable, tag);
     }

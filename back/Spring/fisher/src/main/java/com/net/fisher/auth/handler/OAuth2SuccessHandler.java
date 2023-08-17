@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenizer jwtTokenizer;
     private final RedisDao redisDao;
     private final MemberRepository memberRepository;
@@ -68,14 +69,20 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Cookie cookie = new Cookie("refreshToken",refreshToken);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+
+        cookie = new Cookie("accessToken",accessToken);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
 
         response.addCookie(cookie);
+
         response.setHeader("Access-Control-Expose-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-
-        request.getRequestDispatcher("/api/login/success/oauth").forward(request, response);
-
+        getRedirectStrategy().sendRedirect(request, response, "/");
+       /* request.getRequestDispatcher("/").forward(request, response);
+*/
 
 
         /*RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();

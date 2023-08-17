@@ -32,3 +32,4 @@ public class PostTag {
         this.tag = tag;
     }
 }
+

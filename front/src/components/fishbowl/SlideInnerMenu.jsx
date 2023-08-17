@@ -23,7 +23,7 @@ const SlideInnerMenu = ({
   };
 
   const handleChange = async (id) => {
-    if (isFishBowl == "true") {
+    if (isFishBowl === "true") {
       try {
         const response = await authorizedRequest({
           method: "post",
@@ -65,17 +65,28 @@ const SlideInnerMenu = ({
   }, [onClose]);
 
   return (
-    <div className="slide-inner-menu">
-      {isFishBowl == "false" && <button onClick={handleDelete}>삭제</button>}
+    <div
+      className={
+        isFishBowl === "false"
+          ? "slide-inner-menu-inven"
+          : "slide-inner-menu-fishbowl"
+      }
+    >
+      {isFishBowl === "false" && (
+        <button onClick={handleDelete} className="invenbtn-del">
+          자연으로
+        </button>
+      )}
       {/* <button onClick={handleMenuClose}>Close</button> */}
       <button
+        className="invenbtn"
         onClick={() => {
-          isFishBowl == "false"
+          isFishBowl === "false"
             ? handleChange(fishInfo.inventoryId)
             : handleChange(fishInfo.fishBowlId);
         }}
       >
-        {isFishBowl == "false" ? <span>인벤으로</span> : <span>어항으로</span>}
+        {isFishBowl === "false" ? <span>어항으로</span> : <span>인벤으로</span>}
       </button>
     </div>
   );

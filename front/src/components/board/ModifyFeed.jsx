@@ -43,7 +43,6 @@ const ModifyFeed = () => {
 
         setContent(response.data.content);
 
-        //tagsname 을 보내야함
         setSelectedTags([...response.data.tags]);
       } catch (error) {
         console.error("feed load error");
@@ -110,16 +109,6 @@ const ModifyFeed = () => {
       alert("이미지와 태그를 선택해주세요.");
       return;
     }
-    // const formData = new FormData();
-    // formData.append("postId", postId);
-    // formData.append("content", content);
-
-    // formData.append("tags", selectedTags);
-    // // selectedTags.forEach((tag) => {
-    // //   formData.append("tags", tag);
-    // // });
-    // formData.append("deleteImageList", 1);
-
     try {
       setLoading(true);
 
@@ -173,8 +162,8 @@ const ModifyFeed = () => {
       alert("태그는 4글자 이하로 입력해주세요.");
       return;
     }
-    // 태그 추가 로직 구현
-    const newTagId = Object.keys(tagListData).length + 1; // 임의의 ID 생성
+    // 태그 추가 로직
+    const newTagId = Object.keys(tagListData).length + 1;
     const newTagObject = { tagId: newTagId, tagName: newTag };
 
     setTagListData({ ...tagListData, [newTagId]: newTagObject });
@@ -185,49 +174,55 @@ const ModifyFeed = () => {
   return (
     <div className="modify-feed-wrapper">
       <div className="modify-feed-header">
-        <Link to={`/Board`} className="modify-feed-cancel">
-          <img src="" alt="취소" />
+        <Link to={`/Board`}>
+          <img
+            src="/assets/icons/back.png"
+            alt="취소"
+            className="modify-feed-cancel"
+          />
         </Link>
         <div className="modify-feed-title">
-          <h1>대충 수정한다는 말</h1>
+          <h1>MODIFY</h1>
         </div>
-        <div className="modify-feed-submit" onClick={ModifyFeed}>
-          <img src="" alt="수정" />
+        <div onClick={ModifyFeed}>
+          <img
+            src="/assets/icons/check.png"
+            alt="수정"
+            className="modify-feed-submit"
+          />
         </div>
       </div>
       <div className="modify-feed-contents">
-        {/* 여기서부터 하나씩 집어넣으면 됨 */}
-
         {/* 이미지첨부버튼 */}
-        <div className="create-feed-image-select-header">
-          <h2>Modify Images</h2>
+        <div className="modify-feed-image-select-header">
+          <h2 className="modify-feed-content-title">Modify Images</h2>
         </div>
 
         {/* 이미지출력 */}
-        <div className="create-feed-selected-files-carousel create-feed-disable-scrollbar">
+        <div className="modify-feed-selected-files-carousel modify-feed-disable-scrollbar">
           {selectedFiles.map((file, index) => (
-            <div className="create-feed-selected-file-container">
+            <div className="modify-feed-selected-file-container">
               <img
                 key={index}
                 src={`${process.env.REACT_APP_BACKEND_URL}/${selectedFiles[index].fileUrl}`}
                 alt={`Image ${index}`}
-                className="create-feed-selected-file"
+                className="modify-feed-selected-file"
                 onClick={() => removeSelectedFile(index, file.fileId)}
               />
               <img
-                src="/assets/icons/x.pn" // 마이너스 아이콘 이미지 경로
+                src="/assets/icons/minus.png"
                 alt="Delete"
-                className="create-feed-image-delete-button minus-icon"
+                className="modify-feed-image-delete-button minus-icon"
               />
             </div>
           ))}
         </div>
 
         {/* 게시글 작성부분 */}
-        <div className="create-feed-contents-inner">
-          <h2>Modify Contents</h2>
+        <div className="modify-feed-contents-inner">
+          <h2 className="modify-feed-content-title">Modify Contents</h2>
           <textarea
-            className="create-feed-textarea"
+            className="modify-feed-textarea"
             rows="5"
             cols="45"
             value={content}
@@ -237,11 +232,11 @@ const ModifyFeed = () => {
         </div>
 
         {/* 태그 선택부분 */}
-        <div className="create-feed-contents-inner">
-          <h2>Modify Tag</h2>
+        <div className="modify-feed-contents-inner">
+          <h2 className="modify-feed-content-title">Modify Tag</h2>
           <hr />
           {/* 태그 임의 추가 */}
-          <div className="create-feed-add-tag">
+          <div className="modify-feed-add-tag">
             <input
               type="text"
               placeholder="새로운 태그 추가"
@@ -249,21 +244,21 @@ const ModifyFeed = () => {
               maxLength={4}
               onChange={(e) => setNewTag(e.target.value)}
             />
-            <div className="create-feed-add-tag-button " onClick={addNewTag}>
+            <div className="modify-feed-add-tag-button " onClick={addNewTag}>
               add
             </div>
           </div>
 
-          <div className="create-feed-tag-container create-feed-disable-scrollbar">
+          <div className="modify-feed-tag-container modify-feed-disable-scrollbar">
             {Object.keys(tagListData).map((key) => {
               const tag = tagListData[key];
               return (
                 <FeedTag
-                  key={tag.tagId} // 고유한 키를 제공해야 합니다.
+                  key={tag.tagId}
                   tagInfo={tag}
                   active={selectedTags.some(
                     (selectedTag) => selectedTag.tagName === tag.tagName
-                  )} // 선택 여부를 배열 포함 여부로 판단
+                  )}
                   onClick={() => tagClickHandler(tag)}
                 />
               );
@@ -271,7 +266,7 @@ const ModifyFeed = () => {
           </div>
         </div>
       </div>
-      <DeleteFeed onDelete={deleteHandler}>삭제..</DeleteFeed>
+      <DeleteFeed onDelete={deleteHandler} />
     </div>
   );
 };

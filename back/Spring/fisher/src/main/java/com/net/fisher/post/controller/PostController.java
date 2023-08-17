@@ -1,6 +1,7 @@
 package com.net.fisher.post.controller;
 
 import com.net.fisher.auth.jwt.JwtTokenizer;
+import com.net.fisher.post.dto.DateDto;
 import com.net.fisher.post.dto.LikeDto;
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.PostImageDto;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -77,8 +79,6 @@ public class PostController {
             @RequestBody PostDto.Patch postPatchDto) {
 
         long tokenId = jwtTokenizer.getMemberId(token);
-
-        System.out.println(postPatchDto);
 
         postService.updatePost(tokenId, postId, postPatchDto);
 
@@ -144,10 +144,12 @@ public class PostController {
 
     @GetMapping("/posts/my-post")
     public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyPosts(
+            //HttpServletRequest request,
             @RequestHeader(name = "Authorization") String token,
             @RequestParam(value = "memberId") Long memberId,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
+        //System.out.println(request.getRequestURL() + " " + request.getQueryString());
         long tokenId = jwtTokenizer.getMemberId(token);
         // postId, content, image, tag 정도?
 
@@ -178,19 +180,13 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity getPosts(
             @RequestHeader(name = "Authorization") String token,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime time,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") LocalDateTime time,
             @PageableDefault(size = 6, sort = "post_id", direction = Sort.Direction.DESC) Pageable pageable) {
 
+//        System.out.println(time.toString());
         long tokenId = jwtTokenizer.getMemberId(token);
-        Page<Post> postPage = null;
 
-        postPage = postService.getPostFromMyWay(tokenId, pageable, time);
-
-//        System.out.println("############ postPage myWay");
-//        System.out.println(postPage.getContent());
-
-        // 더미 데이터 -- 나중에 지워야함
-//        postPage = postService.getDefaultPost(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.DESC, "postId"), time);
+        Page<Post> postPage = postService.getPostFromMyWay(tokenId, pageable, time);
 
         List<Post> postList = postPage.getContent();
 
@@ -211,4 +207,8 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/time/server")
+    public ResponseEntity<DateDto.Response> getServerTime(){
+        return new ResponseEntity<>(DateDto.Response.builder().serverTime(LocalDateTime.now()).build(),HttpStatus.OK);
+    }
 }

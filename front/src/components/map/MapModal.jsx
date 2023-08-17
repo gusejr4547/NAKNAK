@@ -17,13 +17,13 @@ import upgradeProgress from "../freshman/upgradeProgress";
 import TTS from "../freshman/TTS";
 const MapModal = () => {
   const [modalOpen, setModalOpen] = useRecoilState(mapModal_recoil);
-  const [newbie, setNewbie] = useRecoilState(newbie_recoil);
+  const [newbie] = useRecoilState(newbie_recoil);
   const [step, setStep] = useState(3);
-  const [mooltae, setMooltae] = useRecoilState(mooltae_recoil);
+  const [mooltae] = useRecoilState(mooltae_recoil);
   const [favoritePoint, setFavoritePoint] =
     useRecoilState(favoritePoint_recoil);
   const navigate = useNavigate();
-  const [weatherInfo, setWeatherInfo] = useRecoilState(weatherInfo_recoil);
+  const [weatherInfo] = useRecoilState(weatherInfo_recoil);
   const [like, setLike] = useState(() => {
     for (let i = 0; i < favoritePoint.length; i++) {
       // 이미 즐겨찾기가 되어있다면
@@ -33,9 +33,10 @@ const MapModal = () => {
     }
     return false;
   });
-  const [tts, setTts] = useRecoilState(tts_recoil);
+  const [tts] = useRecoilState(tts_recoil);
   const [show, setShow] = useState(false);
   const [weatherIcon, setWeatherIcon] = useState(null);
+  const talkContents = Talk2();
 
   useEffect(() => {
     let skyImg = null;
@@ -99,7 +100,7 @@ const MapModal = () => {
         data: { fishingHoleId: weatherInfo.pk },
       });
       setLike(favoritePoint.length);
-      // console.log(res);
+
       const new_data = {
         fishingHoleId: weatherInfo.pk,
         title: weatherInfo.title,
@@ -137,8 +138,10 @@ const MapModal = () => {
     <div className="presentation" role="presentation">
       {newbie && (
         <div className="map-modal-newbie-talk-box">
-          {Talk2[step].content}
-          {Talk2[step].content && <TTS message={Talk2[step].content} />}
+          {talkContents[step].content}
+          {talkContents[step].content && (
+            <TTS message={talkContents[step].content} />
+          )}
           {show && (
             <div
               className="next"
@@ -157,21 +160,23 @@ const MapModal = () => {
         <span onClick={() => setModalOpen(false)} className="modal-close" />
 
         {/* <div className={`modal-title ${newbie && "newbie-data"}`}> */}
-        <div className="modal-title">
-          {weatherInfo?.title}
-          {/* 즐겨찾기 버튼 */}
-          {weatherInfo?.pk && (
-            <span
-              onClick={() => {
-                if (like === false) {
-                  likeLocation();
-                } else {
-                  unlikeLocation();
-                }
-              }}
-              className={like === false ? "like-location" : "unlike-location"}
-            />
-          )}
+        <div className="modal-title-container">
+          <span className="modal-title">
+            {weatherInfo?.title}
+            {/* 즐겨찾기 버튼 */}
+            {weatherInfo?.pk && (
+              <span
+                onClick={() => {
+                  if (like === false) {
+                    likeLocation();
+                  } else {
+                    unlikeLocation();
+                  }
+                }}
+                className={like === false ? "like-location" : "unlike-location"}
+              />
+            )}
+          </span>
         </div>
         {/* <div className={`modal-information" && newbie ? "newbie-data" : ""}`}> */}
         <div className="modal-information">
@@ -223,7 +228,7 @@ const MapModal = () => {
             <span className="modal-info">
               <span className="modal-info-title">강수량</span>
               <br />
-              {weatherInfo?.PCP} mm
+              {weatherInfo?.PCP}
             </span>
           )}
 
@@ -235,9 +240,9 @@ const MapModal = () => {
 
           {weatherInfo?.SNO !== "적설없음" && (
             <span className="modal-info">
-              <span className="modal-info-title">1시간 신적설</span>
+              <span className="modal-info-title">신적설</span>
               <br />
-              {weatherInfo?.SNO} cm
+              {weatherInfo?.SNO}
             </span>
           )}
         </div>
