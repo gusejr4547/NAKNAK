@@ -28,6 +28,7 @@ const WrapperStyle = styled.div`
   height: 4rem;
   display: flex;
   flex-direction: column;
+  margin-bottom: ${(props) => props.marginBottom || "2rem"};
 `;
 
 const LabelStyle = styled.label`

@@ -11,6 +11,7 @@
   position: absolute;
   top: 5%;
   padding: 5%;
+  font-weight: bold;
 }
 
 .checkbox-input {
@@ -65,7 +66,7 @@
   white-space: pre-wrap;
 
   display: flex;
-  width: 90%;
+  width: 70%;
   height: 12%;
   border-radius: 35px;
   background-color: #ffe48e;

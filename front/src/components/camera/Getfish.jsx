@@ -12,7 +12,7 @@ function Getfish(props) {
     <div className="getfishcon">
       {uploadfish && uploadfish.fish && (
         <div className="getfishbox">
-          <h1 style={{ textAlign: "center" }}>{uploadfish.fish.name}</h1>
+          <h1>{uploadfish.fish.name}</h1>
           <div className="getfish-img-box">
             <img
               style={{ margin: "auto" }}
@@ -24,29 +24,28 @@ function Getfish(props) {
             style={{
               margin: "5% 0% 5% 0%",
               borderRadius: "5px",
-              backgroundColor: "white",
+              fontWeight: "bold",
+              paddingLeft: "1rem",
             }}
           >
-            계측 : {uploadfish.size === 0 ? "미측정" : uploadfish.size}
+            계측 :{" "}
+            {uploadfish.size === 0
+              ? "미측정"
+              : uploadfish.size.toFixed(2) + " cm"}
           </p>
           <div className="fish-info">{uploadfish.fish.info}</div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "auto",
-              marginTop: "5%",
-              borderRadius: "5px",
-              width: "100%",
-              textAlign: "center",
-            }}
-          >
+          <div className="fish-info-content">
             <div
               onClick={() => navigate("/Camera")}
               style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 backgroundColor: "#ffb5d1",
+                fontWeight: "bold",
                 borderRadius: "10px",
                 width: "50%",
+                height: "2rem",
               }}
             >
               다시 계측하기
@@ -55,8 +54,13 @@ function Getfish(props) {
               onClick={() => navigate("/Inventory")}
               style={{
                 backgroundColor: "rgb(165, 217, 255)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "bold",
                 borderRadius: "10px",
                 width: "50%",
+                height: "2rem",
               }}
             >
               인벤토리로 이동

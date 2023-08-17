@@ -133,8 +133,10 @@ const Inventory = () => {
             margin: "auto",
             width: "30%",
             textAlign: "center",
-            color: "blue",
-            // border: "1px solid black",
+            color: "#408BD0",
+            fontWeight: "bold",
+            fontSize: "1.1rem",
+            // border: "0.2rem solid #fff",
             // borderRadius: "70%",
           }}
         >
@@ -155,14 +157,28 @@ const Inventory = () => {
             );
           })}
         </div>
-        <div style={{ textAlign: "center", color: "blue", marginTop: "3%" }}>
+        <div
+          style={{
+            textAlign: "center",
+            color: "#408BD0",
+            marginTop: "3%",
+            fontWeight: "bold",
+            fontSize: "1.1rem",
+          }}
+        >
           바다에서 헤엄치는
           <span
             onClick={() => navigate("/SeaScene")}
-            style={{ position: "absolute", right: "5%", color: "green" }}
+            style={{
+              position: "absolute",
+              fontWeight: "bold",
+              right: "5%",
+              color: "black",
+              fontSize: "1rem",
+            }}
           >
             {" "}
-            탐험하러 가기
+            탐험하기 {">>"}
           </span>
         </div>
 
