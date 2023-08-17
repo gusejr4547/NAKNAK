@@ -14,6 +14,7 @@ import {
   location_recoil,
   getFish_recoil,
   fishingMode_recoil,
+  uploadfish_recoil,
 } from "../../utils/atoms";
 import upgradeProgress from "../freshman/upgradeProgress";
 import { useNavigate } from "react-router-dom";
@@ -77,8 +78,7 @@ const Camera = () => {
   // Configs
   const [getFish, setGetFish] = useRecoilState(getFish_recoil);
   const [fishingMode] = useRecoilState(fishingMode_recoil);
-
-  const [uploadfish, setUploadfish] = useState({});
+  const [uploadfish, setUploadfish] = useRecoilState(uploadfish_recoil);
 
   const modelInputShape = [1, 3, 640, 640];
   const topk = 100;
@@ -141,10 +141,6 @@ const Camera = () => {
     };
     console.log(data);
 
-    if (fishingMode !== "selectMode") {
-      setGetFish(getFish + 1);
-      console.log(getFish);
-    }
     try {
       const response = await authorizedRequest({
         method: "post",
@@ -160,10 +156,19 @@ const Camera = () => {
         },
       });
       console.log(response.data);
-      setUploadfish(response.data);
+      await new Promise((resolve) => {
+        setUploadfish(response.data);
+        resolve(); // setUploadfish가 완료될 때까지 기다림
+      });
       console.log(uploadfish);
       setrulerbox({ bounding: [1, 1, 1, 1] });
       setfishbox(0);
+
+      if (fishingMode !== "selectMode") {
+        setGetFish(getFish + 1);
+        console.log(getFish);
+      }
+      navigate("/Getfish");
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -465,7 +470,16 @@ const Camera = () => {
         </div>
       )}
 
-      {uploadfish && uploadfish.fish && <Getfish fishdata={uploadfish} />}
+      {/* {uploadfish && uploadfish.fish && (
+        <div>
+          {uploadfish.fish.name}
+          {uploadfish.size}
+        </div>
+      )} */}
+
+      {/* {uploadfish && Object.keys(uploadfish).length > 0 && (
+        <Getfish fishdata={uploadfish} />
+      )} */}
     </div>
   );
 };

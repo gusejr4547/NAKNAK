@@ -198,6 +198,7 @@ function Login(props) {
       console.log(response.headers.authorization);
       setAccessToken(response.headers.authorization);
       localStorage.setItem("key", response.headers.authorization);
+      localStorage.setItem("loginuser", response.data);
       // console.log(accesstoken, 789);
       navigate("/");
       // console.log(postData, 123);
