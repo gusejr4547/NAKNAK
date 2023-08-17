@@ -233,6 +233,7 @@ const Board = () => {
           const tag = tagListData[key];
           return (
             <FeedTag
+              key={tag.tagId}
               tagInfo={tag}
               active={
                 !selectedTag
@@ -258,9 +259,8 @@ const Board = () => {
                 feed.tags.find((tag) => tag.tagId === selectedTag.tagId)
               ) {
                 return (
-                  <div ref={ref}>
+                  <div key={feed.postId + index} ref={ref}>
                     <Feed
-                      key={index}
                       //경고가 있어서 일단 key를 넘겼습니다 안넘겨도 현재까지는 에러발생 x
                       feedInfo={feed}
                       currentFollowState={

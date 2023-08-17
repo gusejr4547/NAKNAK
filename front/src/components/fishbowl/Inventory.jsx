@@ -121,12 +121,12 @@ const Inventory = () => {
   return (
     <div className="inven-wrapper">
       {/* // add dummy data code */}
-      <img
+      {/* <img
         src="/assets/icons/x.png"
         alt="exit"
         // className="dogam-back-button"
         onClick={addItem}
-      />
+      /> */}
       <div className="inven-board">
         <div
           style={{

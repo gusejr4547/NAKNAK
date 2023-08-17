@@ -122,9 +122,8 @@ const Feed = ({
         <Slider {...settings}>
           {feedInfo.images.length > 0 ? (
             feedInfo.images.map((image, index) => (
-              <div className="feed-image-container">
+              <div key={index} className="feed-image-container">
                 <img
-                  key={index}
                   className="feed-image"
                   src={`${process.env.REACT_APP_BACKEND_URL}/${image.fileUrl}`}
                   alt="post images"
@@ -163,7 +162,7 @@ const Feed = ({
             {feedInfo.tags.map((tag, index) => {
               return (
                 <FeedTag
-                  key={index}
+                  key={tag + index}
                   tagInfo={tag}
                   onClick={() => tagClickHandler()}
                 />
