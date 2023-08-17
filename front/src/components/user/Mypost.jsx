@@ -131,15 +131,15 @@ function Mypost(props) {
         </div>
       )}
       <div className="pagination">
-        <button
-          className="mypost-page-btn"
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          {"<<"}
-        </button>
-        {/* <span>
-          {currentPage} / {totalPage}
-        </span> */}
+        {currentPage > 1 && (
+          <button
+            className="mypost-page-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            {"<<"}
+          </button>
+        )}
+
         {Array.from({ length: totalPage }, (_, index) => index + 1).map(
           (item) => (
             <button
@@ -153,24 +153,14 @@ function Mypost(props) {
             </button>
           )
         )}
-        {/* {pageNation &&
-          pageNation.map((item) => (
-            <button
-              key={item}
-              onClick={() => btnclick(item)}
-              className={
-                currentPage === item ? "page-btn-active" : "page-btn-default"
-              }
-            >
-              {item}
-            </button>
-          ))} */}
-        <button
-          className="mypost-page-btn"
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          {">>"}
-        </button>
+        {currentPage < totalPage && (
+          <button
+            className="mypost-page-btn"
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            {">>"}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -3,10 +3,11 @@
   background-color: rgb(255, 255, 255);
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 95%;
   flex-direction: column;
   align-items: baseline;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .create-feed-header {
@@ -26,7 +27,8 @@
 .create-feed-title {
   margin-right: auto;
 }
-.create-feed-title h1 {
+
+.create-feed-title h3 {
   margin: 0;
   font-weight: bold;
 }

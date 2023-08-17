@@ -360,14 +360,14 @@
 //             });
 //           } else if (api === "badanuri") {
 //             // console.log(markerPosition);
-//             fetchData({
-//               api: api,
-//               pk: pk,
-//               ObsCode: markerPosition.obsCode,
-//               title: markerPosition.title,
-//               lat: markerPosition.lat,
-//               lng: markerPosition.lng,
-//             });
+// fetchData({
+//   api: api,
+//   pk: pk,
+//   ObsCode: markerPosition.obsCode,
+//   title: markerPosition.title,
+//   lat: markerPosition.lat,
+//   lng: markerPosition.lng,
+// });
 //           }
 //           // 모달을 만들어보자
 //           // setModalOpen(true);
@@ -375,21 +375,21 @@
 //           setMapInfomation(markerPosition);
 //         };
 //       }
-//       // 해양 정보 받아오는 api
-//       const fetchData = async (props) => {
-//         try {
-//           if (props.api === "sea") {
-//             const response = await axios.get(
-//               `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
-//             );
-//             const id = { ID: props.pk };
-//             const new_data = [...response.data.result.recordset, id];
-//             // setData(response.data.result.recordset);
-//             setData(new_data);
-//           } else if (props.api === "badanuri") {
-//             const response = await bada_axios.get(
-//               `buObsRecent/search.do?ObsCode=${props.ObsCode}`
-//             );
+//   // 해양 정보 받아오는 api
+//   const fetchData = async (props) => {
+//     try {
+//       if (props.api === "sea") {
+//         const response = await axios.get(
+//           `openWeatherNow.do?mmaf=${props.mmaf}&mmsi=${props.mmsi}`
+//         );
+//         const id = { ID: props.pk };
+//         const new_data = [...response.data.result.recordset, id];
+//         // setData(response.data.result.recordset);
+//         setData(new_data);
+//       } else if (props.api === "badanuri") {
+//         const response = await bada_axios.get(
+//           `buObsRecent/search.do?ObsCode=${props.ObsCode}`
+//         );
 
 //             const new_data = [
 //               {

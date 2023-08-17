@@ -1,5 +1,7 @@
 // import { getLocation } from "../map/getLocation";
-import fishingSpots from "../map/fishingSpots";
+// import fishingSpots from "../map/fishingSpots";
+import fishingspot from "../../utils/data/fishingspot.json";
+
 import { useRecoilState } from "recoil";
 import { location_recoil } from "../../utils/atoms";
 
@@ -17,16 +19,16 @@ const GetLocation = () => {
     lat: 0,
     lng: 0,
   };
-  for (let i = 0; i < fishingSpots.length; i++) {
-    const cal_lat = Math.abs(fishingSpots[i].lat - Lat);
-    const cal_lng = Math.abs(fishingSpots[i].lng - Lng);
+  for (let i = 0; i < fishingspot.length; i++) {
+    const cal_lat = Math.abs(fishingspot[i].lat - Lat);
+    const cal_lng = Math.abs(fishingspot[i].lng - Lng);
 
     const distance = cal_lat * cal_lat + cal_lng * cal_lng;
     if (distance < loca.distance) {
       loca.distance = distance;
-      loca.title = fishingSpots[i].title;
-      loca.lat = fishingSpots[i].lat;
-      loca.lng = fishingSpots[i].lng;
+      loca.title = fishingspot[i].title;
+      loca.lat = fishingspot[i].lat;
+      loca.lng = fishingspot[i].lng;
     }
   }
   return loca;

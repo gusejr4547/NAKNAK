@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
+import Loading from "../common/Loading";
 
 export class ImageObject {
   constructor(canvas, x, y, imageUrl) {
@@ -349,7 +350,8 @@ const Balls = () => {
           }}
         />
       ) : (
-        <div>로딩 중...</div>
+        <Loading />
+        // <div>로딩 중...</div>
       )}
     </div>
   );
