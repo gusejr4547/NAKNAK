@@ -146,29 +146,19 @@ public class PostController {
 
     @GetMapping("/posts/my-post")
     public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyPosts(
-           // @RequestHeader(name = "Authorization") String token,
-           // @RequestParam(value = "memberId") Long memberId,
-           // @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable,
-        HttpServletRequest request) {   // HttpServletRequest를 파라미터로 추가합니다.
+            @RequestHeader(name = "Authorization") String token,
+            @RequestParam(value = "memberId") Long memberId,
+            @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        // 요청 URL 출력
-        String fullURL = request.getRequestURL().toString();
-        String queryString = request.getQueryString();  // Query String (GET 파라미터) 가져오기
-        if (queryString != null) {
-            fullURL += "?" + queryString;
-        }
-        System.out.println("Requested URL: " + fullURL);
-
-        //long tokenId = jwtTokenizer.getMemberId(token);
+        long tokenId = jwtTokenizer.getMemberId(token);
         // postId, content, image, tag 정도?
 
-        //Page<Post> postPage = postService.getPostFromMember(memberId, pageable);
-        //List<Post> postList = postPage.getContent();
+        Page<Post> postPage = postService.getPostFromMember(memberId, pageable);
+        List<Post> postList = postPage.getContent();
 
-        //PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
+        PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
 
-        //return new ResponseEntity<>(response, HttpStatus.OK);
-        return null;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/posts/my-like")
