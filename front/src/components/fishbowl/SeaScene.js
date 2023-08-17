@@ -164,6 +164,7 @@ const SeaScene = () => {
           zIndex: 100,
         }}
       />
+      <div className="decorate"></div>
     </div>
   );
 };

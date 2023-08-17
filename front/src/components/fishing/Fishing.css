@@ -7,11 +7,11 @@
 
 .fishing-container {
   position: absolute;
-  height: 40rem;
+  height: 30rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 50px;
+  top: 8rem;
 }
 .box-header {
   display: flex;
@@ -85,7 +85,8 @@
   scale: 0.4;
   z-index: -2;
   /* Add the animation properties */
-  animation-name: sway;
+  animation-name: sway-cat;
+
   animation-duration: 3s; /* Adjust the duration as needed */
   animation-timing-function: ease-in-out; /* Adjust the timing function as needed */
   animation-iteration-count: infinite;
@@ -103,18 +104,31 @@
   z-index: -2;
 
   /* Add the animation properties */
-  animation-name: sway;
+  animation-name: sway-ship;
+
   animation-duration: 3s; /* Adjust the duration as needed */
   animation-timing-function: ease-in-out; /* Adjust the timing function as needed */
   animation-iteration-count: infinite;
   transform-origin: center bottom;
 }
-@keyframes sway {
+@keyframes sway-cat {
   0%,
   100% {
     transform: rotateZ(0deg);
   }
   50% {
     transform: rotateZ(5deg);
+  }
+}
+
+@keyframes sway-ship {
+  0%,
+  100% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(
+      -5deg
+    ); /* Negative rotation to sway in the opposite direction */
   }
 }
