@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Checklist.css";
 
 function Checklist({ text, completed, onToggle, onRemove }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,11 +11,32 @@ function Checklist({ text, completed, onToggle, onRemove }) {
       <span className="checklist-text" onClick={onToggle}>
         {text}
       </span>
-      <button onClick={toggleModal}>모달</button>
+      {text === "릴 구매하는 방법 시청" && (
+        <button onClick={toggleModal}>모달</button>
+      )}
+      {text === "캐스팅 하는 방법 시청" && (
+        <button onClick={toggleModal}>모달</button>
+      )}
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
             {/* 모달 내용을 이곳에 추가 */}
+            {text === "릴 구매하는 방법 시청" && (
+              <video width="360" height="280" controls="controls">
+                <source
+                  src={require("../../utils/video/reel.mp4")}
+                  type="video/mp4"
+                />
+              </video>
+            )}
+            {text === "캐스팅 하는 방법 시청" && (
+              <video width="360" height="280" controls="controls">
+                <source
+                  src={require("../../utils/video/casting.mp4")}
+                  type="video/mp4"
+                />
+              </video>
+            )}
             <button onClick={toggleModal}>닫기</button>
           </div>
         </div>
