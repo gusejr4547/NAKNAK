@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -70,4 +71,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "select p from posts p where p.member.memberId not in :followingMemberList and p.registeredAt <= :time")
     Page<Post> findAllExceptFollowing(Pageable pageable, List<Long> followingMemberList, LocalDateTime time);
+
+    @EntityGraph(attributePaths = {"postTagList"})
+    @Query(value = "select p from posts p")
+    Stream<Post> streamAll();
 }

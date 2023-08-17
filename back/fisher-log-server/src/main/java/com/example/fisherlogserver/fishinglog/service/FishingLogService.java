@@ -25,7 +25,12 @@ public class FishingLogService {
     @Async
     public void createFishingLog(LogDto logDto) {
         /*FishingLog fishingLog = */
+        logDto.setLogTime(logDto.getLogTime().plusHours(9));
+
         FishingLog fishingLog = fishingLogRepository.save(fishingLogMapper.toFishingLog(logDto));
+
+        System.out.println(fishingLog.toString());
+
         long memberId = logDto.getUserId();
         long fishingCount = fishingLogRepository.countByUserId(memberId);
         if (fishingCount == 50) {

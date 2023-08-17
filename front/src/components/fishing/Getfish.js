@@ -23,11 +23,8 @@ function Getfish(props) {
         data: fishData,
       });
       setFishData(response.data);
-      console.log(fishData, 123);
-      console.log(response, 456);
       setLoading(false);
     } catch (error) {
-      console.error("Error posting data:", error);
       setError("데이터 전송에 실패했습니다.");
       setLoading(false);
     }

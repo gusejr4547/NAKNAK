@@ -20,6 +20,7 @@ public class KafkaConsumer {
     @Async
     public void consume(LogDto logDto) throws IOException{
         //System.out.println("Consumed msg : "+message.toString());
+        System.out.println(logDto.getLogTime().toString());
         fishingLogService.createFishingLog(logDto);
     }
 
