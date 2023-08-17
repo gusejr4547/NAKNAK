@@ -10,6 +10,7 @@ import com.net.fisher.fish.entity.Inventory;
 import com.net.fisher.fish.mapper.FishMapper;
 import com.net.fisher.fish.service.FishService;
 import com.net.fisher.response.BooksResponse;
+import com.net.fisher.response.LocationResponse;
 import com.net.fisher.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,8 @@ public class FishController {
     private final FishMapper fishMapper;
     private final FishService fishService;
 
+    double LIGHTER_SIZE = 8.00;
+
     /*@PostMapping("/fishes/upload")
     public ResponseEntity<InventoryDto.SingleResponse> postFishImage(
             @RequestHeader(name = "Authorization") String token,
@@ -48,9 +51,13 @@ public class FishController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        String fishName = requestBody.getName();
+        String fishName = requestBody.getLabel();
 
-        Inventory inventory = fishService.catchFish(tokenId,fishName, fishMapper.toInventory(requestBody));
+        requestBody.setSize(requestBody.getSize()*LIGHTER_SIZE);
+
+        LocationResponse locationResponse = requestBody.getLocation();
+
+        Inventory inventory = fishService.catchFish(tokenId,fishName, fishMapper.toInventory(requestBody),locationResponse);
 
         return new ResponseEntity<>(fishMapper.toInventorySingleResponse(inventory), HttpStatus.CREATED);
     }
