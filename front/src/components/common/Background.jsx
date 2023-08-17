@@ -23,7 +23,7 @@ const Background = () => {
         <div className="fishinigmode">
           <span
             className="fishingmode-title"
-            fishingOpen={fishingOpen}
+            // fishingOpen={fishingOpen}
             style={{ left: fishingOpen ? "2rem" : "13rem" }}
           ></span>
           {fishingOpen && (

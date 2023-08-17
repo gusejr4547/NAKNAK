@@ -12,10 +12,9 @@ import Fishpic from "./components/fishing/Fishpic";
 import FavoriteSpots from "./components/map/FavoriteSpots";
 import Board from "./components/board/Board";
 import ModifyFeed from "./components/board/ModifyFeed";
-
+import Getfish from "./components/camera/Getfish";
 import CreateFeed from "./components/board/CreateFeed";
 
-// import Getfish from "./components/fishing/Getfish";
 import Background from "./components/common/Background";
 import Loading from "./components/common/Loading";
 import Profile from "./components/user/Profile";
@@ -138,8 +137,6 @@ function AppRouter(props) {
           <Route path="/Dict" element={<Dict />}></Route>
           <Route path="/login/oauth2/code/kakao" element={<Kakao />}></Route>
 
-          {/* <Route path="/Getfish" element={<Getfish />}></Route> */}
-
           <Route path="/UserUpdate" element={<UserUpdate />}></Route>
           <Route path="/Balls" element={<Balls />}></Route>
           <Route path="/Signup" element={<Signup />}></Route>
@@ -157,6 +154,7 @@ function AppRouter(props) {
           {/* <Route path="/FishBowl" element={<FishBowl />}></Route> */}
 
           <Route path="/Map" element={<Map />}></Route>
+          <Route path="/Getfish" element={<Getfish />}></Route>
           {/* <Route path="/Map2" element={<Map2 />}></Route> */}
           <Route path="/FavoriteSpots" element={<FavoriteSpots />}></Route>
           <Route path="/Checkbox" element={<Checkbox />}></Route>

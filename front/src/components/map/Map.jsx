@@ -69,7 +69,6 @@ function Map2() {
       try {
         const locationData = await GetLocation();
         // 위치 데이터를 이용한 추가 작업
-        console.log(locationData);
         setLocation(locationData);
         // {latitude: 35.1029935, longitude: 128.8519049}
       } catch (error) {
@@ -174,6 +173,19 @@ function Map2() {
 
   // 검색하기
   const SearchLocation = () => {
+    console.log(currentsearchData);
+    console.log(inputData);
+    if (!inputData) {
+      return;
+    }
+
+    if (currentsearchData === inputData) {
+      // setinputData([]);
+      return;
+    }
+    if (!inputData) {
+      setCurrentSearchData([]);
+    }
     setSearchData([]);
     const arr = [];
     fishingspot.forEach((ele) => {
@@ -181,24 +193,23 @@ function Map2() {
         arr.push(ele);
         setSearchData(...searchData, arr);
       }
+      setCurrentSearchData(inputData);
     });
   };
 
   const Search = (event) => {
-    console.log(inputData, 11);
-    console.log(event.target.value, 22);
-    if (currentsearchData === event.target.value) {
-      setinputData([]);
-      return;
-    }
     if (!inputData) {
       setCurrentSearchData([]);
     }
-    setSearchData([]);
     if (event.key === "Enter") {
       if (!inputData) {
         return;
       }
+      if (currentsearchData === event.target.value) {
+        // setinputData([]);
+        return;
+      }
+      setSearchData([]);
       const arr = [];
       fishingspot.forEach((ele) => {
         if (ele.title.includes(inputData)) {
@@ -207,8 +218,8 @@ function Map2() {
         }
         setCurrentSearchData(inputData);
       });
-      console.log(searchData);
-      setinputData([]);
+      // console.log(searchData);
+      // setinputData([]);
     } else {
       setSearchData([]);
       const Data = event.target.value;
@@ -378,6 +389,7 @@ function Map2() {
           //   console.log(markerPosition);
           const rs = GetXY("toXY", markerPosition.lat, markerPosition.lng);
           // infowindow.open(map, marker);
+          console.log("연결");
 
           Weather(
             closestPreviousTime.date,

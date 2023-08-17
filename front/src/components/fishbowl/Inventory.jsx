@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { authorizedRequest } from "../account/AxiosInterceptor";
 
@@ -12,6 +13,7 @@ const Inventory = () => {
   const [inventoryData, setInventoryData] = useState({});
   const [fishBowlData, setFishBowlData] = useState({});
   const [itemData, setItemData] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getInventory();
@@ -155,7 +157,15 @@ const Inventory = () => {
         </div>
         <div style={{ textAlign: "center", color: "blue", marginTop: "3%" }}>
           바다에서 헤엄치는
+          <span
+            onClick={() => navigate("/SeaScene")}
+            style={{ position: "absolute", right: "5%", color: "green" }}
+          >
+            {" "}
+            탐험하러 가기
+          </span>
         </div>
+
         <div className="inven-carousel inven-disable-scrollbar">
           {Object.keys(fishBowlData).map((key) => {
             const fish = fishBowlData[key];

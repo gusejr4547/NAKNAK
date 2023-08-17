@@ -59,7 +59,7 @@ const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
       )}
 
       <h6>
-        {fishInfo.fishName} <br />({fishInfo.fishSize}cm)
+        {fishInfo.fishName} <br />({fishInfo.fishSize.toFixed(2)}cm)
       </h6>
 
       {showSlideInnerMenu && (

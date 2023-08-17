@@ -253,27 +253,6 @@ function Dict(props) {
       <div className="dict-img-www">
         <img src="assets/icons/www.png" alt="" />
       </div>
-
-      {/* <button>
-        <Link to="/Freshman" className="nav-link">
-          뉴비
-        </Link>
-      </button> */}
-      {/* <button onClick={handlebutton}>123</button> */}
-      {/* <button onClick={handleGetLocation}>Get Current Location</button>
-      {position && (
-        <div>
-          <p>Your current position is:</p>
-          <p>Latitude: {position.latitude}</p>
-          <p>Longitude: {position.longitude}</p>
-        </div>
-      )} */}
-      {/* <button onClick={handleButtonClick}>버튼123</button> */}
-      {/* {location && (
-        <p>
-          {location.latitude} {location.longitude}
-        </p>
-      )} */}
     </div>
   );
 }

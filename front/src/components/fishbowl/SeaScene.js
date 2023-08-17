@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import fish from "./fishbowl.png";
+import fish from "./fishbowl3.jpg";
 import "./SeaScene.css";
 import Balls from "./Balls";
 

@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import ProfileModal from "./ProfileModal";
 import Profilesea from "../fishbowl/Profilesea";
+import Loading from "../common/Loading";
 
 function Profile(props) {
   const userId = useParams().userId;
@@ -63,7 +64,11 @@ function Profile(props) {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   if (!profileData) {
@@ -72,16 +77,7 @@ function Profile(props) {
 
   return (
     <div className="profileContainer">
-      <div
-        className="profileTop"
-        style={{
-          height: "30%",
-          // display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          // borderBottom: "1px solid #000",
-        }}
-      >
+      <div className="profileTop">
         <div className="profileimgBox">
           <div className="profileimgbox">
             <img
@@ -110,23 +106,11 @@ function Profile(props) {
           <ProfileModal closeModal={setModalOpen} data={profileData} />
         )}
         <div className="profilefollowContainer">
-          <div
-            style={{
-              // display: "inline",
-              textAlign: "center",
-              width: "100%",
-              height: " 25%",
-              position: "relative",
-              top: "25%",
-            }}
-          >
-            <p className="profileusernickname">
+          <div className="profile-title">
+            <span className="profileusernickname">
               {profileData.memberResponse.nickname}
-            </p>
-            <span
-              className="profileuserLV"
-              style={{ margin: "0px", fontSize: "12px", opacity: "0.7" }}
-            >
+            </span>
+            <span className="profileuserLV">
               LV {profileData.memberStatusResponse.level}
             </span>
           </div>
@@ -149,8 +133,8 @@ function Profile(props) {
               }}
             >
               <div style={{ display: "block" }}>
-                <div>{mypost}</div>
                 <div>게시글</div>
+                <div>{mypost}</div>
               </div>
             </div>
             <div
@@ -174,48 +158,38 @@ function Profile(props) {
           </div>
         </div>
       </div>
-      <div
-        className="profileMiddle"
-        style={{
-          // height: "5%",
-          display: "flex",
-          justifyContent: "space-evenly",
-          alignItems: "center",
-          // borderRadius: "10%",
-          // borderBottom: "1px solid #000",
-        }}
-      >
+      <div className="profileMiddle">
         <Profileinventory
           id={profileData.memberResponse.memberId}
           point={profileData.memberStatusResponse.point}
         />
       </div>
       <div className="profileBottom">
-        <div className="profiletoggleBar" style={{ display: "flex" }}>
-          <button
+        <div className="profiletoggleBar">
+          <span
             onClick={() => handleToggle("myPosts")}
             className={
               activeView === "myPosts" ? "profileactive" : "profiledefault"
             }
           >
             게시글
-          </button>
-          <button
+          </span>
+          <span
             onClick={() => handleToggle("likePosts")}
             className={
               activeView === "likePosts" ? "profileactive" : "profiledefault"
             }
           >
             좋아요한 게시글
-          </button>
-          <button
+          </span>
+          <span
             onClick={() => handleToggle("aquarium")}
             className={
               activeView === "aquarium" ? "profileactive" : "profiledefault"
             }
           >
             수조
-          </button>
+          </span>
         </div>
         {activeView === "myPosts" && (
           <div className="profilebottom">

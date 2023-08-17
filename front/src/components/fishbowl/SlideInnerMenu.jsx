@@ -73,8 +73,8 @@ const SlideInnerMenu = ({
       }
     >
       {isFishBowl === "false" && (
-        <button onClick={handleDelete} className="invenbtn">
-          삭제
+        <button onClick={handleDelete} className="invenbtn-del">
+          자연으로
         </button>
       )}
       {/* <button onClick={handleMenuClose}>Close</button> */}

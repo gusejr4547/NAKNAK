@@ -4,7 +4,7 @@ import "./FishDetailModal.css";
 const FishDetailModal = ({ fishData, userFishData, onClose }) => {
   const { fishId, imgUrl, name, info } = fishData;
 
-  console.log(userFishData);
+  console.log(fishData, userFishData);
 
   return (
     <div className="fish-detail-modal container">
@@ -18,7 +18,7 @@ const FishDetailModal = ({ fishData, userFishData, onClose }) => {
         {userFishData ? (
           <div className="modal-content-myRecord">
             <p>최대 크기 : {userFishData.maxSize}</p>
-            <p>잡은 날짜 : {userFishData.getDate}</p>
+            <p>잡은 날짜 : {userFishData.getDate.substr(2, 9)}</p>
             <p>잡은 횟수 : {userFishData.number}</p>
           </div>
         ) : (
@@ -26,8 +26,8 @@ const FishDetailModal = ({ fishData, userFishData, onClose }) => {
             <p>{name} 에 대한 나의 정보가 없습니다.</p>
           </div>
         )}
-        <div className="modal-content-explanation modal-disable-scrollbar">
-          <p>{info}</p>
+        <div className="modal-content-dogam-explanation modal-disable-scrollbar">
+          <p className="model-content-p">{info}</p>
         </div>
         <img
           src="/assets/icons/x.png"
