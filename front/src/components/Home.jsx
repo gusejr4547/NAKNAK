@@ -68,12 +68,13 @@ function Home({ newbieVersion }) {
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to="/Dogam" className="nav-link">
-                <img src="/assets/homeicons/dogam.png" alt="icon" />
-                <h6>도감</h6>
+              <Link to="/Balls" className="nav-link">
+                <img src="/assets/homeicons/fishbowl.png" alt="icon" />
+                <h6>수조</h6>
               </Link>
             </div>
             {/* slide end */}
+
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -111,6 +112,26 @@ function Home({ newbieVersion }) {
             </div>
             {/* slide end */}
             {/* slide start */}
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/FavoriteSpots" className="nav-link">
+                <img src="/assets/homeicons/star.png" alt="icon" />
+                <h6>즐겨찾기</h6>
+              </Link>
+            </div>
+            {/* slide end */}
+            {/* slide start */}
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              <Link to="/Board" className="nav-link">
+                <img src="/assets/homeicons/messenger.png" alt="icon" />
+                <h6>SNS</h6>
+              </Link>
+            </div>
+            {/* slide end */}
+            {/* slide start */}
             {userData?.memberId !== undefined ? (
               <div
                 className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
@@ -130,23 +151,14 @@ function Home({ newbieVersion }) {
               </div>
             )}
             {/* slide end */}
+
             {/* slide start */}
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to="/Board" className="nav-link">
-                <img src="/assets/homeicons/messenger.png" alt="icon" />
-                <h6>SNS</h6>
-              </Link>
-            </div>
-            {/* slide end */}
-            {/* slide start */}
-            <div
-              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
-            >
-              <Link to="/Balls" className="nav-link">
-                <img src="/assets/homeicons/fishbowl.png" alt="icon" />
-                <h6>수조</h6>
+              <Link to="/Dogam" className="nav-link">
+                <img src="/assets/homeicons/dogam.png" alt="icon" />
+                <h6>도감</h6>
               </Link>
             </div>
             {/* slide end */}
@@ -167,16 +179,6 @@ function Home({ newbieVersion }) {
               <Link to="/Achievements" className="nav-link">
                 <img src="/assets/homeicons/awards.png" alt="icon" />
                 <h6>업적</h6>
-              </Link>
-            </div>
-            {/* slide end */}
-            {/* slide start */}
-            <div
-              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
-            >
-              <Link to="/FavoriteSpots" className="nav-link">
-                <img src="/assets/homeicons/star.png" alt="icon" />
-                <h6>즐겨찾기</h6>
               </Link>
             </div>
             {/* slide end */}
