@@ -146,12 +146,12 @@ public class PostController {
 
     @GetMapping("/posts/my-post")
     public ResponseEntity<PageResponse<PostDto.SimpleResponse>> getMyPosts(
-            HttpServletRequest request,
+            //HttpServletRequest request,
             @RequestHeader(name = "Authorization") String token,
             @RequestParam(value = "memberId") Long memberId,
             @PageableDefault(size = 9, sort = "postId", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        System.out.println(request.getRequestURL() + " " + request.getQueryString());
+        //System.out.println(request.getRequestURL() + " " + request.getQueryString());
         long tokenId = jwtTokenizer.getMemberId(token);
         // postId, content, image, tag 정도?
 
@@ -160,7 +160,7 @@ public class PostController {
 
         PageResponse<PostDto.SimpleResponse> response = new PageResponse<>(postPage.getTotalElements(), postMapper.toSimpleResponseDtos(postList));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/posts/my-like")
