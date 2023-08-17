@@ -17,13 +17,13 @@
 .first_cat_img {
   position: absolute;
   bottom: 12rem;
-  width: 10rem;
+  width: 16rem;
   height: 20rem;
-  left: 5rem;
+  left: 2rem;
   z-index: 3;
   background: url("../../../public/assets/cats/cat12.gif") center center
     no-repeat;
-  background-size: 9rem;
+  background-size: 15rem;
 }
 
 .first_wave1 {
