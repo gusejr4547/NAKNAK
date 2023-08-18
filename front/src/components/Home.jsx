@@ -7,12 +7,14 @@ import "./Home.css";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
 import { loginuser, newbie_recoil, sleeping_recoil } from "../utils/atoms";
+import { tmi } from "../utils/data/tmi";
 
 function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [sleep, setSleep] = useRecoilState(sleeping_recoil);
-
+  const random_index = Math.floor(Math.random() * tmi.length);
+  const random_tmi = tmi[random_index];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +43,20 @@ function Home({ newbieVersion }) {
     nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
     swipe: !newbieVersion,
   };
+  const settingss = {
+    dots: true, // 페이지 번호를 나타냄
+    infinite: true, // 무한 루프
+    speed: 300, // 애니메이션 속도 (밀리초 단위)
+    slidesToShow: 1, // 한 번에 보여질 슬라이드 수
+    slidesToScroll: 1, // 스크롤할 슬라이드 수
+    rows: 1,
+    slidesPerRow: 1,
+
+    // swipe: true,
+    prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
+    nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    swipe: !newbieVersion,
+  };
 
   return (
     <div className="home-container">
@@ -61,18 +77,20 @@ function Home({ newbieVersion }) {
       </div>
       <div className="home-board">
         {sleep ? (
-          <div className="sleep-naknak">냑냑이를 깨워주세요</div>
+          <Slider {...settingss} className="home-carousel">
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              {random_tmi.title}
+            </div>
+            <div
+              className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
+            >
+              {random_tmi.content}
+            </div>
+            {/* slide end */}
+          </Slider>
         ) : (
-          //   <감성돔은 성전환을 하는 어종이다
-          //   수컷으로 태어나 자웅동체가 되고 이후 완전히 분리된다
-
-          // 한국에서 가장 비싼 생선을 아시나요
-          //   금태는 1마리 500g에 3만원 이랍니다
-
-          // 독일과 일본에서는 낚시세를 걷는다는 사실을 알고 계신가요
-          //   환경 보호를 위해서
-
-          // 로마에서는 둥근 어항에 금붕어로르 키우면 불법입니다>
           <Slider {...settings} className="home-carousel">
             {/* slide start */}
             <div
