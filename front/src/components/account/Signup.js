@@ -248,9 +248,6 @@ function Signup(props) {
               style={{ width: "100px", height: "100px" }}
               className="signup-image"
             />
-            <span className="custom-file-button" htmlFor="profileImg">
-              파일선택
-            </span>
           </div>
           {/* // 이미지 업로드 input */}
           <form>
@@ -267,6 +264,9 @@ function Signup(props) {
             </span>
             <label className="signup-profileImg-label" htmlFor="profileImg">
               프로필 이미지가 없으면 냥냥이 사진으로 대체됩니다.
+              <span className="custom-file-button" htmlFor="profileImg">
+                파일선택
+              </span>
             </label>{" "}
             <span>
               <span
