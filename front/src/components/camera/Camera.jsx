@@ -395,7 +395,7 @@ const Camera = () => {
                     setrulerbox(boxes[1]);
                     setfishbox(boxes[0]);
                   } else if (boxes.length === 1) {
-                    // return;
+                    return;
                     setfishbox(boxes[0]);
                     setrulerbox({ bounding: [1, 1, 1, 1] });
                   }
