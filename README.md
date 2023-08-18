@@ -81,7 +81,6 @@
 
 - React `18.2.0`
 - Javacript `4.9.3`
-- Firebase `9.17.1`
 - Flutter
 
 ## 💾 Backend
