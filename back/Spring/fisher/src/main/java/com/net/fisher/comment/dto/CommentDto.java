@@ -36,7 +36,7 @@ public class CommentDto {
     public static class Response{
         private long commentId;
         private String content;
-        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime registeredAt;
 
         private long memberId;

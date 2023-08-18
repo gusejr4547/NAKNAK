@@ -18,6 +18,6 @@ public class Oauth2LoginDto {
     private String email;
     @Nullable
     private String profileImgUrl;
-    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registeredAt;
 }

@@ -33,6 +33,6 @@ public class MemberImage {
 
     @Column(nullable = false)
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedAt;
 }
