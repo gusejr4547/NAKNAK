@@ -16,7 +16,7 @@ public class BooksDto {
         private long booksId;
         private long fishId;
         private double maxSize;
-        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime getDate;
         private int number;
     }
