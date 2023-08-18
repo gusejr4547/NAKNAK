@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import SlideInnerMenu from "./SlideInnerMenu";
 
 import "./Inventory.css";
 
-const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
+const ItemSlide = ({ fishInfo, isFishBowl, onDeleteSlide, itemchange }) => {
   const [showSlideInnerMenu, setShowSlideInnerMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState(false);
   const slideRef = useRef(null);
@@ -45,12 +44,22 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
   return (
     <div ref={slideRef} className="inven-slide" onClick={handleSlideClick}>
       {/* 동적으로 받아온 슬라이드 내용 표시 */}
-      <img
-        src={`http://passportlkm.iptime.org:20101/img/fishes/${fishInfo.fishCode}.png`}
-        alt={"fish img"}
-      />
+      {isFishBowl === "true" ? (
+        <img
+          style={{ filter: "grayscale(100)", backgroundColor: "gray" }}
+          src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
+          alt={"fish img"}
+        />
+      ) : (
+        <img
+          style={{ backgroundColor: "rgb(215, 234, 251)" }}
+          src={`${process.env.REACT_APP_BACKEND_URL}/img/${fishInfo.fishName}.png`}
+          alt={"fish img"}
+        />
+      )}
+
       <h6>
-        {fishInfo.fishName} <br />({fishInfo.fishSize}cm)
+        {fishInfo.fishName} <br />({fishInfo.fishSize.toFixed(2)}cm)
       </h6>
 
       {showSlideInnerMenu && (
@@ -59,6 +68,8 @@ const ItemSlide = ({ fishInfo, onDeleteSlide }) => {
           onDeleteSlide={handleDeleteSlide}
           menuPosition={menuPosition}
           fishInfo={fishInfo}
+          isFishBowl={isFishBowl}
+          itemchange={itemchange}
         />
       )}
     </div>

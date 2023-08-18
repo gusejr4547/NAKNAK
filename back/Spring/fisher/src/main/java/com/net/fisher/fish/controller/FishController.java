@@ -10,6 +10,7 @@ import com.net.fisher.fish.entity.Inventory;
 import com.net.fisher.fish.mapper.FishMapper;
 import com.net.fisher.fish.service.FishService;
 import com.net.fisher.response.BooksResponse;
+import com.net.fisher.response.LocationResponse;
 import com.net.fisher.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,13 +33,15 @@ public class FishController {
     private final FishMapper fishMapper;
     private final FishService fishService;
 
-    @PostMapping("/fishes/upload")
+    double LIGHTER_SIZE = 8.00;
+
+    /*@PostMapping("/fishes/upload")
     public ResponseEntity<InventoryDto.SingleResponse> postFishImage(
             @RequestHeader(name = "Authorization") String token,
             @RequestParam("image") MultipartFile image){
         FishRecogDto recogDto = fishService.recognizeFish(token,image);
         return postInventory(token,new InventoryDto.Post(recogDto.getCode(), recogDto.getSize()));
-    }
+    }*/
 
     // 물고기 인식 모듈에서 인벤토리에 추가하는 로직
     @PostMapping("/fishes/catch")
@@ -48,9 +51,13 @@ public class FishController {
 
         long tokenId = jwtTokenizer.getMemberId(token);
 
-        String fishCode = requestBody.getFishCode();
+        String fishName = requestBody.getLabel();
 
-        Inventory inventory = fishService.catchFish(tokenId,fishCode, fishMapper.toInventory(requestBody));
+        requestBody.setSize(requestBody.getSize()*LIGHTER_SIZE);
+
+        LocationResponse locationResponse = requestBody.getLocation();
+
+        Inventory inventory = fishService.catchFish(tokenId,fishName, fishMapper.toInventory(requestBody),locationResponse);
 
         return new ResponseEntity<>(fishMapper.toInventorySingleResponse(inventory), HttpStatus.CREATED);
     }
@@ -93,6 +100,16 @@ public class FishController {
         return new ResponseEntity<>(responses,HttpStatus.OK);
     }
 
+    @GetMapping("/fishes/fishbowl/view")
+    public ResponseEntity<List<FishBowlsDto.MultiResponse>>
+    getFishBowlsListOfMember(
+            @RequestHeader(name = "Authorization") String token){
+        long tokenId = jwtTokenizer.getMemberId(token);
+
+        List<FishBowls> fishBowls= fishService.getFishBowlsListFromMemberId(tokenId);
+        return new ResponseEntity<>(fishMapper.toFishBowlMultiResponseDtos(fishBowls),HttpStatus.OK);
+    }
+
     @GetMapping("/fishes/inventory/view")
     public ResponseEntity<PageResponse<InventoryDto.MultiResponse>>
     getInventoryListOfMember(
@@ -102,8 +119,6 @@ public class FishController {
         long tokenId = jwtTokenizer.getMemberId(token);
 
         Page<Inventory> inventoryPage = fishService.getInventoryListFromMemberId(tokenId,pageable);
-
-
 
         PageResponse<InventoryDto.MultiResponse> response = new PageResponse<>
                 (inventoryPage.getTotalElements(),

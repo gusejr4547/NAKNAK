@@ -1,18 +1,12 @@
 .board-wrapper {
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
+  background-color: rgb(255, 255, 255);
   position: relative;
-  height: 100%;
-  /* display: flex; */
+  height: 95%;
   flex-direction: column;
-  /* justify-content: center; */
-  /* 가로 가운데 정렬 */
   align-items: baseline;
-  /* 세로 가운데 정렬 */
-  /* max-height: 45rem; */
-  /* 카로셀 전체의 최대 높이를 설정합니다. */
   margin: 0 auto;
-  /* 가운데 정렬을 위해 margin을 auto로 설정합니다. */
+  overflow: hidden;
 }
 .board-board {
   width: 100%;
@@ -21,12 +15,12 @@
   overflow-y: auto;
 }
 .board-carousel {
-  position: relative;
+  /* position: relative;
   width: 24rem;
   height: 40.625rem;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 
 /* 스크룰 바 숨기기 */
@@ -41,23 +35,29 @@
 }
 
 .board-header {
+  height: 4rem;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  background-color: aqua;
+  background-color: #ffe48e;
 }
 
 .board-title-container {
+  margin-left: 1rem;
 }
-.board-title-container h3 {
-  width: 100%;
+.board-title-container h1 {
+  margin: 0;
+  font-weight: bold;
 }
 
 .board-search-img-container {
+  margin: 0.2rem 0.6rem 0.2rem 0.2rem;
+  height: 3.5rem;
+  width: auto;
+  display: flex;
+  align-items: center;
 }
 .board-search-img-container img {
-  width: 4rem;
-  height: 4rem;
 }
 
 .board-tag-wrapper {
@@ -76,4 +76,24 @@
   display: flex;
   margin-top: 1rem;
   margin-left: 1rem;
+}
+
+.board-loading {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.board-loading img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.board-create-feed {
+  z-index: 3;
+  overflow: hidden;
+  width: 2.3rem;
+  height: 2.3rem;
+  position: absolute;
+  right: 0.8rem;
+  bottom: 3.5rem;
 }

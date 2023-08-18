@@ -1,10 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Feed.css";
 
-const Feed = ({ feedInfo }) => {
+import { authorizedRequest } from "../account/AxiosInterceptor";
+
+import FeedTag from "./FeedTag";
+import { Link } from "react-router-dom";
+
+const Feed = ({
+  feedInfo,
+  currentFollowState,
+  likedFeedData,
+  userId,
+  onFollowChange,
+  onLikeStateChange,
+}) => {
+  const [feedLikeState, setFeedLikeState] = useState(
+    likedFeedData.length > 0
+      ? likedFeedData.find((likedFeed) => likedFeed.postId === feedInfo.postId)
+        ? true
+        : false
+      : false
+  );
+
+  const [loading, setLoading] = useState(false);
+
+  const followStateClass = currentFollowState
+    ? "feed-following"
+    : "feed-not-follow";
+
   const settings = {
     dots: true,
     infinite: false,
@@ -12,111 +38,138 @@ const Feed = ({ feedInfo }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     swipe: true,
-    prevArrow: <></>, // 이전 화살표를 빈 컴포넌트로 지정
-    nextArrow: <></>, // 다음 화살표를 빈 컴포넌트로 지정
+    prevArrow: <></>,
+    nextArrow: <></>,
   };
 
-  const followClickHandler = () => {
-    // 우선 멤버 id 값을 전달할 예정입니다.
-    console.log("follow btn clicked", feedInfo.post.memberId);
+  const followClickHandler = async () => {
+    onFollowChange(currentFollowState, feedInfo.memberId);
+    console.log("follow btn clicked", feedInfo.memberId);
+  };
+
+  const likeClickHandler = () => {
+    console.log("like btn clicked", feedLikeState);
+    feedInfo.likeCount += !feedLikeState ? 1 : -1;
+    toggleLikeState();
+
+    setFeedLikeState(!feedLikeState);
+
+    onLikeStateChange(feedInfo, !feedLikeState);
+
+    console.log(feedInfo.postId, feedLikeState, feedInfo);
+  };
+
+  const tagClickHandler = () => {
+    console.log("tagClicked", userId, feedInfo);
+  };
+
+  const toggleLikeState = async () => {
+    setLoading(true);
+    try {
+      console.log(feedLikeState);
+      const response = await authorizedRequest({
+        method: "post",
+        url: !feedLikeState
+          ? `/api1/api/posts/likes?post=${feedInfo.postId}`
+          : `/api1/api/posts/unlikes?post=${feedInfo.postId}`,
+      });
+      console.log(feedLikeState, response);
+      setLoading(false);
+    } catch (error) {
+      console.error("fail toggle likedstate");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="feed-wrapper">
-      {/* data */}
-      <div>
-        <h4>FeedInfo</h4>
-        "postId": {feedInfo.post.postId}, <br />
-        "content": {feedInfo.post.content}, <br />
-        "views":{feedInfo.post.views}, <br />
-        "registeredAt":{feedInfo.post.registeredAt}, <br />
-        "memberId":{feedInfo.post.memberId}, <br />
-        "memberImageUrl": {feedInfo.post.memberImageUrl}, <br />
-        "memberNickname": {feedInfo.post.memberNickname}, <br />
-        "images":
-        {feedInfo.images.map((image, index) => {
-          console.log(image.fileUrl);
-          return (
-            <p key={index} style={{ margin: 0 }}>
-              {image.fileUrl}
-            </p>
-          );
-        })}
-        "tags":
-        {feedInfo.tags.map((tag, index) => {
-          <p key={index}>{tag}</p>;
-        })}
-      </div>
-      {/* data */}
-
       <div className="feed-board">
         <div className="feed-header">
           <img
             className="feed-profile-img"
-            // null 값에 feedInfo.post.memberImageUrl가 들어가야함
-            src={null || `/assets/images/jge.png`}
-            alt="progile"
+            src={
+              feedInfo.memberImageUrl
+                ? `${process.env.REACT_APP_BACKEND_URL}/` +
+                  `${feedInfo.memberImageUrl}`
+                : "/assets/cats/cat.png"
+            }
+            alt="profileImg"
           />
-          <div className="feed-username">username</div>
-          <div className="feed-follow" onClick={followClickHandler}>
-            팔로우
-          </div>
+          <Link to={`/Profile/:${feedInfo.memberId}`} className="feed-username">
+            {feedInfo.memberNickname}
+          </Link>
+
+          {userId === feedInfo.memberId ? (
+            <Link
+              to={{
+                pathname: `/ModifyFeed/${feedInfo.postId}`,
+                state: feedInfo.postId,
+              }}
+              className="feed-modify"
+            >
+              수정
+            </Link>
+          ) : (
+            <div className={followStateClass} onClick={followClickHandler}>
+              {currentFollowState ? "팔로잉" : "팔로우"}
+            </div>
+          )}
         </div>
 
         {/* carousel start */}
 
         <Slider {...settings}>
-          {feedInfo.images.map((image, index) => (
-            <img
-              key={index}
-              className="feed-image"
-              src={"/assets/images/jge.png"}
-              alt="post images"
-            />
-          ))}
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
-          <img
-            // key={index}
-            className="feed-image"
-            src={"/assets/images/jge.png"}
-            alt="post images"
-          />
+          {feedInfo.images.length > 0 ? (
+            feedInfo.images.map((image, index) => (
+              <div key={index} className="feed-image-container">
+                <img
+                  className="feed-image"
+                  src={`${process.env.REACT_APP_BACKEND_URL}/${image.fileUrl}`}
+                  alt="post images"
+                />
+              </div>
+            ))
+          ) : (
+            <div className="feed-image-container">
+              <img
+                className="feed-image"
+                src={"/assets/images/jge.png"}
+                alt="post images"
+              />
+            </div>
+          )}
         </Slider>
         {/* carousel end */}
+
         <div className="feed-footer">
           <div className="feed-insight">
-            <div className="feed-views ">{feedInfo.post.views} views</div>
-            {/* 하트가 클릭됐을때 무언가 돼야합니다 */}
-            <img
-              src="/assets/icons/heart.png"
-              alt="하트"
-              onClick={followClickHandler}
-            />
+            <div className="feed-likes ">{feedInfo.likeCount} likes</div>
+            {feedInfo.memberId !== userId && (
+              <img
+                src={
+                  feedLikeState
+                    ? "/assets/icons/likeHeart.png"
+                    : "/assets/icons/unlikeHeart.png"
+                }
+                alt="하트"
+                onClick={likeClickHandler}
+              />
+            )}
           </div>
-          <div className="feed-caption">{feedInfo.post.content}</div>
+          <div className="feed-caption">{feedInfo.content}</div>
+          <div className="feed-tags">
+            {feedInfo.tags.map((tag, index) => {
+              return (
+                <FeedTag
+                  key={tag + index}
+                  tagInfo={tag}
+                  onClick={() => tagClickHandler()}
+                />
+              );
+            })}
+          </div>
         </div>
-        {/* 댓글 DB 아직 미완성 */}
-        {/* <div className="comments">
-            <div className="comment">Comment 1</div>
-            <div className="comment">Comment 2</div>
-          </div> */}
       </div>
     </div>
   );

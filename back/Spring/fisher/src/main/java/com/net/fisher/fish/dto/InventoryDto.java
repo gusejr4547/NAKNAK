@@ -1,6 +1,7 @@
 package com.net.fisher.fish.dto;
 
 import com.net.fisher.fish.entity.Fish;
+import com.net.fisher.response.LocationResponse;
 import jakarta.persistence.Column;
 import lombok.*;
 
@@ -11,8 +12,10 @@ public class InventoryDto {
     @AllArgsConstructor
     @Builder
     public static class Post{
-        private String fishCode;
+        private String label;
         private double size;
+        private double probability;
+        private LocationResponse location;
     }
 
     @Getter

@@ -40,7 +40,7 @@ public class MemberDto {
         private String email;
         private String name;
         private String nickname;
-        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime registeredAt;
         private String address1;
         private String address2;

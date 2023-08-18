@@ -1,11 +1,34 @@
-#bowlcontainer {
-  border: thick double skyblue;
+.bowlcontainer {
+  /* width: 90%; */
+  height: 28rem;
+  border: solid 0.5rem rgb(250, 245, 206);
   /* border: 0.5rem outset pink; */
-  outline: 1px solid rgb(69, 186, 244);
+  outline: 1px solid #fff;
+  overflow: hidden;
   /* box-shadow: 0 0 0 2rem rgb(130, 216, 250); */
-  border-radius: 12px;
+  border-radius: 50px;
   /* font: bold 1rem sans-serif; */
   /* margin: 2rem;
   padding: 1rem; */
   /* outline-offset: 0.5rem; */
+  /* /* position: absolute; */
+  /* left: 5%; */
+}
+.Sea {
+  border: solid 1rem #fff;
+  border-radius: 60px;
+}
+.seascene-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.decorate {
+  position: absolute;
+  background: url("../../../public/assets/images/sea.png") center center
+    no-repeat;
+  width: 24rem;
+  height: 10rem;
+  bottom: 1rem;
+  background-size: 22rem;
+  left: 1rem;
 }

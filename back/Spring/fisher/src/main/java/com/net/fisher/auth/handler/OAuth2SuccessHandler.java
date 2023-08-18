@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenizer jwtTokenizer;
     private final RedisDao redisDao;
     private final MemberRepository memberRepository;
@@ -68,13 +69,24 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Cookie cookie = new Cookie("refreshToken",refreshToken);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+
+        cookie = new Cookie("accessToken",accessToken);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
 
         response.addCookie(cookie);
+
         response.setHeader("Access-Control-Expose-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-        redirectStrategy.sendRedirect(request,response,"/");
+        getRedirectStrategy().sendRedirect(request, response, "/");
+       /* request.getRequestDispatcher("/").forward(request, response);
+*/
 
+
+        /*RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+        redirectStrategy.sendRedirect(request,response,"/");*/
+        // 이 방식은 지금 SPA 에서 잘못됨. 기본적으로 핸들링되는 Redirection URL 을 스프링에서 처리하면된다고함. -> 변경완료
     }
 }

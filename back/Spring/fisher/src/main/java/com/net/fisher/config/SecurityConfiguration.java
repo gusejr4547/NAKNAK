@@ -60,10 +60,14 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize->authorize
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
-                        .requestMatchers(toH2Console()).permitAll()
+                        //.requestMatchers(toH2Console()).permitAll() // H2 Console 에 대한 모든 접근을 허용하기 위한 메서드
                         //.requestMatchers(HttpMethod.POST,"/h2-console/*").permitAll()
+                        .requestMatchers("/static/*").permitAll()
+                        .requestMatchers("/model/*").permitAll()
+                        .requestMatchers("/assets/*").permitAll()
                         .requestMatchers("/oauth2/*").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/reissue").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/members/register**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/members/list").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/fishes/catch").hasRole("USER")
@@ -73,7 +77,7 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login()
                 .successHandler(oAuth2SuccessHandler)
-                .userInfoEndpoint()
+                .userInfoEndpoint() //일반적으로 OAuth 2.0 및 OpenID Connect 프로토콜에서 인증 성공 후 인증된 사용자에 대한 추가 정보를 얻기 위해 사용됩니다.
                 .userService(customOAuth2UserService);
         return httpSecurity.build();
     }
@@ -87,6 +91,9 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:8080");
+        configuration.addAllowedOriginPattern("https://accounts.google.com");
+        configuration.addAllowedOrigin("https://i9E105.p.ssafy.io");
+        configuration.addAllowedOrigin("http://i9E105.p.ssafy.io:8080");
         configuration.addAllowedOriginPattern("*:3000");
         configuration.addExposedHeader("*");
         configuration.setAllowCredentials(true);

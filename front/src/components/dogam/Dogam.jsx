@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { loginuser } from "../../utils/atoms";
-import axios from "axios";
+import { authorizedRequest } from "../account/AxiosInterceptor";
 
 import "./Dogam.css";
 import FishDetailModal from "./FishDetailModal";
 
 const Dogam = (props) => {
-  const catched = true;
+  // const catched = true;
 
   const [selectedFish, setSelectedFish] = useState(null);
-
+  const [user, setUser] = useRecoilState(loginuser);
   const [dogamData, setDogamData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [loginUser, setloginuser] = useRecoilState(loginuser);
+
+  // const [loginUser, setloginuser] = useRecoilState(loginuser);
 
   const goBack = () => {
     if (window && window.history && typeof window.history.back === "function") {
@@ -26,9 +27,14 @@ const Dogam = (props) => {
     const getDogam = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api1/api/books/1");
+        const response = await authorizedRequest({
+          method: "get",
+          url: `/api1/api/books/${user.memberId}`,
+        });
+
         console.log("response success", response.data);
         setDogamData(response.data);
+        console.log(dogamData.list);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching dogam:", error);
@@ -40,7 +46,13 @@ const Dogam = (props) => {
   }, []);
 
   const openFishDetailModal = (fish) => {
-    setSelectedFish(fish);
+    if (dogamData.fishCheck.chk.includes(fish.fishId)) {
+      setSelectedFish(fish);
+      console.log(fish);
+      // console.log(selectedFish);
+    } else {
+      setSelectedFish(null);
+    }
   };
 
   const closeFishDetailModal = () => {
@@ -49,112 +61,38 @@ const Dogam = (props) => {
 
   return (
     <div className="dogam-wrapper">
-      <img
-        src="/assets/icons/x.png"
-        alt="exit"
-        className="dogam-back-button"
-        onClick={goBack}
-      />
       <div className="dogam-board">
         <div className="dogam-carousel dogam-disable-scrollbar">
           {dogamData.fishCheck?.all.map((fish) => (
             <div
               key={fish.fishId}
               className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
+                "dogam-slide" +
+                (dogamData.fishCheck.chk.includes(fish.fishId)
+                  ? ""
+                  : " dogam-slide-inactive")
               }
               onClick={() => openFishDetailModal(fish)}
             >
               <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
+                src={process.env.REACT_APP_BACKEND_URL + fish.imgUrl}
                 alt={fish.name}
               />
-              <h6>{fish.name}</h6>
+              <div className="dogam-slide-fishName">
+                <h6>{fish.name}</h6>
+              </div>
             </div>
           ))}
-          {/* dummy start */}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}{" "}
-          {dogamData.fishCheck?.all.map((fish) => (
-            <div
-              key={fish.fishId}
-              className={
-                "dogam-slide" + (catched ? "" : " dogam-slide-inactive")
-              }
-              onClick={() => openFishDetailModal(fish)}
-            >
-              <img
-                src={"http://passportlkm.iptime.org:20101" + fish.imgUrl}
-                alt={fish.name}
-              />
-              <h6>{fish.name}</h6>
-            </div>
-          ))}
-          {/* dummy end */}
         </div>
       </div>
       {/* 모달 컴포넌트 */}
       {selectedFish && (
         <FishDetailModal
           fishData={selectedFish}
+          userFishData={
+            dogamData.list &&
+            dogamData.list.find((fish) => fish.fishId === selectedFish.fishId)
+          }
           onClose={closeFishDetailModal}
         />
       )}

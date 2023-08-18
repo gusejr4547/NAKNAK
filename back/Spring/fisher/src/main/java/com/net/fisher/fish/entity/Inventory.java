@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

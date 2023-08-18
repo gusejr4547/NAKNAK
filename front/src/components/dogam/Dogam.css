@@ -12,64 +12,65 @@
   box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
   width: 24rem;
-  height: 40.625rem;
+  height: 43rem;
   border-radius: 2.8125rem;
-
+  margin-top: 20%;
   padding-top: 3.25rem;
   padding-bottom: 3.25rem;
 }
 
 .dogam-carousel {
+  padding: 0 1rem 0 1rem;
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
   overflow-y: scroll;
+  align-items: center;
+  justify-content: start;
+  /* align-content: center; */
+  margin-left: 0.5rem;
   flex-wrap: wrap;
-  align-items: start;
-}
-
-.dogasdsam-carousel {
-  padding-top: 3.25rem;
-  padding-bottom: 1.25rem;
-  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 228.36573958396912, 142.37500101327896, 1);
-  width: 24rem;
-  height: 40.625rem;
-  position: absolute;
-  border-radius: 2.8125rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap; /* 넘치는 요소들을 다음 줄로 넘어가게 함 */
-  align-items: flex-start; /* 세로 가운데 정렬 */
-  overflow-y: scroll; /* 내용이 넘칠 때 스크롤이 생성됩니다. */
+  flex-direction: row;
 }
 
 .dogam-slide {
   border-radius: 0.6rem;
   display: flex;
-  background-color: white; /*배경 임시 하얀색 이미지 배경은 #53d5fd 임*/
+  background-color: white;
+  height: 6rem;
   width: calc(32% - 0.625rem);
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   text-align: center;
-  margin: 0.3125rem; /* 가운데 정렬을 위해 필요한 스타일 */
+  margin: 0.3125rem;
 }
 .dogam-slide img {
+  background-color: #71b6ff;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
   border-radius: 0.6rem 0.6rem 0 0;
-
   width: 100%;
   height: auto;
 }
+.dogam-slide-fishName {
+  border-top: 1px #d6d6d6;
+}
 .dogam-slide h6 {
+  margin-bottom: 0.25rem;
   color: black;
   font-weight: bold;
 }
 
 .dogam-slide-inactive {
   background-color: rgba(0, 0, 0, 0.8);
+}
+.dogam-slide-inactive img {
+  opacity: 0.3;
+  filter: grayscale(100%);
+}
+.dogam-slide-inactive h6 {
+  filter: grayscale(100%);
 }
 
 .dogam-back-button {

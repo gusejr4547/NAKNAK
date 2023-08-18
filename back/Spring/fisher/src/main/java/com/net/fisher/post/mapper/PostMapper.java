@@ -2,8 +2,10 @@ package com.net.fisher.post.mapper;
 
 import com.net.fisher.post.dto.PostDto;
 import com.net.fisher.post.dto.PostImageDto;
+import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostImage;
+import com.net.fisher.post.entity.PostTag;
 import com.net.fisher.post.entity.Tag;
 import org.mapstruct.Mapper;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,24 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PostMapper {
     Post postDtoToPost(PostDto.Post requestBody);
+
+    PostImageDto.Response toPostImageDto(PostImage postImages);
+    List<PostImageDto.Response> toPostImageDtos(List<PostImage> postImageList);
+
+    default Tag toTag(PostTag postTag){
+        return postTag.getTag();
+    }
+
+    default TagDto.SingleResponse toTagDto(Tag tag){
+        return TagDto.SingleResponse.builder()
+                .tagId(tag.getTagId())
+                .tagName(tag.getTagName()).build();
+    }
+
+    List<TagDto.SingleResponse> toTagDtos(List<Tag> tags);
+
+    List<Tag> toTagList(List<PostTag> postTagList);
+
     default PostDto.Response toPostResponseDto(Post post){
         String fileUrl = "/upload/man.jpeg";
         if(post.getMember().getMemberImage() !=null) fileUrl = post.getMember().getMemberImage().getFileUrl();
@@ -25,13 +45,20 @@ public interface PostMapper {
                 .memberId(post.getMember().getMemberId())
                 .memberNickname(post.getMember().getNickname())
                 .memberImageUrl(fileUrl)
+                .images(toPostImageDtos(post.getPostImageList()))
+                .tags(toTagDtos(toTagList(post.getPostTagList())))
+                .likeCount(post.getLikes())
                 .build();
         return response;
     }
 
-    default PostDto.SimpleResponse toPostSimpleResponseDto(Post post){
+    List<PostDto.Response> toPostResponseDtos(List<Post> postList);
+
+    default PostDto.SimpleResponse toSimpleResponseDto(Post post){
         String fileUrl = "/upload/man.jpeg";
         if(post.getMember().getMemberImage() !=null) fileUrl = post.getMember().getMemberImage().getFileUrl();
+        PostImage postImage = null;
+        if(!post.getPostImageList().isEmpty()) postImage = post.getPostImageList().get(0);
         PostDto.SimpleResponse response = PostDto.SimpleResponse.builder()
                 .postId(post.getPostId())
                 .content(post.getContent())
@@ -39,7 +66,12 @@ public interface PostMapper {
                 .memberId(post.getMember().getMemberId())
                 .memberNickname(post.getMember().getNickname())
                 .memberImageUrl(fileUrl)
+                .image(toPostImageDto(postImage))
+                .tags(toTagDtos(toTagList(post.getPostTagList())))
+                .likeCount(post.getLikes())
                 .build();
         return response;
     }
+
+    List<PostDto.SimpleResponse> toSimpleResponseDtos(List<Post> postList);
 }

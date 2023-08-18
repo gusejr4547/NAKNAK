@@ -1,67 +1,172 @@
-.loading_wrapper {
+.loading-wrapper {
   width: 100%;
   height: 100%;
-  background-color: #ffe9a1;
-}
-
-.wave_wrap {
-  position: absolute;
   display: flex;
   justify-content: center;
-  justify-items: center;
-  align-content: center;
-  width: 90%;
-  top: 10%;
-  height: 750px;
-  border: 15px solid #fff;
-  border-radius: 50px;
-  left: 5%;
-  overflow: hidden;
+  align-content: stretch;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: #ffe9a1; */
+  position: relative;
+  transition: all 0.2s ease;
 }
-.wave1 {
-  height: 46%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.wave2 {
-  height: 35%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 3;
-}
-.wave3 {
-  height: 40%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 2.5;
-}
-.island_img {
-  position: absolute;
-  bottom: 7.5rem;
-  width: 17rem;
-  height: 17rem;
-  left: 2.5rem;
-  z-index: 2;
-  background: url("../../../public/assets/images/island3.png") center center
-    no-repeat;
-}
-.cat_img {
-  position: absolute;
-  bottom: 12rem;
-  width: 10rem;
+
+.loading-cat {
+  position: relative;
+  width: 16rem;
   height: 20rem;
-  left: 5rem;
-  z-index: 3;
-  background: url("../../../public/assets/cats/cat.png") center center no-repeat;
-  background-size: 9rem;
+
+  z-index: 2;
+  background: url("../../../public/assets/cats/cat12.gif") center center
+    no-repeat;
+  background-size: 15rem;
 }
 .loading_title {
-  font-size: 5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #ffffff;
   position: absolute;
   top: 10rem;
+}
+
+.loader10:before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 6rem;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 1rem;
+  -webkit-animation: loader10g 3s ease-in-out infinite;
+  animation: loader10g 3s ease-in-out infinite;
+}
+
+.loader10 {
+  position: absolute; /* Change position to absolute */
+  width: 1rem;
+  height: 1rem;
+  top: 25%; /* Center loader10 vertically */
+  left: 8rem; /* Center loader10 horizontally */
+  transform: translate(-50%, -50%); /* Center loader10 precisely */
+  border-radius: 1rem;
+  z-index: 3; /* Set z-index to be above loading-cat */
+  -webkit-animation: loader10m 3s ease-in-out infinite;
+  animation: loader10m 3s ease-in-out infinite;
+}
+
+.loader10:after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 12rem;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 1rem;
+  -webkit-animation: loader10d 3s ease-in-out infinite;
+  animation: loader10d 3s ease-in-out infinite;
+}
+
+@-webkit-keyframes loader10g {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+@keyframes loader10g {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+@-webkit-keyframes loader10m {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  75% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+@keyframes loader10m {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  75% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+@-webkit-keyframes loader10d {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    background-color: rgba(0, 0, 255, 0.2);
+  }
+  75% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+@keyframes loader10d {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  25% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  75% {
+    background-color: rgba(0, 0, 0, 1);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { authorizedRequest } from "../account/AxiosInterceptor";
 import axios from "axios";
+import "./Profileinventory.css";
 
 function Profileinventory(props) {
   const [loading, setLoading] = useState(true);
@@ -27,11 +28,15 @@ function Profileinventory(props) {
 
   return (
     <div
-      style={{ display: "flex", justifyContent: "space-evenly", width: "100%" }}
+      className="profileinventorybox"
+      style={{ display: "flex", justifyContent: "space-evenly" }}
     >
-      <p> 포인트 : {props.point}</p>
-      <p> 어획량 : {invenData.count}</p>
-      <p> 최대어 : {invenData.maxSize}자</p>
+      <p className="profileinventoryp"> 💰 : {props.point}</p>
+      <p className="profileinventoryp"> 🐠 : {invenData.count}</p>
+      <p className="profileinventoryp">
+        {" "}
+        🐳 : {Math.floor(invenData.maxSize / 10)}자
+      </p>
     </div>
   );
 }

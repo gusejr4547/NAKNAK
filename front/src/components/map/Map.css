@@ -1,19 +1,66 @@
 #map {
   position: absolute;
-  width: 400px;
-  height: 500px;
+  width: 90%;
+  height: 45%;
+  top: 3rem;
+  left: 4.5%;
+  border-radius: 20px;
+  border: 8px solid #ffffff;
 }
 #title {
   display: absolute;
   padding-top: 20%;
 }
-
-.mapsearch {
+.search {
   position: fixed;
-  bottom: 30%;
+  top: 27rem;
+  left: 1.5rem;
 }
 
-.mapsearchresult {
+.search-wrapper {
+  position: absolute;
+  height: 10rem;
+  left: 2rem;
+  top: 31rem;
+}
+
+.map-newbie-talk-box {
+  display: flex;
+  width: 90%;
+  height: 12%;
+  border-radius: 35px;
+  background-color: #ffe48e;
+  border: dashed #ffffff 0.2rem;
   position: fixed;
-  bottom: 20%;
+  bottom: 5rem;
+  left: 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}
+.map-newbie-talk {
+  padding: 4%;
+}
+.location {
+  color: rgb(0, 74, 211);
+}
+.next {
+  color: blueviolet;
+  font-weight: bold;
+  position: absolute;
+  right: 1rem;
+  padding-top: 4%;
+  bottom: 0.5rem;
+}
+
+.search-btn {
+  position: absolute;
+  right: 2rem;
+  top: 27rem;
+  width: 3rem;
+  height: 2rem;
+  text-align: center;
+  color: #000000;
+  border-radius: 5px;
+  background: #ffd13c;
 }

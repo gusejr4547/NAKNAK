@@ -1,0 +1,171 @@
+.create-feed-wrapper {
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  width: 100%;
+  height: 95%;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.create-feed-header {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffe48e;
+}
+
+.create-feed-cancel {
+  margin: 0 1rem 0 1rem;
+  height: 2.3rem;
+  width: auto;
+}
+
+.create-feed-title {
+  margin-right: auto;
+}
+
+.create-feed-title h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.create-feed-submit {
+  margin: 0 1rem 0 1rem;
+  height: 2.3rem;
+  width: auto;
+}
+
+.create-feed-contents {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.create-feed-image-select-header {
+  margin-left: 1rem;
+  height: 2rem;
+  display: flex;
+  margin-top: 2rem;
+}
+
+.create-feed-image-select-button {
+  margin-left: 1rem;
+  align-items: center;
+
+  background-color: #ffe48e;
+  border-radius: 200px;
+  font-weight: bold;
+  width: 3.7rem;
+  height: 1.7rem;
+  display: flex;
+  justify-content: center;
+  min-width: 5rem;
+}
+
+.create-feed-contents-inner {
+  margin-top: 2rem;
+}
+.create-feed-contents-inner h2 {
+  margin-left: 1rem;
+}
+
+.create-feed-selected-files-carousel {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  height: 6rem;
+  max-height: 6rem;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+}
+.create-feed-selected-file-container {
+  height: 7rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.create-feed-image-delete-button {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.create-feed-selected-file {
+  border: 1px solid #afafaf;
+  max-width: auto;
+  max-height: 5rem;
+  margin: 10px;
+  object-fit: cover; /* 이미지의 비율 유지하며 크기 조정 */
+  object-position: center; /* 이미지 중앙으로 정렬 */
+}
+.minus-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.create-feed-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: none;
+  border-left: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.create-feed-tag-container {
+  margin: 0 1rem 0 1rem;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.create-feed-disable-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.create-feed-disable-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.create-feed-add-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.create-feed-add-tag input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 1rem;
+  font-size: 14px;
+}
+
+.create-feed-add-tag-button {
+  margin-left: 1rem;
+  align-items: center;
+  background-color: #ffe48e;
+  border-radius: 200px;
+  font-weight: bold;
+  width: 3.7rem;
+  height: 1.7rem;
+  display: flex;
+  justify-content: center;
+  min-width: 5rem;
+}
+
+.create-feed-content-title {
+  font-weight: bold;
+}

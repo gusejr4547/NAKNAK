@@ -1,0 +1,61 @@
+.pic-newbie-talk-box {
+  display: flex;
+  width: 90%;
+  height: 12%;
+  border-radius: 35px;
+  background-color: #ffe48e;
+  border: dashed #ffffff 0.2rem;
+  position: fixed;
+  bottom: 5rem;
+  left: 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}
+
+.camera-shape-overlay {
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 95%;
+  height: 50%;
+  border-radius: 50%;
+  opacity: 0.6;
+  /* background-color: red; */
+  /* 도형에 대한 스타일 (예: 너비, 높이, 배경 등) */
+}
+
+.camera-shape-overlay-fire {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 50%;
+  height: 30%;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: grayscale(50);
+  /* background-color: red; */
+  /* 도형에 대한 스타일 (예: 너비, 높이, 배경 등) */
+}
+.camera-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+/* .cameracontent {
+  height: 60%;
+} */
+/* 
+.last-captured-image {
+  max-width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: fill;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+} */

@@ -1,5 +1,6 @@
 package com.net.fisher.post.repository;
 
+import com.net.fisher.post.dto.TagDto;
 import com.net.fisher.post.entity.Post;
 import com.net.fisher.post.entity.PostTag;
 import com.net.fisher.post.entity.Tag;
@@ -18,4 +19,6 @@ public interface PostTagRepository extends JpaRepository<PostTag, Long> {
     void deleteByTagAndPost(Tag tag, Post post);
 
     List<PostTag> findAllByPost_PostId(long postId);
+
 }
+

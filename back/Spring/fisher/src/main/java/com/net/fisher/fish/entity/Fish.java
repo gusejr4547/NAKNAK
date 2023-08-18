@@ -1,10 +1,7 @@
 package com.net.fisher.fish.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity(name = "fishes")
@@ -12,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Fish {
     @Id

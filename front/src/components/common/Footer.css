@@ -4,13 +4,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 45px;
+  height: 5vh;
 }
 
 /* nav태그 아래의 자식들을 수평정렬하기 위한 설정 */
 nav {
   overflow: hidden;
-  border-top: 2px solid grey;
+  border-top: 2px solid rgb(255, 255, 255);
 }
 /* nav태그 아래의 div태그들을 수평정렬 및 세로길이 설정 */
 nav > div {
@@ -20,18 +20,27 @@ nav > div {
   text-align: center;
 
   /* 세로길이 설정 */
-  height: 45px;
-  line-height: 45px;
+  height: 100%;
+  line-height: 100%;
 }
 
 /* 하단 네비바의 메뉴를 눌렀을 때 색상 변경*/
 .nav-item {
-  color: grey;
+  /* color: rgb(220, 228, 157); */
+  color: #545454;
+}
+.nav-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 하단 네비바의 메뉴를 눌렀을 때 색상 변경*/
 .nav-active {
   color: #ef5c89;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 카메라와 피싱모드 히든모드 설정해야됨 */
@@ -40,5 +49,8 @@ nav > div {
 }
 
 .nav-basic {
-  color: #ef5c89;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #545454;
 }
