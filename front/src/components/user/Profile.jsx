@@ -110,9 +110,9 @@ function Profile(props) {
             <span className="profileusernickname">
               {profileData.memberResponse.nickname}
             </span>
-            <span className="profileuserLV">
+            {/* <span className="profileuserLV">
               LV {profileData.memberStatusResponse.level}
-            </span>
+            </span> */}
           </div>
           <div
             style={{
