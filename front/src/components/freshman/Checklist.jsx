@@ -11,17 +11,23 @@ function Checklist({ text, completed, onToggle, onRemove }) {
       <span className="checklist-text" onClick={onToggle}>
         {text}
       </span>
-      {text === "릴 구매하는 방법 시청" && (
-        <button onClick={toggleModal}>모달</button>
+      {text === "릴 구매하는 방법" && (
+        <button onClick={toggleModal} className="checklist-video">
+          {" "}
+          영상{">>"}{" "}
+        </button>
       )}
-      {text === "캐스팅 하는 방법 시청" && (
-        <button onClick={toggleModal}>모달</button>
+      {text === "캐스팅 하는 방법" && (
+        <button onClick={toggleModal} className="checklist-video">
+          {" "}
+          영상{">>"}{" "}
+        </button>
       )}
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
             {/* 모달 내용을 이곳에 추가 */}
-            {text === "릴 구매하는 방법 시청" && (
+            {text === "릴 구매하는 방법" && (
               <video width="360" height="280" controls="controls">
                 <source
                   src={require("../../utils/video/reel.mp4")}
@@ -29,7 +35,7 @@ function Checklist({ text, completed, onToggle, onRemove }) {
                 />
               </video>
             )}
-            {text === "캐스팅 하는 방법 시청" && (
+            {text === "캐스팅 하는 방법" && (
               <video width="360" height="280" controls="controls">
                 <source
                   src={require("../../utils/video/casting.mp4")}

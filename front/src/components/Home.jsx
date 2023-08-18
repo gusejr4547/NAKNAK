@@ -196,7 +196,7 @@ function Home({ newbieVersion }) {
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              <Link to="/Achievements" className="nav-link">
+              <Link to="/Checkbox" className="nav-link">
                 <img src="/assets/homeicons/checklist.png" alt="icon" />
                 <h6>체크리스트</h6>
               </Link>
