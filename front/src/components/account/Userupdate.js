@@ -51,15 +51,6 @@ function UserUpdate(props) {
   } = useInput(isNotEmpty);
 
   const {
-    $value: userPasswordconValue,
-    $isValid: userPasswordconValueIsValid,
-    $hasError: userPasswordconHasError,
-    $valueChangeHandler: userPasswordconChangeHandler,
-    $inputBlurHandler: userPasswordconBlurHandler,
-    // $reset: resetuserPassword,
-  } = useInput(isNotEmpty);
-
-  const {
     $value: usernicknameValue,
     $isValid: usernicknameValueIsValid,
     $hasError: usernicknameHasError,
@@ -194,18 +185,6 @@ function UserUpdate(props) {
           onChange={userPasswordChangeHandler}
           onBlur={userPasswordBlurHandler}
           $hasError={userPasswordHasError}
-          $errorText="필수 입력값입니다"
-          onKeyPress={updateHandleKey}
-        />
-        <AuthInput
-          label="비밀번호 확인"
-          type="passwordcon"
-          id="userPasswordcon"
-          placeholder="비밀번호 확인"
-          $value={userPasswordconValue}
-          onChange={userPasswordconChangeHandler}
-          onBlur={userPasswordconBlurHandler}
-          $hasError={userPasswordconHasError}
           $errorText="필수 입력값입니다"
           onKeyPress={updateHandleKey}
         />

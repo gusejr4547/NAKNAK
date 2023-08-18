@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
@@ -13,8 +13,7 @@ function Home({ newbieVersion }) {
   const [userData] = useRecoilState(loginuser);
   const [newbie, setNewbie] = useRecoilState(newbie_recoil);
   const [sleep, setSleep] = useRecoilState(sleeping_recoil);
-  const random_index = Math.floor(Math.random() * tmi.length);
-  const random_tmi = tmi[random_index];
+  const [tmiData, settmiData] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +23,15 @@ function Home({ newbieVersion }) {
 
     setNewbie(newbieVersion);
   }, [newbieVersion]);
+
+  useEffect(() => {
+    if (!tmiData) {
+      const random_index = Math.floor(Math.random() * tmi.length);
+      const random_tmi = tmi[random_index];
+      settmiData(random_tmi);
+    }
+    return;
+  }, []);
 
   const cameraClick = () => {
     navigate("/Camera");
@@ -77,16 +85,16 @@ function Home({ newbieVersion }) {
       </div>
       <div className="home-board">
         {sleep ? (
-          <Slider {...settingss} className="home-carousel">
+          <Slider {...settingss} className="home-carousel tmidata">
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              {random_tmi.title}
+              {tmiData && tmiData.title}
             </div>
             <div
               className={`home-slide ${newbieVersion ? "non-clickable" : ""}`}
             >
-              {random_tmi.content}
+              {tmiData && tmiData.content}
             </div>
             {/* slide end */}
           </Slider>
