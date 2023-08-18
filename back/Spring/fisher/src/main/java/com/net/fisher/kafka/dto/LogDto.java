@@ -17,6 +17,6 @@ public class LogDto {
     private double size;
     private double latitude;
     private double longitude;
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd kk:mm:ss",timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Seoul")
     private LocalDateTime logTime;
 }

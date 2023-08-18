@@ -13,7 +13,7 @@ public class DateDto {
     @Builder
     @ToString
     public static class Response{
-        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss.SSS")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
         private LocalDateTime serverTime;
     }
 }

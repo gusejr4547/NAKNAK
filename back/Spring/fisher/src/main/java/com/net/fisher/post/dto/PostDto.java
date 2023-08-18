@@ -45,7 +45,7 @@ public class PostDto {
         private long postId;
         private String content;
         private int views;
-        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime registeredAt;
 
         private long memberId;
@@ -67,7 +67,7 @@ public class PostDto {
     public static class SimpleResponse{
         private long postId;
         private String content;
-        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime registeredAt;
 
         private long memberId;
