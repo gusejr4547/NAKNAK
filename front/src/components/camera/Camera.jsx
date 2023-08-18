@@ -227,6 +227,7 @@ const Camera = () => {
   const stopDetection = () => {
     setDetecting(false);
     setWebcamActive(false);
+    // setfishbox(0);
   };
   useEffect(() => {
     startDetection(); // 페이지에 처음 접근할 때 감지 시작

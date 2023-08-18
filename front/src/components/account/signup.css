@@ -28,9 +28,9 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  left: 2rem;
-  bottom: -3.5rem;
-  position: relative;
+  right: 7rem;
+  bottom: 7rem;
+  position: absolute;
 }
 .signup-btns {
   display: flex;
