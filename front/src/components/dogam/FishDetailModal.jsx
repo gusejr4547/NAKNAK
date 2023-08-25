@@ -8,7 +8,7 @@ const FishDetailModal = ({ fishData, userFishData, onClose }) => {
 
   return (
     <div className="fish-detail-modal container">
-      <div className="modal-content">
+      <div className="dogam-modal-content">
         <img
           className="modal-content-fishImg"
           src={process.env.REACT_APP_BACKEND_URL + imgUrl}
@@ -27,7 +27,7 @@ const FishDetailModal = ({ fishData, userFishData, onClose }) => {
           </div>
         )}
         <div className="modal-content-dogam-explanation modal-disable-scrollbar">
-          <p className="model-content-p">{info}</p>
+          <p className="dogam-model-content-p">{info}</p>
         </div>
         <img
           src="/assets/icons/x.png"

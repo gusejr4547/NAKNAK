@@ -20,7 +20,7 @@
   opacity: 1;
 }
 
-.modal-content {
+.dogam-modal-content {
   width: 90%;
   height: 600px;
   background-color: #fff;
@@ -47,7 +47,7 @@
   margin-bottom: 10px;
 }
 
-.modal-content h3 {
+.dogam-modal-content h3 {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -58,7 +58,7 @@
   text-align: start;
 }
 
-.modal-content p {
+.dogam-modal-content p {
   font-size: 16px;
   color: #555;
   margin-bottom: 5px;
@@ -101,12 +101,12 @@
   overflow-y: scroll;
 }
 
-.model-content-p {
+.dogam-model-content-p {
   max-height: 10rem; /* 원하는 높이로 조절 */
   overflow-y: auto;
 }
 
-.modal-content button:hover {
+.dogam-modal-content button:hover {
   background-color: #0056b3;
 }
 
