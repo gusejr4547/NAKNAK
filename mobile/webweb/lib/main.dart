@@ -26,6 +26,7 @@ class GeolocationPermissionShowPromptResponse {
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Future.delayed(const Duration(seconds: 3)); // 3초 지연
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
