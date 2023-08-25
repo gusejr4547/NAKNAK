@@ -17,7 +17,7 @@ const FishDetailModal = ({ fishData, userFishData, onClose }) => {
         <h3>{name}</h3>
         {userFishData ? (
           <div className="modal-content-myRecord">
-            <p>최대 크기 : {userFishData.maxSize}</p>
+            <p>최대 크기 : {userFishData.maxSize.toFixed(2)}</p>
             <p>잡은 날짜 : {userFishData.getDate.substr(2, 9)}</p>
             <p>잡은 횟수 : {userFishData.number}</p>
           </div>
