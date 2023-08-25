@@ -105,6 +105,8 @@
 
 
 ## 프로젝트 구조도
+전체
+```
 ┗📂back
     ┗📁 AutoCrawler
   ┗📁 demo
@@ -114,8 +116,199 @@
 ┗📂front
 ┗📂mobile
 ┗📂data
+```
 
+front-end
+```
+📦src
+ ┣ 📂api
+ ┃ ┣ 📜BadanuriAPI.js
+ ┃ ┣ 📜KMAAPI.js
+ ┃ ┣ 📜SeaAPI.js
+ ┃ ┗ 📜WeatherAPI.js
+ ┣ 📂components
+ ┃ ┣ 📂account
+ ┃ ┃ ┣ 📜Api.js
+ ┃ ┃ ┣ 📜Authinput.jsx
+ ┃ ┃ ┣ 📜AxiosInterceptor.js
+ ┃ ┃ ┣ 📜email_input.js
+ ┃ ┃ ┣ 📜Kakao.jsx
+ ┃ ┃ ┣ 📜Login.css
+ ┃ ┃ ┣ 📜Login.js
+ ┃ ┃ ┣ 📜signup.css
+ ┃ ┃ ┣ 📜Signup.js
+ ┃ ┃ ┣ 📜test.css
+ ┃ ┃ ┣ 📜test.js
+ ┃ ┃ ┣ 📜Userupdate.js
+ ┃ ┃ ┗ 📜use_input.js
+ ┃ ┣ 📂achievements
+ ┃ ┃ ┣ 📜Achievements.jsx
+ ┃ ┃ ┣ 📜quest.css
+ ┃ ┃ ┣ 📜QuestDetailModal.css
+ ┃ ┃ ┣ 📜QuestDetailModal.jsx
+ ┃ ┃ ┗ 📜Questlist.jsx
+ ┃ ┣ 📂board
+ ┃ ┃ ┣ 📜Board.css
+ ┃ ┃ ┣ 📜Board.jsx
+ ┃ ┃ ┣ 📜CreateFeed.css
+ ┃ ┃ ┣ 📜CreateFeed.jsx
+ ┃ ┃ ┣ 📜DeleteFeed.css
+ ┃ ┃ ┣ 📜DeleteFeed.jsx
+ ┃ ┃ ┣ 📜DeleteFeedModal.jsx
+ ┃ ┃ ┣ 📜Feed.css
+ ┃ ┃ ┣ 📜Feed.jsx
+ ┃ ┃ ┣ 📜FeedTag.css
+ ┃ ┃ ┣ 📜FeedTag.jsx
+ ┃ ┃ ┣ 📜ModifyFeed.css
+ ┃ ┃ ┗ 📜ModifyFeed.jsx
+ ┃ ┣ 📂camera
+ ┃ ┃ ┣ 📂components
+ ┃ ┃ ┃ ┗ 📜loader.js
+ ┃ ┃ ┣ 📂style
+ ┃ ┃ ┃ ┣ 📜App.css
+ ┃ ┃ ┃ ┗ 📜loader.css
+ ┃ ┃ ┣ 📂utils
+ ┃ ┃ ┃ ┣ 📜detect.js
+ ┃ ┃ ┃ ┣ 📜download.js
+ ┃ ┃ ┃ ┣ 📜labels.js
+ ┃ ┃ ┃ ┣ 📜labels.json
+ ┃ ┃ ┃ ┗ 📜renderBox.js
+ ┃ ┃ ┣ 📜Camera.css
+ ┃ ┃ ┣ 📜Camera.jsx
+ ┃ ┃ ┣ 📜Detectdata.js
+ ┃ ┃ ┣ 📜Getfish.css
+ ┃ ┃ ┗ 📜Getfish.jsx
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜Background.css
+ ┃ ┃ ┣ 📜Background.jsx
+ ┃ ┃ ┣ 📜Footer.css
+ ┃ ┃ ┣ 📜Footer.js
+ ┃ ┃ ┣ 📜Loading.css
+ ┃ ┃ ┣ 📜Loading.jsx
+ ┃ ┃ ┣ 📜NotFound.js
+ ┃ ┃ ┗ 📜server.js
+ ┃ ┣ 📂dict
+ ┃ ┃ ┣ 📜Dict.css
+ ┃ ┃ ┣ 📜Dict.jsx
+ ┃ ┃ ┣ 📜Dictdetail.css
+ ┃ ┃ ┣ 📜Dictdetail.jsx
+ ┃ ┃ ┣ 📜Dictlist.css
+ ┃ ┃ ┗ 📜Dictlist.js
+ ┃ ┣ 📂dogam
+ ┃ ┃ ┣ 📜Dogam.css
+ ┃ ┃ ┣ 📜Dogam.jsx
+ ┃ ┃ ┣ 📜FishDetailModal.css
+ ┃ ┃ ┗ 📜FishDetailModal.jsx
+ ┃ ┣ 📂fishbowl
+ ┃ ┃ ┣ 📜Balls.jsx
+ ┃ ┃ ┣ 📜Bowl.jsx
+ ┃ ┃ ┣ 📜fishbowl.png
+ ┃ ┃ ┣ 📜fishbowl2.png
+ ┃ ┃ ┣ 📜fishbowl3.jpg
+ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┣ 📜Inventory.css
+ ┃ ┃ ┣ 📜Inventory.jsx
+ ┃ ┃ ┣ 📜ItemSlide.jsx
+ ┃ ┃ ┣ 📜Profileballs.jsx
+ ┃ ┃ ┣ 📜Profilesea.jsx
+ ┃ ┃ ┣ 📜SeaScene.css
+ ┃ ┃ ┣ 📜SeaScene.js
+ ┃ ┃ ┣ 📜SlideInnerMenu.css
+ ┃ ┃ ┣ 📜SlideInnerMenu.jsx
+ ┃ ┃ ┗ 📜style.css
+ ┃ ┣ 📂fishing
+ ┃ ┃ ┣ 📜Fish.js
+ ┃ ┃ ┣ 📜Fishing.css
+ ┃ ┃ ┣ 📜Fishing.js
+ ┃ ┃ ┣ 📜Fishpic.css
+ ┃ ┃ ┣ 📜Fishpic.js
+ ┃ ┃ ┣ 📜Getfish.js
+ ┃ ┃ ┣ 📜Nowget.css
+ ┃ ┃ ┣ 📜Nowget.js
+ ┃ ┃ ┣ 📜Picresult.jsx
+ ┃ ┃ ┣ 📜StopWatch.css
+ ┃ ┃ ┗ 📜StopWatch.js
+ ┃ ┣ 📂freshman
+ ┃ ┃ ┣ 📜Checkbox.css
+ ┃ ┃ ┣ 📜Checkbox.jsx
+ ┃ ┃ ┣ 📜Checklist.css
+ ┃ ┃ ┣ 📜Checklist.jsx
+ ┃ ┃ ┣ 📜Firstpage.css
+ ┃ ┃ ┣ 📜Firstpage.jsx
+ ┃ ┃ ┣ 📜Freshman.css
+ ┃ ┃ ┣ 📜Freshman.jsx
+ ┃ ┃ ┣ 📜Lure.js
+ ┃ ┃ ┣ 📜Newbie.css
+ ┃ ┃ ┣ 📜Newbie.jsx
+ ┃ ┃ ┣ 📜Onetwo.js
+ ┃ ┃ ┣ 📜Secondpage.css
+ ┃ ┃ ┣ 📜Secondpage.jsx
+ ┃ ┃ ┣ 📜Talk.js
+ ┃ ┃ ┣ 📜Talk2.js
+ ┃ ┃ ┣ 📜TTS.jsx
+ ┃ ┃ ┗ 📜upgradeProgress.jsx
+ ┃ ┣ 📂map
+ ┃ ┃ ┣ 📜badanuriPositions.js
+ ┃ ┃ ┣ 📜FavoriteSpot.jsx
+ ┃ ┃ ┣ 📜FavoriteSpots.css
+ ┃ ┃ ┣ 📜FavoriteSpots.jsx
+ ┃ ┃ ┣ 📜GetXY.jsx
+ ┃ ┃ ┣ 📜Map.css
+ ┃ ┃ ┣ 📜Map.jsx
+ ┃ ┃ ┣ 📜MapInfo.json
+ ┃ ┃ ┣ 📜MapModal.css
+ ┃ ┃ ┣ 📜MapModal.jsx
+ ┃ ┃ ┣ 📜markerPositions.js
+ ┃ ┃ ┗ 📜Weather.jsx
+ ┃ ┣ 📂user
+ ┃ ┃ ┣ 📜Follower.jsx
+ ┃ ┃ ┣ 📜FollowerModal.js
+ ┃ ┃ ┣ 📜Following.jsx
+ ┃ ┃ ┣ 📜FollowModal.css
+ ┃ ┃ ┣ 📜Mypost.jsx
+ ┃ ┃ ┣ 📜profile.css
+ ┃ ┃ ┣ 📜Profile.jsx
+ ┃ ┃ ┣ 📜Profileinventory.css
+ ┃ ┃ ┣ 📜Profileinventory.jsx
+ ┃ ┃ ┣ 📜ProfileModal.js
+ ┃ ┃ ┗ 📜profileStyle.js
+ ┃ ┣ 📜Home.css
+ ┃ ┗ 📜Home.jsx
+ ┣ 📂temp
+ ┃ ┗ 📂Teacherable
+ ┃ ┃ ┣ 📂my_model
+ ┃ ┃ ┃ ┣ 📜metadata.json
+ ┃ ┃ ┃ ┣ 📜model.json
+ ┃ ┃ ┃ ┗ 📜weights.bin
+ ┃ ┃ ┣ 📜AxiosTest.js
+ ┃ ┃ ┣ 📜ImgProcess.js
+ ┃ ┃ ┗ 📜ImgTest.jsx
+ ┣ 📂utils
+ ┃ ┣ 📂data
+ ┃ ┃ ┣ 📜challenge.csv
+ ┃ ┃ ┣ 📜challenge.js
+ ┃ ┃ ┣ 📜fishingspot.json
+ ┃ ┃ ┣ 📜point.js
+ ┃ ┃ ┣ 📜quest.js
+ ┃ ┃ ┗ 📜tmi.js
+ ┃ ┣ 📂video
+ ┃ ┃ ┣ 📜casting.mp4
+ ┃ ┃ ┗ 📜reel.mp4
+ ┃ ┣ 📜api.js
+ ┃ ┣ 📜atoms.js
+ ┃ ┣ 📜FontAwesome.jsx
+ ┃ ┣ 📜location.js
+ ┃ ┗ 📜util.js
+ ┣ 📜App.css
+ ┣ 📜App.js
+ ┣ 📜AppRouter.jsx
+ ┣ 📜index.css
+ ┣ 📜index.jsx
+ ┣ 📜reportWebVitals.js
+ ┗ 📜setupProxy.js
+```
 back-end
+```
 📦src
  ┣ 📂main
  ┃ ┣ 📂java
@@ -488,197 +681,7 @@ back-end
  ┃ ┃ ┃ ┗ 📂net
  ┃ ┃ ┃ ┃ ┗ 📂fisher
  ┃ ┃ ┃ ┃ ┃ ┗ 📜FisherApplicationTests.java
-
-
-
-front-end
-📦src
- ┣ 📂api
- ┃ ┣ 📜BadanuriAPI.js
- ┃ ┣ 📜KMAAPI.js
- ┃ ┣ 📜SeaAPI.js
- ┃ ┗ 📜WeatherAPI.js
- ┣ 📂components
- ┃ ┣ 📂account
- ┃ ┃ ┣ 📜Api.js
- ┃ ┃ ┣ 📜Authinput.jsx
- ┃ ┃ ┣ 📜AxiosInterceptor.js
- ┃ ┃ ┣ 📜email_input.js
- ┃ ┃ ┣ 📜Kakao.jsx
- ┃ ┃ ┣ 📜Login.css
- ┃ ┃ ┣ 📜Login.js
- ┃ ┃ ┣ 📜signup.css
- ┃ ┃ ┣ 📜Signup.js
- ┃ ┃ ┣ 📜test.css
- ┃ ┃ ┣ 📜test.js
- ┃ ┃ ┣ 📜Userupdate.js
- ┃ ┃ ┗ 📜use_input.js
- ┃ ┣ 📂achievements
- ┃ ┃ ┣ 📜Achievements.jsx
- ┃ ┃ ┣ 📜quest.css
- ┃ ┃ ┣ 📜QuestDetailModal.css
- ┃ ┃ ┣ 📜QuestDetailModal.jsx
- ┃ ┃ ┗ 📜Questlist.jsx
- ┃ ┣ 📂board
- ┃ ┃ ┣ 📜Board.css
- ┃ ┃ ┣ 📜Board.jsx
- ┃ ┃ ┣ 📜CreateFeed.css
- ┃ ┃ ┣ 📜CreateFeed.jsx
- ┃ ┃ ┣ 📜DeleteFeed.css
- ┃ ┃ ┣ 📜DeleteFeed.jsx
- ┃ ┃ ┣ 📜DeleteFeedModal.jsx
- ┃ ┃ ┣ 📜Feed.css
- ┃ ┃ ┣ 📜Feed.jsx
- ┃ ┃ ┣ 📜FeedTag.css
- ┃ ┃ ┣ 📜FeedTag.jsx
- ┃ ┃ ┣ 📜ModifyFeed.css
- ┃ ┃ ┗ 📜ModifyFeed.jsx
- ┃ ┣ 📂camera
- ┃ ┃ ┣ 📂components
- ┃ ┃ ┃ ┗ 📜loader.js
- ┃ ┃ ┣ 📂style
- ┃ ┃ ┃ ┣ 📜App.css
- ┃ ┃ ┃ ┗ 📜loader.css
- ┃ ┃ ┣ 📂utils
- ┃ ┃ ┃ ┣ 📜detect.js
- ┃ ┃ ┃ ┣ 📜download.js
- ┃ ┃ ┃ ┣ 📜labels.js
- ┃ ┃ ┃ ┣ 📜labels.json
- ┃ ┃ ┃ ┗ 📜renderBox.js
- ┃ ┃ ┣ 📜Camera.css
- ┃ ┃ ┣ 📜Camera.jsx
- ┃ ┃ ┣ 📜Detectdata.js
- ┃ ┃ ┣ 📜Getfish.css
- ┃ ┃ ┗ 📜Getfish.jsx
- ┃ ┣ 📂common
- ┃ ┃ ┣ 📜Background.css
- ┃ ┃ ┣ 📜Background.jsx
- ┃ ┃ ┣ 📜Footer.css
- ┃ ┃ ┣ 📜Footer.js
- ┃ ┃ ┣ 📜Loading.css
- ┃ ┃ ┣ 📜Loading.jsx
- ┃ ┃ ┣ 📜NotFound.js
- ┃ ┃ ┗ 📜server.js
- ┃ ┣ 📂dict
- ┃ ┃ ┣ 📜Dict.css
- ┃ ┃ ┣ 📜Dict.jsx
- ┃ ┃ ┣ 📜Dictdetail.css
- ┃ ┃ ┣ 📜Dictdetail.jsx
- ┃ ┃ ┣ 📜Dictlist.css
- ┃ ┃ ┗ 📜Dictlist.js
- ┃ ┣ 📂dogam
- ┃ ┃ ┣ 📜Dogam.css
- ┃ ┃ ┣ 📜Dogam.jsx
- ┃ ┃ ┣ 📜FishDetailModal.css
- ┃ ┃ ┗ 📜FishDetailModal.jsx
- ┃ ┣ 📂fishbowl
- ┃ ┃ ┣ 📜Balls.jsx
- ┃ ┃ ┣ 📜Bowl.jsx
- ┃ ┃ ┣ 📜fishbowl.png
- ┃ ┃ ┣ 📜fishbowl2.png
- ┃ ┃ ┣ 📜fishbowl3.jpg
- ┃ ┃ ┣ 📜index.js
- ┃ ┃ ┣ 📜Inventory.css
- ┃ ┃ ┣ 📜Inventory.jsx
- ┃ ┃ ┣ 📜ItemSlide.jsx
- ┃ ┃ ┣ 📜Profileballs.jsx
- ┃ ┃ ┣ 📜Profilesea.jsx
- ┃ ┃ ┣ 📜SeaScene.css
- ┃ ┃ ┣ 📜SeaScene.js
- ┃ ┃ ┣ 📜SlideInnerMenu.css
- ┃ ┃ ┣ 📜SlideInnerMenu.jsx
- ┃ ┃ ┗ 📜style.css
- ┃ ┣ 📂fishing
- ┃ ┃ ┣ 📜Fish.js
- ┃ ┃ ┣ 📜Fishing.css
- ┃ ┃ ┣ 📜Fishing.js
- ┃ ┃ ┣ 📜Fishpic.css
- ┃ ┃ ┣ 📜Fishpic.js
- ┃ ┃ ┣ 📜Getfish.js
- ┃ ┃ ┣ 📜Nowget.css
- ┃ ┃ ┣ 📜Nowget.js
- ┃ ┃ ┣ 📜Picresult.jsx
- ┃ ┃ ┣ 📜StopWatch.css
- ┃ ┃ ┗ 📜StopWatch.js
- ┃ ┣ 📂freshman
- ┃ ┃ ┣ 📜Checkbox.css
- ┃ ┃ ┣ 📜Checkbox.jsx
- ┃ ┃ ┣ 📜Checklist.css
- ┃ ┃ ┣ 📜Checklist.jsx
- ┃ ┃ ┣ 📜Firstpage.css
- ┃ ┃ ┣ 📜Firstpage.jsx
- ┃ ┃ ┣ 📜Freshman.css
- ┃ ┃ ┣ 📜Freshman.jsx
- ┃ ┃ ┣ 📜Lure.js
- ┃ ┃ ┣ 📜Newbie.css
- ┃ ┃ ┣ 📜Newbie.jsx
- ┃ ┃ ┣ 📜Onetwo.js
- ┃ ┃ ┣ 📜Secondpage.css
- ┃ ┃ ┣ 📜Secondpage.jsx
- ┃ ┃ ┣ 📜Talk.js
- ┃ ┃ ┣ 📜Talk2.js
- ┃ ┃ ┣ 📜TTS.jsx
- ┃ ┃ ┗ 📜upgradeProgress.jsx
- ┃ ┣ 📂map
- ┃ ┃ ┣ 📜badanuriPositions.js
- ┃ ┃ ┣ 📜FavoriteSpot.jsx
- ┃ ┃ ┣ 📜FavoriteSpots.css
- ┃ ┃ ┣ 📜FavoriteSpots.jsx
- ┃ ┃ ┣ 📜GetXY.jsx
- ┃ ┃ ┣ 📜Map.css
- ┃ ┃ ┣ 📜Map.jsx
- ┃ ┃ ┣ 📜MapInfo.json
- ┃ ┃ ┣ 📜MapModal.css
- ┃ ┃ ┣ 📜MapModal.jsx
- ┃ ┃ ┣ 📜markerPositions.js
- ┃ ┃ ┗ 📜Weather.jsx
- ┃ ┣ 📂user
- ┃ ┃ ┣ 📜Follower.jsx
- ┃ ┃ ┣ 📜FollowerModal.js
- ┃ ┃ ┣ 📜Following.jsx
- ┃ ┃ ┣ 📜FollowModal.css
- ┃ ┃ ┣ 📜Mypost.jsx
- ┃ ┃ ┣ 📜profile.css
- ┃ ┃ ┣ 📜Profile.jsx
- ┃ ┃ ┣ 📜Profileinventory.css
- ┃ ┃ ┣ 📜Profileinventory.jsx
- ┃ ┃ ┣ 📜ProfileModal.js
- ┃ ┃ ┗ 📜profileStyle.js
- ┃ ┣ 📜Home.css
- ┃ ┗ 📜Home.jsx
- ┣ 📂temp
- ┃ ┗ 📂Teacherable
- ┃ ┃ ┣ 📂my_model
- ┃ ┃ ┃ ┣ 📜metadata.json
- ┃ ┃ ┃ ┣ 📜model.json
- ┃ ┃ ┃ ┗ 📜weights.bin
- ┃ ┃ ┣ 📜AxiosTest.js
- ┃ ┃ ┣ 📜ImgProcess.js
- ┃ ┃ ┗ 📜ImgTest.jsx
- ┣ 📂utils
- ┃ ┣ 📂data
- ┃ ┃ ┣ 📜challenge.csv
- ┃ ┃ ┣ 📜challenge.js
- ┃ ┃ ┣ 📜fishingspot.json
- ┃ ┃ ┣ 📜point.js
- ┃ ┃ ┣ 📜quest.js
- ┃ ┃ ┗ 📜tmi.js
- ┃ ┣ 📂video
- ┃ ┃ ┣ 📜casting.mp4
- ┃ ┃ ┗ 📜reel.mp4
- ┃ ┣ 📜api.js
- ┃ ┣ 📜atoms.js
- ┃ ┣ 📜FontAwesome.jsx
- ┃ ┣ 📜location.js
- ┃ ┗ 📜util.js
- ┣ 📜App.css
- ┣ 📜App.js
- ┣ 📜AppRouter.jsx
- ┣ 📜index.css
- ┣ 📜index.jsx
- ┣ 📜reportWebVitals.js
- ┗ 📜setupProxy.js
-
+```
 
 
 
